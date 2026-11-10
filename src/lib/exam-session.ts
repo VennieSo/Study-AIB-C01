@@ -350,4 +350,33 @@ export class ExamSession {
       percentage: (correct / total) * 100,
     };
   }
+
+  domainResults() {
+    this.checkDeadline();
+    if (this.state.status !== 'completed') return [];
+    return domains.flatMap((domain) => {
+      const questions = this.state.questions.filter(
+        ({ snapshot }) => snapshot.domainId === domain.id,
+      );
+      if (!questions.length) return [];
+      const total = questions.length;
+      const attempted = questions.filter(
+        (question) => question.submittedAt !== null,
+      ).length;
+      const correct = questions.filter(
+        (question) => question.feedback === 'correct',
+      ).length;
+      return [
+        {
+          domainId: domain.id,
+          total,
+          attempted,
+          correct,
+          incorrect: attempted - correct,
+          unanswered: total - attempted,
+          percentage: (correct / total) * 100,
+        },
+      ];
+    });
+  }
 }
