@@ -37,6 +37,7 @@ Development preview using labelled synthetic interface fixtures:
 
 [View the mobile domain breakdown](docs/screenshots/development-exam-domain-results-mobile.png)
 and [submitted multiple-response review](docs/screenshots/development-exam-answer-review-mobile.png).
+[View full-length Exam results at 320px](docs/screenshots/development-exam-full-results-mobile.png).
 
 ## Local development
 
@@ -267,8 +268,9 @@ selection counts.
 The automated journeys cover Chrome desktop and a mobile viewport, keyboard
 selection/focus, both feedback outcomes, answer locks, no repeats, reload warnings,
 results/restart, every Practice scope/size, an 85-question all-domain completion,
-reduced pools, production empty availability, built homepage SEO, Exam revision
-and skipped answers, confirmation cancellation, mode changes, and delayed timeout. The session
+reduced pools, production empty availability, built homepage SEO, every Exam preset,
+numbered-grid keyboard navigation, answer revision and skipping, confirmation
+cancellation, mode changes, and delayed timeout. The session
 tests cover JSON round-trip/continuation and malformed-record rejection for every
 Practice configuration, unweighted sampling, domain filtering, and preserved
 question/answer snapshots. Exam tests use a controlled clock to prove deadline

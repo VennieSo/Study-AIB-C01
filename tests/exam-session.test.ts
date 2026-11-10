@@ -198,7 +198,7 @@ it('reconstructs records with navigation and selections while retaining the orig
 });
 
 it('reports finalized per-domain totals with incorrect answers separate from unanswered questions', async () => {
-  const session = await ExamSession.start(bank(), dependencies());
+  const session = await startTwenty(bank(), dependencies());
   expect(session.domainResults()).toEqual([]);
   session.select(['option-1']);
   session.next();
@@ -247,7 +247,7 @@ it('reports finalized per-domain totals with incorrect answers separate from una
 it('retains completed answer and content snapshots independently of reloaded banks and edited copies', async () => {
   const source = bank();
   const deps = dependencies();
-  const session = await ExamSession.start(source, deps);
+  const session = await startTwenty(source, deps);
   session.select(['option-1']);
   session.next();
   session.select(['option-5', 'option-1']);
@@ -264,7 +264,7 @@ it('retains completed answer and content snapshots independently of reloaded ban
   source[0]!.correctOptionIds = ['option-2'];
   source[0]!.explanation = 'Updated synthetic explanation';
   source[0]!.references = [];
-  const reloaded = await ExamSession.start(source, {
+  const reloaded = await startTwenty(source, {
     ...dependencies(),
     createId: () => 'another-exam',
   });
