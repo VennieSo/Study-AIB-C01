@@ -4,6 +4,12 @@ test('legitimate reduced pools disable only unsupported sizes and show actual co
   page,
 }, testInfo) => {
   await page.goto('/');
+  await expect(
+    page.getByRole('button', { name: 'Start exam', exact: true }),
+  ).toBeDisabled();
+  await expect(page.locator('#exam-availability')).toContainText(
+    'AI Governance and Responsible AI Leadership',
+  );
   const scope = page.getByLabel('Choose a domain');
   const sizes = page.getByLabel('Question count');
   const start = page.getByRole('button', { name: 'Start practice' });

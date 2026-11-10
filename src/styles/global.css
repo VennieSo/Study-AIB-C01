@@ -578,8 +578,11 @@ select {
   color: var(--muted);
   font-size: 0.8125rem;
 }
-.session-mode > span {
+.session-mode > span[aria-hidden='true'] {
   color: #b3b3b8;
+}
+#exam-time {
+  font-variant-numeric: tabular-nums;
 }
 .session-top .button {
   min-height: 36px;

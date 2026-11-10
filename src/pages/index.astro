@@ -24,7 +24,7 @@ const payload = JSON.stringify(questions).replace(/</g, '\\u003c');
     <a href="#main" class="skip-link">Skip to content</a>
     <header class="site-header wrap">
       <a class="wordmark" href="/" aria-label={`${site.name} home`}><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 5.5h5a3 3 0 0 1 3 3v11a4 4 0 0 0-3-1.25H5zM19 5.5h-3a3 3 0 0 0-3 3v11a4 4 0 0 1 3-1.25h3z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" /></svg></span><span>{site.name}</span></a>
-      <nav aria-label="Main navigation"><a href="#configure" id="practice-link" aria-current="page">Practice</a><span class="nav-future">Exam <small>Coming later</small></span></nav>
+      <nav aria-label="Main navigation"><a href="#configure" id="practice-link">Practice</a><a href="#exam-config" id="exam-link">Exam</a></nav>
       <a class="header-note" href="https://docs.aws.amazon.com/aws-certification/latest/ai-business-strategist-01/ai-business-strategist-01.html">Official exam guide <span aria-hidden="true">↗</span></a>
     </header>
     <main id="main" class="wrap">
@@ -64,6 +64,22 @@ const payload = JSON.stringify(questions).replace(/</g, '\\u003c');
             <noscript><p class="error">JavaScript is required to start a practice session. You can still explore the domain information and official exam guide.</p></noscript>
           </div>
         </section>
+        <section class="setup-panel" id="exam-config" aria-labelledby="exam-configuration-heading">
+          <div class="setup-copy">
+            <div class="panel-top"><span class="pill">Exam</span><span class="setup-kicker">A timed assessment</span></div>
+            <h2 id="exam-configuration-heading" tabindex="-1">Your next exam session</h2>
+            <p class="muted">All domains. Revise or skip answers until you submit.</p>
+            <div class="session-details"><div><span class="field-label">Session length</span><strong>20 questions</strong></div><div><span class="field-label">Time limit</span><strong>30 minutes</strong></div></div>
+          </div>
+          <div class="setup-controls">
+            <form id="exam-configuration-form">
+              <p id="exam-availability" class="field-note" aria-live="polite"></p>
+              <p class="lifetime">{site.lifetime} The timer continues while this tab is inactive or your device sleeps.</p>
+              <button type="submit" id="start-exam" class="button primary" disabled>Start exam <span aria-hidden="true">→</span></button>
+              <p id="exam-configuration-error" class="error" role="alert"></p>
+            </form>
+          </div>
+        </section>
         <section class="domains-section" aria-labelledby="domains-heading">
           <div class="section-heading"><div><p class="eyebrow">The bigger picture</p><h2 id="domains-heading">Four domains. One business perspective.</h2></div><p class="muted">Aligned with the official exam scope.</p></div>
           <div class="domain-grid">
@@ -76,10 +92,12 @@ const payload = JSON.stringify(questions).replace(/</g, '\\u003c');
         </section>
       </div>
       <section id="session-view" class="session-shell" aria-label="Practice session" hidden></section>
+      <section id="exam-session-view" class="session-shell" aria-label="Exam session" hidden></section>
       <p id="application-error" class="error" role="alert"></p>
     </main>
     <footer class="site-footer wrap"><div><strong>{site.name}</strong><p>{site.notice}</p></div><p>Made for steady progress.<br />Raw percentages. No pass predictions.</p></footer>
     <script id="question-data" type="application/json" set:html={payload} />
     <script src="../scripts/practice.ts"></script>
+    <script src="../scripts/exam.ts"></script>
   </body>
 </html>

@@ -30,7 +30,8 @@ export interface PracticeSessionRecord {
   completedAt: string | null;
 }
 
-export type SessionRecord = PracticeSessionRecord;
+export type SessionRecord =
+  PracticeSessionRecord | import('./exam-session').ExamSessionRecord;
 
 export interface SessionStorage {
   save(record: SessionRecord): void;

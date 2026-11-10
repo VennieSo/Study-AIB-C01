@@ -98,7 +98,7 @@ function initialize() {
     }
   }
 
-  function configure() {
+  function configure(heading = '#configuration-heading') {
     if (session?.record.status === 'active') {
       if (
         !window.confirm(
@@ -112,7 +112,7 @@ function initialize() {
     root.hidden = true;
     root.innerHTML = '';
     home.hidden = false;
-    document.querySelector<HTMLElement>('#configuration-heading')!.focus();
+    document.querySelector<HTMLElement>(heading)!.focus();
   }
 
   selector.addEventListener('change', availability);
@@ -123,12 +123,15 @@ function initialize() {
       event.preventDefault();
       if (!start.disabled) void startSession(domainId());
     });
-  document
-    .querySelector('#practice-link')!
-    .addEventListener('click', (event) => {
+  for (const id of ['#practice-link', '#exam-link'])
+    document.querySelector(id)!.addEventListener('click', (event) => {
       if (session) {
         event.preventDefault();
-        configure();
+        configure(
+          id === '#exam-link'
+            ? '#exam-configuration-heading'
+            : '#configuration-heading',
+        );
       }
     });
   root.addEventListener('change', (event) => {
