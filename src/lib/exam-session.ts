@@ -1,6 +1,7 @@
 import { z } from 'zod';
 import { domains } from './exam-scope';
 import { loadQuestionBanks, type Question } from './questions';
+import { resultCounts } from './result-counts';
 import type { Dependencies, SessionQuestion } from './session';
 
 export const examPresets = [
@@ -448,21 +449,7 @@ export class ExamSession {
 
   result() {
     this.checkDeadline();
-    const total = this.state.questions.length;
-    const attempted = this.state.questions.filter(
-      (question) => question.submittedAt !== null,
-    ).length;
-    const correct = this.state.questions.filter(
-      (question) => question.feedback === 'correct',
-    ).length;
-    return {
-      total,
-      attempted,
-      correct,
-      incorrect: attempted - correct,
-      unanswered: total - attempted,
-      percentage: (correct / total) * 100,
-    };
+    return resultCounts(this.state.questions);
   }
 
   domainResults() {
@@ -472,25 +459,9 @@ export class ExamSession {
       const questions = this.state.questions.filter(
         ({ snapshot }) => snapshot.domainId === domain.id,
       );
-      if (!questions.length) return [];
-      const total = questions.length;
-      const attempted = questions.filter(
-        (question) => question.submittedAt !== null,
-      ).length;
-      const correct = questions.filter(
-        (question) => question.feedback === 'correct',
-      ).length;
-      return [
-        {
-          domainId: domain.id,
-          total,
-          attempted,
-          correct,
-          incorrect: attempted - correct,
-          unanswered: total - attempted,
-          percentage: (correct / total) * 100,
-        },
-      ];
+      return questions.length
+        ? [{ domainId: domain.id, ...resultCounts(questions) }]
+        : [];
     });
   }
 }

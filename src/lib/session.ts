@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { domains } from './exam-scope';
+import { resultCounts } from './result-counts';
 import {
   loadQuestionBanks,
   practiceQuestions,
@@ -351,30 +352,12 @@ export class PracticeSession {
         ({ snapshot }) => snapshot.domainId === domain.id,
       );
       return questions.length
-        ? [{ domainId: domain.id, ...this.counts(questions) }]
+        ? [{ domainId: domain.id, ...resultCounts(questions) }]
         : [];
     });
   }
 
   result() {
-    return this.counts(this.state.questions);
-  }
-
-  private counts(questions: readonly SessionQuestion[]) {
-    const total = questions.length;
-    const attempted = questions.filter(
-      (question) => question.submittedAt !== null,
-    ).length;
-    const correct = questions.filter(
-      (question) => question.feedback === 'correct',
-    ).length;
-    return {
-      total,
-      attempted,
-      correct,
-      incorrect: attempted - correct,
-      unanswered: total - attempted,
-      percentage: (correct / total) * 100,
-    };
+    return resultCounts(this.state.questions);
   }
 }
