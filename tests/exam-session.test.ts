@@ -197,6 +197,115 @@ it('reconstructs records with navigation and selections while retaining the orig
   ).toEqual(completed);
 });
 
+it('reports finalized per-domain totals with incorrect answers separate from unanswered questions', async () => {
+  const session = await ExamSession.start(bank(), dependencies());
+  expect(session.domainResults()).toEqual([]);
+  session.select(['option-1']);
+  session.next();
+  session.select(['option-1', 'option-3']);
+  session.submit();
+  expect(session.domainResults()).toEqual([
+    {
+      domainId: 'domain-1',
+      total: 5,
+      attempted: 2,
+      correct: 1,
+      incorrect: 1,
+      unanswered: 3,
+      percentage: 20,
+    },
+    {
+      domainId: 'domain-2',
+      total: 5,
+      attempted: 0,
+      correct: 0,
+      incorrect: 0,
+      unanswered: 5,
+      percentage: 0,
+    },
+    {
+      domainId: 'domain-3',
+      total: 5,
+      attempted: 0,
+      correct: 0,
+      incorrect: 0,
+      unanswered: 5,
+      percentage: 0,
+    },
+    {
+      domainId: 'domain-4',
+      total: 5,
+      attempted: 0,
+      correct: 0,
+      incorrect: 0,
+      unanswered: 5,
+      percentage: 0,
+    },
+  ]);
+});
+
+it('retains completed answer and content snapshots independently of reloaded banks and edited copies', async () => {
+  const source = bank();
+  const deps = dependencies();
+  const session = await ExamSession.start(source, deps);
+  session.select(['option-1']);
+  session.next();
+  session.select(['option-5', 'option-1']);
+  session.submit();
+  const completed = session.record;
+  const results = {
+    session: session.result(),
+    domains: session.domainResults(),
+  };
+
+  source[0]!.text = 'Updated synthetic question';
+  source[0]!.taskId = '1.2';
+  source[0]!.options[0]!.text = 'Updated synthetic option';
+  source[0]!.correctOptionIds = ['option-2'];
+  source[0]!.explanation = 'Updated synthetic explanation';
+  source[0]!.references = [];
+  const reloaded = await ExamSession.start(source, {
+    ...dependencies(),
+    createId: () => 'another-exam',
+  });
+  expect(reloaded.record.questions[0]!.snapshot.text).toBe(
+    'Updated synthetic question',
+  );
+
+  const editableCopy = session.record;
+  editableCopy.questions[0]!.snapshot.text = 'Edited result copy';
+  editableCopy.questions[1]!.selectedOptionIds = [
+    'option-1',
+    'option-3',
+    'option-5',
+  ];
+  const storedCopy = deps.storage.load('exam-test')!;
+  storedCopy.questions[0]!.snapshot.explanation = 'Edited storage copy';
+  const restored = await ExamSession.restore(
+    JSON.parse(JSON.stringify(completed)),
+    dependencies(),
+  );
+  expect(session.record).toEqual(completed);
+  expect(restored.record).toEqual(completed);
+  expect(restored.record.questions[0]!.snapshot).toMatchObject({
+    taskId: '1.1',
+    correctOptionIds: ['option-1'],
+    references: [{ title: 'AWS exam guide (synthetic reference link check)' }],
+  });
+  expect(restored.record.questions[1]!.selectedOptionIds).toEqual([
+    'option-5',
+    'option-1',
+  ]);
+  expect({
+    session: restored.result(),
+    domains: restored.domainResults(),
+  }).toEqual(results);
+  expect(() => restored.select(['option-2'])).toThrow(/active/);
+  expect(() => restored.previous()).toThrow(/active/);
+  restored.submit();
+  expect(restored.record).toEqual(completed);
+});
+
 it.each([
   ['partial', ['option-1', 'option-3'], 1],
   ['over-selected', ['option-1', 'option-2', 'option-3', 'option-5'], 1],
