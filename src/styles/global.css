@@ -1212,7 +1212,8 @@ fieldset {
   .result-counts > div {
     padding: 13px 10px;
   }
-  .results-panel .question-actions {
+  .results-panel .question-actions,
+  #exam-session-view .question-actions {
     flex-direction: column;
   }
 }
@@ -1281,9 +1282,9 @@ fieldset {
   cursor: pointer;
 }
 .exam-question-number.answered {
-  background: #e1eee7;
-  color: #244c38;
-  border-color: #8caf9b;
+  background: var(--border);
+  color: var(--ink);
+  border-color: var(--border-strong);
 }
 .exam-question-number[aria-current='step'] {
   outline: 2px solid var(--ink);

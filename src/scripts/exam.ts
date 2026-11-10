@@ -145,6 +145,11 @@ function initialize() {
       root.querySelector('.exam-navigation')!.outerHTML = renderExamGrid(
         session.record,
       );
+      root.querySelector<HTMLButtonElement>(
+        '[data-action="clear-exam-answer"]',
+      )!.disabled =
+        session.record.questions[session.record.currentIndex]!.selectedOptionIds
+          .length === 0;
     } catch {
       tick();
     }
@@ -162,6 +167,10 @@ function initialize() {
     )
       return;
     switch (button.dataset['action']) {
+      case 'clear-exam-answer':
+        session.select([]);
+        render();
+        break;
       case 'go-to-exam':
         session.goTo(Number(button.dataset['index']));
         render();

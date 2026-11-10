@@ -1,5 +1,82 @@
 import { expect, test } from '@playwright/test';
 
+test('a cleared single answer remains unanswered through navigation, confirmation, and final review', async ({
+  page,
+}, testInfo) => {
+  await page.addInitScript(() => {
+    Math.random = () => 0.999;
+  });
+  await page.goto('/');
+  if (testInfo.project.name === 'mobile')
+    await page.setViewportSize({ width: 320, height: 844 });
+  await page.getByLabel('Exam length', { exact: true }).selectOption('20');
+  await page.getByRole('button', { name: 'Start exam', exact: true }).click();
+  const clear = page.getByRole('button', { name: 'Clear answer', exact: true });
+  const target = page.getByRole('radio', { name: /Fixture target/ });
+  const grid = page.getByRole('navigation', {
+    name: 'Exam questions',
+    exact: true,
+  });
+  await expect(clear).toBeDisabled();
+  await target.check();
+  await expect(clear).toBeEnabled();
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= window.innerWidth,
+    ),
+  ).toBe(true);
+  await expect(
+    grid.getByRole('button', { name: 'Question 1, answered', exact: true }),
+  ).toContainText('✓');
+  await clear.focus();
+  await page.keyboard.press('Enter');
+  await expect(target).not.toBeChecked();
+  await expect(clear).toBeDisabled();
+  await expect(page.locator('#exam-heading')).toBeFocused();
+  await expect(
+    page.getByText('0 answered · 20 unanswered', { exact: true }),
+  ).toBeVisible();
+  await expect(
+    grid.getByRole('button', { name: 'Question 1, unanswered', exact: true }),
+  ).not.toContainText('✓');
+  await page
+    .getByRole('button', { name: 'Next question', exact: true })
+    .click();
+  for (const answer of await page
+    .getByRole('checkbox', { name: /Fixture target/ })
+    .all())
+    await answer.check();
+  await page
+    .getByRole('button', { name: 'Previous question', exact: true })
+    .click();
+  await expect(target).not.toBeChecked();
+  await expect(
+    page.getByText('1 answered · 19 unanswered', { exact: true }),
+  ).toBeVisible();
+  await page.screenshot({
+    path: testInfo.outputPath('exam-cleared-answer.png'),
+    fullPage: true,
+  });
+  page.once('dialog', async (dialog) => {
+    expect(dialog.message()).toContain('19 unanswered');
+    await dialog.accept();
+  });
+  await page.getByRole('button', { name: 'Submit exam', exact: true }).click();
+  await expect(page.getByLabel('Session counts')).toContainText('Attempted1');
+  await expect(page.getByLabel('Session counts')).toContainText('Correct1');
+  await expect(page.getByLabel('Session counts')).toContainText('Incorrect0');
+  await expect(page.getByLabel('Session counts')).toContainText('Unanswered19');
+  await expect(page.locator('.score')).toHaveText('5%');
+  const review = page.locator('.exam-review-item').first();
+  await review.locator('summary').click();
+  await expect(review.locator('summary')).toHaveText('Question 1 Unanswered');
+  await expect(
+    review.getByText('Your answer: Unanswered', { exact: true }),
+  ).toBeVisible();
+  await expect(clear).toHaveCount(0);
+  await expect(page.getByRole('radio')).toHaveCount(0);
+});
+
 test('exam supports skipping, revision, cancellation, unrestricted selections, and immutable results', async ({
   page,
 }, testInfo) => {
