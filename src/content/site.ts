@@ -6,7 +6,7 @@ export const site = {
   eyebrow: 'AWS Certified AI Business Strategist',
   heading: 'Study the strategy behind AI.',
   introduction:
-    'A little practice. A clearer perspective. Work through business-focused AI questions at your own pace, one domain at a time.',
+    'Build your understanding of business-focused AI with short practice sessions and clear explanations. One domain at a time, at your own pace.',
   notice:
     'Unofficial study resource. Initial, original AI-generated practice questions follow AWS question formats. No AWS affiliation or endorsement.',
   lifetime:

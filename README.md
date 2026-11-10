@@ -23,6 +23,8 @@ Development preview using labelled synthetic interface fixtures:
 
 <img src="docs/screenshots/development-mobile-feedback.png" alt="Mobile Practice showing an incorrect answer, correct answer and explanation using synthetic interface fixtures" width="320" />
 
+[View the results screen](docs/screenshots/development-results.png).
+
 ## Local development
 
 Use Node **22.23.4 or newer** and npm 10 or newer. `.nvmrc` pins a compatible
@@ -64,6 +66,10 @@ It writes to **`.qa-dist/`**, separate from production `dist/`, and includes a
 development notice and `noindex` metadata. Do not deploy `.qa-dist/` as production.
 
 ## Architecture
+
+The interface uses a monochrome light theme with self-hosted Inter and Plus
+Jakarta Sans. The [visual guide](docs/design.md) records the design tokens and
+component conventions. Styling uses native Astro/CSS with shadcn-inspired controls.
 
 - `src/pages/index.astro`: meaningful static homepage HTML, metadata, domain
   information, and session configuration. Edit homepage copy in `src/content/site.ts`.

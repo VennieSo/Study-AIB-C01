@@ -2,7 +2,7 @@ import { expect, test } from '@playwright/test';
 
 test('a visitor completes ten unique questions, sees feedback and results, and restarts', async ({
   page,
-}) => {
+}, testInfo) => {
   await page.goto('/');
   await expect(
     page.getByText('Development preview · synthetic questions'),
@@ -23,6 +23,11 @@ test('a visitor completes ten unique questions, sees feedback and results, and r
     });
     await expect(next).toBeDisabled();
     if (index === 0) {
+      await page.evaluate(() => document.fonts.ready);
+      await page.screenshot({
+        path: testInfo.outputPath('question.png'),
+        fullPage: true,
+      });
       await page.getByRole('button', { name: 'Submit answer' }).click();
       await expect(page.getByRole('alert')).toHaveText(
         'Select an answer before submitting.',
@@ -46,6 +51,10 @@ test('a visitor completes ten unique questions, sees feedback and results, and r
   ).toBeVisible();
   await expect(page.getByText('100%', { exact: true })).toBeVisible();
   await expect(page.getByLabel('Session counts')).toContainText('Attempted10');
+  await page.screenshot({
+    path: testInfo.outputPath('results.png'),
+    fullPage: true,
+  });
   await page.getByRole('button', { name: 'Practice again' }).click();
   await expect(
     page.getByText('Question 1 of 10', { exact: true }),
@@ -72,6 +81,7 @@ test('layout, incorrect feedback, keyboard focus, and leave warnings work', asyn
       () => document.documentElement.scrollWidth <= window.innerWidth,
     ),
   ).toBe(true);
+  await page.evaluate(() => document.fonts.ready);
   await page.screenshot({
     path: testInfo.outputPath('homepage.png'),
     fullPage: true,
