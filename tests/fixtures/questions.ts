@@ -1,3 +1,5 @@
+import { domains, type DomainId } from '../../src/lib/exam-scope';
+
 // Synthetic interface fixtures. These are not exam preparation content.
 export function syntheticBank(
   count = 12,
@@ -26,4 +28,36 @@ export function syntheticBank(
       };
     }),
   };
+}
+
+/** Clearly synthetic fixtures spanning every official domain and task. */
+export function syntheticBanks(countPerDomain = 25) {
+  return Object.fromEntries(
+    domains.map((domain) => [
+      domain.id,
+      {
+        schemaVersion: 1,
+        questions: syntheticBank(countPerDomain, 'mixed').questions.map(
+          (question, index) => ({
+            ...question,
+            id:
+              domain.id === 'domain-1'
+                ? question.id
+                : `${domain.id}-${question.id}`,
+            text:
+              domain.id === 'domain-1'
+                ? question.text
+                : question.text.replace(
+                    'Synthetic fixture ',
+                    `Synthetic fixture ${domain.id}.`,
+                  ),
+            domainId: domain.id,
+            taskId: Object.keys(domain.tasks)[
+              index % Object.keys(domain.tasks).length
+            ]!,
+          }),
+        ),
+      },
+    ]),
+  ) as Record<DomainId, ReturnType<typeof syntheticBank>>;
 }

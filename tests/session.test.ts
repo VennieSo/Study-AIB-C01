@@ -369,3 +369,172 @@ it('retains the single-answer selection limit in live and restored sessions', as
     PracticeSession.restore(record, dependencies()),
   ).rejects.toThrow();
 });
+
+it('samples every approved Practice scope and size without repeats and restores its configuration', async () => {
+  const { syntheticBanks } = await import('./fixtures/questions');
+  const questions = loadQuestionBanks(syntheticBanks());
+  for (const scope of [
+    'domain-1',
+    'domain-2',
+    'domain-3',
+    'domain-4',
+    'all',
+  ] as const) {
+    for (const count of scope === 'all' ? [20, 40, 60, 85] : [10, 15, 20, 25]) {
+      const session = await PracticeSession.start(
+        scope,
+        questions,
+        dependencies(),
+        count,
+      );
+      expect(session.record.configuration).toEqual({
+        domainId: scope,
+        questionCount: count,
+      });
+      expect(session.record.questions).toHaveLength(count);
+      expect(
+        new Set(session.record.questions.map(({ snapshot }) => snapshot.id))
+          .size,
+      ).toBe(count);
+      if (scope !== 'all')
+        expect(
+          session.record.questions.every(
+            ({ snapshot }) => snapshot.domainId === scope,
+          ),
+        ).toBe(true);
+      const restored = await PracticeSession.restore(
+        JSON.parse(JSON.stringify(session.record)),
+        dependencies(),
+      );
+      expect(restored.record).toEqual(session.record);
+      for (let index = 0; index < count; index++) {
+        restored.select(
+          restored.record.questions[index]!.snapshot.correctOptionIds,
+        );
+        restored.submit();
+        restored.next();
+      }
+      const completed = await PracticeSession.restore(
+        JSON.parse(JSON.stringify(restored.record)),
+        dependencies(),
+      );
+      expect(completed.record.status).toBe('completed');
+      expect(completed.result()).toMatchObject({
+        total: count,
+        correct: count,
+        percentage: 100,
+      });
+    }
+  }
+});
+
+it('uses the full unweighted pool, preserves answers, and reports participating domain performance', async () => {
+  const { syntheticBanks } = await import('./fixtures/questions');
+  const questions = loadQuestionBanks(syntheticBanks());
+  const session = await PracticeSession.start(
+    'all',
+    questions,
+    { ...dependencies(), random: () => 0.999 },
+    40,
+  );
+  expect(
+    session.record.questions
+      .slice(0, 25)
+      .every(({ snapshot }) => snapshot.domainId === 'domain-1'),
+  ).toBe(true);
+  expect(session.record.questions[25]!.snapshot.domainId).toBe('domain-2');
+  const original = session.record.questions[0]!.snapshot.text;
+  questions[0]!.text = 'new bank revision';
+  for (let index = 0; index < 40; index++) {
+    const snapshot = session.record.questions[index]!.snapshot;
+    session.select(
+      index < 30
+        ? snapshot.correctOptionIds
+        : [
+            snapshot.options.find(
+              (option) => !snapshot.correctOptionIds.includes(option.id),
+            )!.id,
+          ],
+    );
+    session.submit();
+    session.next();
+  }
+  const restored = await PracticeSession.restore(
+    JSON.parse(JSON.stringify(session.record)),
+    dependencies(),
+  );
+  expect(restored.record.questions[0]!.snapshot.text).toBe(original);
+  expect(restored.record.questions[0]!.selectedOptionIds).toEqual(['option-1']);
+  expect(restored.result()).toMatchObject({
+    total: 40,
+    attempted: 40,
+    correct: 30,
+    incorrect: 10,
+    unanswered: 0,
+    percentage: 75,
+  });
+  expect(restored.domainResults()).toEqual([
+    {
+      domainId: 'domain-1',
+      total: 25,
+      attempted: 25,
+      correct: 25,
+      incorrect: 0,
+      unanswered: 0,
+      percentage: 100,
+    },
+    {
+      domainId: 'domain-2',
+      total: 15,
+      attempted: 15,
+      correct: 5,
+      incorrect: 10,
+      unanswered: 0,
+      percentage: expect.closeTo(33.333333, 5),
+    },
+  ]);
+});
+
+it('rejects unsupported configurations and refuses to repeat or silently shorten reduced pools', async () => {
+  const { syntheticBanks } = await import('./fixtures/questions');
+  const questions = loadQuestionBanks(syntheticBanks(16));
+  await expect(
+    PracticeSession.start('domain-3', questions, dependencies(), 20),
+  ).rejects.toThrow(/20 questions; 16 available/);
+  await expect(
+    PracticeSession.start('all', questions, dependencies(), 85),
+  ).rejects.toThrow(/85 questions; 64 available/);
+  await expect(
+    PracticeSession.start('all', questions, dependencies(), 10),
+  ).rejects.toThrow(/approved/);
+  await expect(
+    PracticeSession.start('domain-1', questions, dependencies(), 85),
+  ).rejects.toThrow(/approved/);
+  const session = await PracticeSession.start(
+    'all',
+    questions,
+    dependencies(),
+    60,
+  );
+  expect(session.record.questions).toHaveLength(60);
+  for (const mutate of [
+    (record: SessionRecord) => {
+      record.configuration.questionCount = 20;
+    },
+    (record: SessionRecord) => {
+      record.configuration.domainId = 'domain-1';
+    },
+    (record: SessionRecord) => {
+      record.currentIndex = 60;
+    },
+    (record: SessionRecord) => {
+      record.questions[1] = record.questions[0]!;
+    },
+  ]) {
+    const record = session.record;
+    mutate(record);
+    await expect(
+      PracticeSession.restore(record, dependencies()),
+    ).rejects.toThrow();
+  }
+});

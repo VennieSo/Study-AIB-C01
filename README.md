@@ -4,16 +4,15 @@ A free, unofficial study site for **AWS Certified AI Business Strategist (AIB-C0
 Initial, original AI-generated practice questions follow AWS question formats.
 This project has no AWS affiliation or endorsement.
 
-Practice offers untimed, ten-question sessions in one domain, with single-answer
-and multiple-response questions. Select answers, submit for immediate feedback
+Practice offers untimed sessions in one domain (10/15/20/25 questions) or all
+domains (20/40/60/85 questions), with single-answer and multiple-response questions. Select answers, submit for immediate feedback
 and an explanation, finish with raw results, and start another randomized session. Questions do not
 repeat within a session. Submitted answers are locked.
 
 **Status:** local implementation; no live deployment yet. The public question
 banks are currently empty, so production correctly disables Practice. Development
 uses clearly labelled synthetic interface fixtures, which do not assess exam
-knowledge and never become production question data. More session sizes and Exam
-Mode are later slices.
+knowledge and never become production question data. Exam Mode is a later slice.
 
 ## Screenshots
 
@@ -23,7 +22,7 @@ Development preview using labelled synthetic interface fixtures:
 
 <img src="docs/screenshots/development-mobile-feedback.png" alt="Mobile Practice showing an incorrect answer, correct answer and explanation using synthetic interface fixtures" width="320" />
 
-[View the results screen](docs/screenshots/development-results.png).
+[View the all-domain results screen](docs/screenshots/development-all-domain-results.png).
 [View the single-column setup at 768px](docs/screenshots/development-wide-mobile-homepage.png).
 
 ## Local development
@@ -36,12 +35,13 @@ npm ci
 npm run dev
 ```
 
-Open the printed local URL (normally `http://localhost:4321`). Choose the first
-domain, then **Start practice**. Development provides twelve synthetic questions
-with both answer types, from which each session samples ten. Other domains
-truthfully show no availability. Use Tab, arrow keys for radio options, and Space
+Open the printed local URL (normally `http://localhost:4321`). Choose a domain or **All domains**, choose a question count, then **Start practice**.
+Development provides 100 labelled synthetic questions, 25 per domain, covering
+every official task and both answer types. Every offered Practice size is supported.
+Each eligible question has the same chance of selection; all-domain Practice uses
+no weighted quotas. Use Tab, arrow keys for radio options, and Space
 to select answers, then submit. Next unlocks only after feedback. Results show total, attempted, correct, incorrect, unanswered, and
-the raw percentage against the whole session.
+the raw percentage against the whole session, plus performance by participating domain.
 
 Sessions live in tab memory. Refreshing or closing loses progress; supported
 browsers warn before leaving an active session. Changing configuration asks before
@@ -59,9 +59,9 @@ npm run preview          # Inspect the production build, not the fixture bank
 Browser tests use installed Google Chrome. On a CI machine without Chrome, install
 it first with `npx playwright install chrome`. Mobile tests emulate an iPhone-sized
 viewport in Chromium; they do not replace testing Safari or an actual iOS device.
-The end-to-end suite starts its own development, production, and static fixture
-servers on ports 4321–4323. Set `PLAYWRIGHT_PORT` to change the first port (the
-other two follow it), for example `PLAYWRIGHT_PORT=4341 npm run test:e2e`.
+The end-to-end suite starts its own development, production, static fixture, and reduced-pool
+servers on ports 4321–4324. Set `PLAYWRIGHT_PORT` to change the first port (the
+other three follow it), for example `PLAYWRIGHT_PORT=4341 npm run test:e2e`.
 It also writes screenshots to the ignored `test-results/` directory.
 
 An explicitly synthetic static build is available with `npm run build:fixtures`.
@@ -88,9 +88,12 @@ component conventions. Styling uses native Astro/CSS with shadcn-inspired contro
 - `src/scripts/render-session.ts`: escaped HTML presentation of question, feedback,
   and summary state. Content is rendered as plain text, not interpreted HTML.
 
-`PracticeSession.start(domainId, questions, dependencies)` creates a session.
+`PracticeSession.start(domainId, questions, dependencies, questionCount = 10)` creates a session.
+Use `domainId: 'all'` with an approved all-domain count for a mixed session.
+`practiceAvailability(questions, scope)` exposes actual eligible counts and supported sizes.
 `select`, `submit`, `next`, and `abandon` enforce its lifecycle. `record` returns a
-defensive JSON-serializable copy; `result()` reports counts and percentage.
+defensive JSON-serializable copy; `result()` reports counts and percentage and
+`domainResults()` reports participating-domain performance.
 `PracticeSession.restore(record, dependencies)` validates a record before allowing
 continuation. Invalid records fail rather than silently reset or repair themselves.
 
@@ -128,7 +131,8 @@ valid pools are allowed; unsupported sessions are disabled instead of shortened.
 
 ```sh
 npm run validate:content  # Structural and semantic validation; allows small pools
-npm run validate:launch   # Also requires exactly 25 questions in each domain
+npm run validate:launch   # Also requires exactly 25 public questions in each domain
+npm run validate:fixtures # Independently checks 100 synthetic questions, 25/domain
 ```
 
 The launch check intentionally fails until all four public banks reach 25
@@ -215,9 +219,20 @@ The shared scope labels follow the [official AIB-C01 exam guide](https://docs.aw
 The interface shows raw practice percentages, with equal question weight. It
 offers no AWS scaled score, passing threshold, endorsement, or readiness prediction.
 Multiple-response scoring requires an exact set match without limiting student
-selection counts. Exam timers, review, and other presets remain future work.
+selection counts. Exam timers and review remain future work.
 
 The automated journeys cover Chrome desktop and a mobile viewport, keyboard
 selection/focus, both feedback outcomes, answer locks, no repeats, reload warnings,
-results/restart, production empty availability, and built homepage SEO. The session
-tests cover JSON round-trip/continuation and malformed-record rejection.
+results/restart, every Practice scope/size, an 85-question all-domain completion,
+reduced pools, production empty availability, and built homepage SEO. The session
+tests cover JSON round-trip/continuation and malformed-record rejection for every
+configuration, unweighted sampling, domain filtering, and preserved question/answer snapshots.
+
+For reduced-pool QA, run `AIB_FIXTURE_COUNTS=16,8,0,25 npm run dev`. The four
+comma-separated counts apply only to development fixtures, in official domain
+order (whole numbers from 0 to 25). This example offers 10/15 in domain 1, no
+sessions in domains 2/3, all sizes in domain 4, and 20/40 across the full 49-question
+pool. Disabled sizes show actual availability; sessions are never shortened or
+filled with repeated questions. Production and static fixture builds ignore this
+development-only setting. Use `PLAYWRIGHT_PORT=4351 npm run test:e2e` to isolate
+all four browser-test servers from another checkout.

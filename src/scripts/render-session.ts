@@ -1,5 +1,5 @@
 import { getDomain } from '../lib/exam-scope';
-import type { PracticeSession, SessionRecord } from '../lib/session';
+import type { PracticeSession, PracticeSessionRecord } from '../lib/session';
 
 const escape = (value: string) =>
   value.replace(
@@ -16,17 +16,21 @@ const crossIcon =
   '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m7 7 10 10M17 7 7 17" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" /></svg>';
 
 export function renderSession(
-  record: SessionRecord,
+  record: PracticeSessionRecord,
   result: ReturnType<PracticeSession['result']>,
+  domainResults: ReturnType<PracticeSession['domainResults']>,
 ) {
-  const domain = getDomain(record.configuration.domainId);
+  const scopeName =
+    record.configuration.domainId === 'all'
+      ? 'All domains'
+      : getDomain(record.configuration.domainId).name;
   if (record.status === 'completed') {
     return `<div class="results-panel">
-      <p class="eyebrow">Practice · ${escape(domain.name)}</p>
+      <p class="eyebrow">Practice · ${escape(scopeName)}</p>
       <span class="completion-mark" aria-hidden="true">${checkIcon}</span>
       <h1 id="session-heading" tabindex="-1">Practice complete</h1>
       <p class="muted">Here’s how this session went.</p>
-      <div class="score-line"><strong class="score">${result.percentage}%</strong><span class="score-caption">${result.correct} of ${result.total} correct<br />Raw practice percentage</span></div>
+      <div class="score-line"><strong class="score">${Number(result.percentage.toFixed(1))}%</strong><span class="score-caption">${result.correct} of ${result.total} correct<br />Raw practice percentage</span></div>
       <dl class="result-counts" aria-label="Session counts">${[
         ['Total', result.total],
         ['Attempted', result.attempted],
@@ -38,6 +42,12 @@ export function renderSession(
           ([label, value]) => `<div><dt>${label}</dt><dd>${value}</dd></div>`,
         )
         .join('')}</dl>
+      <section class="domain-results" aria-labelledby="domain-results-heading">
+        <h2 id="domain-results-heading">Performance by domain</h2>
+        <div class="table-scroll"><table aria-label="Practice performance by domain"><thead><tr><th scope="col">Domain</th><th scope="col">Correct</th><th scope="col">Percentage</th></tr></thead><tbody>
+        ${domainResults.map((row) => `<tr><th scope="row">${escape(getDomain(row.domainId).name)}</th><td>${row.correct} of ${row.total}</td><td>${Number(row.percentage.toFixed(1))}%</td></tr>`).join('')}
+        </tbody></table></div>
+      </section>
       <p class="result-footnote">Each question has equal weight. This is a practice result, not an AWS scaled score or a prediction of passing.</p>
       <div class="question-actions"><button class="button primary" data-action="restart">Practice again <span aria-hidden="true">↻</span></button><button class="button" data-action="configure">Change configuration</button></div>
     </div>`;
@@ -45,6 +55,7 @@ export function renderSession(
 
   const current = record.questions[record.currentIndex]!;
   const question = current.snapshot;
+  const domain = getDomain(question.domainId);
   const questionText = question.text
     .split(/\r?\n\s*\r?\n/)
     .map(

@@ -10,12 +10,12 @@ export default defineConfig({
   projects: [
     {
       name: 'desktop',
-      testIgnore: 'production.spec.ts',
+      testIgnore: ['production.spec.ts', 'reduced-pools.spec.ts'],
       use: { ...devices['Desktop Chrome'], channel: 'chrome' },
     },
     {
       name: 'mobile',
-      testIgnore: 'production.spec.ts',
+      testIgnore: ['production.spec.ts', 'reduced-pools.spec.ts'],
       use: {
         ...devices['iPhone 13'],
         defaultBrowserType: 'chromium',
@@ -32,8 +32,13 @@ export default defineConfig({
       },
     },
     {
+      name: 'reduced-pools',
+      testMatch: 'reduced-pools.spec.ts',
+      use: { ...devices['Desktop Chrome'], channel: 'chrome', baseURL: url(3) },
+    },
+    {
       name: 'static-preview',
-      testIgnore: 'production.spec.ts',
+      testIgnore: ['production.spec.ts', 'reduced-pools.spec.ts'],
       use: {
         ...devices['Desktop Chrome'],
         channel: 'chrome',
@@ -55,6 +60,11 @@ export default defineConfig({
     {
       command: `npm run build:fixtures && npm run preview:fixtures -- --host 127.0.0.1 --port ${port + 2} --ignore-lock`,
       url: url(2),
+      reuseExistingServer: false,
+    },
+    {
+      command: `AIB_FIXTURE_COUNTS=16,8,0,25 npm run dev -- --host 127.0.0.1 --port ${port + 3} --ignore-lock`,
+      url: url(3),
       reuseExistingServer: false,
     },
   ],

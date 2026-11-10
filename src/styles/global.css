@@ -1223,3 +1223,35 @@ fieldset {
       border-color 0.15s;
   }
 }
+
+.count-label {
+  display: block;
+  margin-top: 1rem;
+}
+.domain-results {
+  margin-top: 2rem;
+  text-align: left;
+}
+.domain-results h2 {
+  font-size: 1.1rem;
+}
+.table-scroll {
+  overflow-x: auto;
+}
+.domain-results table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+.domain-results th,
+.domain-results td {
+  padding: 0.8rem 0.5rem;
+  border-bottom: 1px solid var(--border, #e7e7e9);
+  text-align: left;
+}
+.domain-results tbody th {
+  font-weight: 500;
+}
+.domain-results td {
+  white-space: nowrap;
+}

@@ -71,9 +71,11 @@ export function loadQuestionBanks(
 
 export function practiceQuestions(
   questions: readonly Question[],
-  domainId: DomainId,
+  domainId: PracticeScope,
 ) {
-  return questions.filter((question) => question.domainId === domainId);
+  return questions.filter(
+    (question) => domainId === 'all' || question.domainId === domainId,
+  );
 }
 
 export function validateLaunchCounts(questions: readonly Question[]) {
@@ -84,4 +86,24 @@ export function validateLaunchCounts(questions: readonly Question[]) {
     if (count !== 25)
       throw new Error(`Launch requires 25 questions for ${id}; found ${count}`);
   }
+}
+
+export type PracticeScope = DomainId | 'all';
+
+export function practiceSizes(scope: PracticeScope): readonly number[] {
+  return scope === 'all' ? [20, 40, 60, 85] : [10, 15, 20, 25];
+}
+
+export function practiceAvailability(
+  questions: readonly Question[],
+  scope: PracticeScope,
+) {
+  const count = practiceQuestions(questions, scope).length;
+  return {
+    count,
+    sizes: practiceSizes(scope).map((questionCount) => ({
+      questionCount,
+      available: count >= questionCount,
+    })),
+  };
 }
