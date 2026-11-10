@@ -4,3 +4,15 @@
 
 # Local-only files.
 /.private/
+
+# Generated application files
+node_modules/
+dist/
+.qa-dist/
+.astro/
+coverage/
+playwright-report/
+test-results/
+.env
+.env.*
+!.env.example

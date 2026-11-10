@@ -1,0 +1,77 @@
+---
+import { site } from '../content/site';
+import { domains } from '../lib/exam-scope';
+import { practiceQuestions } from '../lib/questions';
+import { loadSiteBank } from '../data/load-bank';
+import '../styles/global.css';
+
+const { questions, synthetic } = await loadSiteBank();
+const availability = domains.map((domain) => ({ ...domain, count: practiceQuestions(questions, domain.id).length }));
+const firstAvailable = availability.find((domain) => domain.count >= 10);
+const payload = JSON.stringify(questions).replace(/</g, '\\u003c');
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={site.description} />
+    {synthetic && <meta name="robots" content="noindex, nofollow" />}
+    <title>{site.title}</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  </head>
+  <body>
+    <a href="#main" class="skip-link">Skip to content</a>
+    <header class="site-header wrap">
+      <a class="wordmark" href="/" aria-label="AIB-C01 Practice home"><span class="brand-mark" aria-hidden="true">a</span><span>AIB-C01 <strong>Practice</strong></span></a>
+      <nav aria-label="Main navigation"><a href="#configure" id="practice-link" aria-current="page">Practice</a><span class="nav-future">Exam <small>Coming later</small></span></nav>
+      <span class="header-note">Free to learn. Room to grow.</span>
+    </header>
+    <main id="main" class="wrap">
+      {synthetic && <p class="preview-notice">Development preview · synthetic questions</p>}
+      <div id="home-view">
+        <section class="hero" aria-labelledby="home-heading">
+          <div class="hero-copy">
+            <p class="eyebrow">{site.eyebrow} <span class="exam-code">AIB-C01</span></p>
+            <h1 id="home-heading">{site.heading}</h1>
+            <p class="intro">{site.introduction}</p>
+            <div class="feature-line"><span>Untimed practice</span><span>Instant explanations</span><span>No account needed</span></div>
+            <a class="text-link" href="https://docs.aws.amazon.com/aws-certification/latest/ai-business-strategist-01/ai-business-strategist-01.html">Explore the official exam guide <span aria-hidden="true">↗</span></a>
+          </div>
+          <section class="setup-panel" id="configure" aria-labelledby="configuration-heading">
+            <div class="panel-top"><span class="eyebrow">A focused start</span><span class="pill">Practice</span></div>
+            <h2 id="configuration-heading" tabindex="-1">Your next practice session</h2>
+            <p class="muted">One domain. Ten questions. Your own pace.</p>
+            <form id="configuration-form">
+              <label class="field-label" for="domain">Choose a domain</label>
+              <select name="domain" id="domain" aria-describedby="availability">
+                {availability.map((domain) => <option value={domain.id} selected={domain.id === (firstAvailable?.id ?? 'domain-1')}>{domain.number}. {domain.name}</option>)}
+              </select>
+              <p id="availability" class="field-note" aria-live="polite">{firstAvailable ? `${firstAvailable.count} single-answer questions available. 10 will be sampled.` : '0 questions available. This domain needs at least 10 single-answer questions.'}</p>
+              <div class="session-details"><div><span class="field-label">Session length</span><strong>10 questions</strong></div><div><span class="field-label">Time limit</span><strong>None</strong></div></div>
+              <p class="lifetime">{site.lifetime}</p>
+              <button type="submit" id="start-button" class="button primary" disabled>Start practice <span aria-hidden="true">→</span></button>
+              <p id="configuration-error" class="error" role="alert"></p>
+            </form>
+            <noscript><p class="error">JavaScript is required to start a practice session. You can still explore the domain information and official exam guide.</p></noscript>
+          </section>
+        </section>
+        <section class="domains-section" aria-labelledby="domains-heading">
+          <div class="section-heading"><div><p class="eyebrow">The bigger picture</p><h2 id="domains-heading">Four domains. One business perspective.</h2></div><p class="muted">Aligned with the official exam scope.</p></div>
+          <div class="domain-grid">
+            {availability.map((domain) => <article class="domain-card"><div class="domain-card-top"><span class="domain-number">0{domain.number}</span><span class="weight">{domain.weight}% of exam content</span></div><h3>{domain.name}</h3><p>{domain.description}</p><span class="domain-availability">{domain.count} questions available</span></article>)}
+          </div>
+        </section>
+        <section class="how-section" aria-labelledby="how-heading">
+          <h2 id="how-heading">A small session, a useful habit.</h2>
+          <ol class="steps"><li><strong>Choose your focus.</strong><span>Start with a single domain and a fresh set of ten questions.</span></li><li><strong>Think it through.</strong><span>Submit each answer to see the correct choice and explanation.</span></li><li><strong>Take the next step.</strong><span>See your results, then start another randomized session.</span></li></ol>
+        </section>
+      </div>
+      <section id="session-view" class="session-shell" aria-label="Practice session" hidden></section>
+      <p id="application-error" class="error" role="alert"></p>
+    </main>
+    <footer class="site-footer wrap"><div><strong>AIB-C01 Practice</strong><p>{site.notice}</p></div><p>Raw practice percentages only.<br />No AWS scaled score or pass prediction.</p></footer>
+    <script id="question-data" type="application/json" set:html={payload} />
+    <script src="../scripts/practice.ts"></script>
+  </body>
+</html>
