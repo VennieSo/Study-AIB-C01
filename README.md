@@ -59,12 +59,15 @@ npm run preview          # Inspect the production build, not the fixture bank
 Browser tests use installed Google Chrome. On a CI machine without Chrome, install
 it first with `npx playwright install chrome`. Mobile tests emulate an iPhone-sized
 viewport in Chromium; they do not replace testing Safari or an actual iOS device.
-The end-to-end suite starts its own development and production servers on ports
-4321 and 4322. It also writes screenshots to the ignored `test-results/` directory.
+The end-to-end suite starts its own development, production, and static fixture
+servers on ports 4321–4323. Set `PLAYWRIGHT_PORT` to change the first port (the
+other two follow it), for example `PLAYWRIGHT_PORT=4341 npm run test:e2e`.
+It also writes screenshots to the ignored `test-results/` directory.
 
 An explicitly synthetic static build is available with `npm run build:fixtures`.
 It writes to **`.qa-dist/`**, separate from production `dist/`, and includes a
-development notice and `noindex` metadata. Do not deploy `.qa-dist/` as production.
+development notice and `noindex` metadata. Run `npm run preview:fixtures` to inspect
+it locally. Do not deploy `.qa-dist/` as production.
 
 ## Architecture
 
@@ -135,12 +138,76 @@ this static study tool by design.
 
 ## Build and deployment boundary
 
-`npm run build` emits only static files in `dist/`; no server, database,
-authentication, or runtime AI is needed. Cloudflare Workers Static Assets and
-automatic deployment are planned in a later issue. When hosting is configured,
-use Node 22.23.4+, `npm ci`, `npm run check`, and `npm run build`, with `dist/` as
-the assets directory. Publish only the production output. No hosting resources
-are provisioned by this slice.
+`npm run build` emits static files in `dist/`. `wrangler.json` serves that
+directory with Cloudflare Workers Static Assets on a free `workers.dev` hostname.
+`wrangler.preview.json` serves `.qa-dist/` through a separate preview Worker.
+Neither configuration has a runtime handler, SSR adapter, data binding, custom
+domain, or account requirement for students. Local build and preview commands
+work without Cloudflare credentials.
+
+Both builds run `validate:assets`. Its public allowlist permits only `index.html`,
+`favicon.svg`, and generated JS, CSS, and WOFF2 files directly under `_astro/`.
+Unexpected files, directories, symlinks, source maps, source JSON, and common
+credential patterns fail validation. Production's embedded question payload must
+match the public banks exactly and cannot contain fixture markers; the explicit
+fixture target must match the synthetic bank and carry its visible notice and
+`noindex` metadata. Credential-pattern checks supplement this allowlist; they are
+not a general secret detector. Never put credentials in public assets or
+`PUBLIC_` build variables.
+
+```sh
+npm run build
+npm run preview                # Production output; no Cloudflare login
+npm run build:fixtures
+npm run preview:fixtures       # Explicitly synthetic output; no Cloudflare login
+npm run deploy:dry-run         # Validate both Wrangler configs after both builds
+```
+
+The [deployment workflow](.github/workflows/deploy.yml) runs type checks, content
+and session tests, browser journeys, both artifact checks, and Wrangler dry runs.
+Pull requests run checks only. Pushes to `integration/spec-1` deploy the labelled
+synthetic preview. Pushes to `main` deploy production only after the launch check
+confirms 100 questions, 25 per domain. The workflow can also be dispatched with
+`preview` selected; `production` requires the `main` branch. It reads the real
+HTTPS URL from Wrangler's successful deployment output, downloads the page,
+compares it with the built HTML, and records the verified URL in the run summary.
+
+Account setup and first deployment:
+
+1. Use a Cloudflare Free account and enable its `workers.dev` subdomain in the
+   Workers dashboard. Select the intended account; no paid plan is needed.
+2. Following [Cloudflare's GitHub Actions authentication instructions](https://developers.cloudflare.com/workers/ci-cd/external-cicd/github-actions/#1-authentication),
+   create a Workers deployment API token scoped to that account. Store it and the
+   account ID as GitHub Actions repository secrets named `CLOUDFLARE_API_TOKEN`
+   and `CLOUDFLARE_ACCOUNT_ID`. Use GitHub Settings → Secrets and variables →
+   Actions, or the interactive commands below. Enter secret values only into
+   the secure prompt, never source files, issue comments, or chat.
+3. Push the checked configuration to `integration/spec-1`. Open the repository's
+   Actions page and wait for **Check and deploy static assets**. A missing secret
+   produces a named error; configuring the workflow alone does not deploy a site.
+4. Open the verified URL from the successful run summary. Confirm the synthetic
+   notice, finish a Practice session without an account, and check the browser
+   console and mobile layout. Record the actual run link, commit, and URL as
+   deployment evidence. Add the live link here only after that verification.
+5. Publish production from `main` once the initial question bank passes
+   `npm run validate:launch`. Production never falls back to synthetic content.
+
+```sh
+gh secret set CLOUDFLARE_API_TOKEN --repo VennieSo/Study-AIB-C01
+gh secret set CLOUDFLARE_ACCOUNT_ID --repo VennieSo/Study-AIB-C01
+```
+
+For a manual deployment after the same checks, use `npm run deploy:preview` or
+`npm run deploy` with a local `wrangler login` session or securely supplied
+Cloudflare environment variables. This does not demonstrate automatic GitHub
+deployment. Do not create a second Cloudflare Builds integration alongside this
+workflow: GitHub Actions is the deployment owner.
+
+**Deployment status:** configuration and local verification are prepared; a
+successful GitHub-triggered deployment and actual HTTPS URL are still pending
+Cloudflare account authorization. Production is also pending the initial bank.
+See [Cloudflare's static Astro configuration](https://developers.cloudflare.com/workers/framework-guides/web-apps/astro/#if-you-have-a-static-site)
+and [Static Assets billing and limits](https://developers.cloudflare.com/workers/static-assets/billing-and-limitations/).
 
 ## Sources and limitations
 
