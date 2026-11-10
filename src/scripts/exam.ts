@@ -67,7 +67,7 @@ function initialize() {
       timer.textContent = formatRemaining(session.remainingMilliseconds());
   }
 
-  function configure() {
+  function configure(heading = '#exam-configuration-heading') {
     tick();
     if (session?.record.status === 'active') {
       if (
@@ -90,7 +90,7 @@ function initialize() {
     root.hidden = true;
     root.innerHTML = '';
     home.hidden = false;
-    document.querySelector<HTMLElement>('#exam-configuration-heading')!.focus();
+    document.querySelector<HTMLElement>(heading)!.focus();
   }
 
   document
@@ -103,7 +103,11 @@ function initialize() {
     document.querySelector(id)!.addEventListener('click', (event) => {
       if (!session) return;
       event.preventDefault();
-      configure();
+      configure(
+        id === '#practice-link'
+          ? '#configuration-heading'
+          : '#exam-configuration-heading',
+      );
     });
   root.addEventListener('change', (event) => {
     if (

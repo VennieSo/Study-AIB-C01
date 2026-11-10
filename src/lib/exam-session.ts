@@ -1,3 +1,4 @@
+import { z } from 'zod';
 import { domains } from './exam-scope';
 import { loadQuestionBanks, type Question } from './questions';
 import type { Dependencies, SessionQuestion } from './session';
@@ -349,4 +350,3 @@ export class ExamSession {
     };
   }
 }
-import { z } from 'zod';

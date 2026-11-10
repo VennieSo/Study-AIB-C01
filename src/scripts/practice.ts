@@ -63,7 +63,7 @@ function initialize() {
     }
   }
 
-  function configure() {
+  function configure(heading = '#configuration-heading') {
     if (session?.record.status === 'active') {
       if (
         !window.confirm(
@@ -77,7 +77,7 @@ function initialize() {
     root.hidden = true;
     root.innerHTML = '';
     home.hidden = false;
-    document.querySelector<HTMLElement>('#configuration-heading')!.focus();
+    document.querySelector<HTMLElement>(heading)!.focus();
   }
 
   selector.addEventListener('change', availability);
