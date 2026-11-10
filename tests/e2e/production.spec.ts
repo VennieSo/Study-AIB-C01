@@ -16,8 +16,16 @@ test('built production HTML has SEO content and truthful unavailable sessions', 
     page.getByRole('button', { name: 'Start exam', exact: true }),
   ).toBeDisabled();
   await expect(page.locator('#exam-availability')).toContainText(
-    'at least 5 questions in every domain',
+    'at least 20 questions in AI Fundamentals and Literacy',
   );
+  await expect(page.getByLabel('Exam length', { exact: true })).toHaveValue(
+    '85',
+  );
+  for (const option of await page
+    .getByLabel('Exam length', { exact: true })
+    .locator('option')
+    .all())
+    await expect(option).toBeDisabled();
   for (const domain of [
     'all',
     'domain-1',

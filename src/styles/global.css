@@ -1259,6 +1259,38 @@ fieldset {
   white-space: nowrap;
 }
 
+.exam-navigation {
+  margin-top: 2rem;
+}
+.exam-navigation h2 {
+  font-size: 1rem;
+}
+.exam-question-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(2.75rem, 1fr));
+  gap: 0.5rem;
+}
+.exam-question-number {
+  min-height: 44px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+.exam-question-number.answered {
+  background: #e1eee7;
+  color: #244c38;
+  border-color: #8caf9b;
+}
+.exam-question-number[aria-current='step'] {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+  font-weight: 700;
+}
+
 .exam-domain-results,
 .exam-review {
   margin-top: 2rem;

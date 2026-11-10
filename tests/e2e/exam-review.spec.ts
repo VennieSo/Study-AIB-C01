@@ -7,6 +7,7 @@ test('submitted review preserves every answer subset and unanswered item, then s
     Math.random = () => 0.999;
   });
   await page.goto('/');
+  await page.getByLabel('Exam length', { exact: true }).selectOption('20');
   await page.getByRole('button', { name: 'Start exam', exact: true }).click();
   await expect(
     page.getByRole('heading', { name: 'Answer review', exact: true }),
@@ -117,18 +118,14 @@ test('submitted review preserves every answer subset and unanswered item, then s
     fullPage: true,
     scale: 'css',
   });
-  await page
-    .locator('.results-panel')
-    .screenshot({
-      path: testInfo.outputPath('exam-domain-results.png'),
-      scale: 'css',
-    });
-  await items
-    .nth(1)
-    .screenshot({
-      path: testInfo.outputPath('exam-partial-answer-review.png'),
-      scale: 'css',
-    });
+  await page.locator('.results-panel').screenshot({
+    path: testInfo.outputPath('exam-domain-results.png'),
+    scale: 'css',
+  });
+  await items.nth(1).screenshot({
+    path: testInfo.outputPath('exam-partial-answer-review.png'),
+    scale: 'css',
+  });
   await page.getByRole('button', { name: 'Exam again' }).click();
   await expect(
     page.getByText('Question 1 of 20', { exact: true }),
@@ -148,4 +145,66 @@ test('submitted review preserves every answer subset and unanswered item, then s
   await expect(
     page.getByRole('heading', { name: 'Your next exam session', exact: true }),
   ).toBeFocused();
+});
+
+test('full-length results retain all eighty-five questions and a readable rounded percentage at narrow mobile width', async ({
+  page,
+}, testInfo) => {
+  await page.setViewportSize({ width: 320, height: 900 });
+  await page.clock.install({ time: new Date('2026-11-10T10:00:00.000Z') });
+  await page.clock.pauseAt(new Date('2026-11-10T10:00:01.000Z'));
+  await page.addInitScript(() => {
+    Math.random = () => 0.999;
+  });
+  await page.goto('/');
+  await expect(page.getByLabel('Exam length', { exact: true })).toHaveValue(
+    '85',
+  );
+  await page.getByRole('button', { name: 'Start exam', exact: true }).click();
+  await page.getByRole('radio', { name: /Fixture target/ }).check();
+  await page
+    .getByRole('button', { name: 'Question 85, unanswered', exact: true })
+    .click();
+  await page.clock.fastForward(131 * 60_000);
+  await expect(
+    page.getByRole('heading', { name: 'Exam complete', exact: true }),
+  ).toBeFocused();
+  await expect(page.locator('.score')).toHaveText('1.2%');
+  await expect(page.getByLabel('Session counts')).toContainText('Total85');
+  await expect(page.getByLabel('Session counts')).toContainText('Attempted1');
+  await expect(page.getByLabel('Session counts')).toContainText('Correct1');
+  await expect(page.getByLabel('Session counts')).toContainText('Unanswered84');
+  const domainResults = page.getByRole('region', {
+    name: 'Exam performance by domain',
+    exact: true,
+  });
+  await expect(domainResults.getByRole('article')).toHaveCount(4);
+  const secondDomain = domainResults.getByRole('article').nth(1);
+  await expect(secondDomain).toContainText('Total24');
+  await expect(secondDomain).toContainText('Unanswered23');
+  await expect(secondDomain).toContainText('4.2%');
+  const items = page
+    .getByRole('region', { name: 'Answer review', exact: true })
+    .locator('details');
+  await expect(items).toHaveCount(85);
+  await items.last().locator('summary').click();
+  await expect(items.last()).toContainText('Your answer: Unanswered');
+  await items.first().locator('summary').click();
+  await expect(
+    items.first().locator('.review-option').filter({ hasText: 'Your answer' }),
+  ).toHaveCount(1);
+  await expect(items.first()).toContainText(
+    'This is synthetic interface test 1.',
+  );
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= window.innerWidth,
+    ),
+  ).toBe(true);
+  await page
+    .locator('.results-panel')
+    .screenshot({ path: testInfo.outputPath('exam-85-results-320.png') });
+  await items
+    .first()
+    .screenshot({ path: testInfo.outputPath('exam-85-review-320.png') });
 });

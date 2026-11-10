@@ -15,6 +15,15 @@ export function formatRemaining(milliseconds: number) {
   return `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, '0')}`;
 }
 
+export function renderExamGrid(record: ExamSessionRecord) {
+  return `<nav class="exam-navigation" aria-label="Exam questions"><h2>Jump to a question</h2><p class="field-note">A check mark (✓) means answered. No check mark means unanswered.</p><div class="exam-question-grid">${record.questions
+    .map((item, index) => {
+      const answered = item.selectedOptionIds.length > 0;
+      return `<button class="exam-question-number ${answered ? 'answered' : ''}" data-action="go-to-exam" data-index="${index}" aria-label="Question ${index + 1}, ${answered ? 'answered' : 'unanswered'}" ${index === record.currentIndex ? 'aria-current="step"' : ''}>${index + 1}${answered ? '<span aria-hidden="true"> ✓</span>' : ''}</button>`;
+    })
+    .join('')}</div></nav>`;
+}
+
 export function renderExam(
   record: ExamSessionRecord,
   result: ReturnType<ExamSession['result']>,
@@ -113,5 +122,5 @@ export function renderExam(
       </fieldset>
       <p id="exam-answer-error" class="error" role="alert"></p>
       <div class="question-actions"><button class="button" data-action="previous-exam" ${record.currentIndex === 0 ? 'disabled' : ''}>Previous question</button><button class="button primary" data-action="next-exam" ${record.currentIndex === record.questions.length - 1 ? 'disabled' : ''}>Next question <span aria-hidden="true">→</span></button><button class="button" data-action="submit-exam">Submit exam</button></div>
-    </div><p class="session-note">You may skip questions and revise selections until submission or time expiry. Progress stays in this tab only. Refreshing or closing discards the session.</p>`;
+    </div>${renderExamGrid(record)}<p class="session-note">You may skip questions and revise selections until submission or time expiry. Progress stays in this tab only. Refreshing or closing discards the session.</p>`;
 }

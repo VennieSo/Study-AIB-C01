@@ -1,5 +1,5 @@
 import { expect, it } from 'vitest';
-import { ExamSession } from '../src/lib/exam-session';
+import { ExamSession, examAvailability } from '../src/lib/exam-session';
 import { MemorySessionStorage } from '../src/lib/session';
 import { loadQuestionBanks } from '../src/lib/questions';
 import { domains } from '../src/lib/exam-scope';
@@ -39,9 +39,27 @@ function dependencies() {
   };
 }
 
+function startTwenty(
+  questions: Parameters<typeof ExamSession.start>[0],
+  deps: Parameters<typeof ExamSession.start>[1],
+) {
+  return ExamSession.start(questions, deps, 20);
+}
+
+it('defaults to a full eighty-five-question exam with a 130-minute deadline', async () => {
+  const session = await ExamSession.start(bank(), dependencies());
+  expect(session.record.configuration).toEqual({
+    domainId: 'all',
+    questionCount: 85,
+    durationMinutes: 130,
+  });
+  expect(session.record.questions).toHaveLength(85);
+  expect(session.record.deadlineAt).toBe('2026-11-10T12:10:00.000Z');
+});
+
 it('starts a weighted twenty-question exam with unique snapshots and an absolute thirty-minute deadline', async () => {
   const source = bank();
-  const session = await ExamSession.start(source, dependencies());
+  const session = await startTwenty(source, dependencies());
   source[0]!.text = 'changed bank';
   const record = session.record;
   expect(record).toMatchObject({
@@ -77,7 +95,7 @@ it('starts a weighted twenty-question exam with unique snapshots and an absolute
 
 it('retains revisable and cleared answers across skipped questions and finalizes exact-set scoring once', async () => {
   const deps = dependencies();
-  const session = await ExamSession.start(bank(), deps);
+  const session = await startTwenty(bank(), deps);
   session.select(session.record.questions[0]!.snapshot.correctOptionIds);
   session.next();
   session.next();
@@ -115,7 +133,7 @@ it('retains revisable and cleared answers across skipped questions and finalizes
 
 it('finalizes retained answers on delayed execution and rejects an edit at the deadline', async () => {
   const deps = dependencies();
-  const session = await ExamSession.start(bank(), deps);
+  const session = await startTwenty(bank(), deps);
   session.select(session.record.questions[0]!.snapshot.correctOptionIds);
   deps.advance(30 * 60 * 1000);
   expect(() => session.select([])).toThrow(/active/);
@@ -134,7 +152,7 @@ it('finalizes retained answers on delayed execution and rejects an edit at the d
   expect(session.record).toEqual(completed);
 
   const suspendedDeps = dependencies();
-  const suspended = await ExamSession.start(bank(), suspendedDeps);
+  const suspended = await startTwenty(bank(), suspendedDeps);
   suspendedDeps.advance(45 * 60 * 1000);
   suspended.checkDeadline();
   expect(suspended.record).toMatchObject({
@@ -152,7 +170,7 @@ it('finalizes retained answers on delayed execution and rejects an edit at the d
 
 it('reconstructs records with navigation and selections while retaining the original deadline', async () => {
   const deps = dependencies();
-  let session = await ExamSession.start(bank(), deps);
+  let session = await startTwenty(bank(), deps);
   session.select(session.record.questions[0]!.snapshot.correctOptionIds);
   session.next();
   session.select(['option-1', 'option-3']);
@@ -180,7 +198,7 @@ it('reconstructs records with navigation and selections while retaining the orig
 });
 
 it('reports finalized per-domain totals with incorrect answers separate from unanswered questions', async () => {
-  const session = await ExamSession.start(bank(), dependencies());
+  const session = await startTwenty(bank(), dependencies());
   expect(session.domainResults()).toEqual([]);
   session.select(['option-1']);
   session.next();
@@ -229,7 +247,7 @@ it('reports finalized per-domain totals with incorrect answers separate from una
 it('retains completed answer and content snapshots independently of reloaded banks and edited copies', async () => {
   const source = bank();
   const deps = dependencies();
-  const session = await ExamSession.start(source, deps);
+  const session = await startTwenty(source, deps);
   session.select(['option-1']);
   session.next();
   session.select(['option-5', 'option-1']);
@@ -246,7 +264,7 @@ it('retains completed answer and content snapshots independently of reloaded ban
   source[0]!.correctOptionIds = ['option-2'];
   source[0]!.explanation = 'Updated synthetic explanation';
   source[0]!.references = [];
-  const reloaded = await ExamSession.start(source, {
+  const reloaded = await startTwenty(source, {
     ...dependencies(),
     createId: () => 'another-exam',
   });
@@ -302,7 +320,7 @@ it.each([
   'accepts %s multiple-response sets and counts empty selections separately',
   async (_, selected, incorrect) => {
     const deps = dependencies();
-    const session = await ExamSession.start(bank(), deps);
+    const session = await startTwenty(bank(), deps);
     session.next();
     session.select(['option-1']);
     session.select(selected as string[]);
@@ -328,19 +346,15 @@ it('rejects insufficient actual domain capacity rather than shortening or repeat
         .filter((question) => question.domainId === 'domain-4')
         .slice(0, 4),
     );
-  await expect(ExamSession.start(skewed, dependencies())).rejects.toThrow(
-    /domain-4/,
-  );
-  await expect(ExamSession.start(bank(4), dependencies())).rejects.toThrow(
-    /needs/,
-  );
+  await expect(startTwenty(skewed, dependencies())).rejects.toThrow(/domain-4/);
+  await expect(startTwenty(bank(4), dependencies())).rejects.toThrow(/needs/);
 });
 
 it('keeps weighted totals and no repeats across different random orders', async () => {
   const orders = new Set<string>();
   for (let seed = 1; seed <= 20; seed++) {
     let state = seed;
-    const session = await ExamSession.start(bank(), {
+    const session = await startTwenty(bank(), {
       ...dependencies(),
       random: () => {
         state = (state * 1664525 + 1013904223) >>> 0;
@@ -363,6 +377,28 @@ it('keeps weighted totals and no repeats across different random orders', async 
 });
 
 it.each([
+  [
+    'unpaired duration',
+    (record: any) => {
+      record.configuration.durationMinutes = 65;
+    },
+  ],
+  [
+    'mismatched preset count',
+    (record: any) => {
+      record.configuration = {
+        domainId: 'all',
+        questionCount: 40,
+        durationMinutes: 65,
+      };
+    },
+  ],
+  [
+    'position past the preset',
+    (record: any) => {
+      record.currentIndex = 20;
+    },
+  ],
   [
     'domain',
     (record: any) => {
@@ -412,8 +448,159 @@ it.each([
     },
   ],
 ])('rejects forged Exam records: %s', async (_, mutate) => {
-  const session = await ExamSession.start(bank(), dependencies());
+  const session = await startTwenty(bank(), dependencies());
   const record = session.record;
   mutate(record);
   await expect(ExamSession.restore(record, dependencies())).rejects.toThrow();
 });
+
+it.each([
+  [20, [5, 5, 5, 5]],
+  [40, [9, 11, 10, 10]],
+  [60, [14, 17, 14, 15]],
+  [85, [20, 24, 20, 21]],
+] as const)(
+  'starts preset %i whenever actual capacity supports a valid weighted allocation',
+  async (count, capacities) => {
+    const reduced = bank().filter((question) => {
+      const index = domains.findIndex(
+        (domain) => domain.id === question.domainId,
+      );
+      return Number(question.id.split('-').at(-1)) <= capacities[index]!;
+    });
+    expect(examAvailability(reduced, count).available).toBe(true);
+    for (const random of [() => 0, () => 0.999]) {
+      const session = await ExamSession.start(
+        reduced,
+        { ...dependencies(), random },
+        count,
+      );
+      expect(
+        domains.map(
+          (domain) =>
+            session.record.questions.filter(
+              ({ snapshot }) => snapshot.domainId === domain.id,
+            ).length,
+        ),
+      ).toEqual(capacities);
+      expect(
+        new Set(session.record.questions.map(({ snapshot }) => snapshot.id))
+          .size,
+      ).toBe(count);
+      const insufficient = reduced.filter(
+        (question) => question.id !== session.record.questions[0]!.snapshot.id,
+      );
+      expect(examAvailability(insufficient, count).available).toBe(false);
+      await expect(
+        ExamSession.start(insufficient, dependencies(), count),
+      ).rejects.toThrow(/needs/);
+    }
+  },
+);
+
+it.each([
+  [20, 30, [5, 5, 5, 5]],
+  [40, 65, [10, 11, 10, 9]],
+  [60, 95, [15, 17, 14, 14]],
+  [85, 130, [21, 24, 20, 20]],
+] as const)(
+  'retains preset %i, direct navigation, unrestricted selections, and the deadline through reconstruction and expiry',
+  async (count, minutes, allocation) => {
+    const deps = dependencies();
+    let session = await ExamSession.start(bank(), deps, count);
+    expect(
+      domains.map(
+        (domain) =>
+          session.record.questions.filter(
+            ({ snapshot }) => snapshot.domainId === domain.id,
+          ).length,
+      ),
+    ).toEqual(allocation);
+    expect(
+      new Set(session.record.questions.map(({ snapshot }) => snapshot.id)).size,
+    ).toBe(count);
+    const deadline = session.record.deadlineAt;
+    const first = session.record.questions[0]!.snapshot;
+    session.select(first.correctOptionIds);
+    const multipleIndex = session.record.questions.findIndex(
+      ({ snapshot }) => snapshot.type === 'multiple',
+    );
+    session.goTo(multipleIndex);
+    const multiple = session.record.questions[multipleIndex]!.snapshot;
+    session.select([multiple.options[0]!.id]);
+    expect(session.unansweredCount()).toBe(count - 2);
+    session.select(multiple.options.map((option) => option.id));
+    session.goTo(count - 1);
+    expect(session.record.questions[count - 1]!.selectedOptionIds).toEqual([]);
+    session.goTo(multipleIndex);
+    expect(
+      session.record.questions[multipleIndex]!.selectedOptionIds,
+    ).toHaveLength(6);
+    session.select([]);
+    expect(session.unansweredCount()).toBe(count - 1);
+    session.select(multiple.options.map((option) => option.id));
+    deps.advance(60_000);
+    const saved = JSON.parse(JSON.stringify(session.record));
+    session = await ExamSession.restore(saved, deps);
+    expect(session.record).toEqual(saved);
+    expect(session.record.configuration).toEqual({
+      domainId: 'all',
+      questionCount: count,
+      durationMinutes: minutes,
+    });
+    expect(session.remainingMilliseconds()).toBe((minutes - 1) * 60_000);
+    session.goTo(0);
+    expect(session.record.questions[0]!.selectedOptionIds).toEqual(
+      first.correctOptionIds,
+    );
+    for (const invalid of [-1, count, 0.5, NaN])
+      expect(() => session.goTo(invalid)).toThrow(/position/);
+    expect(session.record.currentIndex).toBe(0);
+    expect(session.record.deadlineAt).toBe(deadline);
+    deps.advance((minutes + 10) * 60_000);
+    expect(() => session.goTo(1)).toThrow(/active/);
+    expect(session.result()).toEqual({
+      total: count,
+      attempted: 2,
+      correct: 1,
+      incorrect: 1,
+      unanswered: count - 2,
+      percentage: 100 / count,
+    });
+    expect(session.record.completedAt).toBe(deadline);
+    const completed = session.record;
+    session.submit();
+    expect(session.record).toEqual(completed);
+  },
+);
+
+it.each([40, 60, 85] as const)(
+  'randomly breaks weighted remainder ties for preset %i without changing higher-priority quotas',
+  async (count) => {
+    const allocations = new Set<string>();
+    const allowed =
+      count === 40
+        ? ['10,11,10,9', '10,11,9,10', '9,11,10,10']
+        : count === 60
+          ? ['15,17,14,14', '14,17,15,14', '14,17,14,15']
+          : ['21,24,20,20', '20,24,21,20', '20,24,20,21'];
+    for (const value of [0, 0.25, 0.5, 0.999]) {
+      const session = await ExamSession.start(
+        bank(),
+        { ...dependencies(), random: () => value },
+        count,
+      );
+      const allocation = domains
+        .map(
+          (domain) =>
+            session.record.questions.filter(
+              ({ snapshot }) => snapshot.domainId === domain.id,
+            ).length,
+        )
+        .join(',');
+      expect(allowed).toContain(allocation);
+      allocations.add(allocation);
+    }
+    expect(allocations.size).toBe(3);
+  },
+);

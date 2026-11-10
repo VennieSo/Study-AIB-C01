@@ -3,11 +3,32 @@ import { domains } from './exam-scope';
 import { loadQuestionBanks, type Question } from './questions';
 import type { Dependencies, SessionQuestion } from './session';
 
+export const examPresets = [
+  { questionCount: 20, durationMinutes: 30 },
+  { questionCount: 40, durationMinutes: 65 },
+  { questionCount: 60, durationMinutes: 95 },
+  { questionCount: 85, durationMinutes: 130 },
+] as const;
+
+export type ExamQuestionCount = (typeof examPresets)[number]['questionCount'];
+
+function presetFor(questionCount: ExamQuestionCount) {
+  const preset = examPresets.find(
+    (preset) => preset.questionCount === questionCount,
+  );
+  if (!preset) throw new Error('Choose an approved Exam preset.');
+  return preset;
+}
+
 export interface ExamSessionRecord {
   schemaVersion: 1;
   id: string;
   mode: 'exam';
-  configuration: { domainId: 'all'; questionCount: 20; durationMinutes: 30 };
+  configuration: {
+    domainId: 'all';
+    questionCount: ExamQuestionCount;
+    durationMinutes: number;
+  };
   questions: SessionQuestion[];
   currentIndex: number;
   status: 'active' | 'completed' | 'abandoned';
@@ -23,8 +44,13 @@ const recordSchema = z.strictObject({
   mode: z.literal('exam'),
   configuration: z.strictObject({
     domainId: z.literal('all'),
-    questionCount: z.literal(20),
-    durationMinutes: z.literal(30),
+    questionCount: z.union([
+      z.literal(20),
+      z.literal(40),
+      z.literal(60),
+      z.literal(85),
+    ]),
+    durationMinutes: z.number().int().positive(),
   }),
   questions: z
     .array(
@@ -36,8 +62,9 @@ const recordSchema = z.strictObject({
         feedback: z.enum(['correct', 'incorrect']).nullable(),
       }),
     )
-    .length(20),
-  currentIndex: z.number().int().min(0).max(19),
+    .min(20)
+    .max(85),
+  currentIndex: z.number().int().min(0).max(84),
   status: z.enum(['active', 'completed', 'abandoned']),
   startedAt: z.iso.datetime(),
   updatedAt: z.iso.datetime(),
@@ -97,19 +124,72 @@ function validatedBank(bank: readonly Question[]) {
   );
 }
 
-export function examAvailability(bank: readonly Question[]) {
-  const pool = validatedBank(bank);
-  const shortages = domains.filter(
-    (domain) =>
-      pool.filter((question) => question.domainId === domain.id).length < 5,
+function weightedAllocation(
+  pool: readonly Question[],
+  questionCount: ExamQuestionCount,
+  random?: () => number,
+) {
+  // Shuffled priority breaks ties only among domains that can supply the extra question.
+  const priority = random ? shuffle(domains, random) : [...domains];
+  const allocations = priority
+    .map((domain) => ({
+      domainId: domain.id,
+      name: domain.name,
+      count: Math.floor((questionCount * domain.weight) / 100),
+      remainder: (questionCount * domain.weight) % 100,
+      capacity: pool.filter((question) => question.domainId === domain.id)
+        .length,
+    }))
+    .sort((a, b) => b.remainder - a.remainder);
+  const shortages = allocations.filter(
+    (allocation) => allocation.capacity < allocation.count,
   );
-  return {
-    available: shortages.length === 0,
-    message:
-      shortages.length === 0
-        ? `${pool.length} questions available. 20 will be sampled across all domains.`
-        : `This exam needs at least 5 questions in every domain. Not enough questions in ${shortages.map((domain) => domain.name).join('; ')}.`,
-  };
+  if (shortages.length)
+    throw new Error(
+      `Exam needs ${shortages.map((allocation) => `at least ${allocation.count} questions in ${allocation.name} (${allocation.domainId}); found ${allocation.capacity}`).join('. It also needs ')}.`,
+    );
+  let remaining =
+    questionCount -
+    allocations.reduce((sum, allocation) => sum + allocation.count, 0);
+  for (const remainder of new Set(
+    allocations.map((allocation) => allocation.remainder),
+  )) {
+    if (remaining === 0) break;
+    const tied = allocations.filter(
+      (allocation) => allocation.remainder === remainder,
+    );
+    const needed = Math.min(remaining, tied.length);
+    const eligible = tied.filter(
+      (allocation) => allocation.capacity > allocation.count,
+    );
+    if (eligible.length < needed)
+      throw new Error(
+        `Exam needs ${needed} additional questions across ${tied.map((allocation) => `${allocation.name} (${allocation.domainId})`).join('; ')} to support the ${questionCount}-question weighted allocation.`,
+      );
+    for (const allocation of eligible.slice(0, needed)) allocation.count++;
+    remaining -= needed;
+  }
+  return allocations;
+}
+
+export function examAvailability(
+  bank: readonly Question[],
+  questionCount: ExamQuestionCount = 85,
+) {
+  presetFor(questionCount);
+  const pool = validatedBank(bank);
+  try {
+    weightedAllocation(pool, questionCount);
+    return {
+      available: true,
+      message: `${pool.length} questions available. ${questionCount} will be sampled across all domains.`,
+    };
+  } catch (cause) {
+    return {
+      available: false,
+      message: `${pool.length} questions available. ${cause instanceof Error ? cause.message : 'Not enough questions for this preset.'}`,
+    };
+  }
 }
 
 export class ExamSession {
@@ -118,21 +198,15 @@ export class ExamSession {
     private dependencies: Dependencies,
   ) {}
 
-  static async start(bank: readonly Question[], dependencies: Dependencies) {
+  static async start(
+    bank: readonly Question[],
+    dependencies: Dependencies,
+    questionCount: ExamQuestionCount = 85,
+  ) {
+    const preset = presetFor(questionCount);
     const pool = validatedBank(bank);
     const random = dependencies.random ?? Math.random;
-    // Stable remainder sorting preserves the shuffled priority for ties.
-    const allocations = shuffle(domains, random)
-      .map((domain) => ({
-        domainId: domain.id,
-        count: Math.floor((20 * domain.weight) / 100),
-        remainder: (20 * domain.weight) % 100,
-      }))
-      .sort((a, b) => b.remainder - a.remainder);
-    let remaining =
-      20 - allocations.reduce((sum, allocation) => sum + allocation.count, 0);
-    for (const allocation of allocations)
-      if (remaining-- > 0) allocation.count++;
+    const allocations = weightedAllocation(pool, questionCount, random);
     const selected: Question[] = [];
     for (const allocation of allocations) {
       const eligible = pool.filter(
@@ -152,8 +226,7 @@ export class ExamSession {
       mode: 'exam',
       configuration: {
         domainId: 'all',
-        questionCount: 20,
-        durationMinutes: 30,
+        ...preset,
       },
       questions: await Promise.all(
         shuffle(selected, random).map(async (snapshot) => ({
@@ -168,7 +241,9 @@ export class ExamSession {
       status: 'active',
       startedAt,
       updatedAt: startedAt,
-      deadlineAt: new Date(started + 30 * 60 * 1000).toISOString(),
+      deadlineAt: new Date(
+        started + preset.durationMinutes * 60 * 1000,
+      ).toISOString(),
       completedAt: null,
     };
     dependencies.storage.save(state);
@@ -177,13 +252,22 @@ export class ExamSession {
 
   static async restore(input: unknown, dependencies: Dependencies) {
     const state = recordSchema.parse(input);
+    const preset = presetFor(state.configuration.questionCount);
+    if (
+      state.configuration.durationMinutes !== preset.durationMinutes ||
+      state.questions.length !== preset.questionCount ||
+      state.currentIndex >= state.questions.length
+    )
+      throw new Error(
+        'Invalid Exam preset, question count, or current position.',
+      );
     validatedBank(state.questions.map((question) => question.snapshot));
     const start = Date.parse(state.startedAt);
     const updated = Date.parse(state.updatedAt);
     const deadline = Date.parse(state.deadlineAt);
     if (
       updated < start ||
-      deadline !== start + 30 * 60 * 1000 ||
+      deadline !== start + preset.durationMinutes * 60 * 1000 ||
       (state.status !== 'completed' && updated >= deadline) ||
       (state.status === 'completed') !== (state.completedAt !== null) ||
       (state.completedAt !== null &&
@@ -192,12 +276,30 @@ export class ExamSession {
           Date.parse(state.completedAt) > deadline))
     )
       throw new Error('Invalid exam lifecycle timestamps.');
+    const allocation = domains.map((domain) => {
+      const exact = (preset.questionCount * domain.weight) / 100;
+      const count = state.questions.filter(
+        ({ snapshot }) => snapshot.domainId === domain.id,
+      ).length;
+      return {
+        count,
+        floor: Math.floor(exact),
+        remainder: (preset.questionCount * domain.weight) % 100,
+      };
+    });
     if (
-      domains.some(
-        (domain) =>
-          state.questions.filter(
-            ({ snapshot }) => snapshot.domainId === domain.id,
-          ).length !== 5,
+      allocation.some(
+        (item) =>
+          item.count < item.floor ||
+          item.count > item.floor + (item.remainder > 0 ? 1 : 0),
+      ) ||
+      allocation.some(
+        (extra) =>
+          extra.count > extra.floor &&
+          allocation.some(
+            (base) =>
+              base.count === base.floor && base.remainder > extra.remainder,
+          ),
       )
     )
       throw new Error('Invalid exam domain allocation.');
@@ -269,6 +371,18 @@ export class ExamSession {
     )
       throw new Error('Select valid options without duplicates.');
     question.selectedOptionIds = [...optionIds];
+    this.persist();
+  }
+
+  goTo(index: number) {
+    this.active();
+    if (
+      !Number.isInteger(index) ||
+      index < 0 ||
+      index >= this.state.questions.length
+    )
+      throw new Error('Choose a valid question position.');
+    this.state.currentIndex = index;
     this.persist();
   }
 
