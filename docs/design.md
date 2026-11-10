@@ -1,8 +1,9 @@
 # Visual direction
 
 A light, ink-on-white study workspace. Inspired by Cycle's strong typography and
-soft surfaces, with the restraint of shadcn controls. Keep the palette monochrome:
-white, near-black, and neutral grays. Color does not identify domains or outcomes.
+soft surfaces, with the restraint of shadcn controls. Use white, near-black, and
+neutral grays for the interface. Reserve green and red for correct and incorrect
+answer feedback; keep check/cross markers and text alongside color.
 
 ## Foundation
 
@@ -14,6 +15,8 @@ white, near-black, and neutral grays. Color does not identify domains or outcome
 | Secondary text           | `#6c6b70`                          |
 | Dividers                 | `#e7e7e9`                          |
 | Control borders          | `#d1d1d5`                          |
+| Correct answer text      | `#166534` on `#f0fdf4`             |
+| Incorrect answer text    | `#b42318` on `#fff5f4`             |
 | Display face             | Plus Jakarta Sans, 700–800         |
 | Body and UI face         | Inter, 400–600                     |
 | Cards                    | 20px radius; subtle neutral shadow |
@@ -27,10 +30,12 @@ files included. Edit the shared tokens and component styles in
 
 ## Composition and interaction
 
-- Center the homepage introduction. Use a heavy, tightly tracked 58px display
-  heading on desktop and a smaller responsive size on mobile.
+- Use Study AIB-C01 as the website name. Center the homepage introduction with
+  AWS Certified AI Business Strategist as the main heading and Study the strategy
+  behind AI. as the subheading. Use a heavy, tightly tracked display face for the
+  main heading and a smaller responsive size on mobile.
 - Keep configuration compact, with one clear primary action. Use two columns on
-  desktop and a single readable column on mobile.
+  desktop and a single readable column at viewport widths of 800px or less.
 - Use gray domain cards with small neutral metadata. No decorative category colors,
   mascots, gradients, or marketing illustrations.
 - Use a dark primary button for the next enabled step: Submit before feedback,
@@ -38,9 +43,14 @@ files included. Edit the shared tokens and component styles in
 - Keep native form semantics and keyboard operation. Interactive controls get a
   visible ink focus ring. Programmatically focused reading headings do not get
   a control-style ring.
-- Distinguish correct answers with a check, an ink border, a quiet gray fill, and
-  text. Mark an incorrect selected answer with a cross, a dashed border, and text.
+- Distinguish correct answers with green borders and text, a pale green fill, and
+  a check. Mark an incorrect selected answer with red borders and text, a pale red
+  fill, and a cross.
   Correctness must remain understandable without color.
+- Use 17px regular-weight Inter for question text on desktop and 16px on mobile,
+  with comfortable line height and blank-line paragraph spacing. Omit the extra
+  answer instruction. Label the active session's exit action End practice;
+  retain Change configuration on completed results.
 - Preserve white space, comfortable line height, and full-width controls on small
   screens. Avoid shrinking content to fit extra columns.
 

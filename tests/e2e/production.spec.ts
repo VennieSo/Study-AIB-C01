@@ -11,7 +11,7 @@ test('built production HTML has SEO content and truthful unavailable sessions', 
   expect(html).not.toContain('synthetic-');
   expect(html).not.toContain('Fixture target');
   expect(html).not.toContain('Development preview');
-  await expect(page).toHaveTitle(/AIB-C01 Practice/);
+  await expect(page).toHaveTitle(/Study AIB-C01/);
   for (const domain of ['domain-1', 'domain-2', 'domain-3', 'domain-4']) {
     await page.getByLabel('Choose a domain').selectOption(domain);
     await expect(

@@ -45,19 +45,25 @@ export function renderSession(
 
   const current = record.questions[record.currentIndex]!;
   const question = current.snapshot;
+  const questionText = question.text
+    .split(/\r?\n\s*\r?\n/)
+    .map(
+      (paragraph) =>
+        `<span class="question-paragraph">${escape(paragraph)}</span>`,
+    )
+    .join('');
   const submitted = current.submittedAt !== null;
   const correctAnswers = question.options
     .filter((option) => question.correctOptionIds.includes(option.id))
     .map((option) => option.text);
-  return `<div class="session-top"><span class="session-mode">Practice <span aria-hidden="true">/</span> Untimed</span><button class="button" data-action="configure">Change configuration</button></div>
+  return `<div class="session-top"><span class="session-mode">Practice <span aria-hidden="true">/</span> Untimed</span><button class="button" data-action="configure">End practice</button></div>
     <div class="progress-heading"><span>Question ${record.currentIndex + 1} of ${record.questions.length}</span><span class="pill">${escape(domain.name)}</span></div>
     <progress value="${record.currentIndex + 1}" max="${record.questions.length}" aria-label="Question progress"></progress>
     <div class="question-panel">
       <p class="eyebrow">Domain ${domain.number} · Task ${escape(question.taskId)}</p>
-      <h1 id="session-heading" tabindex="-1">${escape(question.text)}</h1>
-      <p class="question-help" id="answer-help">Choose one answer. Submit to see the explanation.</p>
+      <h1 id="session-heading" tabindex="-1">${questionText}</h1>
       <form id="answer-form" novalidate>
-        <fieldset aria-describedby="answer-help answer-error"><legend class="sr-only">Answer options</legend>
+        <fieldset aria-describedby="answer-error"><legend class="sr-only">Answer options</legend>
           ${question.options
             .map((option, index) => {
               const selected = current.selectedOptionIds.includes(option.id);

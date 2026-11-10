@@ -1,4 +1,4 @@
-# AIB-C01 Practice
+# Study AIB-C01
 
 A free, unofficial study site for **AWS Certified AI Business Strategist (AIB-C01)**.
 Initial, original AI-generated practice questions follow AWS question formats.
@@ -24,6 +24,7 @@ Development preview using labelled synthetic interface fixtures:
 <img src="docs/screenshots/development-mobile-feedback.png" alt="Mobile Practice showing an incorrect answer, correct answer and explanation using synthetic interface fixtures" width="320" />
 
 [View the results screen](docs/screenshots/development-results.png).
+[View the single-column setup at 768px](docs/screenshots/development-wide-mobile-homepage.png).
 
 ## Local development
 
@@ -67,7 +68,7 @@ development notice and `noindex` metadata. Do not deploy `.qa-dist/` as producti
 
 ## Architecture
 
-The interface uses a monochrome light theme with self-hosted Inter and Plus
+The interface uses an ink-on-white light theme with green/red answer feedback, self-hosted Inter and Plus
 Jakarta Sans. The [visual guide](docs/design.md) records the design tokens and
 component conventions. Styling uses native Astro/CSS with shadcn-inspired controls.
 

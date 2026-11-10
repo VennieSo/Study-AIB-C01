@@ -60,7 +60,7 @@ test('a visitor completes ten unique questions, sees feedback and results, and r
     page.getByText('Question 1 of 10', { exact: true }),
   ).toBeVisible();
   page.once('dialog', (dialog) => dialog.accept());
-  await page.getByRole('button', { name: 'Change configuration' }).click();
+  await page.getByRole('button', { name: 'End practice' }).click();
   await expect(
     page.getByRole('heading', { name: 'Your next practice session' }),
   ).toBeVisible();
@@ -71,7 +71,10 @@ test('layout, incorrect feedback, keyboard focus, and leave warnings work', asyn
 }, testInfo) => {
   await page.goto('/');
   await expect(
-    page.getByRole('heading', { name: 'Study the strategy behind AI.' }),
+    page.getByRole('heading', {
+      name: 'AWS Certified AI Business Strategist',
+      level: 1,
+    }),
   ).toBeVisible();
   await expect(
     page.getByRole('button', { name: 'Start practice' }),
@@ -86,6 +89,15 @@ test('layout, incorrect feedback, keyboard focus, and leave warnings work', asyn
     path: testInfo.outputPath('homepage.png'),
     fullPage: true,
   });
+  if (testInfo.project.name === 'mobile') {
+    const viewport = page.viewportSize()!;
+    await page.setViewportSize({ width: 768, height: 1024 });
+    await page.screenshot({
+      path: testInfo.outputPath('wide-mobile-homepage.png'),
+      fullPage: true,
+    });
+    await page.setViewportSize(viewport);
+  }
   await page.getByLabel('Choose a domain').selectOption('domain-2');
   await expect(
     page.getByRole('button', { name: 'Start practice' }),
@@ -123,7 +135,7 @@ test('layout, incorrect feedback, keyboard focus, and leave warnings work', asyn
     expect(dialog.type()).toBe('confirm');
     await dialog.dismiss();
   });
-  await page.getByRole('button', { name: 'Change configuration' }).click();
+  await page.getByRole('button', { name: 'End practice' }).click();
   await expect(
     page.getByRole('heading', { name: 'Incorrect', exact: true }),
   ).toBeVisible();

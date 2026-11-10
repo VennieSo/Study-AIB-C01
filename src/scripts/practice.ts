@@ -67,7 +67,7 @@ function initialize() {
     if (session?.record.status === 'active') {
       if (
         !window.confirm(
-          'Leave this practice session? Your current progress will be discarded.',
+          'End this practice session? Your current progress will be discarded.',
         )
       )
         return;

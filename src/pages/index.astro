@@ -23,7 +23,7 @@ const payload = JSON.stringify(questions).replace(/</g, '\\u003c');
   <body>
     <a href="#main" class="skip-link">Skip to content</a>
     <header class="site-header wrap">
-      <a class="wordmark" href="/" aria-label="AIB-C01 Practice home"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 5.5h5a3 3 0 0 1 3 3v11a4 4 0 0 0-3-1.25H5zM19 5.5h-3a3 3 0 0 0-3 3v11a4 4 0 0 1 3-1.25h3z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" /></svg></span><span>AIB-C01 <strong>Practice</strong></span></a>
+      <a class="wordmark" href="/" aria-label={`${site.name} home`}><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 5.5h5a3 3 0 0 1 3 3v11a4 4 0 0 0-3-1.25H5zM19 5.5h-3a3 3 0 0 0-3 3v11a4 4 0 0 1 3-1.25h3z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" /></svg></span><span>{site.name}</span></a>
       <nav aria-label="Main navigation"><a href="#configure" id="practice-link" aria-current="page">Practice</a><span class="nav-future">Exam <small>Coming later</small></span></nav>
       <a class="header-note" href="https://docs.aws.amazon.com/aws-certification/latest/ai-business-strategist-01/ai-business-strategist-01.html">Official exam guide <span aria-hidden="true">↗</span></a>
     </header>
@@ -32,8 +32,8 @@ const payload = JSON.stringify(questions).replace(/</g, '\\u003c');
       <div id="home-view">
         <section class="hero" aria-labelledby="home-heading">
           <div class="hero-copy">
-            <p class="hero-label"><span class="label-dot" aria-hidden="true"></span>{site.eyebrow}</p>
             <h1 id="home-heading">{site.heading}</h1>
+            <p class="hero-subheading">{site.subheading}</p>
             <p class="intro">{site.introduction}</p>
             <div class="feature-line"><span>Untimed practice</span><span>Instant explanations</span><span>No account needed</span></div>
           </div>
@@ -73,7 +73,7 @@ const payload = JSON.stringify(questions).replace(/</g, '\\u003c');
       <section id="session-view" class="session-shell" aria-label="Practice session" hidden></section>
       <p id="application-error" class="error" role="alert"></p>
     </main>
-    <footer class="site-footer wrap"><div><strong>AIB-C01 Practice</strong><p>{site.notice}</p></div><p>Made for steady progress.<br />Raw percentages. No pass predictions.</p></footer>
+    <footer class="site-footer wrap"><div><strong>{site.name}</strong><p>{site.notice}</p></div><p>Made for steady progress.<br />Raw percentages. No pass predictions.</p></footer>
     <script id="question-data" type="application/json" set:html={payload} />
     <script src="../scripts/practice.ts"></script>
   </body>

@@ -7,7 +7,7 @@ export function syntheticBank(count = 12) {
       domainId: 'domain-1',
       taskId: '1.1',
       type: 'single',
-      text: `Synthetic fixture ${index + 1}. To check this practice interface, select the option labelled “Fixture target ${index + 1}”.`,
+      text: `Synthetic fixture ${index + 1}. This development-only scenario checks how a longer question reads in the practice interface. It contains multiple paragraphs and does not assess exam knowledge.\n\nTo complete this interface check, select the option labelled “Fixture target ${index + 1}”.`,
       options: Array.from({ length: 4 }, (_, option) => ({
         id: `option-${option + 1}`,
         text:
