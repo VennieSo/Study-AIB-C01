@@ -1258,3 +1258,139 @@ fieldset {
 .domain-results td {
   white-space: nowrap;
 }
+
+.exam-domain-results,
+.exam-review {
+  margin-top: 2rem;
+  text-align: left;
+}
+.exam-domain-results h2,
+.exam-review h2 {
+  margin-bottom: 1rem;
+  font-size: 1.25rem;
+}
+.exam-domain-results article {
+  margin-top: 1.5rem;
+}
+.exam-domain-results h3 {
+  font-size: 0.9375rem;
+  line-height: 1.6;
+}
+.domain-percentage {
+  margin: 0.5rem 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+.domain-percentage span {
+  color: var(--muted);
+  font-size: 0.75rem;
+  font-weight: 400;
+}
+.exam-domain-results .result-counts {
+  margin: 0.5rem 0 0;
+}
+.exam-review > .muted {
+  margin-bottom: 1.5rem;
+  line-height: 1.8;
+  font-size: 0.875rem;
+}
+.exam-review-item {
+  margin-top: 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--background);
+  overflow-wrap: anywhere;
+}
+.exam-review-item summary {
+  padding: 1.125rem 1.25rem;
+  cursor: pointer;
+  font-size: 0.9375rem;
+  font-weight: 500;
+}
+.exam-review-item summary:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+  border-radius: 12px;
+}
+.review-outcome {
+  margin-left: 0.75rem;
+  color: var(--muted);
+  font-size: 0.8125rem;
+}
+.review-outcome.correct {
+  color: var(--correct);
+}
+.review-outcome.incorrect {
+  color: var(--incorrect);
+}
+.review-content {
+  padding: 0.5rem 1.25rem 1.25rem;
+}
+.review-content .eyebrow {
+  line-height: 1.8;
+}
+.review-content h3 {
+  margin: 1rem 0 1.5rem;
+  font-family: inherit;
+  font-size: 1.0625rem;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.8;
+}
+.review-unanswered {
+  margin-bottom: 1rem;
+  font-size: 0.875rem;
+}
+.review-options {
+  display: grid;
+  gap: 0.625rem;
+  padding: 0;
+  list-style: none;
+}
+.review-option {
+  display: flex;
+  gap: 0.875rem;
+  align-items: flex-start;
+  padding: 1rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 0.875rem;
+  line-height: 1.7;
+}
+.review-option.correct-answer {
+  color: var(--correct);
+  border-color: var(--correct-border);
+  background: var(--correct-surface);
+}
+.review-option.wrong-answer {
+  color: var(--incorrect);
+  border-color: var(--incorrect-border);
+  background: var(--incorrect-surface);
+}
+.review-explanation {
+  margin-top: 1.5rem;
+  font-size: 0.875rem;
+  line-height: 1.8;
+}
+.review-explanation h4 {
+  margin: 1rem 0 0.5rem;
+  font-size: 0.875rem;
+}
+.review-explanation ul {
+  padding-left: 1.25rem;
+}
+@media (max-width: 600px) {
+  .review-content {
+    padding: 0 1rem 1rem;
+  }
+  .review-content h3 {
+    font-size: 1rem;
+  }
+  .exam-review-item summary {
+    padding: 1rem;
+  }
+  .review-option {
+    padding: 0.875rem 0.75rem;
+    font-size: 0.8125rem;
+  }
+}

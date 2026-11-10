@@ -32,6 +32,7 @@ function initialize() {
       record,
       session.result(),
       session.remainingMilliseconds(),
+      session.domainResults(),
     );
     renderedStatus = record.status;
     home.hidden = true;

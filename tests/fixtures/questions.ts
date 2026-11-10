@@ -25,6 +25,16 @@ export function syntheticBank(
         })),
         correctOptionIds: targets.map((option) => `option-${option + 1}`),
         explanation: `This is synthetic interface test ${index + 1}. The requested ${multiple ? 'targets are the correct choices' : 'target is the correct choice'}. This fixture does not teach or assess exam knowledge.`,
+        ...(index === 0
+          ? {
+              references: [
+                {
+                  title: 'AWS exam guide (synthetic reference link check)',
+                  url: 'https://docs.aws.amazon.com/aws-certification/latest/ai-business-strategist-01/ai-business-strategist-01.html',
+                },
+              ],
+            }
+          : {}),
       };
     }),
   };

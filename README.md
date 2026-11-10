@@ -12,13 +12,15 @@ repeat within a session. Submitted Practice answers are locked.
 Exam offers an all-domain **20-question / 30-minute** assessment. Skip questions,
 return with Previous/Next, and revise selections until confirming submission or
 the deadline expires. Results count unanswered questions separately and score
-against the full session size.
+against the full session size. Review every submitted question, the exact selected
+options, correct answers, explanations, and optional AWS references. Domain results
+show totals, attempted, correct, incorrect, unanswered, and raw percentages.
 
 **Status:** local implementation; no live deployment yet. The public question
 banks are currently empty, so production correctly disables both modes. Development
 uses clearly labelled synthetic interface fixtures, which do not assess exam
-knowledge and never become production question data. Further Exam presets and
-detailed Exam answer review are later slices.
+knowledge and never become production question data. Further Exam presets are a
+later slice.
 
 ## Screenshots
 
@@ -32,6 +34,9 @@ Development preview using labelled synthetic interface fixtures:
 [View the single-column setup at 768px](docs/screenshots/development-wide-mobile-homepage.png).
 [View an active mobile Exam](docs/screenshots/development-exam-mobile.png) and
 [its results](docs/screenshots/development-exam-results.png).
+
+[View the mobile domain breakdown](docs/screenshots/development-exam-domain-results-mobile.png)
+and [submitted multiple-response review](docs/screenshots/development-exam-answer-review-mobile.png).
 
 ## Local development
 
@@ -132,6 +137,10 @@ operations check expiry, and repeated submission cannot change completed results
 assignments, selections, scoring, and timestamps, retaining the original deadline
 and immediately finalizing if it has elapsed. The clock and random source are
 injected for deterministic verification; no timer counter or DOM value owns state.
+`domainResults()` reports finalized participating-domain totals and raw percentages.
+Completed answer review reads only the finalized record's question and selection
+snapshots. Opening review cannot edit answers or change recorded scores; changes
+to the source bank do not change completed review.
 
 `SessionStorage` exposes `save(record)` and `load(id)`. `MemorySessionStorage`
 keeps independent copies of active, completed, and abandoned records for the tab's
@@ -249,8 +258,8 @@ The shared scope labels follow the [official AIB-C01 exam guide](https://docs.aw
 The interface shows raw practice percentages, with equal question weight. It
 offers no AWS scaled score, passing threshold, endorsement, or readiness prediction.
 Multiple-response scoring requires an exact set match without limiting student
-selection counts. Additional Exam presets, a numbered question grid, and detailed
-Exam review remain future work.
+selection counts. Additional Exam presets and a numbered question grid remain
+future work.
 
 The automated journeys cover Chrome desktop and a mobile viewport, keyboard
 selection/focus, both feedback outcomes, answer locks, no repeats, reload warnings,
@@ -263,6 +272,11 @@ question/answer snapshots. Exam tests use a controlled clock to prove deadline
 enforcement and reconstruction, repeated-submission idempotence, weighted
 no-repeat invariants, and exact-set scoring for partial, over-selected, and cleared
 responses.
+Completed Exam review checks cover every question, including unanswered items,
+faithful partial and over-selected responses, optional references, domain counts,
+keyboard details, and fresh-session/configuration navigation. Completed records
+also preserve selections, task metadata, explanations, references, and scores
+after reloading changed question content or editing returned copies.
 
 For reduced-pool QA, run `AIB_FIXTURE_COUNTS=16,8,0,25 npm run dev`. The four
 comma-separated counts apply only to development fixtures, in official domain
