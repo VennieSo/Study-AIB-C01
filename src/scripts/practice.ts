@@ -1,5 +1,9 @@
-import { domains, type DomainId } from '../lib/exam-scope';
-import { practiceQuestions, type Question } from '../lib/questions';
+import { domains } from '../lib/exam-scope';
+import {
+  practiceAvailability,
+  type PracticeScope,
+  type Question,
+} from '../lib/questions';
 import { MemorySessionStorage, PracticeSession } from '../lib/session';
 import { renderSession } from './render-session';
 
@@ -7,6 +11,8 @@ function initialize() {
   const home = document.querySelector<HTMLElement>('#home-view')!;
   const root = document.querySelector<HTMLElement>('#session-view')!;
   const selector = document.querySelector<HTMLSelectElement>('#domain')!;
+  const sizeSelector =
+    document.querySelector<HTMLSelectElement>('#question-count')!;
   const start = document.querySelector<HTMLButtonElement>('#start-button')!;
   const configurationError = document.querySelector<HTMLElement>(
     '#configuration-error',
@@ -18,24 +24,50 @@ function initialize() {
   let session: PracticeSession | undefined;
   let starting = false;
 
-  function domainId(): DomainId {
+  function domainId(): PracticeScope {
+    if (selector.value === 'all') return 'all';
     const domain = domains.find((candidate) => candidate.id === selector.value);
     if (!domain) throw new Error('Choose a valid domain.');
     return domain.id;
   }
 
   function availability() {
-    const count = practiceQuestions(questions, domainId()).length;
-    document.querySelector('#availability')!.textContent =
-      count >= 10
-        ? `${count} questions available. 10 will be sampled.`
-        : `${count} questions available. This domain needs at least 10 questions.`;
-    start.disabled = count < 10 || starting;
+    const { count, sizes } = practiceAvailability(questions, domainId());
+    const previous = sizeSelector.value;
+    sizeSelector.replaceChildren(
+      ...sizes.map(({ questionCount, available }) => {
+        const option = new Option(
+          `${questionCount} questions${available ? '' : ' — unavailable'}`,
+          String(questionCount),
+        );
+        option.disabled = !available;
+        return option;
+      }),
+    );
+    sizeSelector.value = sizes.some(
+      (size) => String(size.questionCount) === previous && size.available,
+    )
+      ? previous
+      : String(
+          sizes.find((size) => size.available)?.questionCount ??
+            sizes[0]!.questionCount,
+        );
+    const selected = sizes.find(
+      (size) => String(size.questionCount) === sizeSelector.value,
+    )!;
+    document.querySelector('#availability')!.textContent = selected.available
+      ? `${count} questions available. ${selected.questionCount} will be sampled.`
+      : `${count} questions available. This scope needs at least ${selected.questionCount} questions.`;
+    start.disabled = !selected.available || starting;
   }
 
   function render(focus: 'question' | 'feedback' = 'question') {
     if (!session) return;
-    root.innerHTML = renderSession(session.record, session.result());
+    root.innerHTML = renderSession(
+      session.record,
+      session.result(),
+      session.domainResults(),
+    );
     home.hidden = true;
     root.hidden = false;
     root
@@ -45,13 +77,16 @@ function initialize() {
       ?.focus();
   }
 
-  async function startSession(id: DomainId) {
+  async function startSession(
+    id: PracticeScope,
+    count = Number(sizeSelector.value),
+  ) {
     if (starting) return;
     starting = true;
     availability();
     configurationError.textContent = '';
     try {
-      session = await PracticeSession.start(id, questions, { storage });
+      session = await PracticeSession.start(id, questions, { storage }, count);
       render();
       window.scrollTo({ top: 0 });
     } catch (error) {
@@ -81,6 +116,7 @@ function initialize() {
   }
 
   selector.addEventListener('change', availability);
+  sizeSelector.addEventListener('change', availability);
   document
     .querySelector('#configuration-form')!
     .addEventListener('submit', (event) => {
@@ -91,7 +127,11 @@ function initialize() {
     document.querySelector(id)!.addEventListener('click', (event) => {
       if (session) {
         event.preventDefault();
-        configure();
+        configure(
+          id === '#exam-link'
+            ? '#exam-configuration-heading'
+            : '#configuration-heading',
+        );
       }
     });
   root.addEventListener('change', (event) => {
@@ -137,7 +177,10 @@ function initialize() {
         configure();
         break;
       case 'restart':
-        void startSession(session.record.configuration.domainId);
+        void startSession(
+          session.record.configuration.domainId,
+          session.record.configuration.questionCount,
+        );
         break;
     }
   });

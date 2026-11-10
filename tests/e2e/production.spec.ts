@@ -12,13 +12,19 @@ test('built production HTML has SEO content and truthful unavailable sessions', 
   expect(html).not.toContain('Fixture target');
   expect(html).not.toContain('Development preview');
   await expect(page).toHaveTitle(/Study AIB-C01/);
-  for (const domain of ['domain-1', 'domain-2', 'domain-3', 'domain-4']) {
+  for (const domain of [
+    'all',
+    'domain-1',
+    'domain-2',
+    'domain-3',
+    'domain-4',
+  ]) {
     await page.getByLabel('Choose a domain').selectOption(domain);
     await expect(
       page.getByRole('button', { name: 'Start practice' }),
     ).toBeDisabled();
     await expect(
-      page.getByText(/0 questions available. This domain needs/),
+      page.getByText(/0 questions available. This scope needs/),
     ).toBeVisible();
   }
 });

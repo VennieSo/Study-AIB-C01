@@ -9,15 +9,21 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "npm run validate:content && astro build",
-    "build:fixtures": "astro build --mode fixture --outDir .qa-dist",
+    "build": "npm run validate:content && astro build && npm run validate:assets",
+    "build:fixtures": "astro build --mode fixture --outDir .qa-dist && npm run validate:assets -- --fixtures",
     "preview": "astro preview",
+    "preview:fixtures": "astro preview --outDir .qa-dist",
     "check": "astro check && tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:e2e": "playwright test",
     "validate:content": "node --import tsx scripts/validate-content.ts",
-    "validate:launch": "node --import tsx scripts/validate-content.ts --launch"
+    "validate:fixtures": "node --import tsx scripts/validate-content.ts --synthetic",
+    "validate:launch": "node --import tsx scripts/validate-content.ts --launch",
+    "validate:assets": "node --import tsx scripts/validate-assets.ts",
+    "deploy": "npm run validate:launch && npm run build && wrangler deploy",
+    "deploy:preview": "npm run build:fixtures && wrangler deploy --config wrangler.preview.json",
+    "deploy:dry-run": "wrangler deploy --dry-run && wrangler deploy --dry-run --config wrangler.preview.json"
   },
   "dependencies": {
     "@fontsource-variable/inter": "^5.3.0",
@@ -34,6 +40,7 @@
     "prettier": "^3.9.10",
     "tsx": "^4.20.6",
     "typescript": "^5.9.3",
-    "vitest": "^5.1.0"
+    "vitest": "^5.1.0",
+    "wrangler": "4.160.0"
   }
 }

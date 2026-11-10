@@ -1,8 +1,10 @@
 import { z } from 'zod';
-import { domains, type DomainId } from './exam-scope';
+import { domains } from './exam-scope';
 import {
   loadQuestionBanks,
   practiceQuestions,
+  practiceSizes,
+  type PracticeScope,
   type Question,
 } from './questions';
 
@@ -18,7 +20,7 @@ export interface PracticeSessionRecord {
   schemaVersion: 1;
   id: string;
   mode: 'practice';
-  configuration: { domainId: DomainId; questionCount: 10 };
+  configuration: { domainId: PracticeScope; questionCount: number };
   questions: SessionQuestion[];
   currentIndex: number;
   status: 'active' | 'completed' | 'abandoned';
@@ -59,8 +61,8 @@ const recordSchema = z.strictObject({
   id: z.string().trim().min(1),
   mode: z.literal('practice'),
   configuration: z.strictObject({
-    domainId: z.enum(domains.map((domain) => domain.id)),
-    questionCount: z.literal(10),
+    domainId: z.enum([...domains.map((domain) => domain.id), 'all']),
+    questionCount: z.number().int().positive(),
   }),
   questions: z
     .array(
@@ -72,8 +74,8 @@ const recordSchema = z.strictObject({
         feedback: z.enum(['correct', 'incorrect']).nullable(),
       }),
     )
-    .length(10),
-  currentIndex: z.number().int().min(0).max(9),
+    .min(1),
+  currentIndex: z.number().int().min(0),
   status: z.enum(['active', 'completed', 'abandoned']),
   startedAt: z.iso.datetime(),
   updatedAt: z.iso.datetime(),
@@ -109,18 +111,33 @@ export class PracticeSession {
   ) {}
 
   static async start(
-    domainId: DomainId,
+    domainId: PracticeScope,
     bank: readonly Question[],
     dependencies: Dependencies,
+    questionCount = 10,
   ) {
-    const pool = loadQuestionBanks({
-      [domainId]: {
-        schemaVersion: 1,
-        questions: practiceQuestions(bank, domainId),
-      },
-    });
-    if (pool.length < 10)
-      throw new Error('This domain needs at least 10 questions.');
+    if (!practiceSizes(domainId).includes(questionCount))
+      throw new Error('Choose an approved Practice size for this scope.');
+    const validated = loadQuestionBanks(
+      Object.fromEntries(
+        domains.map((domain) => [
+          domain.id,
+          {
+            schemaVersion: 1,
+            questions: bank.filter(
+              (question) => question.domainId === domain.id,
+            ),
+          },
+        ]),
+      ),
+    );
+    if (validated.length !== bank.length)
+      throw new Error('Invalid question domain.');
+    const pool = practiceQuestions(validated, domainId);
+    if (pool.length < questionCount)
+      throw new Error(
+        `This scope needs at least ${questionCount} questions; ${pool.length} available.`,
+      );
     const random = dependencies.random ?? Math.random;
     for (let i = pool.length - 1; i > 0; i--) {
       const value = random();
@@ -136,9 +153,9 @@ export class PracticeSession {
       schemaVersion: 1,
       id: (dependencies.createId ?? (() => crypto.randomUUID()))(),
       mode: 'practice',
-      configuration: { domainId, questionCount: 10 },
+      configuration: { domainId, questionCount },
       questions: await Promise.all(
-        pool.slice(0, 10).map(async (snapshot) => ({
+        pool.slice(0, questionCount).map(async (snapshot) => ({
           snapshot,
           revision: await revision(snapshot),
           selectedOptionIds: [],
@@ -159,12 +176,32 @@ export class PracticeSession {
 
   static async restore(input: unknown, dependencies: Dependencies) {
     const state: PracticeSessionRecord = recordSchema.parse(input);
-    loadQuestionBanks({
-      [state.configuration.domainId]: {
-        schemaVersion: 1,
-        questions: state.questions.map((question) => question.snapshot),
-      },
-    });
+    const { domainId, questionCount } = state.configuration;
+    if (
+      !practiceSizes(domainId).includes(questionCount) ||
+      state.questions.length !== questionCount ||
+      state.currentIndex >= questionCount
+    )
+      throw new Error('Invalid Practice configuration or question count.');
+    const snapshots = state.questions.map((question) => question.snapshot);
+    const validated = loadQuestionBanks(
+      Object.fromEntries(
+        domains.map((domain) => [
+          domain.id,
+          {
+            schemaVersion: 1,
+            questions: snapshots.filter(
+              (question) => question?.domainId === domain.id,
+            ),
+          },
+        ]),
+      ),
+    );
+    if (
+      validated.length !== questionCount ||
+      practiceQuestions(validated, domainId).length !== questionCount
+    )
+      throw new Error('Invalid session question scope.');
     const start = Date.parse(state.startedAt);
     const updated = Date.parse(state.updatedAt);
     if (
@@ -208,7 +245,8 @@ export class PracticeSession {
         (index > state.currentIndex &&
           (submittedAt !== null || selectedOptionIds.length > 0)) ||
         (state.status === 'completed' &&
-          (submittedAt === null || state.currentIndex !== 9))
+          (submittedAt === null ||
+            state.currentIndex !== state.questions.length - 1))
       ) {
         throw new Error('Invalid session progress.');
       }
@@ -307,12 +345,27 @@ export class PracticeSession {
     this.persist();
   }
 
+  domainResults() {
+    return domains.flatMap((domain) => {
+      const questions = this.state.questions.filter(
+        ({ snapshot }) => snapshot.domainId === domain.id,
+      );
+      return questions.length
+        ? [{ domainId: domain.id, ...this.counts(questions) }]
+        : [];
+    });
+  }
+
   result() {
-    const total = this.state.questions.length;
-    const attempted = this.state.questions.filter(
+    return this.counts(this.state.questions);
+  }
+
+  private counts(questions: readonly SessionQuestion[]) {
+    const total = questions.length;
+    const attempted = questions.filter(
       (question) => question.submittedAt !== null,
     ).length;
-    const correct = this.state.questions.filter(
+    const correct = questions.filter(
       (question) => question.feedback === 'correct',
     ).length;
     return {

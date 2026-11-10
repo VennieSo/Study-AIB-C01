@@ -1,13 +1,13 @@
 ---
 import { site } from '../content/site';
 import { domains } from '../lib/exam-scope';
-import { practiceQuestions } from '../lib/questions';
+import { practiceQuestions, practiceSizes } from '../lib/questions';
 import { loadSiteBank } from '../data/load-bank';
 import '../styles/global.css';
 
 const { questions, synthetic } = await loadSiteBank();
 const availability = domains.map((domain) => ({ ...domain, count: practiceQuestions(questions, domain.id).length }));
-const firstAvailable = availability.find((domain) => domain.count >= 10);
+const initialDomain = availability.find((domain) => domain.count >= 10) ?? availability[0]!;
 const payload = JSON.stringify(questions).replace(/</g, '\\u003c');
 ---
 <!doctype html>
@@ -42,16 +42,21 @@ const payload = JSON.stringify(questions).replace(/</g, '\\u003c');
           <div class="setup-copy">
             <div class="panel-top"><span class="pill">Practice</span><span class="setup-kicker">A focused study break</span></div>
             <h2 id="configuration-heading" tabindex="-1">Your next practice session</h2>
-            <p class="muted">One domain. Ten questions. Your own pace.</p>
-            <div class="session-details"><div><span class="field-label">Session length</span><strong>10 questions</strong></div><div><span class="field-label">Time limit</span><strong>None</strong></div></div>
+            <p class="muted">Choose one domain or explore them all. Your own pace.</p>
+            <div class="session-details"><div><span class="field-label">Session length</span><strong>10–85 questions</strong></div><div><span class="field-label">Time limit</span><strong>None</strong></div></div>
           </div>
           <div class="setup-controls">
             <form id="configuration-form">
               <label class="field-label" for="domain">Choose a domain</label>
               <select name="domain" id="domain" aria-describedby="availability">
-                {availability.map((domain) => <option value={domain.id} selected={domain.id === (firstAvailable?.id ?? 'domain-1')}>{domain.number}. {domain.name}</option>)}
+                <option value="all">All domains</option>
+                {availability.map((domain) => <option value={domain.id} selected={domain.id === initialDomain.id}>{domain.number}. {domain.name}</option>)}
               </select>
-              <p id="availability" class="field-note" aria-live="polite">{firstAvailable ? `${firstAvailable.count} questions available. 10 will be sampled.` : '0 questions available. This domain needs at least 10 questions.'}</p>
+              <label class="field-label count-label" for="question-count">Question count</label>
+              <select name="question-count" id="question-count" aria-describedby="availability">
+                {practiceSizes('domain-1').map((count) => <option value={count} disabled={initialDomain.count < count}>{count} questions</option>)}
+              </select>
+              <p id="availability" class="field-note" aria-live="polite">{initialDomain.count >= 10 ? `${initialDomain.count} questions available. 10 will be sampled.` : `${initialDomain.count} questions available. This scope needs at least 10 questions.`}</p>
               <p class="lifetime">{site.lifetime}</p>
               <button type="submit" id="start-button" class="button primary" disabled>Start practice <span aria-hidden="true">→</span></button>
               <p id="configuration-error" class="error" role="alert"></p>
@@ -83,7 +88,7 @@ const payload = JSON.stringify(questions).replace(/</g, '\\u003c');
         </section>
         <section class="how-section" aria-labelledby="how-heading">
           <h2 id="how-heading">A small session, a useful habit.</h2>
-          <ol class="steps"><li><strong>Choose your focus.</strong><span>Start with a single domain and a fresh set of ten questions.</span></li><li><strong>Think it through.</strong><span>Submit each answer to see the correct choice and explanation.</span></li><li><strong>Take the next step.</strong><span>See your results, then start another randomized session.</span></li></ol>
+          <ol class="steps"><li><strong>Choose your focus.</strong><span>Choose one domain or all domains and a supported session size.</span></li><li><strong>Think it through.</strong><span>Submit each answer to see the correct choice and explanation.</span></li><li><strong>Take the next step.</strong><span>See your results, then start another randomized session.</span></li></ol>
         </section>
       </div>
       <section id="session-view" class="session-shell" aria-label="Practice session" hidden></section>
