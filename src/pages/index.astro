@@ -51,7 +51,7 @@ const payload = JSON.stringify(questions).replace(/</g, '\\u003c');
               <select name="domain" id="domain" aria-describedby="availability">
                 {availability.map((domain) => <option value={domain.id} selected={domain.id === (firstAvailable?.id ?? 'domain-1')}>{domain.number}. {domain.name}</option>)}
               </select>
-              <p id="availability" class="field-note" aria-live="polite">{firstAvailable ? `${firstAvailable.count} single-answer questions available. 10 will be sampled.` : '0 questions available. This domain needs at least 10 single-answer questions.'}</p>
+              <p id="availability" class="field-note" aria-live="polite">{firstAvailable ? `${firstAvailable.count} questions available. 10 will be sampled.` : '0 questions available. This domain needs at least 10 questions.'}</p>
               <p class="lifetime">{site.lifetime}</p>
               <button type="submit" id="start-button" class="button primary" disabled>Start practice <span aria-hidden="true">→</span></button>
               <p id="configuration-error" class="error" role="alert"></p>

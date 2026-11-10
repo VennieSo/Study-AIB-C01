@@ -225,3 +225,147 @@ it.each<[string, (record: SessionRecord) => void]>([
     PracticeSession.restore(record, dependencies()),
   ).rejects.toThrow();
 });
+
+it('admits multiple-response questions and scores one selected correct option as incorrect', async () => {
+  const questions = loadQuestionBanks({
+    'domain-1': syntheticBank(12, 'multiple'),
+  });
+  const session = await PracticeSession.start(
+    'domain-1',
+    questions,
+    dependencies(),
+  );
+  expect(session.record.questions[0]!.snapshot).toMatchObject({
+    type: 'multiple',
+    domainId: 'domain-1',
+    taskId: '1.1',
+  });
+  session.select(['option-1']);
+  session.submit();
+  expect(session.record.questions[0]!.feedback).toBe('incorrect');
+});
+
+it.each([
+  ['one', ['option-1'], 'incorrect'],
+  ['too few', ['option-1', 'option-3'], 'incorrect'],
+  ['too many', ['option-1', 'option-2', 'option-3', 'option-5'], 'incorrect'],
+  [
+    'all',
+    ['option-1', 'option-2', 'option-3', 'option-4', 'option-5', 'option-6'],
+    'incorrect',
+  ],
+  ['same-sized incorrect', ['option-1', 'option-2', 'option-3'], 'incorrect'],
+  [
+    'exact correct set in different order',
+    ['option-5', 'option-1', 'option-3'],
+    'correct',
+  ],
+])(
+  'submits %s multiple-response selections, restores feedback, and counts exact-set credit',
+  async (_, selected, feedback) => {
+    const deps = dependencies();
+    let session = await PracticeSession.start(
+      'domain-1',
+      loadQuestionBanks({ 'domain-1': syntheticBank(12, 'multiple') }),
+      deps,
+    );
+    session.select(selected as string[]);
+    expect(session.record.questions[0]!.submittedAt).toBeNull();
+    expect(() => session.next()).toThrow(/Submit/);
+    session = await PracticeSession.restore(
+      JSON.parse(JSON.stringify(session.record)),
+      deps,
+    );
+    expect(session.record.questions[0]!.selectedOptionIds).toEqual(selected);
+    session.submit();
+    expect(session.record.questions[0]!.feedback).toBe(feedback);
+    session = await PracticeSession.restore(
+      JSON.parse(JSON.stringify(session.record)),
+      deps,
+    );
+    expect(() => session.select([])).toThrow(/locked/);
+    expect(() => session.submit()).toThrow(/locked/);
+    session.next();
+    for (let index = 1; index < 10; index++) {
+      session.select(
+        session.record.questions[index]!.snapshot.correctOptionIds,
+      );
+      session.submit();
+      session.next();
+    }
+    session = await PracticeSession.restore(
+      JSON.parse(JSON.stringify(session.record)),
+      deps,
+    );
+    expect(session.record.status).toBe('completed');
+    expect(session.result()).toEqual({
+      total: 10,
+      attempted: 10,
+      correct: feedback === 'correct' ? 10 : 9,
+      incorrect: feedback === 'correct' ? 0 : 1,
+      unanswered: 0,
+      percentage: feedback === 'correct' ? 100 : 90,
+    });
+    expect(deps.storage.load('test-session')).toEqual(session.record);
+  },
+);
+
+it('keeps an empty multiple-response answer on the current question until explicit submission', async () => {
+  const session = await PracticeSession.start(
+    'domain-1',
+    loadQuestionBanks({ 'domain-1': syntheticBank(12, 'multiple') }),
+    dependencies(),
+  );
+  session.select(['option-1']);
+  session.select([]);
+  expect(() => session.submit()).toThrow('Select an answer before submitting.');
+  expect(() => session.next()).toThrow(/Submit/);
+  expect(session.record).toMatchObject({ status: 'active', currentIndex: 0 });
+  expect(session.record.questions[0]).toMatchObject({
+    selectedOptionIds: [],
+    submittedAt: null,
+    feedback: null,
+  });
+  expect(session.result()).toMatchObject({
+    attempted: 0,
+    correct: 0,
+    incorrect: 0,
+    unanswered: 10,
+  });
+});
+
+it('rejects duplicated or unknown selections and forged partial-credit feedback in multiple-response records', async () => {
+  const session = await PracticeSession.start(
+    'domain-1',
+    loadQuestionBanks({ 'domain-1': syntheticBank(12, 'multiple') }),
+    dependencies(),
+  );
+  expect(() => session.select(['option-1', 'option-1'])).toThrow(/option/);
+  expect(() => session.select(['option-1', 'unknown'])).toThrow(/option/);
+  const duplicate = session.record;
+  duplicate.questions[0]!.selectedOptionIds = ['option-1', 'option-1'];
+  await expect(
+    PracticeSession.restore(duplicate, dependencies()),
+  ).rejects.toThrow();
+  session.select(['option-1', 'option-3']);
+  session.submit();
+  const forged = session.record;
+  forged.questions[0]!.feedback = 'correct';
+  await expect(PracticeSession.restore(forged, dependencies())).rejects.toThrow(
+    /feedback/,
+  );
+});
+
+it('retains the single-answer selection limit in live and restored sessions', async () => {
+  const session = await PracticeSession.start(
+    'domain-1',
+    bank(),
+    dependencies(),
+  );
+  expect(() => session.select(['option-1', 'option-2'])).toThrow(/one/);
+  const record = session.record;
+  record.questions[0]!.selectedOptionIds = ['option-1', 'option-2'];
+  await expect(
+    PracticeSession.restore(record, dependencies()),
+  ).rejects.toThrow();
+});
