@@ -73,9 +73,7 @@ export function practiceQuestions(
   questions: readonly Question[],
   domainId: DomainId,
 ) {
-  return questions.filter(
-    (question) => question.domainId === domainId && question.type === 'single',
-  );
+  return questions.filter((question) => question.domainId === domainId);
 }
 
 export function validateLaunchCounts(questions: readonly Question[]) {

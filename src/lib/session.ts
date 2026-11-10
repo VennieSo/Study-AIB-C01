@@ -64,7 +64,7 @@ const recordSchema = z.strictObject({
       z.strictObject({
         snapshot: z.custom<Question>(),
         revision: z.string().regex(/^[a-f0-9]{64}$/),
-        selectedOptionIds: z.array(z.string()).max(1),
+        selectedOptionIds: z.array(z.string()),
         submittedAt: z.iso.datetime().nullable(),
         feedback: z.enum(['correct', 'incorrect']).nullable(),
       }),
@@ -117,7 +117,7 @@ export class PracticeSession {
       },
     });
     if (pool.length < 10)
-      throw new Error('This domain needs at least 10 single-answer questions.');
+      throw new Error('This domain needs at least 10 questions.');
     const random = dependencies.random ?? Math.random;
     for (let i = pool.length - 1; i > 0; i--) {
       const value = random();
@@ -177,7 +177,8 @@ export class PracticeSession {
     for (const [index, question] of state.questions.entries()) {
       const { snapshot, selectedOptionIds, submittedAt, feedback } = question;
       if (
-        snapshot.type !== 'single' ||
+        (snapshot.type === 'single' && selectedOptionIds.length > 1) ||
+        new Set(selectedOptionIds).size !== selectedOptionIds.length ||
         question.revision !== (await revision(snapshot)) ||
         selectedOptionIds.some(
           (id) => !snapshot.options.some((option) => option.id === id),
@@ -190,7 +191,8 @@ export class PracticeSession {
           ? feedback !== null
           : selectedOptionIds.length === 0 ||
             feedback !==
-              (selectedOptionIds.every((id) =>
+              (selectedOptionIds.length === snapshot.correctOptionIds.length &&
+              selectedOptionIds.every((id) =>
                 snapshot.correctOptionIds.includes(id),
               )
                 ? 'correct'
@@ -246,12 +248,17 @@ export class PracticeSession {
     if (current.submittedAt)
       throw new Error('Answers are locked after submission.');
     if (
-      optionIds.length > 1 ||
+      (current.snapshot.type === 'single' && optionIds.length > 1) ||
+      new Set(optionIds).size !== optionIds.length ||
       optionIds.some(
         (id) => !current.snapshot.options.some((option) => option.id === id),
       )
     ) {
-      throw new Error('Select one valid option.');
+      throw new Error(
+        current.snapshot.type === 'single'
+          ? 'Select one valid option.'
+          : 'Select valid options without duplicates.',
+      );
     }
     current.selectedOptionIds = [...optionIds];
     this.persist();

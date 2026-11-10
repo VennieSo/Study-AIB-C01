@@ -688,6 +688,10 @@ fieldset {
   background: var(--ink);
   transform: scale(0);
 }
+.answer-card input[type='checkbox'],
+.answer-card input[type='checkbox']::before {
+  border-radius: 2px;
+}
 .answer-card input:checked {
   border-color: var(--ink);
 }
