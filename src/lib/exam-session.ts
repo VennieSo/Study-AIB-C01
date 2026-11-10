@@ -121,6 +121,7 @@ export class ExamSession {
   static async start(bank: readonly Question[], dependencies: Dependencies) {
     const pool = validatedBank(bank);
     const random = dependencies.random ?? Math.random;
+    // Stable remainder sorting preserves the shuffled priority for ties.
     const allocations = shuffle(domains, random)
       .map((domain) => ({
         domainId: domain.id,

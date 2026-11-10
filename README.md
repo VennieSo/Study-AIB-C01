@@ -7,12 +7,18 @@ This project has no AWS affiliation or endorsement.
 Practice offers untimed sessions in one domain (10/15/20/25 questions) or all
 domains (20/40/60/85 questions), with single-answer and multiple-response questions. Select answers, submit for immediate feedback
 and an explanation, finish with raw results, and start another randomized session. Questions do not
-repeat within a session. Submitted answers are locked.
+repeat within a session. Submitted Practice answers are locked.
+
+Exam offers an all-domain **20-question / 30-minute** assessment. Skip questions,
+return with Previous/Next, and revise selections until confirming submission or
+the deadline expires. Results count unanswered questions separately and score
+against the full session size.
 
 **Status:** local implementation; no live deployment yet. The public question
-banks are currently empty, so production correctly disables Practice. Development
+banks are currently empty, so production correctly disables both modes. Development
 uses clearly labelled synthetic interface fixtures, which do not assess exam
-knowledge and never become production question data. Exam Mode is a later slice.
+knowledge and never become production question data. Further Exam presets and
+detailed Exam answer review are later slices.
 
 ## Screenshots
 
@@ -24,6 +30,8 @@ Development preview using labelled synthetic interface fixtures:
 
 [View the all-domain results screen](docs/screenshots/development-all-domain-results.png).
 [View the single-column setup at 768px](docs/screenshots/development-wide-mobile-homepage.png).
+[View an active mobile Exam](docs/screenshots/development-exam-mobile.png) and
+[its results](docs/screenshots/development-exam-results.png).
 
 ## Local development
 
@@ -42,6 +50,15 @@ Each eligible question has the same chance of selection; all-domain Practice use
 no weighted quotas. Use Tab, arrow keys for radio options, and Space
 to select answers, then submit. Next unlocks only after feedback. Results show total, attempted, correct, incorrect, unanswered, and
 the raw percentage against the whole session, plus performance by participating domain.
+
+Choose **Start exam** for the timed assessment. Twenty questions are sampled
+without replacement using the official 24/28/24/24 domain weights, rounded to
+whole questions with randomized equal priorities. For this preset that produces
+five questions per domain; all five-question allocations must be available.
+The countdown uses a recorded absolute deadline, so inactive tabs and device
+sleep consume time. When execution resumes after expiry, retained answers are
+finalized immediately. Manual submission reports the unanswered count and asks
+for confirmation. Active questions reveal no domains, answer keys, or feedback.
 
 Sessions live in tab memory. Refreshing or closing loses progress; supported
 browsers warn before leaving an active session. Changing configuration asks before
@@ -84,7 +101,10 @@ component conventions. Styling uses native Astro/CSS with shadcn-inspired contro
   Rendering and session rules do not load content themselves.
 - `src/lib/session.ts`: DOM-free Practice rules, injected randomness/clock/storage,
   versioned session validation, and the in-memory storage adapter.
-- `src/scripts/practice.ts`: browser events, focus, and leave warnings.
+- `src/lib/exam-session.ts`: weighted Exam sampling, revisable answers, exact-set
+  scoring, deadline enforcement, validated reconstruction, and immutable completion.
+- `src/scripts/practice.ts` and `src/scripts/exam.ts`: browser events, focus,
+  countdown display, and leave warnings.
 - `src/scripts/render-session.ts`: escaped HTML presentation of question, feedback,
   and summary state. Content is rendered as plain text, not interpreted HTML.
 
@@ -100,9 +120,18 @@ continuation. Invalid records fail rather than silently reset or repair themselv
 Version-1 records include the session ID, mode/configuration, ordered question
 snapshots with SHA-256 content revisions, domain/task metadata, selections,
 submission times, feedback, current index, lifecycle, and start/update/completion
-timestamps. `deadlineAt` is reserved and must be `null` for untimed Practice. Exam
-behavior is not implemented in this slice. The bank can change without changing
-an existing session's snapshots or results.
+timestamps. `deadlineAt` is `null` for untimed Practice and an absolute timestamp
+for Exam. `SessionRecord` is a versioned union of both mode records. The bank can
+change without changing an existing session's snapshots or results.
+
+`ExamSession.start(questions, dependencies)` creates the 20/30 preset. `select`,
+`previous`, and `next` retain revisions and allow unanswered questions. `submit`
+finalizes once; `checkDeadline` finalizes expired active sessions. All mutating
+operations check expiry, and repeated submission cannot change completed results.
+`ExamSession.restore(record, dependencies)` validates content revisions, domain/task
+assignments, selections, scoring, and timestamps, retaining the original deadline
+and immediately finalizing if it has elapsed. The clock and random source are
+injected for deterministic verification; no timer counter or DOM value owns state.
 
 `SessionStorage` exposes `save(record)` and `load(id)`. `MemorySessionStorage`
 keeps independent copies of active, completed, and abandoned records for the tab's
@@ -119,10 +148,11 @@ Every question has `id`, `domainId`, `taskId`, `type`, `text`, stable `options`,
 `correctOptionIds`, and `explanation`. `topic` and official public AWS `references`
 are optional. Domain and task IDs must belong together. Single-answer records
 have four options and one correct answer; multiple-response records have at least
-five options and two correct answers. Both types are eligible for Practice.
+five options and two correct answers. Both types are eligible for both modes.
 Multiple-response checkboxes allow any nonempty set, including every option.
-An empty submission is rejected; only the exact correct set earns credit, with
-no partial credit. These answer-key cardinality rules do not limit selections.
+Practice rejects an empty submission. Exam allows unanswered questions, including
+cleared selections, skips, and final submission; they earn zero. Only the exact
+correct set earns credit, with no partial credit. These answer-key cardinality rules do not limit selections.
 
 Validation rejects extra fields, blank required text, wrong task/domain pairings,
 mixed-domain files, duplicate question IDs across files, duplicate option IDs,
@@ -219,14 +249,20 @@ The shared scope labels follow the [official AIB-C01 exam guide](https://docs.aw
 The interface shows raw practice percentages, with equal question weight. It
 offers no AWS scaled score, passing threshold, endorsement, or readiness prediction.
 Multiple-response scoring requires an exact set match without limiting student
-selection counts. Exam timers and review remain future work.
+selection counts. Additional Exam presets, a numbered question grid, and detailed
+Exam review remain future work.
 
 The automated journeys cover Chrome desktop and a mobile viewport, keyboard
 selection/focus, both feedback outcomes, answer locks, no repeats, reload warnings,
 results/restart, every Practice scope/size, an 85-question all-domain completion,
-reduced pools, production empty availability, and built homepage SEO. The session
+reduced pools, production empty availability, built homepage SEO, Exam revision
+and skipped answers, confirmation cancellation, mode changes, and delayed timeout. The session
 tests cover JSON round-trip/continuation and malformed-record rejection for every
-configuration, unweighted sampling, domain filtering, and preserved question/answer snapshots.
+Practice configuration, unweighted sampling, domain filtering, and preserved
+question/answer snapshots. Exam tests use a controlled clock to prove deadline
+enforcement and reconstruction, repeated-submission idempotence, weighted
+no-repeat invariants, and exact-set scoring for partial, over-selected, and cleared
+responses.
 
 For reduced-pool QA, run `AIB_FIXTURE_COUNTS=16,8,0,25 npm run dev`. The four
 comma-separated counts apply only to development fixtures, in official domain

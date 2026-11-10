@@ -12,6 +12,12 @@ test('built production HTML has SEO content and truthful unavailable sessions', 
   expect(html).not.toContain('Fixture target');
   expect(html).not.toContain('Development preview');
   await expect(page).toHaveTitle(/Study AIB-C01/);
+  await expect(
+    page.getByRole('button', { name: 'Start exam', exact: true }),
+  ).toBeDisabled();
+  await expect(page.locator('#exam-availability')).toContainText(
+    'at least 5 questions in every domain',
+  );
   for (const domain of [
     'all',
     'domain-1',
