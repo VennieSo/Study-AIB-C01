@@ -4,16 +4,16 @@ A free, unofficial study site for **AWS Certified AI Business Strategist (AIB-C0
 Initial, original AI-generated practice questions follow AWS question formats.
 This project has no AWS affiliation or endorsement.
 
-This first slice implements an untimed, ten-question, single-domain Practice
-session: select an answer, submit for immediate feedback and an explanation,
-finish with raw results, and start another randomized session. Questions do not
+Practice offers untimed, ten-question sessions in one domain, with single-answer
+and multiple-response questions. Select answers, submit for immediate feedback
+and an explanation, finish with raw results, and start another randomized session. Questions do not
 repeat within a session. Submitted answers are locked.
 
 **Status:** local implementation; no live deployment yet. The public question
 banks are currently empty, so production correctly disables Practice. Development
 uses clearly labelled synthetic interface fixtures, which do not assess exam
-knowledge and never become production question data. More session sizes,
-multiple-response Practice, and Exam Mode are later slices.
+knowledge and never become production question data. More session sizes and Exam
+Mode are later slices.
 
 ## Screenshots
 
@@ -38,9 +38,9 @@ npm run dev
 
 Open the printed local URL (normally `http://localhost:4321`). Choose the first
 domain, then **Start practice**. Development provides twelve synthetic questions
-from which each session samples ten. Other domains truthfully show no availability.
-Use Tab, arrow keys, and Space to select an answer, then submit. Next unlocks only
-after feedback. Results show total, attempted, correct, incorrect, unanswered, and
+with both answer types, from which each session samples ten. Other domains
+truthfully show no availability. Use Tab, arrow keys for radio options, and Space
+to select answers, then submit. Next unlocks only after feedback. Results show total, attempted, correct, incorrect, unanswered, and
 the raw percentage against the whole session.
 
 Sessions live in tab memory. Refreshing or closing loses progress; supported
@@ -79,7 +79,7 @@ component conventions. Styling uses native Astro/CSS with shadcn-inspired contro
   information, and session configuration. Edit homepage copy in `src/content/site.ts`.
 - `src/lib/exam-scope.ts`: shared official domain/task registry, in guide order.
 - `src/lib/questions.ts`: canonical JSON Schema validation plus cross-record and
-  content invariants; single-answer Practice eligibility and launch-count checks.
+  content invariants; Practice eligibility and launch-count checks.
 - `src/data/load-bank.ts`: build-time choice of public banks or development fixtures.
   Rendering and session rules do not load content themselves.
 - `src/lib/session.ts`: DOM-free Practice rules, injected randomness/clock/storage,
@@ -116,8 +116,10 @@ Every question has `id`, `domainId`, `taskId`, `type`, `text`, stable `options`,
 `correctOptionIds`, and `explanation`. `topic` and official public AWS `references`
 are optional. Domain and task IDs must belong together. Single-answer records
 have four options and one correct answer; multiple-response records have at least
-five options and two correct answers. The content loader supports both types;
-this slice's session selector only offers single-answer questions.
+five options and two correct answers. Both types are eligible for Practice.
+Multiple-response checkboxes allow any nonempty set, including every option.
+An empty submission is rejected; only the exact correct set earns credit, with
+no partial credit. These answer-key cardinality rules do not limit selections.
 
 Validation rejects extra fields, blank required text, wrong task/domain pairings,
 mixed-domain files, duplicate question IDs across files, duplicate option IDs,
@@ -212,8 +214,8 @@ and [Static Assets billing and limits](https://developers.cloudflare.com/workers
 The shared scope labels follow the [official AIB-C01 exam guide](https://docs.aws.amazon.com/aws-certification/latest/ai-business-strategist-01/ai-business-strategist-01.html).
 The interface shows raw practice percentages, with equal question weight. It
 offers no AWS scaled score, passing threshold, endorsement, or readiness prediction.
-Future multiple-response scoring requires an exact set match without limiting
-student selection counts. Exam timers, review, and other presets remain future work.
+Multiple-response scoring requires an exact set match without limiting student
+selection counts. Exam timers, review, and other presets remain future work.
 
 The automated journeys cover Chrome desktop and a mobile viewport, keyboard
 selection/focus, both feedback outcomes, answer locks, no repeats, reload warnings,

@@ -118,3 +118,59 @@ describe('question content loading', () => {
     }
   });
 });
+
+it.each([
+  [
+    'fewer than five options',
+    (question: ReturnType<typeof syntheticBank>['questions'][number]) => {
+      question.options = question.options.slice(0, 4);
+      question.correctOptionIds = ['option-1', 'option-3'];
+    },
+  ],
+  [
+    'fewer than two correct IDs',
+    (question: ReturnType<typeof syntheticBank>['questions'][number]) => {
+      question.correctOptionIds = ['option-1'];
+    },
+  ],
+  [
+    'duplicate correct IDs',
+    (question: ReturnType<typeof syntheticBank>['questions'][number]) => {
+      question.correctOptionIds = ['option-1', 'option-1'];
+    },
+  ],
+  [
+    'duplicate options',
+    (question: ReturnType<typeof syntheticBank>['questions'][number]) => {
+      question.options[1]!.id = 'option-1';
+    },
+  ],
+  [
+    'unknown correct ID',
+    (question: ReturnType<typeof syntheticBank>['questions'][number]) => {
+      question.correctOptionIds = ['option-1', 'missing'];
+    },
+  ],
+  [
+    'blank option text',
+    (question: ReturnType<typeof syntheticBank>['questions'][number]) => {
+      question.options[0]!.text = ' ';
+    },
+  ],
+  [
+    'missing explanation',
+    (question: ReturnType<typeof syntheticBank>['questions'][number]) => {
+      question.explanation = '';
+    },
+  ],
+  [
+    'wrong task/domain relationship',
+    (question: ReturnType<typeof syntheticBank>['questions'][number]) => {
+      question.taskId = '4.1';
+    },
+  ],
+])('rejects invalid multiple-response content: %s', (_, mutate) => {
+  const bank = syntheticBank(1, 'multiple');
+  mutate(bank.questions[0]!);
+  expect(() => loadQuestionBanks({ 'domain-1': bank })).toThrow();
+});

@@ -8,7 +8,7 @@ export async function loadSiteBank() {
     ? {
         'domain-1': (
           await import('../../tests/fixtures/questions')
-        ).syntheticBank(),
+        ).syntheticBank(12, 'mixed'),
       }
     : publicBanks;
   return { questions: loadQuestionBanks(banks), synthetic };

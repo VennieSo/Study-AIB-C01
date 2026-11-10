@@ -63,7 +63,7 @@ export function renderSession(
       <p class="eyebrow">Domain ${domain.number} · Task ${escape(question.taskId)}</p>
       <h1 id="session-heading" tabindex="-1">${questionText}</h1>
       <form id="answer-form" novalidate>
-        <fieldset aria-describedby="answer-error"><legend class="sr-only">Answer options</legend>
+        <fieldset aria-describedby="answer-error"><legend class="sr-only">${question.type === 'multiple' ? 'Answer options: select one or more' : 'Answer options'}</legend>
           ${question.options
             .map((option, index) => {
               const selected = current.selectedOptionIds.includes(option.id);
@@ -77,7 +77,7 @@ export function renderSession(
                     .join(' · ')
                 : '';
               return `<label class="answer-card${submitted && correct ? ' correct-answer' : submitted && selected ? ' wrong-answer' : ''}">
-              <input type="radio" name="answer" value="${escape(option.id)}" ${selected ? 'checked' : ''} ${submitted ? 'disabled' : ''} />
+              <input type="${question.type === 'multiple' ? 'checkbox' : 'radio'}" name="answer" value="${escape(option.id)}" ${selected ? 'checked' : ''} ${submitted ? 'disabled' : ''} />
               <span class="answer-letter" aria-hidden="true">${String.fromCharCode(65 + index)}</span><span class="answer-text">${escape(option.text)}${label ? `<span class="answer-status">${correct ? checkIcon : crossIcon}${label}</span>` : ''}</span>
             </label>`;
             })
@@ -88,7 +88,7 @@ export function renderSession(
           submitted
             ? `<section class="feedback ${current.feedback}" aria-labelledby="feedback-heading" role="status">
           <h2 id="feedback-heading" tabindex="-1"><span class="feedback-icon" aria-hidden="true">${current.feedback === 'correct' ? checkIcon : crossIcon}</span>${current.feedback === 'correct' ? 'Correct' : 'Incorrect'}</h2>
-          <p class="correct-label">Correct answer: ${escape(correctAnswers.join('; '))}</p>
+          <p class="correct-label">Correct ${question.type === 'multiple' ? 'answers' : 'answer'}: ${escape(correctAnswers.join('; '))}</p>
           <p>${escape(question.explanation)}</p>
           ${question.references?.length ? `<ul>${question.references.map((reference) => `<li><a href="${escape(reference.url)}" target="_blank" rel="noopener noreferrer">${escape(reference.title)} <span class="sr-only">(opens in a new tab)</span></a></li>`).join('')}</ul>` : ''}
         </section>`

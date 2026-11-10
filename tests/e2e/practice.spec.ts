@@ -33,14 +33,20 @@ test('a visitor completes ten unique questions, sees feedback and results, and r
         'Select an answer before submitting.',
       );
     }
-    const answer = page.getByRole('radio', { name: /Fixture target/ });
-    await answer.focus();
-    await page.keyboard.press('Space');
+    const answers = page.getByRole(
+      (await page.getByRole('checkbox').count()) ? 'checkbox' : 'radio',
+      { name: /Fixture target/ },
+    );
+    for (const answer of await answers.all()) {
+      await answer.focus();
+      await page.keyboard.press('Space');
+    }
     await page.getByRole('button', { name: 'Submit answer' }).click();
     await expect(
       page.getByRole('heading', { name: 'Correct', exact: true }),
     ).toBeVisible();
-    await expect(answer).toBeDisabled();
+    for (const answer of await answers.all())
+      await expect(answer).toBeDisabled();
     await expect(
       page.getByText(/This is synthetic interface test/),
     ).toBeVisible();
@@ -69,6 +75,9 @@ test('a visitor completes ten unique questions, sees feedback and results, and r
 test('layout, incorrect feedback, keyboard focus, and leave warnings work', async ({
   page,
 }, testInfo) => {
+  await page.addInitScript(() => {
+    Math.random = () => 0.999;
+  });
   await page.goto('/');
   await expect(
     page.getByRole('heading', {
@@ -148,4 +157,82 @@ test('layout, incorrect feedback, keyboard focus, and leave warnings work', asyn
   await expect(
     page.getByRole('heading', { name: 'Your next practice session' }),
   ).toBeVisible();
+});
+
+test('multiple-response checkboxes support empty rejection, all selections, locked feedback, and exact answers', async ({
+  page,
+}, testInfo) => {
+  await page.addInitScript(() => {
+    Math.random = () => 0.999;
+  });
+  await page.goto('/');
+  await page.getByRole('button', { name: 'Start practice' }).click();
+  await page.getByRole('radio', { name: /Fixture target/ }).check();
+  await page.getByRole('button', { name: 'Submit answer' }).click();
+  await page
+    .getByRole('button', { name: 'Next question', exact: true })
+    .click();
+  const boxes = page.getByRole('checkbox');
+  await expect(boxes).toHaveCount(6);
+  await expect(
+    page.getByRole('group', { name: 'Answer options: select one or more' }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole('button', { name: 'Next question', exact: true }),
+  ).toBeDisabled();
+  await page.getByRole('button', { name: 'Submit answer' }).click();
+  await expect(page.getByRole('alert')).toHaveText(
+    'Select an answer before submitting.',
+  );
+  await expect(
+    page.getByText('Question 2 of 10', { exact: true }),
+  ).toBeVisible();
+  await boxes.first().focus();
+  await page.keyboard.press('Space');
+  await expect(boxes.first()).toBeChecked();
+  await page.keyboard.press('Space');
+  await expect(boxes.first()).not.toBeChecked();
+  for (const box of await boxes.all()) await box.check();
+  await expect(
+    page.getByRole('heading', { name: 'Incorrect', exact: true }),
+  ).toHaveCount(0);
+  await page.getByRole('button', { name: 'Submit answer' }).click();
+  await expect(
+    page.getByRole('heading', { name: 'Incorrect', exact: true }),
+  ).toBeFocused();
+  await expect(page.getByText(/^Correct answers:/)).toContainText(
+    'Fixture target 2.1; Fixture target 2.3; Fixture target 2.5',
+  );
+  for (const box of await boxes.all()) {
+    await expect(box).toBeChecked();
+    await expect(box).toBeDisabled();
+  }
+  await expect(
+    page.getByRole('button', { name: 'Submit answer' }),
+  ).toBeDisabled();
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= window.innerWidth,
+    ),
+  ).toBe(true);
+  await page.screenshot({
+    path: testInfo.outputPath('multiple-feedback.png'),
+    fullPage: true,
+  });
+  for (let index = 2; index < 10; index++) {
+    await page
+      .getByRole('button', { name: 'Next question', exact: true })
+      .click();
+    for (const answer of await page
+      .getByRole(index % 2 ? 'checkbox' : 'radio', { name: /Fixture target/ })
+      .all())
+      await answer.check();
+    await page.getByRole('button', { name: 'Submit answer' }).click();
+    await expect(
+      page.getByRole('heading', { name: 'Correct', exact: true }),
+    ).toBeVisible();
+  }
+  await page.getByRole('button', { name: 'See results', exact: true }).click();
+  await expect(page.getByText('90%', { exact: true })).toBeVisible();
+  await expect(page.getByLabel('Session counts')).toContainText('Incorrect1');
 });

@@ -28,8 +28,8 @@ function initialize() {
     const count = practiceQuestions(questions, domainId()).length;
     document.querySelector('#availability')!.textContent =
       count >= 10
-        ? `${count} single-answer questions available. 10 will be sampled.`
-        : `${count} questions available. This domain needs at least 10 single-answer questions.`;
+        ? `${count} questions available. 10 will be sampled.`
+        : `${count} questions available. This domain needs at least 10 questions.`;
     start.disabled = count < 10 || starting;
   }
 
@@ -101,7 +101,14 @@ function initialize() {
       event.target.name === 'answer' &&
       session
     ) {
-      session.select([event.target.value]);
+      session.select(
+        Array.from(
+          root.querySelectorAll<HTMLInputElement>(
+            'input[name="answer"]:checked',
+          ),
+          (input) => input.value,
+        ),
+      );
       root.querySelector('#answer-error')!.textContent = '';
     }
   });
