@@ -87,9 +87,8 @@ function initialize() {
       event.preventDefault();
       if (!start.disabled) void startSession(domainId());
     });
-  document
-    .querySelector('#practice-link')!
-    .addEventListener('click', (event) => {
+  for (const id of ['#practice-link', '#exam-link'])
+    document.querySelector(id)!.addEventListener('click', (event) => {
       if (session) {
         event.preventDefault();
         configure();

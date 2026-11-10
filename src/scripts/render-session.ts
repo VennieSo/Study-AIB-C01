@@ -1,5 +1,5 @@
 import { getDomain } from '../lib/exam-scope';
-import type { PracticeSession, SessionRecord } from '../lib/session';
+import type { PracticeSession, PracticeSessionRecord } from '../lib/session';
 
 const escape = (value: string) =>
   value.replace(
@@ -16,7 +16,7 @@ const crossIcon =
   '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m7 7 10 10M17 7 7 17" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" /></svg>';
 
 export function renderSession(
-  record: SessionRecord,
+  record: PracticeSessionRecord,
   result: ReturnType<PracticeSession['result']>,
 ) {
   const domain = getDomain(record.configuration.domainId);

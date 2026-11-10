@@ -14,7 +14,7 @@ export interface SessionQuestion {
   feedback: 'correct' | 'incorrect' | null;
 }
 
-export interface SessionRecord {
+export interface PracticeSessionRecord {
   schemaVersion: 1;
   id: string;
   mode: 'practice';
@@ -27,6 +27,9 @@ export interface SessionRecord {
   deadlineAt: string | null;
   completedAt: string | null;
 }
+
+export type SessionRecord =
+  PracticeSessionRecord | import('./exam-session').ExamSessionRecord;
 
 export interface SessionStorage {
   save(record: SessionRecord): void;
@@ -44,7 +47,7 @@ export class MemorySessionStorage implements SessionStorage {
   }
 }
 
-interface Dependencies {
+export interface Dependencies {
   storage: SessionStorage;
   clock?: () => number;
   random?: () => number;
@@ -101,7 +104,7 @@ async function revision(question: Question) {
 
 export class PracticeSession {
   private constructor(
-    private state: SessionRecord,
+    private state: PracticeSessionRecord,
     private dependencies: Dependencies,
   ) {}
 
@@ -129,7 +132,7 @@ export class PracticeSession {
     const startedAt = new Date(
       (dependencies.clock ?? Date.now)(),
     ).toISOString();
-    const state: SessionRecord = {
+    const state: PracticeSessionRecord = {
       schemaVersion: 1,
       id: (dependencies.createId ?? (() => crypto.randomUUID()))(),
       mode: 'practice',
@@ -155,7 +158,7 @@ export class PracticeSession {
   }
 
   static async restore(input: unknown, dependencies: Dependencies) {
-    const state: SessionRecord = recordSchema.parse(input);
+    const state: PracticeSessionRecord = recordSchema.parse(input);
     loadQuestionBanks({
       [state.configuration.domainId]: {
         schemaVersion: 1,
@@ -226,7 +229,7 @@ export class PracticeSession {
     return new PracticeSession(restored, dependencies);
   }
 
-  get record(): SessionRecord {
+  get record(): PracticeSessionRecord {
     return structuredClone(this.state);
   }
 

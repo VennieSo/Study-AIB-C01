@@ -5,11 +5,7 @@ import { loadQuestionBanks } from '../lib/questions';
 export async function loadSiteBank() {
   const synthetic = import.meta.env.DEV || import.meta.env.MODE === 'fixture';
   const banks = synthetic
-    ? {
-        'domain-1': (
-          await import('../../tests/fixtures/questions')
-        ).syntheticBank(12, 'mixed'),
-      }
+    ? (await import('../../tests/fixtures/questions')).syntheticBanks()
     : publicBanks;
   return { questions: loadQuestionBanks(banks), synthetic };
 }
