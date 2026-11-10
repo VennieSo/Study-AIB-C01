@@ -9,16 +9,16 @@ domains (20/40/60/85 questions), with single-answer and multiple-response questi
 and an explanation, finish with raw results, and start another randomized session. Questions do not
 repeat within a session. Submitted Practice answers are locked.
 
-Exam offers an all-domain **20-question / 30-minute** assessment. Skip questions,
-return with Previous/Next, and revise selections until confirming submission or
+Exam offers paired all-domain presets: **20 questions / 30 minutes**, **40 / 65**,
+**60 / 95**, and **85 / 130** (the default). Skip questions, return with Previous/Next
+or the numbered question grid, and revise selections until confirming submission or
 the deadline expires. Results count unanswered questions separately and score
 against the full session size.
 
 **Status:** local implementation; no live deployment yet. The public question
 banks are currently empty, so production correctly disables both modes. Development
 uses clearly labelled synthetic interface fixtures, which do not assess exam
-knowledge and never become production question data. Further Exam presets and
-detailed Exam answer review are later slices.
+knowledge and never become production question data. Detailed Exam answer review is a later slice.
 
 ## Screenshots
 
@@ -51,10 +51,13 @@ no weighted quotas. Use Tab, arrow keys for radio options, and Space
 to select answers, then submit. Next unlocks only after feedback. Results show total, attempted, correct, incorrect, unanswered, and
 the raw percentage against the whole session, plus performance by participating domain.
 
-Choose **Start exam** for the timed assessment. Twenty questions are sampled
-without replacement using the official 24/28/24/24 domain weights, rounded to
-whole questions with randomized equal priorities. For this preset that produces
-five questions per domain; all five-question allocations must be available.
+Choose an **Exam length**, then **Start exam** for the timed assessment. Questions
+are sampled without replacement using the official 24/28/24/24 domain weights,
+rounded to whole questions with random tie-breaking among domains with capacity.
+Unsupported presets are disabled using actual domain counts; sessions never shrink
+or repeat questions to fill a preset. The numbered question grid shows answered
+questions with a check mark and supports mouse, touch, and keyboard navigation.
+Selections and the original deadline stay unchanged when moving between questions.
 The countdown uses a recorded absolute deadline, so inactive tabs and device
 sleep consume time. When execution resumes after expiry, retained answers are
 finalized immediately. Manual submission reports the unanswered count and asks
@@ -124,7 +127,8 @@ timestamps. `deadlineAt` is `null` for untimed Practice and an absolute timestam
 for Exam. `SessionRecord` is a versioned union of both mode records. The bank can
 change without changing an existing session's snapshots or results.
 
-`ExamSession.start(questions, dependencies)` creates the 20/30 preset. `select`,
+`ExamSession.start(questions, dependencies, questionCount?)` defaults to 85/130;
+the optional count selects one of the four paired presets. `select`, `goTo`,
 `previous`, and `next` retain revisions and allow unanswered questions. `submit`
 finalizes once; `checkDeadline` finalizes expired active sessions. All mutating
 operations check expiry, and repeated submission cannot change completed results.
@@ -249,8 +253,7 @@ The shared scope labels follow the [official AIB-C01 exam guide](https://docs.aw
 The interface shows raw practice percentages, with equal question weight. It
 offers no AWS scaled score, passing threshold, endorsement, or readiness prediction.
 Multiple-response scoring requires an exact set match without limiting student
-selection counts. Additional Exam presets, a numbered question grid, and detailed
-Exam review remain future work.
+selection counts. Detailed Exam review remains future work.
 
 The automated journeys cover Chrome desktop and a mobile viewport, keyboard
 selection/focus, both feedback outcomes, answer locks, no repeats, reload warnings,

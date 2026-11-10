@@ -1,5 +1,6 @@
 ---
 import { site } from '../content/site';
+import { examPresets, examAvailability } from '../lib/exam-session';
 import { domains } from '../lib/exam-scope';
 import { practiceQuestions, practiceSizes } from '../lib/questions';
 import { loadSiteBank } from '../data/load-bank';
@@ -69,10 +70,14 @@ const payload = JSON.stringify(questions).replace(/</g, '\\u003c');
             <div class="panel-top"><span class="pill">Exam</span><span class="setup-kicker">A timed assessment</span></div>
             <h2 id="exam-configuration-heading" tabindex="-1">Your next exam session</h2>
             <p class="muted">All domains. Revise or skip answers until you submit.</p>
-            <div class="session-details"><div><span class="field-label">Session length</span><strong>20 questions</strong></div><div><span class="field-label">Time limit</span><strong>30 minutes</strong></div></div>
+            <p class="field-note">Choose a paired question count and time limit for your study session.</p>
           </div>
           <div class="setup-controls">
             <form id="exam-configuration-form">
+              <label class="field-label" for="exam-preset">Exam length</label>
+              <select id="exam-preset" name="exam-preset">
+                {examPresets.map((preset) => <option value={preset.questionCount} selected={preset.questionCount === 85} disabled={!examAvailability(questions, preset.questionCount).available}>{preset.questionCount} questions / {preset.durationMinutes} minutes</option>)}
+              </select>
               <p id="exam-availability" class="field-note" aria-live="polite"></p>
               <p class="lifetime">{site.lifetime} The timer continues while this tab is inactive or your device sleeps.</p>
               <button type="submit" id="start-exam" class="button primary" disabled>Start exam <span aria-hidden="true">→</span></button>

@@ -1,11 +1,17 @@
-import { ExamSession, examAvailability } from '../lib/exam-session';
+import {
+  ExamSession,
+  examAvailability,
+  type ExamQuestionCount,
+} from '../lib/exam-session';
 import { MemorySessionStorage } from '../lib/session';
 import type { Question } from '../lib/questions';
-import { formatRemaining, renderExam } from './render-exam';
+import { formatRemaining, renderExam, renderExamGrid } from './render-exam';
 
 function initialize() {
   const home = document.querySelector<HTMLElement>('#home-view')!;
   const root = document.querySelector<HTMLElement>('#exam-session-view')!;
+  const preset = document.querySelector<HTMLSelectElement>('#exam-preset')!;
+  const selectedCount = () => Number(preset.value) as ExamQuestionCount;
   const start = document.querySelector<HTMLButtonElement>('#start-exam')!;
   const error = document.querySelector<HTMLElement>(
     '#exam-configuration-error',
@@ -19,7 +25,7 @@ function initialize() {
   let renderedStatus: string | undefined;
 
   function availability() {
-    const availability = examAvailability(questions);
+    const availability = examAvailability(questions, selectedCount());
     document.querySelector('#exam-availability')!.textContent =
       availability.message;
     start.disabled = starting || !availability.available;
@@ -45,7 +51,11 @@ function initialize() {
     availability();
     error.textContent = '';
     try {
-      session = await ExamSession.start(questions, { storage });
+      session = await ExamSession.start(
+        questions,
+        { storage },
+        selectedCount(),
+      );
       render();
       window.scrollTo({ top: 0 });
     } catch (cause) {
@@ -93,6 +103,7 @@ function initialize() {
     document.querySelector<HTMLElement>(heading)!.focus();
   }
 
+  preset.addEventListener('change', availability);
   document
     .querySelector('#exam-configuration-form')!
     .addEventListener('submit', (event) => {
@@ -129,7 +140,10 @@ function initialize() {
         (question) => question.selectedOptionIds.length > 0,
       ).length;
       root.querySelector('.progress-heading span:last-child')!.textContent =
-        `${answered} answered · ${20 - answered} unanswered`;
+        `${answered} answered · ${session.record.questions.length - answered} unanswered`;
+      root.querySelector('.exam-navigation')!.outerHTML = renderExamGrid(
+        session.record,
+      );
     } catch {
       tick();
     }
@@ -147,6 +161,10 @@ function initialize() {
     )
       return;
     switch (button.dataset['action']) {
+      case 'go-to-exam':
+        session.goTo(Number(button.dataset['index']));
+        render();
+        break;
       case 'previous-exam':
         session.previous();
         render();
