@@ -174,3 +174,50 @@ it.each([
   mutate(bank.questions[0]!);
   expect(() => loadQuestionBanks({ 'domain-1': bank })).toThrow();
 });
+
+it('reports every supported size from actual reduced pool counts without padding', async () => {
+  const { practiceAvailability } = await import('../src/lib/questions');
+  const { syntheticBanks } = await import('./fixtures/questions');
+  const banks = syntheticBanks(16);
+  const questions = loadQuestionBanks(banks);
+  expect(practiceAvailability(questions, 'domain-3')).toEqual({
+    count: 16,
+    sizes: [
+      { questionCount: 10, available: true },
+      { questionCount: 15, available: true },
+      { questionCount: 20, available: false },
+      { questionCount: 25, available: false },
+    ],
+  });
+  expect(practiceAvailability(questions, 'all')).toEqual({
+    count: 64,
+    sizes: [
+      { questionCount: 20, available: true },
+      { questionCount: 40, available: true },
+      { questionCount: 60, available: true },
+      { questionCount: 85, available: false },
+    ],
+  });
+});
+
+it('provides 25 synthetic questions for each domain and covers every valid task', async () => {
+  const { syntheticBanks } = await import('./fixtures/questions');
+  const questions = loadQuestionBanks(syntheticBanks());
+  expect(() => validateLaunchCounts(questions)).not.toThrow();
+  expect(questions).toHaveLength(100);
+  expect([...new Set(questions.map((question) => question.taskId))]).toEqual([
+    '1.1',
+    '1.2',
+    '1.3',
+    '2.1',
+    '2.2',
+    '2.3',
+    '3.1',
+    '3.2',
+    '3.3',
+    '4.1',
+    '4.2',
+    '4.3',
+    '4.4',
+  ]);
+});

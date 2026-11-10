@@ -54,12 +54,9 @@ try {
     /<script\b[^>]*\bid="question-data"[^>]*>([\s\S]*?)<\/script>/,
   )?.[1];
   const expected = values.fixtures
-    ? loadQuestionBanks({
-        'domain-1': (await import('../tests/fixtures/questions')).syntheticBank(
-          12,
-          'mixed',
-        ),
-      })
+    ? loadQuestionBanks(
+        (await import('../tests/fixtures/questions')).syntheticBanks(),
+      )
     : loadQuestionBanks(publicBanks);
   if (
     !payload ||
