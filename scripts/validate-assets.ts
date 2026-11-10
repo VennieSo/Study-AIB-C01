@@ -55,9 +55,10 @@ try {
   )?.[1];
   const expected = values.fixtures
     ? loadQuestionBanks({
-        'domain-1': (
-          await import('../tests/fixtures/questions')
-        ).syntheticBank(),
+        'domain-1': (await import('../tests/fixtures/questions')).syntheticBank(
+          12,
+          'mixed',
+        ),
       })
     : loadQuestionBanks(publicBanks);
   if (

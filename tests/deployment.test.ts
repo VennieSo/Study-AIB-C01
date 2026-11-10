@@ -60,7 +60,7 @@ test('production refuses a synthetic question payload even when it has an allowe
   const directory = artifact();
   writeFileSync(
     join(directory, 'index.html'),
-    `<script id="question-data" type="application/json">${JSON.stringify(syntheticBank().questions)}</script>`,
+    `<script id="question-data" type="application/json">${JSON.stringify(syntheticBank(12, 'mixed').questions)}</script>`,
   );
   const result = validate(directory);
   expect(result.status).toBe(1);
@@ -71,7 +71,7 @@ test('explicit synthetic preview accepts only its labelled fixture content', () 
   const directory = artifact();
   writeFileSync(
     join(directory, 'index.html'),
-    `<meta name="robots" content="noindex, nofollow"><p>Development preview · synthetic questions</p><script id="question-data" type="application/json">${JSON.stringify(syntheticBank().questions)}</script>`,
+    `<meta name="robots" content="noindex, nofollow"><p>Development preview · synthetic questions</p><script id="question-data" type="application/json">${JSON.stringify(syntheticBank(12, 'mixed').questions)}</script>`,
   );
   const result = validate(directory, '--fixtures');
   expect(result.status, result.stderr).toBe(0);
@@ -81,7 +81,7 @@ test('synthetic preview refuses fixture data without a visible notice and noinde
   const directory = artifact();
   writeFileSync(
     join(directory, 'index.html'),
-    `<script id="question-data" type="application/json">${JSON.stringify(syntheticBank().questions)}</script>`,
+    `<script id="question-data" type="application/json">${JSON.stringify(syntheticBank(12, 'mixed').questions)}</script>`,
   );
   const result = validate(directory, '--fixtures');
   expect(result.status).toBe(1);
