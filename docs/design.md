@@ -60,7 +60,16 @@ files included. Edit the shared tokens and component styles in
   with comfortable line height and blank-line paragraph spacing. Omit the extra
   answer instruction. Label the exit action End practice in Practice and End exam
   in Exam, including completed results. Keep the existing exit/configuration action
-  and the separate Practice again or Exam again action.
+  and the separate Practice again or Test again action.
+- Keep active Practice progress to the current question number and progress bar.
+  Place the compact Show/Hide domain & task control beside the question eyebrow,
+  with a visible keyboard focus ring and accessible expanded state. Show the
+  Domain x / Task y.z eyebrow initially and retain the display choice in tab
+  memory across question navigation, feedback and fresh Practice sessions.
+- Center the active Exam countdown in large, readable, tabular digits. Display
+  only the time in the countdown, with a separate quiet Exam label and a meaningful
+  accessible Time remaining label. On narrow screens, place the countdown on its
+  own centered row below the mode label and End exam control.
 - Preserve white space, comfortable line height, and full-width controls on small
   screens. Avoid shrinking content to fit extra columns.
 

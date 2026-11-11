@@ -8,6 +8,12 @@ test('a visitor completes ten unique questions, sees feedback and results, and r
     page.getByText('Development preview · synthetic questions'),
   ).toBeVisible();
   await page.getByRole('button', { name: 'Start practice' }).click();
+  const metadata = page.locator('#question-metadata');
+  await expect(metadata).toBeVisible();
+  await expect(metadata).toHaveText(/^Domain \d · Task \d\.\d$/);
+  await expect(page.locator('.progress-heading')).toHaveText(
+    'Question 1 of 10',
+  );
   const seen = new Set<string>();
   for (let index = 0; index < 10; index++) {
     const question = page.getByRole('heading', { level: 1 });
@@ -41,12 +47,44 @@ test('a visitor completes ten unique questions, sees feedback and results, and r
       await answer.focus();
       await page.keyboard.press('Space');
     }
+    if (index === 0) {
+      const hideMetadata = page.getByRole('button', {
+        name: 'Hide domain & task',
+        exact: true,
+      });
+      await hideMetadata.focus();
+      await page.keyboard.press('Enter');
+      await expect(metadata).toBeHidden();
+      await expect(
+        page.getByRole('button', { name: 'Show domain & task', exact: true }),
+      ).toHaveAttribute('aria-expanded', 'false');
+      for (const answer of await answers.all())
+        await expect(answer).toBeChecked();
+    } else {
+      await expect(metadata).toBeHidden();
+    }
     await page.getByRole('button', { name: 'Submit answer' }).click();
     await expect(
       page.getByRole('heading', { name: 'Correct', exact: true }),
     ).toBeVisible();
     for (const answer of await answers.all())
       await expect(answer).toBeDisabled();
+    if (index === 0) {
+      await page
+        .getByRole('button', { name: 'Show domain & task', exact: true })
+        .click();
+      await expect(metadata).toBeVisible();
+      await expect(
+        page.getByRole('button', { name: 'Hide domain & task', exact: true }),
+      ).toHaveAttribute('aria-expanded', 'true');
+      for (const answer of await answers.all()) {
+        await expect(answer).toBeChecked();
+        await expect(answer).toBeDisabled();
+      }
+      await page
+        .getByRole('button', { name: 'Hide domain & task', exact: true })
+        .click();
+    }
     await expect(
       page.getByText(/This is synthetic interface test/),
     ).toBeVisible();
@@ -75,6 +113,12 @@ test('a visitor completes ten unique questions, sees feedback and results, and r
   await expect(
     page.getByText('Question 1 of 10', { exact: true }),
   ).toBeVisible();
+  await expect(metadata).toBeHidden();
+  await page.screenshot({
+    path: testInfo.outputPath('metadata-hidden.png'),
+    fullPage: true,
+    scale: 'css',
+  });
   page.once('dialog', (dialog) => dialog.accept());
   await page.getByRole('button', { name: 'End practice' }).click();
   await expect(
@@ -313,16 +357,16 @@ test('a visitor can configure every Practice scope and size with actual availabi
       await expect(
         page.getByText(`Question 1 of ${size}`, { exact: true }),
       ).toBeVisible();
-      if (scope !== 'all')
-        await expect(page.locator('.progress-heading .pill')).toContainText(
-          scope === 'domain-4'
-            ? 'Business Readiness'
-            : scope === 'domain-3'
-              ? 'AI Governance'
-              : scope === 'domain-2'
-                ? 'AI Strategy'
-                : 'AI Fundamentals',
-        );
+      await expect(page.locator('.progress-heading')).toHaveText(
+        `Question 1 of ${size}`,
+      );
+      await expect(page.locator('#question-metadata')).toHaveText(
+        scope === 'all'
+          ? /^Domain \d · Task \d\.\d$/
+          : new RegExp(
+              `^Domain ${scope.slice(-1)} · Task ${scope.slice(-1)}\\.\\d$`,
+            ),
+      );
       page.once('dialog', (dialog) => dialog.accept());
       await page.getByRole('button', { name: 'End practice' }).click();
     }

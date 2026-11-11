@@ -23,6 +23,7 @@ function initialize() {
   const storage = new MemorySessionStorage();
   let session: PracticeSession | undefined;
   let starting = false;
+  let showQuestionMetadata = true;
 
   function domainId(): PracticeScope {
     if (selector.value === 'all') return 'all';
@@ -67,6 +68,7 @@ function initialize() {
       session.record,
       session.result(),
       session.domainResults(),
+      showQuestionMetadata,
     );
     home.hidden = true;
     root.hidden = false;
@@ -169,6 +171,13 @@ function initialize() {
     );
     if (!button || button.disabled) return;
     switch (button.dataset['action']) {
+      case 'toggle-metadata':
+        showQuestionMetadata = !showQuestionMetadata;
+        root.querySelector<HTMLElement>('#question-metadata')!.hidden =
+          !showQuestionMetadata;
+        button.setAttribute('aria-expanded', String(showQuestionMetadata));
+        button.textContent = `${showQuestionMetadata ? 'Hide' : 'Show'} domain & task`;
+        break;
       case 'next':
         session.next();
         render();

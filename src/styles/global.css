@@ -584,14 +584,27 @@ select {
 .session-mode > span[aria-hidden='true'] {
   color: #b3b3b8;
 }
-#exam-time {
-  font-variant-numeric: tabular-nums;
-}
 .session-top .button {
   min-height: 36px;
   padding: 8px 12px;
   font-size: 0.75rem;
   box-shadow: none;
+}
+.exam-session-top {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+}
+.exam-session-top .button {
+  justify-self: end;
+}
+#exam-time {
+  color: var(--ink);
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.04em;
+  line-height: 1.2;
+  text-align: center;
 }
 .progress-heading {
   display: flex;
@@ -602,10 +615,27 @@ select {
   color: var(--muted);
   font-size: 0.75rem;
 }
-.progress-heading .pill {
-  max-width: 70%;
-  background: var(--background);
+.question-metadata-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 16px;
+}
+.metadata-toggle {
+  margin-left: auto;
+  padding: 4px 0;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  font: inherit;
   font-size: 0.6875rem;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+.metadata-toggle:hover {
+  color: var(--ink);
 }
 progress {
   display: block;
@@ -1161,6 +1191,18 @@ fieldset {
     padding: 8px 10px;
     font-size: 0.6875rem;
   }
+  .exam-session-top {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    row-gap: 16px;
+  }
+  .exam-session-top .button {
+    grid-column: 2;
+    grid-row: 1;
+  }
+  #exam-time {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
   .progress-heading {
     align-items: start;
     gap: 12px;
@@ -1168,11 +1210,6 @@ fieldset {
   }
   .progress-heading > span:first-child {
     white-space: nowrap;
-  }
-  .progress-heading .pill {
-    max-width: 65%;
-    font-size: 0.625rem;
-    line-height: 1.5;
   }
   .question-panel {
     padding: 24px 18px;

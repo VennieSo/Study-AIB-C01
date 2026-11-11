@@ -66,7 +66,7 @@ export function renderExam(
         .join('')}
     </section>
     <p class="result-footnote">Each question has equal weight. Unanswered questions earn zero. Multiple-response questions require the exact correct set, with no partial credit. Percentages include unanswered questions and are rounded to one decimal where needed. This is a practice result, not an AWS scaled score or a prediction of passing.</p>
-    <div class="question-actions"><button class="button primary" data-action="restart-exam">Exam again <span aria-hidden="true">↻</span></button><button class="button" data-action="configure-exam">End exam</button></div>
+    <div class="question-actions"><button class="button primary" data-action="restart-exam">Test again <span aria-hidden="true">↻</span></button><button class="button" data-action="configure-exam">End exam</button></div>
   </div>
   <section class="exam-review" aria-labelledby="exam-review-heading">
     <h2 id="exam-review-heading">Answer review</h2>
@@ -107,7 +107,7 @@ export function renderExam(
   const answered = record.questions.filter(
     (item) => item.selectedOptionIds.length > 0,
   ).length;
-  return `<div class="session-top"><span class="session-mode">Exam <span aria-hidden="true">/</span> <span role="timer" aria-label="Time remaining" id="exam-time">${formatRemaining(remaining)}</span> remaining</span><button class="button" data-action="configure-exam">End exam</button></div>
+  return `<div class="session-top exam-session-top"><span class="session-mode">Exam</span><span role="timer" aria-label="Time remaining" id="exam-time">${formatRemaining(remaining)}</span><button class="button" data-action="configure-exam">End exam</button></div>
     <div class="progress-heading"><span>Question ${record.currentIndex + 1} of ${record.questions.length}</span><span>${answered} answered · ${record.questions.length - answered} unanswered</span></div>
     <progress value="${record.currentIndex + 1}" max="${record.questions.length}" aria-label="Question progress"></progress>
     <div class="question-panel">

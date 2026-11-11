@@ -147,7 +147,7 @@ test('exam supports skipping, revision, cancellation, unrestricted selections, a
     path: testInfo.outputPath('exam-results.png'),
     fullPage: true,
   });
-  await page.getByRole('button', { name: 'Exam again' }).click();
+  await page.getByRole('button', { name: 'Test again' }).click();
   await expect(
     page.getByText('Question 1 of 20', { exact: true }),
   ).toBeVisible();
@@ -248,11 +248,41 @@ for (const [count, minutes] of [
       Math.random = () => 0.999;
     });
     await page.goto('/');
+    if (testInfo.project.name === 'mobile')
+      await page.setViewportSize({ width: 320, height: 900 });
     const preset = page.getByLabel('Exam length', { exact: true });
     await expect(preset).toHaveValue('85');
     await preset.selectOption(String(count));
     await page.getByRole('button', { name: 'Start exam', exact: true }).click();
     await expect(page.getByLabel('Time remaining')).toHaveText(`${minutes}:00`);
+    const timer = page.getByRole('timer', {
+      name: 'Time remaining',
+      exact: true,
+    });
+    await expect(timer).toBeVisible();
+    await expect(page.locator('.session-top')).toHaveText(
+      new RegExp(`^Exam\\s*${minutes}:00\\s*End exam$`),
+    );
+    await expect(timer).toHaveCSS('font-variant-numeric', 'tabular-nums');
+    expect(
+      await timer.evaluate((element) =>
+        parseFloat(getComputedStyle(element).fontSize),
+      ),
+    ).toBeGreaterThanOrEqual(40);
+    const timerBox = (await timer.boundingBox())!;
+    const headerBox = (await page.locator('.session-top').boundingBox())!;
+    const exitBox = (await page
+      .getByRole('button', { name: 'End exam', exact: true })
+      .boundingBox())!;
+    expect(
+      Math.abs(
+        timerBox.x + timerBox.width / 2 - headerBox.x - headerBox.width / 2,
+      ),
+    ).toBeLessThanOrEqual(1);
+    expect(
+      timerBox.x + timerBox.width <= exitBox.x ||
+        timerBox.y >= exitBox.y + exitBox.height,
+    ).toBe(true);
     const grid = page.getByRole('navigation', {
       name: 'Exam questions',
       exact: true,
@@ -308,6 +338,7 @@ for (const [count, minutes] of [
       `${minutes - 1}:00`,
     );
     await expect(page.locator('#exam-session-view .pill')).toHaveCount(0);
+    await expect(timer).toBeVisible();
     await expect(page.getByText(/^Correct answer/)).toHaveCount(0);
     await expect(
       page.getByText(/This is synthetic interface test/),
@@ -327,7 +358,7 @@ for (const [count, minutes] of [
     await expect(page.getByLabel('Session counts')).toContainText('Attempted2');
     await page.clock.fastForward(60_000);
     await expect(page.getByLabel('Session counts')).toContainText('Attempted2');
-    await page.getByRole('button', { name: 'Exam again' }).click();
+    await page.getByRole('button', { name: 'Test again' }).click();
     await expect(
       page.getByText(`Question 1 of ${count}`, { exact: true }),
     ).toBeVisible();
