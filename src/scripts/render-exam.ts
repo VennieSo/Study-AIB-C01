@@ -66,7 +66,7 @@ export function renderExam(
         .join('')}
     </section>
     <p class="result-footnote">Each question has equal weight. Unanswered questions earn zero. Multiple-response questions require the exact correct set, with no partial credit. Percentages include unanswered questions and are rounded to one decimal where needed. This is a practice result, not an AWS scaled score or a prediction of passing.</p>
-    <div class="question-actions"><button class="button primary" data-action="restart-exam">Exam again <span aria-hidden="true">↻</span></button><button class="button" data-action="configure-exam">Change configuration</button></div>
+    <div class="question-actions"><button class="button primary" data-action="restart-exam">Exam again <span aria-hidden="true">↻</span></button><button class="button" data-action="configure-exam">End exam</button></div>
   </div>
   <section class="exam-review" aria-labelledby="exam-review-heading">
     <h2 id="exam-review-heading">Answer review</h2>
@@ -93,7 +93,8 @@ export function renderExam(
           .map((option, optionIndex) => {
             const selected = item.selectedOptionIds.includes(option.id);
             const correct = question.correctOptionIds.includes(option.id);
-            return `<li class="review-option${correct ? ' correct-answer' : selected ? ' wrong-answer' : ''}"><span class="answer-letter" aria-hidden="true">${String.fromCharCode(65 + optionIndex)}</span><span class="answer-text">${escape(option.text)}${correct || selected ? `<span class="answer-status">${correct ? '✓ Correct answer' : ''}${correct && selected ? ' · ' : ''}${selected ? `${correct ? '' : '✕ '}Your answer` : ''}</span>` : ''}</span></li>`;
+            const missed = question.type === 'multiple' && correct && !selected;
+            return `<li class="review-option${missed ? ' missed-answer' : correct ? ' correct-answer' : selected ? ' wrong-answer' : ''}"><span class="answer-letter" aria-hidden="true">${String.fromCharCode(65 + optionIndex)}</span><span class="answer-text">${escape(option.text)}${correct || selected ? `<span class="answer-status">${missed ? '✓ Missed correct answer' : correct ? '✓ Correct answer' : ''}${correct && selected ? ' · ' : ''}${selected ? `${correct ? '' : '✕ '}Your answer` : ''}</span>` : ''}</span></li>`;
           })
           .join('')}</ul>
         <div class="review-explanation"><h4>Explanation</h4><p>${escape(question.explanation)}</p>${question.references?.length ? `<h4>AWS references</h4><ul>${question.references.map((reference) => `<li><a href="${escape(reference.url)}" target="_blank" rel="noopener noreferrer">${escape(reference.title)} <span class="sr-only">(opens in a new tab)</span></a></li>`).join('')}</ul>` : ''}</div>

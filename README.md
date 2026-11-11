@@ -32,6 +32,8 @@ Development preview using labelled synthetic interface fixtures:
 
 <img src="docs/screenshots/development-mobile-feedback.png" alt="Mobile Practice showing an incorrect answer, correct answer and explanation using synthetic interface fixtures" width="320" />
 
+<img src="docs/screenshots/development-mobile-multiple-feedback.png" alt="Practice multiple-response feedback at 320px with a selected correct option in green, a selected incorrect option in red, and missed correct options in yellow with text labels" width="320" />
+
 [View the all-domain results screen](docs/screenshots/development-all-domain-results.png).
 [View the single-column setup at 768px](docs/screenshots/development-wide-mobile-homepage.png).
 [View an active mobile Exam](docs/screenshots/development-exam-mobile.png) and
@@ -99,8 +101,9 @@ it locally. Do not deploy `.qa-dist/` as production.
 
 ## Architecture
 
-The interface uses an ink-on-white light theme with green/red answer feedback, self-hosted Inter and Plus
-Jakarta Sans. The [visual guide](docs/design.md) records the design tokens and
+The interface uses an ink-on-white light theme with green/red answer feedback and
+yellow missed correct multiple-response options, self-hosted Inter and Plus Jakarta
+Sans. The [visual guide](docs/design.md) records the design tokens and
 component conventions. Styling uses native Astro/CSS with shadcn-inspired controls.
 
 - `src/pages/index.astro`: meaningful static homepage HTML, metadata, domain

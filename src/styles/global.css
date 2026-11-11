@@ -36,6 +36,9 @@
   --incorrect: #b42318;
   --incorrect-surface: #fff5f4;
   --incorrect-border: #e7a29a;
+  --missed: #854d0e;
+  --missed-surface: #fef9c3;
+  --missed-border: #ca8a04;
   --radius: 20px;
   --shadow: 0 2px 4px rgb(23 22 24 / 2%), 0 8px 24px rgb(23 22 24 / 3%);
   --display:
@@ -720,6 +723,10 @@ fieldset {
   border-color: var(--correct-border);
   background: var(--correct-surface);
 }
+.answer-card.missed-answer {
+  border-color: var(--missed-border);
+  background: var(--missed-surface);
+}
 .answer-card.wrong-answer {
   border-color: var(--incorrect-border);
   background: var(--incorrect-surface);
@@ -728,9 +735,16 @@ fieldset {
 .correct-answer .answer-letter {
   color: var(--correct);
 }
+.missed-answer .answer-status,
+.missed-answer .answer-letter {
+  color: var(--missed);
+}
 .wrong-answer .answer-status,
 .wrong-answer .answer-letter {
   color: var(--incorrect);
+}
+.answer-card.missed-answer input {
+  border-color: var(--missed);
 }
 .answer-card.correct-answer input {
   border-color: var(--correct);
@@ -1394,6 +1408,11 @@ fieldset {
   color: var(--correct);
   border-color: var(--correct-border);
   background: var(--correct-surface);
+}
+.review-option.missed-answer {
+  color: var(--missed);
+  border-color: var(--missed-border);
+  background: var(--missed-surface);
 }
 .review-option.wrong-answer {
   color: var(--incorrect);

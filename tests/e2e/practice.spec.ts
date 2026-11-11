@@ -55,8 +55,18 @@ test('a visitor completes ten unique questions, sees feedback and results, and r
   await expect(
     page.getByRole('heading', { name: 'Practice complete' }),
   ).toBeVisible();
+  await expect(
+    page.getByRole('button', { name: 'End practice', exact: true }),
+  ).toBeVisible();
   await expect(page.locator('.score')).toHaveText('100%');
   await expect(page.getByLabel('Session counts')).toContainText('Attempted10');
+  if (testInfo.project.name === 'mobile')
+    await page.setViewportSize({ width: 320, height: 900 });
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= window.innerWidth,
+    ),
+  ).toBe(true);
   await page.screenshot({
     path: testInfo.outputPath('results.png'),
     fullPage: true,
@@ -152,7 +162,7 @@ test('layout, incorrect feedback, keyboard focus, and leave warnings work', asyn
   ).toBeVisible();
 });
 
-test('multiple-response checkboxes support empty rejection, all selections, locked feedback, and exact answers', async ({
+test('multiple-response checkboxes support empty rejection, all selections, missed answers, locked feedback, and exact answers', async ({
   page,
 }, testInfo) => {
   await page.addInitScript(() => {
@@ -216,18 +226,72 @@ test('multiple-response checkboxes support empty rejection, all selections, lock
     await page
       .getByRole('button', { name: 'Next question', exact: true })
       .click();
-    for (const answer of await page
-      .getByRole(index % 2 ? 'checkbox' : 'radio', { name: /Fixture target/ })
-      .all())
-      await answer.check();
+    if (index === 3) {
+      await boxes.nth(0).check();
+      await boxes.nth(1).check();
+    } else {
+      for (const answer of await page
+        .getByRole(index % 2 ? 'checkbox' : 'radio', { name: /Fixture target/ })
+        .all())
+        await answer.check();
+    }
     await page.getByRole('button', { name: 'Submit answer' }).click();
     await expect(
-      page.getByRole('heading', { name: 'Correct', exact: true }),
+      page.getByRole('heading', {
+        name: index === 3 ? 'Incorrect' : 'Correct',
+        exact: true,
+      }),
     ).toBeVisible();
+    if (index === 3) {
+      const cards = page.locator('.answer-card');
+      await expect(cards.nth(4)).toContainText('Missed correct answer');
+      await expect(cards.nth(4)).toHaveCSS(
+        'background-color',
+        'rgb(254, 249, 195)',
+      );
+      await expect(cards.nth(0)).toHaveCSS(
+        'background-color',
+        'rgb(240, 253, 244)',
+      );
+      await expect(cards.nth(1)).toHaveCSS(
+        'background-color',
+        'rgb(255, 245, 244)',
+      );
+      await expect(cards.nth(5)).toHaveCSS(
+        'background-color',
+        'rgb(255, 255, 255)',
+      );
+      await expect(
+        page.getByRole('heading', { name: 'Incorrect', exact: true }),
+      ).toHaveCSS('color', 'rgb(180, 35, 24)');
+      for (const box of await boxes.all()) await expect(box).toBeDisabled();
+      await expect(page.getByRole('checkbox', { checked: true })).toHaveCount(
+        2,
+      );
+      if (testInfo.project.name === 'mobile')
+        await page.setViewportSize({ width: 320, height: 900 });
+      expect(
+        await page.evaluate(
+          () => document.documentElement.scrollWidth <= window.innerWidth,
+        ),
+      ).toBe(true);
+      await page.screenshot({
+        path: testInfo.outputPath('partial-multiple-feedback.png'),
+        fullPage: true,
+        scale: 'css',
+      });
+    }
   }
   await page.getByRole('button', { name: 'See results', exact: true }).click();
-  await expect(page.locator('.score')).toHaveText('90%');
-  await expect(page.getByLabel('Session counts')).toContainText('Incorrect1');
+  await expect(page.locator('.score')).toHaveText('80%');
+  await expect(page.getByLabel('Session counts')).toContainText('Incorrect2');
+  await page.getByRole('button', { name: 'End practice', exact: true }).click();
+  await expect(
+    page.getByRole('heading', {
+      name: 'Your next practice session',
+      exact: true,
+    }),
+  ).toBeFocused();
 });
 
 test('a visitor can configure every Practice scope and size with actual availability', async ({

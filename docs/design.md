@@ -2,8 +2,10 @@
 
 A light, ink-on-white study workspace. Inspired by Cycle's strong typography and
 soft surfaces, with the restraint of shadcn controls. Use white, near-black, and
-neutral grays for the interface. Reserve green and red for correct and incorrect
-answer feedback; keep check/cross markers and text alongside color.
+neutral grays for the interface. Reserve green, red, and yellow for answer
+feedback: correct selections, incorrect selections, and missed correct
+multiple-response options. Keep markers and text
+alongside color.
 
 ## Foundation
 
@@ -17,6 +19,7 @@ answer feedback; keep check/cross markers and text alongside color.
 | Control borders          | `#d1d1d5`                          |
 | Correct answer text      | `#166534` on `#f0fdf4`             |
 | Incorrect answer text    | `#b42318` on `#fff5f4`             |
+| Missed answer text       | `#854d0e` on `#fef9c3`             |
 | Display face             | Plus Jakarta Sans, 700–800         |
 | Body and UI face         | Inter, 400–600                     |
 | Cards                    | 20px radius; subtle neutral shadow |
@@ -43,14 +46,21 @@ files included. Edit the shared tokens and component styles in
 - Keep native form semantics and keyboard operation. Interactive controls get a
   visible ink focus ring. Programmatically focused reading headings do not get
   a control-style ring.
-- Distinguish correct answers with green borders and text, a pale green fill, and
-  a check. Mark an incorrect selected answer with red borders and text, a pale red
-  fill, and a cross.
-  Correctness must remain understandable without color.
+- In revealed Practice feedback and finalized Exam review, distinguish selected
+  correct options with green borders and text, a pale green fill, and a check.
+  Mark an incorrect selected option with red borders and text, a pale red fill,
+  and a cross. Mark unselected correct multiple-response options with yellow
+  borders, a pale yellow fill, dark readable text, and “Missed correct answer”.
+  Keep unselected incorrect options neutral and single-answer feedback unchanged.
+  Overall incorrect feedback and review summaries remain red; unanswered Exam
+  questions retain their separate Unanswered status. Correctness and missed
+  selections must remain understandable without color. Active Exams conceal all
+  answer feedback until finalized.
 - Use 17px regular-weight Inter for question text on desktop and 16px on mobile,
   with comfortable line height and blank-line paragraph spacing. Omit the extra
-  answer instruction. Label the active session's exit action End practice;
-  retain Change configuration on completed results.
+  answer instruction. Label the exit action End practice in Practice and End exam
+  in Exam, including completed results. Keep the existing exit/configuration action
+  and the separate Practice again or Exam again action.
 - Preserve white space, comfortable line height, and full-width controls on small
   screens. Avoid shrinking content to fit extra columns.
 
