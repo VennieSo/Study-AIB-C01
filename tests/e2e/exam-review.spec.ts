@@ -17,7 +17,7 @@ test('submitted review preserves every answer subset and unanswered item, then s
     .getByRole('button', { name: 'Next question', exact: true })
     .click();
   await page.getByRole('checkbox').nth(0).check();
-  await page.getByRole('checkbox').nth(2).check();
+  await page.getByRole('checkbox').nth(1).check();
   await page
     .getByRole('button', { name: 'Next question', exact: true })
     .click();
@@ -41,6 +41,9 @@ test('submitted review preserves every answer subset and unanswered item, then s
 
   await expect(
     page.getByRole('heading', { name: 'Answer review', exact: true }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole('button', { name: 'End exam', exact: true }),
   ).toBeVisible();
   const review = page.getByRole('region', {
     name: 'Answer review',
@@ -79,8 +82,30 @@ test('submitted review preserves every answer subset and unanswered item, then s
     items
       .nth(1)
       .locator('.review-option')
-      .filter({ hasText: 'Correct answer' }),
+      .filter({ hasText: /[Cc]orrect answer/ }),
   ).toHaveCount(3);
+  const partialOptions = items.nth(1).locator('.review-option');
+  await expect(partialOptions.nth(4)).toContainText('Missed correct answer');
+  await expect(partialOptions.nth(4)).toHaveCSS(
+    'background-color',
+    'rgb(254, 249, 195)',
+  );
+  await expect(partialOptions.nth(0)).toHaveCSS(
+    'background-color',
+    'rgb(240, 253, 244)',
+  );
+  await expect(partialOptions.nth(1)).toHaveCSS(
+    'background-color',
+    'rgb(255, 245, 244)',
+  );
+  await expect(partialOptions.nth(5)).toHaveCSS(
+    'background-color',
+    'rgba(0, 0, 0, 0)',
+  );
+  await expect(items.nth(1).locator('.review-outcome')).toHaveCSS(
+    'color',
+    'rgb(180, 35, 24)',
+  );
   await expect(items.nth(1)).toContainText('Task 1.2');
   await expect(items.nth(1)).toContainText(
     'This is synthetic interface test 2.',
@@ -99,6 +124,20 @@ test('submitted review preserves every answer subset and unanswered item, then s
   await expect(
     items.nth(2).locator('.review-option').filter({ hasText: 'Your answer' }),
   ).toHaveCount(0);
+  await expect(
+    items
+      .nth(2)
+      .locator('.review-option')
+      .filter({ hasText: 'Correct answer' }),
+  ).toHaveCSS('background-color', 'rgb(240, 253, 244)');
+  await items.nth(8).locator('summary').click();
+  await expect(items.nth(8).locator('summary')).toHaveText(
+    'Question 9 Unanswered',
+  );
+  await expect(items.nth(8)).toContainText('Your answer: Unanswered');
+  await expect(
+    items.nth(8).getByText('✓ Missed correct answer', { exact: true }),
+  ).toHaveCount(3);
   await items.first().locator('summary').click();
   await expect(
     items.first().getByRole('link', { name: /AWS exam guide/ }),
@@ -108,6 +147,13 @@ test('submitted review preserves every answer subset and unanswered item, then s
   );
   await expect(review.getByRole('radio')).toHaveCount(0);
   await expect(review.getByRole('checkbox')).toHaveCount(0);
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= window.innerWidth,
+    ),
+  ).toBe(true);
+  if (testInfo.project.name === 'mobile')
+    await page.setViewportSize({ width: 320, height: 900 });
   expect(
     await page.evaluate(
       () => document.documentElement.scrollWidth <= window.innerWidth,
@@ -139,9 +185,7 @@ test('submitted review preserves every answer subset and unanswered item, then s
   page.once('dialog', (dialog) => dialog.accept());
   await page.getByRole('button', { name: 'Submit exam', exact: true }).click();
   await expect(page.getByLabel('Session counts')).toContainText('Unanswered20');
-  await page
-    .getByRole('button', { name: 'Change configuration', exact: true })
-    .click();
+  await page.getByRole('button', { name: 'End exam', exact: true }).click();
   await expect(
     page.getByRole('heading', { name: 'Your next exam session', exact: true }),
   ).toBeFocused();

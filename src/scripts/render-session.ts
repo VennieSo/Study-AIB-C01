@@ -49,7 +49,7 @@ export function renderSession(
         </tbody></table></div>
       </section>
       <p class="result-footnote">Each question has equal weight. This is a practice result, not an AWS scaled score or a prediction of passing.</p>
-      <div class="question-actions"><button class="button primary" data-action="restart">Practice again <span aria-hidden="true">↻</span></button><button class="button" data-action="configure">Change configuration</button></div>
+      <div class="question-actions"><button class="button primary" data-action="restart">Practice again <span aria-hidden="true">↻</span></button><button class="button" data-action="configure">End practice</button></div>
     </div>`;
   }
 
@@ -79,15 +79,21 @@ export function renderSession(
             .map((option, index) => {
               const selected = current.selectedOptionIds.includes(option.id);
               const correct = question.correctOptionIds.includes(option.id);
+              const missed =
+                question.type === 'multiple' && correct && !selected;
               const label = submitted
                 ? [
-                    correct ? 'Correct answer' : '',
+                    missed
+                      ? 'Missed correct answer'
+                      : correct
+                        ? 'Correct answer'
+                        : '',
                     selected ? 'Your answer' : '',
                   ]
                     .filter(Boolean)
                     .join(' · ')
                 : '';
-              return `<label class="answer-card${submitted && correct ? ' correct-answer' : submitted && selected ? ' wrong-answer' : ''}">
+              return `<label class="answer-card${submitted && missed ? ' missed-answer' : submitted && correct ? ' correct-answer' : submitted && selected ? ' wrong-answer' : ''}">
               <input type="${question.type === 'multiple' ? 'checkbox' : 'radio'}" name="answer" value="${escape(option.id)}" ${selected ? 'checked' : ''} ${submitted ? 'disabled' : ''} />
               <span class="answer-letter" aria-hidden="true">${String.fromCharCode(65 + index)}</span><span class="answer-text">${escape(option.text)}${label ? `<span class="answer-status">${correct ? checkIcon : crossIcon}${label}</span>` : ''}</span>
             </label>`;
