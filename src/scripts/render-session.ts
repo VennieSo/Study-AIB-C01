@@ -19,6 +19,7 @@ export function renderSession(
   record: PracticeSessionRecord,
   result: ReturnType<PracticeSession['result']>,
   domainResults: ReturnType<PracticeSession['domainResults']>,
+  showQuestionMetadata = true,
 ) {
   const scopeName =
     record.configuration.domainId === 'all'
@@ -68,10 +69,10 @@ export function renderSession(
     .filter((option) => question.correctOptionIds.includes(option.id))
     .map((option) => option.text);
   return `<div class="session-top"><span class="session-mode">Practice <span aria-hidden="true">/</span> Untimed</span><button class="button" data-action="configure">End practice</button></div>
-    <div class="progress-heading"><span>Question ${record.currentIndex + 1} of ${record.questions.length}</span><span class="pill">${escape(domain.name)}</span></div>
+    <div class="progress-heading"><span>Question ${record.currentIndex + 1} of ${record.questions.length}</span></div>
     <progress value="${record.currentIndex + 1}" max="${record.questions.length}" aria-label="Question progress"></progress>
     <div class="question-panel">
-      <p class="eyebrow">Domain ${domain.number} · Task ${escape(question.taskId)}</p>
+      <div class="question-metadata-row"><p class="eyebrow" id="question-metadata" ${showQuestionMetadata ? '' : 'hidden'}>Domain ${domain.number} · Task ${escape(question.taskId)}</p><button class="metadata-toggle" data-action="toggle-metadata" aria-expanded="${showQuestionMetadata}" aria-controls="question-metadata">${showQuestionMetadata ? 'Hide' : 'Show'} domain &amp; task</button></div>
       <h1 id="session-heading" tabindex="-1">${questionText}</h1>
       <form id="answer-form" novalidate>
         <fieldset aria-describedby="answer-error"><legend class="sr-only">${question.type === 'multiple' ? 'Answer options: select one or more' : 'Answer options'}</legend>

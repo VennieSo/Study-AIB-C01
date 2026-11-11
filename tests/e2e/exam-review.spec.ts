@@ -172,7 +172,7 @@ test('submitted review preserves every answer subset and unanswered item, then s
     path: testInfo.outputPath('exam-partial-answer-review.png'),
     scale: 'css',
   });
-  await page.getByRole('button', { name: 'Exam again' }).click();
+  await page.getByRole('button', { name: 'Test again' }).click();
   await expect(
     page.getByText('Question 1 of 20', { exact: true }),
   ).toBeVisible();
