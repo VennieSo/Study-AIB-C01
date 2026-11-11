@@ -17,10 +17,12 @@ against the full session size. Review every submitted question, the exact select
 options, correct answers, explanations, and optional AWS references. Domain results
 show totals, attempted, correct, incorrect, unanswered, and raw percentages.
 
-**Status:** local implementation; no live deployment yet. The public question
-banks are currently empty, so production correctly disables both modes. Development
-uses clearly labelled synthetic interface fixtures, which do not assess exam
-knowledge and never become production question data.
+**Live synthetic preview:** [Try Practice and Exam](https://study-aib-c01-preview.bigthink.workers.dev).
+The preview is clearly labelled, carries `noindex` metadata, and uses synthetic
+interface fixtures that do not assess exam knowledge. The public question banks
+are currently empty, so production correctly disables both modes and remains
+unpublished pending the initial bank in [#9](https://github.com/VennieSo/Study-AIB-C01/issues/9).
+Synthetic fixtures never become production question data.
 
 ## Screenshots
 
@@ -240,6 +242,13 @@ Account setup and first deployment:
 5. Publish production from `main` once the initial question bank passes
    `npm run validate:launch`. Production never falls back to synthetic content.
 
+Use the [minimum Workers role for deployment](https://developers.cloudflare.com/workers/authorization/workers/#wrangler):
+first creation requires Workers product-level **Admin**. After creating
+`study-aib-c01-preview`, reduce the CI token to **Editor** scoped to that Worker.
+Creating the separate `study-aib-c01` production Worker later requires Admin again;
+after creation, Editor can be scoped to both Workers. Do not create or deploy
+production until the initial bank passes the launch gate.
+
 ```sh
 gh secret set CLOUDFLARE_API_TOKEN --repo VennieSo/Study-AIB-C01
 gh secret set CLOUDFLARE_ACCOUNT_ID --repo VennieSo/Study-AIB-C01
@@ -251,9 +260,28 @@ Cloudflare environment variables. This does not demonstrate automatic GitHub
 deployment. Do not create a second Cloudflare Builds integration alongside this
 workflow: GitHub Actions is the deployment owner.
 
-**Deployment status:** configuration and local verification are prepared; a
-successful GitHub-triggered deployment and actual HTTPS URL are still pending
-Cloudflare account authorization. Production is also pending the initial bank.
+**Deployment verified on 2026-11-10 (UTC):** the push-triggered
+[GitHub run 42879251505, attempt 2](https://github.com/VennieSo/Study-AIB-C01/actions/runs/42879251505/attempts/2)
+successfully deployed [commit 0270a2e](https://github.com/VennieSo/Study-AIB-C01/commit/0270a2e6fb390514f5e24c23ce123d0c5f16c333)
+to the [live synthetic preview](https://study-aib-c01-preview.bigthink.workers.dev).
+
+- CI passed type checks, 93 unit tests, all 47 browser cases, both static artifact
+  checks, and both Wrangler dry runs. The deployment step verified the live HTML
+  against its built HTML. The production deployment step was skipped.
+- All eight deployed public files (HTML, favicon, JS, CSS, and fonts) returned
+  HTTPS 200 and matched the checked fixture build byte for byte. The HTML contains
+  the synthetic notice and `noindex` metadata.
+- Ten additional live journeys passed using Google Chrome **157.0.8103.40**, across
+  desktop and an emulated mobile viewport: complete/restart ten-question Practice,
+  multiple-response empty rejection and exact-set feedback, clearing an Exam
+  answer and manual submission, delayed timeout, and submitted-answer/domain
+  review. The cleared-answer journey also checked a 320px-wide mobile layout.
+  Desktop/mobile smoke checks reported no console, page, or network errors and no
+  horizontal overflow. Mobile emulation does not verify Safari or a physical phone.
+- Local production and fixture builds passed their allowlists. Production still
+  contains zero questions; `validate:launch` correctly rejects the missing bank.
+  No production Worker was created or deployed.
+
 See [Cloudflare's static Astro configuration](https://developers.cloudflare.com/workers/framework-guides/web-apps/astro/#if-you-have-a-static-site)
 and [Static Assets billing and limits](https://developers.cloudflare.com/workers/static-assets/billing-and-limitations/).
 
