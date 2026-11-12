@@ -117,7 +117,7 @@ function validatedBank(bank: readonly Question[]) {
       domains.map((domain) => [
         domain.id,
         {
-          schemaVersion: 1,
+          schemaVersion: 2,
           questions: bank.filter((question) => question.domainId === domain.id),
         },
       ]),
@@ -253,6 +253,10 @@ export class ExamSession {
 
   static async restore(input: unknown, dependencies: Dependencies) {
     const state = recordSchema.parse(input);
+    if (state.questions.some(({ snapshot }) => !snapshot?.skillId))
+      throw new Error(
+        'Unsupported session snapshot: required primary skillId is missing. Start a new session; skill classifications are never inferred.',
+      );
     const preset = presetFor(state.configuration.questionCount);
     if (
       state.configuration.durationMinutes !== preset.durationMinutes ||

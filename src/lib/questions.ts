@@ -1,12 +1,19 @@
 import Ajv2020 from 'ajv/dist/2020';
 import addFormats from 'ajv-formats';
 import schema from '../../docs/agents/question-bank.schema.json';
-import { getDomain, type DomainId, type TaskId } from './exam-scope';
+import {
+  getDomain,
+  getSkill,
+  type DomainId,
+  type TaskId,
+  type SkillId,
+} from './exam-scope';
 
 export interface Question {
   id: string;
   domainId: DomainId;
   taskId: TaskId;
+  skillId: SkillId;
   type: 'single' | 'multiple';
   topic?: string;
   text: string;
@@ -17,7 +24,7 @@ export interface Question {
 }
 
 interface QuestionBank {
-  schemaVersion: 1;
+  schemaVersion: 2;
   questions: Question[];
 }
 
@@ -32,6 +39,16 @@ export function loadQuestionBanks(
   const questions: Question[] = [];
   const ids = new Set<string>();
   for (const [domainId, bank] of Object.entries(banks)) {
+    if (
+      bank !== null &&
+      typeof bank === 'object' &&
+      'schemaVersion' in bank &&
+      bank.schemaVersion === 1
+    ) {
+      throw new Error(
+        `Unsupported question bank version 1 for ${domainId}: migrate to schemaVersion 2 and explicitly assign each question a primary official skillId; classifications are never inferred.`,
+      );
+    }
     if (!validate(bank)) {
       throw new Error(
         `Invalid question bank ${domainId}: ${ajv.errorsText(validate.errors)}`,
@@ -44,6 +61,15 @@ export function loadQuestionBanks(
       ) {
         throw new Error(`Invalid domain/task assignment for ${question.id}`);
       }
+      const skill = getSkill(question.skillId);
+      if (
+        !skill ||
+        skill.taskId !== question.taskId ||
+        skill.domainId !== question.domainId
+      )
+        throw new Error(
+          `Invalid skill/task/domain assignment for ${question.id}`,
+        );
       if (ids.has(question.id))
         throw new Error(`Duplicate question ID: ${question.id}`);
       ids.add(question.id);

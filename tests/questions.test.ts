@@ -17,7 +17,7 @@ describe('question content loading', () => {
     [
       'schema version',
       (bank: ReturnType<typeof syntheticBank>) => {
-        bank.schemaVersion = 2;
+        bank.schemaVersion = 3;
       },
     ],
     [
@@ -85,6 +85,7 @@ describe('question content loading', () => {
     second.questions.forEach((question) => {
       question.domainId = 'domain-2';
       question.taskId = '2.1';
+      question.skillId = '2.1.1';
     });
     expect(() =>
       loadQuestionBanks({ 'domain-1': syntheticBank(), 'domain-2': second }),
@@ -205,7 +206,9 @@ it('provides 25 synthetic questions for each domain and covers every valid task'
   const questions = loadQuestionBanks(syntheticBanks());
   expect(() => validateLaunchCounts(questions)).not.toThrow();
   expect(questions).toHaveLength(100);
-  expect([...new Set(questions.map((question) => question.taskId))]).toEqual([
+  expect(
+    [...new Set(questions.map((question) => question.taskId))].sort(),
+  ).toEqual([
     '1.1',
     '1.2',
     '1.3',

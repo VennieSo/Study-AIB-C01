@@ -11,13 +11,14 @@ function bank(count = 25) {
       domains.map((domain) => [
         domain.id,
         {
-          schemaVersion: 1,
+          schemaVersion: 2,
           questions: syntheticBank(count, 'mixed').questions.map(
             (question) => ({
               ...question,
               id: `${domain.id}-${question.id}`,
               domainId: domain.id,
               taskId: `${domain.number}.1`,
+              skillId: `${domain.number}.1.1`,
             }),
           ),
         },
@@ -260,6 +261,7 @@ it('retains completed answer and content snapshots independently of reloaded ban
 
   source[0]!.text = 'Updated synthetic question';
   source[0]!.taskId = '1.2';
+  source[0]!.skillId = '1.2.1';
   source[0]!.options[0]!.text = 'Updated synthetic option';
   source[0]!.correctOptionIds = ['option-2'];
   source[0]!.explanation = 'Updated synthetic explanation';

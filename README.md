@@ -108,7 +108,7 @@ component conventions. Styling uses native Astro/CSS with shadcn-inspired contro
 
 - `src/pages/index.astro`: meaningful static homepage HTML, metadata, domain
   information, and session configuration. Edit homepage copy in `src/content/site.ts`.
-- `src/lib/exam-scope.ts`: shared official domain/task registry, in guide order.
+- `src/lib/exam-scope.ts`: shared official domain/task/skill registry, in guide order.
 - `src/lib/questions.ts`: canonical JSON Schema validation plus cross-record and
   content invariants; Practice eligibility and launch-count checks.
 - `src/data/load-bank.ts`: build-time choice of public banks or development fixtures.
@@ -132,18 +132,24 @@ defensive JSON-serializable copy; `result()` reports counts and percentage and
 continuation. Invalid records fail rather than silently reset or repair themselves.
 
 Version-1 records include the session ID, mode/configuration, ordered question
-snapshots with SHA-256 content revisions, domain/task metadata, selections,
+snapshots with SHA-256 content revisions, domain/task/skill metadata, selections,
 submission times, feedback, current index, lifecycle, and start/update/completion
 timestamps. `deadlineAt` is `null` for untimed Practice and an absolute timestamp
 for Exam. `SessionRecord` is a versioned union of both mode records. The bank can
-change without changing an existing session's snapshots or results.
+change without changing an existing session's snapshots or results. The session
+record envelope remains version 1; its snapshots now require the version-2 question
+shape. Both modes explicitly reject older snapshots without `skillId` with a
+start-new-session error. There is no classification inference or migration, and
+no active-session resume or history feature is added. The canonical content hash
+includes `skillId`, so changing even a valid primary classification changes the
+revision; a changed snapshot cannot retain its previous revision hash.
 
 `ExamSession.start(questions, dependencies, questionCount?)` defaults to 85/130;
 the optional count selects one of the four paired presets. `select`, `goTo`,
 `previous`, and `next` retain revisions and allow unanswered questions. `submit`
 finalizes once; `checkDeadline` finalizes expired active sessions. All mutating
 operations check expiry, and repeated submission cannot change completed results.
-`ExamSession.restore(record, dependencies)` validates content revisions, domain/task
+`ExamSession.restore(record, dependencies)` validates content revisions, domain/task/skill
 assignments, selections, scoring, and timestamps, retaining the original deadline
 and immediately finalizing if it has elapsed. The clock and random source are
 injected for deterministic verification; no timer counter or DOM value owns state.
@@ -159,13 +165,30 @@ release exposes no persistence or history UI.
 
 ## Public question contract
 
-Store one version-1 JSON bank per domain in `src/data/questions/domain-N.json`:
-an object with `schemaVersion: 1` and a `questions` array. The authoritative format
+Store one version-2 JSON bank per domain in `src/data/questions/domain-N.json`:
+an object with `schemaVersion: 2` and a `questions` array. The authoritative format
 is [question-bank.schema.json](docs/agents/question-bank.schema.json).
 
-Every question has `id`, `domainId`, `taskId`, `type`, `text`, stable `options`,
+Version-1 banks are unsupported and fail with an actionable error: update the
+wrapper to version 2 and explicitly classify each question. Changing only the
+wrapper does not supply missing metadata. Empty banks need only the wrapper update.
+
+The official skill registry in `src/lib/exam-scope.ts` contains 58 skills with
+descriptions, task/domain relationships, and per-domain AWS guide URLs, verified
+on 2026-11-12. `SkillId` is derived from this registry. JSON Schema enumerates its
+IDs and task relationships; consistency tests guard against registry/schema drift.
+The loader also checks registry membership and both relationships directly.
+
+For example, classification metadata may be `domainId: "domain-2"`,
+`taskId: "2.1"`, `skillId: "2.1.4"` (determine when AI is not appropriate).
+This metadata does not change sampling weights, availability, scoring, or what
+metadata is revealed during an active Exam. Synthetic fixture classifications are
+interface checks, not exam preparation content.
+
+Every question has `id`, `domainId`, `taskId`, `skillId`, `type`, `text`, stable `options`,
 `correctOptionIds`, and `explanation`. `topic` and official public AWS `references`
-are optional. Domain and task IDs must belong together. Single-answer records
+are optional. Each question has exactly one primary official skill ID. Skill, task, and domain
+IDs must belong together; a matching ID format alone does not establish membership. Single-answer records
 have four options and one correct answer; multiple-response records have at least
 five options and two correct answers. Both types are eligible for both modes.
 Multiple-response checkboxes allow any nonempty set, including every option.
@@ -173,7 +196,7 @@ Practice rejects an empty submission. Exam allows unanswered questions, includin
 cleared selections, skips, and final submission; they earn zero. Only the exact
 correct set earns credit, with no partial credit. These answer-key cardinality rules do not limit selections.
 
-Validation rejects extra fields, blank required text, wrong task/domain pairings,
+Validation rejects extra fields, blank required text, unknown skills, wrong skill/task/domain pairings,
 mixed-domain files, duplicate question IDs across files, duplicate option IDs,
 invalid answer membership/cardinality, and unsafe/non-AWS reference URLs. Smaller
 valid pools are allowed; unsupported sessions are disabled instead of shortened.

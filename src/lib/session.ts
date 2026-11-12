@@ -124,7 +124,7 @@ export class PracticeSession {
         domains.map((domain) => [
           domain.id,
           {
-            schemaVersion: 1,
+            schemaVersion: 2,
             questions: bank.filter(
               (question) => question.domainId === domain.id,
             ),
@@ -177,6 +177,10 @@ export class PracticeSession {
 
   static async restore(input: unknown, dependencies: Dependencies) {
     const state: PracticeSessionRecord = recordSchema.parse(input);
+    if (state.questions.some(({ snapshot }) => !snapshot?.skillId))
+      throw new Error(
+        'Unsupported session snapshot: required primary skillId is missing. Start a new session; skill classifications are never inferred.',
+      );
     const { domainId, questionCount } = state.configuration;
     if (
       !practiceSizes(domainId).includes(questionCount) ||
@@ -190,7 +194,7 @@ export class PracticeSession {
         domains.map((domain) => [
           domain.id,
           {
-            schemaVersion: 1,
+            schemaVersion: 2,
             questions: snapshots.filter(
               (question) => question?.domainId === domain.id,
             ),

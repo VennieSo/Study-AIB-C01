@@ -1,4 +1,4 @@
-import { domains, type DomainId } from '../../src/lib/exam-scope';
+import { domains, skills, type DomainId } from '../../src/lib/exam-scope';
 
 // Synthetic interface fixtures. These are not exam preparation content.
 export function syntheticBank(
@@ -6,7 +6,7 @@ export function syntheticBank(
   type: 'single' | 'multiple' | 'mixed' = 'single',
 ) {
   return {
-    schemaVersion: 1,
+    schemaVersion: 2,
     questions: Array.from({ length: count }, (_, index) => {
       const multiple =
         type === 'multiple' || (type === 'mixed' && index % 2 === 1);
@@ -15,6 +15,7 @@ export function syntheticBank(
         id: `synthetic-${index + 1}`,
         domainId: 'domain-1',
         taskId: '1.1',
+        skillId: '1.1.1',
         type: multiple ? 'multiple' : 'single',
         text: `Synthetic fixture ${index + 1}. This development-only scenario checks how a longer question reads in the practice interface. It contains multiple paragraphs and does not assess exam knowledge.\n\nTo complete this interface check, select ${multiple ? 'all options' : 'the option'} labelled “Fixture target ${index + 1}”.`,
         options: Array.from({ length: multiple ? 6 : 4 }, (_, option) => ({
@@ -40,32 +41,41 @@ export function syntheticBank(
   };
 }
 
-/** Clearly synthetic fixtures spanning every official domain and task. */
+/** Clearly synthetic fixtures spanning every official domain, task, and skill. */
 export function syntheticBanks(countPerDomain = 25) {
   return Object.fromEntries(
     domains.map((domain) => [
       domain.id,
       {
-        schemaVersion: 1,
+        schemaVersion: 2,
         questions: syntheticBank(countPerDomain, 'mixed').questions.map(
-          (question, index) => ({
-            ...question,
-            id:
-              domain.id === 'domain-1'
-                ? question.id
-                : `${domain.id}-${question.id}`,
-            text:
-              domain.id === 'domain-1'
-                ? question.text
-                : question.text.replace(
-                    'Synthetic fixture ',
-                    `Synthetic fixture ${domain.id}.`,
-                  ),
-            domainId: domain.id,
-            taskId: Object.keys(domain.tasks)[
-              index % Object.keys(domain.tasks).length
-            ]!,
-          }),
+          (question, index) => {
+            const tasks = Object.keys(domain.tasks);
+            const taskId = tasks[index % tasks.length]!;
+            const taskSkills = skills.filter(
+              (skill) => skill.taskId === taskId,
+            );
+            // Keep the established task rotation; cycle skills within each task.
+            const skill =
+              taskSkills[Math.floor(index / tasks.length) % taskSkills.length]!;
+            return {
+              ...question,
+              id:
+                domain.id === 'domain-1'
+                  ? question.id
+                  : `${domain.id}-${question.id}`,
+              text:
+                domain.id === 'domain-1'
+                  ? question.text
+                  : question.text.replace(
+                      'Synthetic fixture ',
+                      `Synthetic fixture ${domain.id}.`,
+                    ),
+              domainId: domain.id,
+              taskId,
+              skillId: skill.id,
+            };
+          },
         ),
       },
     ]),
