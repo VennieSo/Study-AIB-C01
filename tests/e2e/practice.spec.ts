@@ -216,6 +216,9 @@ test('multiple-response checkboxes support empty rejection, all selections, miss
   await page.getByRole('button', { name: 'Start practice' }).click();
   await page.getByRole('radio', { name: /Fixture target/ }).check();
   await page.getByRole('button', { name: 'Submit answer' }).click();
+  await expect(
+    page.locator('.answer-card.correct-answer .answer-text'),
+  ).toHaveCSS('color', 'rgb(23, 22, 24)');
   await page
     .getByRole('button', { name: 'Next question', exact: true })
     .click();
@@ -293,17 +296,33 @@ test('multiple-response checkboxes support empty rejection, all selections, miss
         'background-color',
         'rgb(254, 249, 195)',
       );
+      await expect(cards.nth(4).locator('.answer-text')).toHaveCSS(
+        'color',
+        'rgb(23, 22, 24)',
+      );
       await expect(cards.nth(0)).toHaveCSS(
         'background-color',
         'rgb(240, 253, 244)',
+      );
+      await expect(cards.nth(0).locator('.answer-text')).toHaveCSS(
+        'color',
+        'rgb(22, 101, 52)',
       );
       await expect(cards.nth(1)).toHaveCSS(
         'background-color',
         'rgb(255, 245, 244)',
       );
+      await expect(cards.nth(1).locator('.answer-text')).toHaveCSS(
+        'color',
+        'rgb(180, 35, 24)',
+      );
       await expect(cards.nth(5)).toHaveCSS(
         'background-color',
         'rgb(255, 255, 255)',
+      );
+      await expect(cards.nth(5).locator('.answer-text')).toHaveCSS(
+        'color',
+        'rgb(23, 22, 24)',
       );
       await expect(
         page.getByRole('heading', { name: 'Incorrect', exact: true }),
