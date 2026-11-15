@@ -3,7 +3,7 @@
 Free, unofficial practice for **AWS Certified AI Business Strategist (AIB-C01)**.
 Study one domain or all four with **135 questions**, explanations, and no account.
 
-Production publication is pending verification.
+**[Start studying](https://study-aib-c01.bigthink.workers.dev)** — free, no sign-up.
 
 ## Choose how to study
 
@@ -14,11 +14,11 @@ and results by domain.
 
 **Exam** is timed and covers all domains. Choose a paired preset:
 
-| Questions | Time limit |
-| --- | --- |
-| 20 | 30 minutes |
-| 40 | 65 minutes |
-| 60 | 95 minutes |
+| Questions    | Time limit  |
+| ------------ | ----------- |
+| 20           | 30 minutes  |
+| 40           | 65 minutes  |
+| 60           | 95 minutes  |
 | 85 (default) | 130 minutes |
 
 Skip questions, move between them, and revise answers until you submit or time
@@ -47,12 +47,11 @@ you want to practise again.
 
 ## Screenshots
 
-Local production candidate with the 135-question bank, captured on 2026-11-15.
-These show the local build, not a verified live deployment.
+Study setup and results with the 135-question bank.
 
-<img src="docs/screenshots/production-candidate-homepage.png" alt="Local production candidate: choose a Practice domain and session size, or a timed Exam preset" width="720" />
+<img src="docs/screenshots/production-homepage.png" alt="Choose a Practice domain and session size, or a timed Exam preset" width="720" />
 
-[Practice results](docs/screenshots/production-candidate-practice-results.png) ·
-[Mobile Exam results](docs/screenshots/production-candidate-exam-results-mobile.png)
+[Practice results](docs/screenshots/production-practice-results.png) ·
+[Mobile Exam results](docs/screenshots/production-exam-results-mobile.png)
 
 For contributors: [development and deployment guide](docs/development.md).

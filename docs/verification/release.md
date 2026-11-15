@@ -1,15 +1,16 @@
 # Initial release verification
 
-The release candidate contains 135 initial, original AI-generated practice
+The initial release contains 135 original AI-generated practice
 questions following AWS formats. The project is unofficial and has no AWS
 endorsement. Raw results are not an official score or readiness prediction.
 
 ## Publication status
 
-Production publication and live verification are pending. A local build or a
-successful synthetic preview deployment does not demonstrate the production
-release. Record the real HTTPS URL, source commit and successful push-triggered
-GitHub Actions run here after production verification.
+Published on 2026-11-15 at **https://study-aib-c01.bigthink.workers.dev** through the separate `study-aib-c01` Worker. The synthetic preview remains at `https://study-aib-c01-preview.bigthink.workers.dev`.
+
+The first production release is commit `4a26d5c115b0d0673c2e0ed498369349bdeb02f7`. Its [push-triggered production run](https://github.com/VennieSo/Study-AIB-C01/actions/runs/43683723080) passed all checks, deployed the initial bank, compared deployed HTML with the build, and passed 20 live desktop/mobile Chrome journeys. The [parallel integration run](https://github.com/VennieSo/Study-AIB-C01/actions/runs/43683722965) verified and deployed the separate synthetic preview.
+
+An additional 20 live WebKit desktop/mobile journeys passed against the production URL. All eight public assets returned HTTPS 200 and matched the checked local build byte for byte. Browser checks reported no console, page or network errors.
 
 ## Reproduce the checks
 
@@ -45,10 +46,7 @@ HTML. Screenshots and failure traces are written under ignored `test-results/`.
 
 ## Browser coverage
 
-Local verification on 2026-11-15 passed all 20 production browser cases across
-desktop Chrome and a 320px mobile viewport in 24.7 seconds, including server/build
-startup. Type checking also passed with zero errors, warnings or hints. These
-results precede production deployment; live evidence remains pending above.
+Final local verification on 2026-11-15 passed 137 unit/content/session tests, all 66 browser cases, the 135-question launch validator, both static builds and artifact allowlists, and both Wrangler deployment dry runs. Astro and TypeScript checks reported zero errors, warnings or hints. The full browser matrix includes development, reduced pools, static preview, and canonical production at desktop and 320px mobile widths. Supplementary WebKit checks passed 20 local and 20 live production journeys.
 
 - Every Practice scope and size; all four Exam presets; actual bank availability
   and exact canonical payload; static homepage copy and metadata.
@@ -70,26 +68,35 @@ serialization/continuation, snapshot preservation, malformed-record rejection an
 restoration with the original absolute deadline. Persistence remains deferred:
 there is no localStorage resume or history; refresh/close loses active sessions.
 
-Chrome mobile emulation does not verify Safari or physical devices. Downloadable
+Local browser versions were Chrome 157.0.8103.51 and WebKit 27.2, using Node 22.23.4.
+
+Mobile checks use Chrome and WebKit emulation; they do not verify native Safari or physical devices. Downloadable
 answer keys are intentional in this static study tool. Structural and journey
 checks do not establish factual correctness of every question.
 
 ## Release measurements
 
-The 2026-11-15 release-candidate build contains eight public files:
+The verified production build contains eight public files:
 
-| Artifact                                       | Uncompressed bytes |  gzip bytes |
-| ---------------------------------------------- | -----------------: | ----------: |
-| Homepage HTML (including public question data) |            306,419 |      91,441 |
-| Browser JavaScript (three files)               |            289,810 |      82,111 |
-| Stylesheet                                     |             21,727 |       5,027 |
-| Fonts (two files)                              |             75,604 |      75,625 |
-| Favicon                                        |                286 |         216 |
-| **Total**                                      |        **693,846** | **254,420** |
+| Artifact                                       | Uncompressed bytes | gzip bytes |
+| ---------------------------------------------- | -----------------: | ---------: |
+| Homepage HTML (including public question data) |            306,419 |     91,440 |
+| Browser JavaScript (three files)               |            289,431 |     81,935 |
+| Stylesheet                                     |             21,893 |      5,045 |
+| Fonts (two files)                              |             75,604 |     75,625 |
+| Favicon                                        |                286 |        216 |
+| **Total**                                      |            693,633 |    254,261 |
 
-These represent artifact bytes and a full download without cache; actual network
-transfer depends on the host's compression and cache policy. gzip sizes were
-measured per file, including already compressed fonts. Refresh measurements if
-production source changes. Record final check counts and the verified browser
-version alongside deployment evidence. Historical synthetic-preview results in
-the README are separate from this production release.
+These are artifact bytes and a full download without cache. Actual transfer depends on host compression and caching. gzip sizes are measured per file, including already compressed fonts. Historical synthetic-preview evidence is in the [contributor guide](../development.md).
+
+## Public information checks
+
+The source repository is public. Tracked files and Git history were scanned for scoped patterns for common credentials and unintended public information; no matches were found outside deliberate detector-test literals. All 13 surviving public issue bodies, comments and available edit histories (42 texts, with no unread pages) were checked with the same scoped patterns; no matches were found. Ignored local files are not tracked or deployed. These checks do not establish that every possible disclosure is absent. Production artifact checks also require exact canonical-bank payload equality and reject fixture markers and unexpected assets.
+
+## Standards
+
+The independent review found two issues, both fixed and verified: selected multiple-response Practice text now follows the documented feedback colors, and both session modes share the unchanged question-revision helper. No open Standards findings remain.
+
+## Spec
+
+The independent review found no functional gaps against #1, the revised 135-question requirement in #9, and the version-2 skill contract in #18. The owner requested a user-facing README; technical guidance is retained in the linked contributor guide. No open Spec findings remain.
