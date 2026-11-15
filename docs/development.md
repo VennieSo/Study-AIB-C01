@@ -337,4 +337,3 @@ Development preview using labelled synthetic interface fixtures:
 [View the mobile domain breakdown](screenshots/development-exam-domain-results-mobile.png)
 and [submitted multiple-response review](screenshots/development-exam-answer-review-mobile.png).
 [View full-length Exam results at 320px](screenshots/development-exam-full-results-mobile.png).
-
