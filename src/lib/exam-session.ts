@@ -2,6 +2,7 @@ import { z } from 'zod';
 import { domains } from './exam-scope';
 import { loadQuestionBanks, type Question } from './questions';
 import { resultCounts } from './result-counts';
+import { questionRevision } from './question-revision';
 import type { Dependencies, SessionQuestion } from './session';
 
 export const examPresets = [
@@ -83,26 +84,6 @@ function shuffle<T>(values: readonly T[], random: () => number): T[] {
     [result[i], result[j]] = [result[j]!, result[i]!];
   }
   return result;
-}
-
-function canonicalJson(value: unknown): string {
-  if (Array.isArray(value)) return `[${value.map(canonicalJson).join(',')}]`;
-  if (value !== null && typeof value === 'object')
-    return `{${Object.entries(value)
-      .sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0))
-      .map(([key, child]) => `${JSON.stringify(key)}:${canonicalJson(child)}`)
-      .join(',')}}`;
-  return JSON.stringify(value);
-}
-
-async function revision(question: Question) {
-  const digest = await crypto.subtle.digest(
-    'SHA-256',
-    new TextEncoder().encode(canonicalJson(question)),
-  );
-  return Array.from(new Uint8Array(digest), (byte) =>
-    byte.toString(16).padStart(2, '0'),
-  ).join('');
 }
 
 function validatedBank(bank: readonly Question[]) {
@@ -232,7 +213,7 @@ export class ExamSession {
       questions: await Promise.all(
         shuffle(selected, random).map(async (snapshot) => ({
           snapshot,
-          revision: await revision(snapshot),
+          revision: await questionRevision(snapshot),
           selectedOptionIds: [],
           submittedAt: null,
           feedback: null,
@@ -311,7 +292,7 @@ export class ExamSession {
     for (const question of state.questions) {
       const { snapshot, selectedOptionIds, submittedAt, feedback } = question;
       if (
-        question.revision !== (await revision(snapshot)) ||
+        question.revision !== (await questionRevision(snapshot)) ||
         (snapshot.type === 'single' && selectedOptionIds.length > 1) ||
         new Set(selectedOptionIds).size !== selectedOptionIds.length ||
         selectedOptionIds.some(

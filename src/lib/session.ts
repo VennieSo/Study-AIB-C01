@@ -1,6 +1,7 @@
 import { z } from 'zod';
 import { domains } from './exam-scope';
 import { resultCounts } from './result-counts';
+import { questionRevision } from './question-revision';
 import {
   loadQuestionBanks,
   practiceQuestions,
@@ -84,27 +85,6 @@ const recordSchema = z.strictObject({
   completedAt: z.iso.datetime().nullable(),
 });
 
-function canonicalJson(value: unknown): string {
-  if (Array.isArray(value)) return `[${value.map(canonicalJson).join(',')}]`;
-  if (value !== null && typeof value === 'object') {
-    return `{${Object.entries(value)
-      .sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0))
-      .map(([key, child]) => `${JSON.stringify(key)}:${canonicalJson(child)}`)
-      .join(',')}}`;
-  }
-  return JSON.stringify(value);
-}
-
-async function revision(question: Question) {
-  const digest = await crypto.subtle.digest(
-    'SHA-256',
-    new TextEncoder().encode(canonicalJson(question)),
-  );
-  return Array.from(new Uint8Array(digest), (byte) =>
-    byte.toString(16).padStart(2, '0'),
-  ).join('');
-}
-
 export class PracticeSession {
   private constructor(
     private state: PracticeSessionRecord,
@@ -158,7 +138,7 @@ export class PracticeSession {
       questions: await Promise.all(
         pool.slice(0, questionCount).map(async (snapshot) => ({
           snapshot,
-          revision: await revision(snapshot),
+          revision: await questionRevision(snapshot),
           selectedOptionIds: [],
           submittedAt: null,
           feedback: null,
@@ -224,7 +204,7 @@ export class PracticeSession {
       if (
         (snapshot.type === 'single' && selectedOptionIds.length > 1) ||
         new Set(selectedOptionIds).size !== selectedOptionIds.length ||
-        question.revision !== (await revision(snapshot)) ||
+        question.revision !== (await questionRevision(snapshot)) ||
         selectedOptionIds.some(
           (id) => !snapshot.options.some((option) => option.id === id),
         )
