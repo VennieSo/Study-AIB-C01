@@ -1,4 +1,1045 @@
 {
   "schemaVersion": 2,
-  "questions": []
+  "questions": [
+    {
+      "id": "aib-conversation-reviewed-v1-001",
+      "domainId": "domain-1",
+      "taskId": "1.3",
+      "skillId": "1.3.3",
+      "type": "single",
+      "text": "A manufacturer's maintenance assistant uses a foundation model that was fine-tuned on the company's 3,000 maintenance manuals six months ago. The company revises about 40 manuals each week. Technicians report that some answers describe procedures that a revision has replaced. The company wants answers to reflect each manual's latest revision.\n\nWhich approach will meet this requirement with the LEAST ongoing operational overhead?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Fine-tune the model on the revised manuals, building on the earlier fine-tuning."
+        },
+        {
+          "id": "b",
+          "text": "Move the assistant to a newer foundation model with a more recent training cutoff date."
+        },
+        {
+          "id": "c",
+          "text": "Include the complete set of maintenance manuals in the prompt for every question."
+        },
+        {
+          "id": "d",
+          "text": "Index the manuals in a knowledge base, and retrieve relevant passages for each question."
+        }
+      ],
+      "correctOptionIds": [
+        "d"
+      ],
+      "explanation": "A: Fine-tuning adapts a model by training it on additional data. Because manuals change every week, the company would need to run and evaluate new training jobs continually, and earlier training on replaced procedures can still influence answers.\n\nB: A newer foundation model's training data does not include the company's internal manuals. Moving to it would discard the fine-tuning without supplying the latest revisions.\n\nC: A context window limits how much text a model can consider in one request. Thousands of manuals are unlikely to fit, and sending large volumes of text with every question increases cost and response time.\n\nD: Retrieval Augmented Generation (RAG) retrieves relevant content from an external knowledge source when the model answers. When a manual changes, the company updates the document in the knowledge base instead of retraining the model, so keeping answers current requires only routine content updates."
+    },
+    {
+      "id": "replacement-v1-01",
+      "domainId": "domain-1",
+      "taskId": "1.2",
+      "skillId": "1.2.3",
+      "type": "single",
+      "text": "A food delivery company uses a machine learning model to forecast hourly order volumes for courier scheduling. Overall forecast error has stayed within its target since launch. Six months after the company started serving three suburban areas, couriers there are often understaffed during weekday lunch hours, while staffing in the city remains adequate.\n\nWhich action will BEST help the company determine whether the model needs to be updated?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Continue monitoring overall forecast error, because it remains within the target set at launch."
+        },
+        {
+          "id": "b",
+          "text": "Retrain the model each month on the most recent orders so that it keeps pace with demand."
+        },
+        {
+          "id": "c",
+          "text": "Measure forecast error by area and time of day, and compare recent input data with the training data."
+        },
+        {
+          "id": "d",
+          "text": "Add a fixed staffing buffer in the suburban areas until the model's annual review."
+        }
+      ],
+      "correctOptionIds": [
+        "c"
+      ],
+      "explanation": "A: An overall error figure averages performance across all areas and hours. Large errors in a few suburban areas and time periods can be hidden while the overall figure stays within target.\n\nB: Scheduled retraining can help a model keep up with change. However, retraining without first measuring where and why performance has changed does not show whether the model needs updating or whether retraining solved the problem.\n\nC: Comparing predictions with actual outcomes for each area and time period shows where forecasting performance has degraded. Comparing recent input data with the training data can reveal data drift, such as demand patterns that the model did not learn. Together, these show whether the model needs to be updated.\n\nD: A staffing buffer can reduce the immediate impact, but it does not measure model performance. It masks the symptom while possible model drift continues unexamined."
+    },
+    {
+      "id": "replacement-v1-02",
+      "domainId": "domain-1",
+      "taskId": "1.3",
+      "skillId": "1.3.1",
+      "type": "single",
+      "text": "A conference organizer uses a generative AI model to turn speaker biographies into program entries. The current prompt asks for \"a short, neutral entry.\" The entries range from 30 to 150 words, present details in different orders, and sometimes include promotional phrases. The organizer needs all entries to share one structure, length and tone.\n\nWhich change will MOST effectively produce consistent entries?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Lower the temperature setting so that the model produces less varied output."
+        },
+        {
+          "id": "b",
+          "text": "Add two or three sample entries written in the target style to the prompt."
+        },
+        {
+          "id": "c",
+          "text": "Set the maximum output tokens to a value that matches the target entry length."
+        },
+        {
+          "id": "d",
+          "text": "Rewrite the instruction to request a \"very short, strictly neutral and professional\" entry."
+        }
+      ],
+      "correctOptionIds": [
+        "b"
+      ],
+      "explanation": "A: Temperature controls how random the output is. A lower value makes output more predictable, but it does not tell the model which structure, length or tone to use, so entries can be consistently unsuitable.\n\nB: Few-shot prompting places examples of the desired output in the prompt. The examples show the model the structure, length and tone to reproduce, which addresses all three kinds of variation without changing the model.\n\nC: The maximum output tokens setting stops generation at a set length, which can cut entries off mid-sentence. It does not define the structure or remove promotional language.\n\nD: Stronger adjectives remain open to interpretation. Without a concrete pattern to follow, the model can still choose different lengths, orders and wording."
+    },
+    {
+      "id": "gen-2026-11-14-b-02",
+      "domainId": "domain-1",
+      "taskId": "1.2",
+      "skillId": "1.2.4",
+      "type": "single",
+      "text": "A company's survey shows that many employees use public generative AI tools that IT has never reviewed, and some have pasted customer contract details into them. The company licenses one enterprise AI assistant, but teams say it lacks features they need for specialized tasks. Their requests to IT for other tools have gone unanswered for months. Leaders want to reduce the risk without losing productivity.\n\nWhich action will BEST meet these requirements?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Publish a maintained register that shows whether each requested AI tool is permitted, prohibited, or still being assessed, and commit to reviewing new requests within a set time."
+        },
+        {
+          "id": "B",
+          "text": "Deploy data loss prevention controls that stop customer contract details from being submitted to any external website, including public AI tools."
+        },
+        {
+          "id": "C",
+          "text": "Require all employees to complete responsible AI training and sign an acceptable use policy that prohibits entering confidential data into AI tools."
+        },
+        {
+          "id": "D",
+          "text": "Buy enterprise licenses for the three public AI tools that the survey found most popular, and make them available to all employees."
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "explanation": "A: Shadow AI grows when employees cannot tell which tools are allowed and the approved path is slow. A visible, maintained status for each tool, together with timely reviews, makes the governed path easier to use than the unreviewed one. This reduces risk while giving teams a route to the tools they need.\n\nB: Data loss prevention protects a specific type of sensitive data. However, employees would continue to use unreviewed tools for other content, and the unanswered tool requests that drive the behavior remain unresolved.\n\nC: Training and an acceptable use policy help employees handle data responsibly, but they do not resolve which tools teams may use or the stalled requests. Employees would still have no approved option for their specialized tasks.\n\nD: Licensing popular tools improves access, but popularity is not a review. The tools would be approved without assessing their data handling or fit, and teams that need other tools would still have no process."
+    },
+    {
+      "id": "gen-2026-11-14-01",
+      "domainId": "domain-1",
+      "taskId": "1.2",
+      "skillId": "1.2.1",
+      "type": "single",
+      "text": "A manufacturer receives about 4,000 supplier invoices each month from more than 600 suppliers as PDFs, scans and email text. Invoice layouts differ by supplier and change without notice. A finance policy sets approval limits by invoice amount and rejects suppliers that are not on an approved list. Auditors must be able to trace each routing decision to the policy.\n\nWhich approach should the company use to automate invoice routing?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Build an extraction template for each supplier's invoice format. Route each invoice with rules for amount limits and supplier status."
+        },
+        {
+          "id": "b",
+          "text": "Capture invoice text with optical character recognition (OCR). Train a machine learning model on past routing decisions to select each approver."
+        },
+        {
+          "id": "c",
+          "text": "Use AI document processing to extract the amount and supplier from each invoice. Route each invoice with rules for amount limits and supplier status."
+        },
+        {
+          "id": "d",
+          "text": "Use a generative AI model to read each invoice. Have the model select the approver by following the finance policy text in its prompt."
+        }
+      ],
+      "correctOptionIds": [
+        "c"
+      ],
+      "explanation": "A: Rules suit the routing decision because the approval criteria are fixed and documented. However, template-based extraction depends on each supplier's layout. With more than 600 suppliers whose layouts change without notice, the templates would break often and need constant maintenance.\n\nB: OCR captures the text, but a model trained on past routing decisions reproduces learned patterns, including past exceptions and errors. Its decisions cannot be traced to the written criteria, and the criteria are already explicit, so a learned model adds uncertainty without benefit.\n\nC: AI suits the part of the task that varies: extracting values such as amounts and supplier names from documents in many formats. The routing criteria are fixed, so rule-based logic can apply them the same way every time and link each decision to a specific rule.\n\nD: A generative AI model can read varied invoices, but its choice of approver is probabilistic. Policy text in a prompt guides the model but does not guarantee that every decision applies the approval limits exactly, which weakens the audit trail."
+    },
+    {
+      "id": "gen-2026-11-14-c-01",
+      "domainId": "domain-1",
+      "taskId": "1.3",
+      "skillId": "1.3.2",
+      "type": "single",
+      "text": "A procurement team uses a generative AI assistant to summarize supplier contracts and list every obligation the company must meet. Summaries of contracts up to about 60 pages are accurate. For master agreements that run to several hundred pages, the summaries are well formed and end normally, but they consistently leave out obligations that appear in the later schedules.\n\nWhich change will MOST likely fix this problem?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Lower the model's temperature setting so that it follows the instruction to list every obligation more consistently."
+        },
+        {
+          "id": "B",
+          "text": "Split each long agreement into sections that fit within the context window, and then summarize the sections in turn."
+        },
+        {
+          "id": "C",
+          "text": "Raise the maximum output token setting so that the model has room to include obligations from the later schedules."
+        },
+        {
+          "id": "D",
+          "text": "Fine-tune the model on the company's past supplier agreements so that it learns where obligations usually appear."
+        }
+      ],
+      "correctOptionIds": [
+        "B"
+      ],
+      "explanation": "A: Temperature controls how random or varied a model's output is. A lower setting makes output more predictable, but it does not let the model use text it never received. The omissions are consistent and limited to the end of very long agreements, which points to a limit on input rather than to variable output.\n\nB: A model can take in only a limited number of tokens at once, called its context window. Text beyond that limit is not processed, so obligations near the end of a very long agreement are missed while shorter contracts are summarized correctly. Splitting each agreement into sections that fit the window lets the model process all of the text.\n\nC: The maximum output token setting limits the length of the response. If it were the cause, summaries would stop abruptly. These summaries end normally, and the missing content comes from one part of the input, so a larger output allowance would not recover it.\n\nD: Fine-tuning adapts a model to a specific task or domain by training it on examples. It does not increase how much text the model can take in at once, so the later schedules would still fall outside what the model processes."
+    },
+    {
+      "id": "gen-2026-11-14-c-02",
+      "domainId": "domain-1",
+      "taskId": "1.1",
+      "skillId": "1.1.4",
+      "type": "single",
+      "text": "An insurer trained a model on 5 years of claims history to predict how long claims take to resolve. Validation results were strong in every region. In production, predictions for one region run about 2 weeks shorter than actual waits. That region handles more commercial claims than the others, and its staff close a claim in the system once payment is approved, tracking any follow-up work in another tool.\n\nWhich action will MOST likely improve the predictions for that region?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Add claim type and region as model inputs so that the model can learn the commercial claim pattern in that region, and then retrain."
+        },
+        {
+          "id": "B",
+          "text": "Retrain the model on 10 years of claims history so that it has more examples of commercial claims from that region."
+        },
+        {
+          "id": "C",
+          "text": "Replace the model with a more complex algorithm that can capture interactions between region, claim type, and claim size."
+        },
+        {
+          "id": "D",
+          "text": "Correct that region's historical completion dates so that they show when all work on each claim ended, and then retrain."
+        }
+      ],
+      "correctOptionIds": [
+        "D"
+      ],
+      "explanation": "A: Adding inputs helps when a model lacks information that explains differences between cases. However, a model learns to predict the outcome recorded in its training data. That region's recorded dates end at payment approval, so with more inputs the model would only learn those short times more precisely.\n\nB: More history helps when a model has too few examples. Older records from the same region would likely follow the same recording practice, so more data would repeat the error rather than correct it.\n\nC: A more complex algorithm can fit more detailed patterns, but it still learns from the same recorded outcomes. It cannot correct values that misstate when claims were actually resolved.\n\nD: A model's results depend on the quality of its training data, including the accuracy of the outcome it learns to predict. That region's records understate how long claims take, so the model learned short times. Validation looked strong because the validation data contained the same recorded dates; production predictions are compared with actual waits. Correcting the historical dates and retraining addresses the cause."
+    },
+    {
+      "id": "gen-2026-11-15-01",
+      "domainId": "domain-1",
+      "taskId": "1.1",
+      "skillId": "1.1.1",
+      "type": "single",
+      "text": "A logistics company uses a model to estimate delivery times when customers place orders. The model was trained on two years of delivery records and has been in use for six months. Last month, a bridge closure began adding about a day to deliveries in one region. Actual delivery times are recorded in the same database that supplied the training data, but the model's estimates for that region have not changed.\n\nWhich statement BEST explains this?",
+      "options": [
+        {
+          "id": "A",
+          "text": "The model applies patterns that were set when it was trained, and new delivery outcomes affect its estimates only after it is retrained on data that includes them."
+        },
+        {
+          "id": "B",
+          "text": "The model is still adjusting to the new delivery outcomes, and its estimates will shift once the recent records outnumber the older records from that region."
+        },
+        {
+          "id": "C",
+          "text": "The model treats the longer delivery times as outliers, and it ignores values that are far from its training averages when it produces estimates."
+        },
+        {
+          "id": "D",
+          "text": "The model looks up average delivery times for each region when an order is placed, and those averages have not yet been recalculated with recent orders."
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "explanation": "A: Training is the step in which a model learns patterns from historical data. After deployment, the model performs inference: it applies those learned patterns to each new order. Recording new outcomes in a database does not change the model. The longer delivery times will affect estimates only when the model is retrained on data that includes them, which is why deployed models need monitoring and periodic retraining.\n\nB: This describes a model that keeps learning as it makes predictions. A typical deployed model does not update itself from new outcomes, so the estimates would not shift no matter how many recent records accumulate.\n\nC: During inference, a model processes the order details it receives and returns an estimate. It does not compare actual delivery times with training averages or set them aside. The actual delivery times are not inputs to the model at all.\n\nD: A trained model is not a lookup table that recalculates averages from the database for each order. It generates estimates from patterns learned during training, so refreshing stored averages would not change its output."
+    },
+    {
+      "id": "gen-2026-11-15-03",
+      "domainId": "domain-1",
+      "taskId": "1.1",
+      "skillId": "1.1.2",
+      "type": "single",
+      "text": "A car insurer wants to estimate, for each policyholder, how likely the policyholder is to file a claim in the next 12 months. It keeps 8 years of policy and claims data in database tables. Today, underwriters set risk ratings by hand with a small set of rating factors, and the insurer wants estimates that improve on those ratings.\n\nWhich approach BEST suits this task?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Use a foundation model, provide each policyholder's details in the prompt, and ask the model to estimate the probability of a claim."
+        },
+        {
+          "id": "B",
+          "text": "Train a supervised machine learning model on past policies so that it outputs a claim probability for each current policyholder."
+        },
+        {
+          "id": "C",
+          "text": "Fine-tune a generative AI model on the policy tables so that it learns the insurer's data and writes a risk estimate for each policyholder."
+        },
+        {
+          "id": "D",
+          "text": "Expand the underwriters' rating factors into a detailed rule-based scoring system that is easy to explain to customers and regulators."
+        }
+      ],
+      "correctOptionIds": [
+        "B"
+      ],
+      "explanation": "A: A foundation model is a generative AI model pretrained on broad data. Given one policyholder's details, it can write a plausible-sounding estimate, but it has not learned from this insurer's 8 years of outcomes, so its numbers are not derived from how similar policies actually performed.\n\nB: AI is the broad field. Machine learning is the part of AI in which models learn patterns from data, and generative AI is a part of machine learning that creates new content. Estimating claim likelihood is a prediction task: a supervised model learns from past policies where the outcome is known and outputs a probability for each current policy, which is what conventional machine learning is designed for.\n\nC: Fine-tuning adapts a generative model to produce content in a particular way. It does not turn the model into a predictive model that is evaluated against known outcomes, and generating text is not needed for a numeric risk estimate.\n\nD: Rules are transparent, but they encode the factors that people choose in advance. The insurer wants to improve on hand-set ratings, which requires learning patterns from the historical outcomes rather than adding more fixed rules."
+    },
+    {
+      "id": "gen-2026-11-15-04",
+      "domainId": "domain-1",
+      "taskId": "1.1",
+      "skillId": "1.1.2",
+      "type": "multiple",
+      "text": "A retailer's AI steering group funds generative AI projects from a separate budget. It wants each new proposal assigned to the correct budget. Five proposals have been submitted.\n\nWhich proposals belong in the generative AI budget? (Choose TWO.)",
+      "options": [
+        {
+          "id": "A",
+          "text": "Forecast weekly demand for each product at each store from three years of sales history."
+        },
+        {
+          "id": "B",
+          "text": "Detect empty shelf space in the photos that store cameras take every hour."
+        },
+        {
+          "id": "C",
+          "text": "Produce first-draft product descriptions from the specification sheets that suppliers send."
+        },
+        {
+          "id": "D",
+          "text": "Suggest the three most relevant existing help articles for each question that a customer types."
+        },
+        {
+          "id": "E",
+          "text": "Respond to employees' questions about the returns policy in a chat window, using the policy manual as the source."
+        }
+      ],
+      "correctOptionIds": [
+        "C",
+        "E"
+      ],
+      "explanation": "A: Demand forecasting predicts numbers from historical data. This is a conventional machine learning prediction task, not content generation.\n\nB: Finding empty shelves in photos is image recognition. The input is unstructured, but the output is a detection or label, so this is predictive machine learning rather than generative AI.\n\nC: Generative AI creates new content based on patterns learned from existing data. Producing a product description from a specification sheet creates new text, which is a generative AI task.\n\nD: Suggesting help articles is a search and ranking task. It returns text, but the text already exists; the system finds and orders relevant articles rather than creating new content.\n\nE: A chat assistant that composes answers in natural language from a policy manual generates new text for each question. This is a generative AI task, often combined with retrieval of the relevant policy text."
+    },
+    {
+      "id": "gen-2026-11-15-06",
+      "domainId": "domain-1",
+      "taskId": "1.1",
+      "skillId": "1.1.3",
+      "type": "single",
+      "text": "An apparel retailer's return rate for one clothing line has risen 30% over two quarters, but the line's average star rating is unchanged at 4.2. Last year, customers left about 150,000 written reviews for the line. Merchandising leaders want to understand why customers are returning the items before they plan the next season.\n\nWhich approach will MOST likely give them that understanding?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Break down the average star ratings by size, color, and sales channel to locate the variants with the lowest ratings."
+        },
+        {
+          "id": "B",
+          "text": "Use an AI model to analyze the review text and group the comments by the problems that customers describe."
+        },
+        {
+          "id": "C",
+          "text": "Score each review for positive or negative sentiment, and add the average sentiment score to the product dashboard."
+        },
+        {
+          "id": "D",
+          "text": "Train a model on ratings and return records to predict which customers are most likely to return items from the line."
+        }
+      ],
+      "correctOptionIds": [
+        "B"
+      ],
+      "explanation": "A: Star ratings are structured data that summarize satisfaction as one number. Breaking them down can show where ratings are lower, but the ratings have not moved, and a number cannot state why customers return items.\n\nB: The reasons for returns are most likely written in the reviews, which are unstructured text. Unstructured data needs techniques such as natural language processing to analyze. An AI model can read the review text at scale and group comments by the issues described, such as sizing or fabric, which answers the leaders' question.\n\nC: Sentiment analysis converts text into a positive or negative score. That shows how customers feel but discards what they are describing, so it would not explain the cause of the returns.\n\nD: A return prediction model can identify which customers are likely to return items, but it predicts an outcome rather than explaining the reasons. It also relies on ratings and return records that do not contain those reasons."
+    },
+    {
+      "id": "gen-2026-11-15-07",
+      "domainId": "domain-1",
+      "taskId": "1.1",
+      "skillId": "1.1.5",
+      "type": "single",
+      "text": "A lender trained a model on five years of loan records to predict which applicants will default. On loans held back from training, the model identified 9 of every 10 loans that later defaulted. Since launch last week, it has rated almost every new applicant as low risk, including some that underwriters consider high risk. One input is the account status code, which servicing staff update throughout each loan's life.\n\nWhat is the MOST likely cause?",
+      "options": [
+        {
+          "id": "A",
+          "text": "The model is too complex and memorized the training records, so it cannot generalize to applicants that it has not seen before."
+        },
+        {
+          "id": "B",
+          "text": "Economic conditions differ from the training period, so the patterns that predicted default no longer apply to current applicants."
+        },
+        {
+          "id": "C",
+          "text": "The training records included information that becomes available only after a loan is made, so new applicants lack it when scored."
+        },
+        {
+          "id": "D",
+          "text": "Defaults are rare in the training records, so the model learned to predict that almost every applicant will repay the loan."
+        }
+      ],
+      "correctOptionIds": [
+        "C"
+      ],
+      "explanation": "A: An overfitted model performs well on training data but poorly on data it has not seen. Here the model performed well on held-back loans it had not seen, so overfitting does not explain the drop.\n\nB: A change in conditions can reduce accuracy over time, but it would not explain an immediate collapse at launch to rating nearly everyone as low risk. The pattern points to a difference between the training inputs and the inputs available for new applicants.\n\nC: When a model is trained on historical data, every input must be available at the time a prediction is made. The status code was updated during each loan's life, so in historical records it reflected later payment problems and strongly signaled default. This is called target leakage. New applicants have no payment history, so their status codes look like those of loans that repaid, and the model rates them as low risk. The held-back loans contained the same leaked information, which is why testing looked strong.\n\nD: A model trained on rare outcomes can learn to predict the common outcome. However, the model identified 9 of every 10 defaults in the held-back loans, which shows that it did learn to recognize defaults in data like its training data."
+    },
+    {
+      "id": "gen-2026-11-15-08",
+      "domainId": "domain-1",
+      "taskId": "1.1",
+      "skillId": "1.1.5",
+      "type": "single",
+      "text": "A manufacturer wants a model that warns maintenance teams a day before a machine is likely to fail. It has four years of sensor readings from 300 machines, taken every minute on newer machines and every five minutes on older ones. A separate maintenance system holds a record for each repair job, listing the date, the machine, the parts used, and the labor hours.\n\nWhich gap is MOST important to close before the company trains the model?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Determine which past repair jobs were responses to a machine stopping so that the model has examples of the outcome it must predict."
+        },
+        {
+          "id": "B",
+          "text": "Resample the older machines' readings to one-minute intervals so that all sensor data has the same level of detail."
+        },
+        {
+          "id": "C",
+          "text": "Move the sensor readings and the maintenance records into one database so that the model can access both sources."
+        },
+        {
+          "id": "D",
+          "text": "Choose an algorithm designed for time-series data so that the model can learn from the sequence of sensor readings."
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "explanation": "A: A supervised model learns from historical examples in which the answer it must predict is known. These examples are called labeled data. Repair records show that work was done, but not whether a machine had stopped or the work was routine servicing. Without that label, the model cannot learn which sensor patterns come before a failure, no matter how much sensor data exists.\n\nB: Different reading intervals are a data preparation issue that is routinely handled during training, for example by aligning readings to a common interval. It does not stop the model from learning, and it does not supply the missing failure outcomes.\n\nC: The two sources need to be joined for training, but they can be combined without first moving them into one database. Combining them still would not show which repair jobs followed failures.\n\nD: Choosing a suitable algorithm is part of building the model, but every algorithm for this task needs examples of past failures to learn from. Algorithm choice cannot make up for a missing outcome."
+    },
+    {
+      "id": "gen-2026-11-15-09",
+      "domainId": "domain-1",
+      "taskId": "1.1",
+      "skillId": "1.1.6",
+      "type": "single",
+      "text": "A software company sells an AI-based candidate screening tool to large employers. Several prospective customers want independent evidence that the company has an organization-wide process to assess AI risks, assign responsibilities, monitor its AI systems, and improve over time. The company wants a recognized international standard that an external auditor can certify it against.\n\nWhich standard should the company adopt?",
+      "options": [
+        {
+          "id": "A",
+          "text": "ISO/IEC 23053"
+        },
+        {
+          "id": "B",
+          "text": "ISO/IEC 27001"
+        },
+        {
+          "id": "C",
+          "text": "ISO/IEC 23894"
+        },
+        {
+          "id": "D",
+          "text": "ISO/IEC 42001"
+        }
+      ],
+      "correctOptionIds": [
+        "D"
+      ],
+      "explanation": "A: ISO/IEC 23053 describes the components and functions of AI systems that use machine learning. It gives organizations a common vocabulary and structure for discussing these systems, but it does not set requirements for how an organization governs AI, so it does not provide the certification that customers want.\n\nB: ISO/IEC 27001 specifies requirements for an information security management system and can be certified. However, it covers information security risks, not AI-specific risks, responsibilities, and monitoring.\n\nC: ISO/IEC 23894 gives guidance on managing AI risks. Guidance helps an organization design its risk process, but it does not set requirements that an auditor certifies against, and it does not cover the full management system that customers are asking about.\n\nD: ISO/IEC 42001 specifies requirements for establishing, implementing, maintaining, and continually improving an AI management system. Independent certification bodies audit organizations against it, which gives customers external evidence of how the company manages AI risks across its organization."
+    },
+    {
+      "id": "gen-2026-11-15-10",
+      "domainId": "domain-1",
+      "taskId": "1.2",
+      "skillId": "1.2.2",
+      "type": "single",
+      "text": "A bank built one AI agent to handle business account openings. Over time, the team gave it more than 40 tools for identity checks, credit checks, account setup, and card ordering, with instructions for each. The checks that each application needs vary with the business type and its owners. The agent now often calls the wrong tool or skips steps, and each fix to its instructions seems to break another step.\n\nWhich change will MOST likely improve the agent's reliability?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Move the agent to a model with a larger context window so that it can hold all of the tool descriptions and instructions at once."
+        },
+        {
+          "id": "B",
+          "text": "Divide the work among specialized agents with their own tools and instructions, and have a supervisor agent assign tasks to them."
+        },
+        {
+          "id": "C",
+          "text": "Fine-tune the agent's model on records of past account openings so that it learns the correct order of tools and steps."
+        },
+        {
+          "id": "D",
+          "text": "Replace the agent with an automated workflow that runs every check in a fixed order for each account opening."
+        }
+      ],
+      "correctOptionIds": [
+        "B"
+      ],
+      "explanation": "A: A larger context window lets the model take in more text, but the problem is not that instructions are cut off. One agent must still choose among more than 40 tools with overlapping instructions, so the confusion between tools would remain.\n\nB: Multi-agent collaboration is an orchestration strategy in which a supervisor agent breaks a request into parts and assigns each part to a specialized agent. Each specialist has a small, focused set of tools and instructions, so tool selection is simpler and a change to one area does not disturb the others. The supervisor still decides which checks each application needs.\n\nC: Fine-tuning can adjust a model's behavior, but it does not reduce the number of overlapping tools and instructions that one agent must manage. Every later change to tools would also require retraining.\n\nD: A fixed workflow suits a process that is the same every time. Here the checks vary with the business type and its owners, so running every check in one order would perform unnecessary checks or miss case-specific steps. This also gives up the agent's ability to decide what each application needs."
+    },
+    {
+      "id": "gen-2026-11-15-11",
+      "domainId": "domain-1",
+      "taskId": "1.2",
+      "skillId": "1.2.2",
+      "type": "multiple",
+      "text": "A distributor uses a generative AI assistant to draft replies to supplier questions about late payments. Staff prepare each request for the assistant, then review and send its drafts. The answer to a question depends on the state of the supplier's invoices, which can be approved, paid, disputed, or on hold. The company wants routine questions handled from start to finish, with staff involved only for exceptions.\n\nWhich capabilities are MOST essential for the new solution? (Choose TWO.)",
+      "options": [
+        {
+          "id": "A",
+          "text": "Connecting to the company's finance systems through APIs to get current invoice and payment data as it works"
+        },
+        {
+          "id": "B",
+          "text": "Retrieving relevant clauses from supplier contracts in a document library before drafting a reply"
+        },
+        {
+          "id": "C",
+          "text": "Using a model with a larger context window so that it can read a supplier's full payment history"
+        },
+        {
+          "id": "D",
+          "text": "Planning a sequence of actions and choosing each next action from the results of the previous one"
+        },
+        {
+          "id": "E",
+          "text": "Retraining its model on each resolved question so that its answers improve automatically over time"
+        }
+      ],
+      "correctOptionIds": [
+        "A",
+        "D"
+      ],
+      "explanation": "A: Tool use is a core capability of an AI agent. Today staff prepare each request, which means gathering the facts the reply depends on. To work without them, the solution must call the finance systems itself to get the current state of the supplier's invoices.\n\nB: Retrieval Augmented Generation (RAG) supplies reference text to a model. It can improve answers, but these questions depend mainly on the current state of invoices and payments, and retrieval of contract text alone does not let the solution get that data or decide what to do next.\n\nC: A larger context window lets a model read more text in one request. It does not let the solution obtain current data or act on it, which is the work staff currently do.\n\nD: Autonomy is the other core capability that separates an agent from an assistant. Because the right reply depends on whether an invoice is approved, paid, disputed, or on hold, the agent must reason about each result, decide the next step, and recognize exceptions to route to staff, rather than wait for a person to direct it.\n\nE: Agents do not need to retrain their underlying model to complete tasks. They work by reasoning over instructions and calling tools. Retraining on every question would add cost and risk without enabling start-to-finish handling."
+    },
+    {
+      "id": "gen-2026-11-15-12",
+      "domainId": "domain-1",
+      "taskId": "1.2",
+      "skillId": "1.2.3",
+      "type": "single",
+      "text": "A credit card issuer uses a model to set credit limits for new customers. Whether a customer defaults becomes known only about 12 months after the account is opened. Last quarter, an upstream system began reporting income as monthly rather than annual amounts for some applications. The error went unnoticed for 10 weeks, and limits for those customers were set far too low.\n\nWhich monitoring approach would have detected this problem soonest?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Compare the model's default predictions with actual defaults each month, and alert when accuracy falls below its target."
+        },
+        {
+          "id": "B",
+          "text": "Retrain the model each quarter on the most recent applications so that it adapts to changes in the incoming data."
+        },
+        {
+          "id": "C",
+          "text": "Compare the distributions of the model's inputs and outputs with those in its training data, and alert on large shifts."
+        },
+        {
+          "id": "D",
+          "text": "Have credit officers review a random sample of 50 newly approved limits each month and escalate any that look unusual."
+        }
+      ],
+      "correctOptionIds": [
+        "C"
+      ],
+      "explanation": "A: Measuring accuracy requires actual outcomes, called ground truth. Defaults appear only about 12 months after accounts open, so an accuracy check would not reveal this problem for about a year.\n\nB: Retraining is a remediation step, not a detection method. Retraining on recent applications would also teach the model from the incorrect income values.\n\nC: Data quality monitoring compares the statistical properties of production inputs, and of the model's outputs, with a baseline from the training data. It does not need ground truth. A sudden drop in reported income for some applications and a shift toward lower limits would trigger an alert within days, so the upstream system could be investigated.\n\nD: Human review can catch individual problems, but a monthly sample of 50 limits is small and infrequent, and reviewers see the resulting limits rather than the income values that caused them. Low limits can also look reasonable case by case."
+    },
+    {
+      "id": "gen-2026-11-15-13",
+      "domainId": "domain-1",
+      "taskId": "1.3",
+      "skillId": "1.3.2",
+      "type": "single",
+      "text": "A travel company's chat assistant helps customers plan trips to several cities. It works well in short conversations. In long conversations, where customers paste itineraries and change plans many times, the assistant begins suggesting flights that conflict with dates and preferences the customer gave near the start of the chat. Its replies remain complete and well formed.\n\nWhich change will MOST likely fix this?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Raise the maximum output token setting so that the assistant can include all of the customer's preferences in each reply."
+        },
+        {
+          "id": "B",
+          "text": "Lower the temperature setting so that the assistant applies the customer's stated preferences more consistently."
+        },
+        {
+          "id": "C",
+          "text": "Fine-tune the model on past trip-planning chats so that it learns which details customers usually care about."
+        },
+        {
+          "id": "D",
+          "text": "Keep a running summary of the customer's confirmed dates and preferences, and send it with each new message."
+        }
+      ],
+      "correctOptionIds": [
+        "D"
+      ],
+      "explanation": "A: The maximum output token setting limits the length of each reply. The replies are complete and well formed, so output length is not the issue. The problem is that early details no longer reach the model.\n\nB: Temperature controls how varied the output is. A lower setting makes replies more predictable, but it cannot make the model use details that are no longer in its input.\n\nC: Fine-tuning can teach general patterns, but it cannot teach the model one customer's dates and preferences. Those details exist only in the current conversation.\n\nD: A model can consider only the tokens within its context window. Each turn sends the conversation history, and in long chats with pasted itineraries the earliest messages no longer fit, so details from the start of the chat are lost. A short running summary keeps the confirmed dates and preferences within the window on every turn."
+    },
+    {
+      "id": "gen-2026-11-15-14",
+      "domainId": "domain-1",
+      "taskId": "1.3",
+      "skillId": "1.3.1",
+      "type": "single",
+      "text": "An IT service desk uses a generative AI model to read each new ticket and return a category, a priority, and a one-sentence summary. A ticketing system reads the model's output automatically. The prompt says: \"Categorize, prioritize, and summarize this ticket.\" About one response in five uses unexpected labels or a different field order, and the ticketing system rejects it.\n\nWhat should the team try FIRST?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Revise the prompt to list the allowed categories and priority levels, define the output format, and show an example response."
+        },
+        {
+          "id": "B",
+          "text": "Fine-tune the model on several thousand past tickets with their categories, priorities, and summaries to teach it the format."
+        },
+        {
+          "id": "C",
+          "text": "Lower the maximum output token setting so that the model returns only the three fields and stops before adding extra text."
+        },
+        {
+          "id": "D",
+          "text": "Switch to a larger foundation model with stronger reasoning so that it interprets the instruction to categorize more reliably."
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "explanation": "A: Prompt engineering shapes a model's output by giving it clear instructions and context. The current prompt never states which labels are allowed or what format to use, so the model has to guess. Listing the allowed values, defining the format, and including an example of a correct response directly addresses the rejected outputs. This is quick and inexpensive, so it is the right first step.\n\nB: Fine-tuning can make output more consistent, but it requires preparing training data, time, and cost. Prompt engineering should be tried first, especially when the prompt has not yet stated the requirements.\n\nC: The maximum output token setting only limits length. A shorter limit can cut off a response partway through a field, and it does not tell the model which labels or field order to use.\n\nD: A larger model may follow instructions better, but it would still have to guess at labels and a format that the prompt never defines. The change also adds cost without addressing the cause."
+    },
+    {
+      "id": "gen-2026-11-15-15",
+      "domainId": "domain-1",
+      "taskId": "1.3",
+      "skillId": "1.3.3",
+      "type": "single",
+      "text": "An insurer uses a generative AI model to draft letters that explain claim decisions. Each prompt includes the claim file, and the facts in the drafts are accurate. However, the drafts' tone and structure often differ from the insurer's house style, even with style instructions and two sample letters in the prompt. The insurer has 20,000 approved letters from past claims.\n\nWhich approach will MOST likely produce drafts that match the house style?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Use Retrieval Augmented Generation (RAG) to add the relevant sections of the insurer's claims policies to each prompt."
+        },
+        {
+          "id": "B",
+          "text": "Fine-tune the model on the approved letters so that its writing follows the patterns found across those examples."
+        },
+        {
+          "id": "C",
+          "text": "Move to a model with a larger context window so that each prompt can include a longer and more detailed style guide."
+        },
+        {
+          "id": "D",
+          "text": "Lower the model's temperature setting so that its drafts vary less in wording from one letter to the next."
+        }
+      ],
+      "correctOptionIds": [
+        "B"
+      ],
+      "explanation": "A: RAG adds relevant information to a prompt at the time of the request. It helps when answers need current or company-specific facts. The drafts' facts are already accurate, and adding policy text does not change how the model writes.\n\nB: Fine-tuning further trains a model on examples so that it adapts to a specific task or style. Prompt instructions and two samples have not produced consistent results, and the insurer has 20,000 approved letters that show the house style. Fine-tuning on those letters can produce content that more closely matches the organization's style.\n\nC: A larger context window allows longer prompts, but the model already receives style instructions and still drifts from them. Longer instructions describe the style without giving the model the broad set of examples it needs to reproduce it.\n\nD: A lower temperature makes output more predictable. It would make drafts more alike, but not necessarily alike in the house style, because the model would still follow its own default tone and structure."
+    },
+    {
+      "id": "gen-2026-11-15-b-01",
+      "domainId": "domain-1",
+      "taskId": "1.1",
+      "skillId": "1.1.3",
+      "type": "single",
+      "text": "A manufacturer's legal team must find which of its 12,000 supplier contracts renew automatically and how much notice each requires for cancellation. The contracts are PDF and Word files that many different suppliers wrote over 15 years. The contract management system tags each file with the supplier name, contract type, start date, and contract owner.\n\nWhich approach will produce this list MOST efficiently?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Filter the contract management system's tags for contract types that usually renew automatically, and apply each type's standard notice period."
+        },
+        {
+          "id": "B",
+          "text": "Train a classification model on the contract tags to predict which contracts renew automatically, by using a sample that the legal team labels."
+        },
+        {
+          "id": "C",
+          "text": "Use a generative AI model to read each contract and record any renewal clause and notice period as fields, with legal staff checking a sample."
+        },
+        {
+          "id": "D",
+          "text": "Run a keyword search of the contract text for phrases such as automatic renewal, and have staff read each match to record the notice period."
+        }
+      ],
+      "correctOptionIds": [
+        "C"
+      ],
+      "explanation": "A: The tags are structured metadata about each file. They do not record what each contract says. Contracts that many different suppliers wrote vary in their terms, so applying a standard renewal term and notice period for each contract type would produce an unreliable list.\n\nB: A model can learn only from the inputs it receives. The tags do not contain the renewal terms, so a model trained on them has no information from which to identify which contracts renew automatically. It also would not produce notice periods.\n\nC: The renewal terms exist only in the contract text, which is unstructured data. A generative AI model can read unstructured text and extract specific details into structured fields, such as whether a contract renews automatically and how much notice it requires. Checking a sample confirms the quality of the extraction before the legal team relies on the list.\n\nD: Keyword search treats the text as fixed strings. Contracts that many suppliers wrote over 15 years express renewal terms in many different ways, so phrase matching would miss clauses that use other wording. Staff would also have to read every match to find the notice period."
+    },
+    {
+      "id": "gen-2026-11-15-b-02",
+      "domainId": "domain-1",
+      "taskId": "1.1",
+      "skillId": "1.1.3",
+      "type": "single",
+      "text": "A company's data team has four AI proposals. Each proposal depends on one data source. To show results before the next quarterly review, the team will start with the proposal whose data a model can use with the LEAST preparation.\n\nWhich proposal should the team start with?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Recommend products by using website click events, which the site logs with the same fields for every event: time, customer ID, page, and action."
+        },
+        {
+          "id": "B",
+          "text": "Forecast spare-part costs by using supplier price lists, which arrive as scanned PDF files that each contain a table of part numbers and prices."
+        },
+        {
+          "id": "C",
+          "text": "Flag accounts at risk of leaving by using account managers' weekly notes, which are typed into a comments column in the CRM database."
+        },
+        {
+          "id": "D",
+          "text": "Detect packaging defects by using photos from inspection stations, which are stored in folders that are named by product line and date."
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "explanation": "A: Click events that are logged with the same fields for every event are structured data. Each record has defined fields with consistent meanings, so a model can use the data after routine preparation. This proposal needs the least preparation.\n\nB: A scanned PDF file is an image of a page. Although each page shows a table, the part numbers and prices are not stored as data fields. The text and tables must be extracted and checked before a model can use the prices.\n\nC: Storing notes in a database column does not make the notes structured. Free-form text in a comments field is unstructured data, so the notes must be processed, for example to identify topics or sentiment, before a model can use them.\n\nD: Photos are unstructured data. The folder names provide only the product line and date. To detect defects, a model needs examples that are labeled to show which photos contain defects, which requires substantial preparation."
+    },
+    {
+      "id": "gen-2026-11-15-b-03",
+      "domainId": "domain-1",
+      "taskId": "1.1",
+      "skillId": "1.1.4",
+      "type": "single",
+      "text": "A company's HR assistant uses a generative AI model to answer employee questions from documents on the HR intranet site. Over ten years, the site has grown to about 9,000 pages, and HR teams in each country post their own versions of policies. Employees report that the assistant sometimes describes leave benefits that changed last year, and that two employees who ask the same question can get different answers.\n\nWhich action will MOST likely improve the accuracy of the answers?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Have HR staff review a sample of the assistant's answers each week and send corrections to employees who received wrong answers."
+        },
+        {
+          "id": "B",
+          "text": "Lower the model's temperature setting so that the assistant gives the same answer each time employees ask the same question."
+        },
+        {
+          "id": "C",
+          "text": "Fine-tune the model on the full set of intranet documents so that the model learns the company's policies directly."
+        },
+        {
+          "id": "D",
+          "text": "Archive superseded and duplicate pages, and assign an owner for each policy to keep its published version current."
+        }
+      ],
+      "correctOptionIds": [
+        "D"
+      ],
+      "explanation": "A: A weekly sample review is a detective control. Staff would correct some answers after employees received them, but the outdated and conflicting pages would remain the source of new answers.\n\nB: Temperature controls the randomness of a model's output. A lower setting can make wording more consistent, but the assistant would still draw on outdated and conflicting pages, so its answers could be consistently wrong.\n\nC: Fine-tuning on the same documents would teach the model the outdated and conflicting versions along with the current versions. The model would also need to be fine-tuned again whenever a policy changes.\n\nD: An AI system's outputs can only be as accurate as the data it draws on. Ten years of pages with several versions of each policy mean that the assistant can retrieve superseded or duplicate content, which explains both the outdated answers and the inconsistent answers. Removing old and duplicate pages and assigning owners improves the accuracy and currency of the source data."
+    },
+    {
+      "id": "gen-2026-11-15-b-04",
+      "domainId": "domain-1",
+      "taskId": "1.1",
+      "skillId": "1.1.4",
+      "type": "multiple",
+      "text": "A streaming service is preparing five years of subscriber records to train a model that predicts which subscribers will cancel within the next 60 days. A review of the data found the following issues.\n\nWhich issues are MOST likely to reduce the accuracy of the model's predictions? (Choose TWO.)",
+      "options": [
+        {
+          "id": "A",
+          "text": "The billing system stores dates as day/month/year, but the viewing system stores dates as month/day/year."
+        },
+        {
+          "id": "B",
+          "text": "Many profile names are nicknames or include emoji, so they do not match the names on subscribers' payment cards."
+        },
+        {
+          "id": "C",
+          "text": "Subscribers who cancel by phone are recorded only in the call center system, not in the subscription database that the team is using."
+        },
+        {
+          "id": "D",
+          "text": "A system migration in 2023 set the subscription start date to the migration date for every account that existed at that time."
+        },
+        {
+          "id": "E",
+          "text": "Viewing events from smart TVs do not include the device model, although events from phones and tablets do include it."
+        }
+      ],
+      "correctOptionIds": [
+        "C",
+        "D"
+      ],
+      "explanation": "A: Inconsistent date formats are a data quality issue, but they follow a known pattern for each system. The team can detect and convert them during routine preparation, after which they do not affect accuracy.\n\nB: Profile names are inaccurate as legal names, but a subscriber's display name has little to do with whether the subscriber cancels. Errors in a field that does not help predict the outcome have little effect on accuracy.\n\nC: The model learns which subscribers cancel from the cancellation records. Subscribers who cancelled by phone would appear in the training data as subscribers who stayed. These incorrect labels teach the model misleading patterns, so it will underestimate cancellation risk.\n\nD: How long a customer has subscribed is often an important predictor of cancellation. The migration replaced the real start date for every existing account, so this value is inaccurate for most long-term subscribers, and nothing in the data reveals the error. The model cannot learn the real relationship between subscription length and cancellation.\n\nE: Missing device models leave a gap in one descriptive field, but the viewing events themselves are recorded. The device model is a weak signal for cancellation compared with how much and how often a subscriber watches, so the gap has a limited effect on accuracy."
+    },
+    {
+      "id": "gen-2026-11-15-b-05",
+      "domainId": "domain-1",
+      "taskId": "1.1",
+      "skillId": "1.1.6",
+      "type": "single",
+      "text": "A hospital is choosing a vendor for an AI tool that helps emergency department nurses prioritize patients. One vendor's proposal highlights that the vendor holds an accredited ISO/IEC 42001 certification. The hospital's procurement committee wants to understand what this certification tells the hospital.\n\nWhich statement is MOST accurate?",
+      "options": [
+        {
+          "id": "A",
+          "text": "An independent body tested the vendor's prioritization tool against the standard's accuracy and fairness thresholds for clinical use."
+        },
+        {
+          "id": "B",
+          "text": "An independent auditor confirmed that the vendor runs a system for managing its AI risks and responsibilities and for improving its AI practices."
+        },
+        {
+          "id": "C",
+          "text": "The vendor describes its AI systems by using the standard's common vocabulary and component model, so its proposal can be compared with others."
+        },
+        {
+          "id": "D",
+          "text": "An auditor confirmed that the vendor's information security management system was extended to protect the data that its AI tools process."
+        }
+      ],
+      "correctOptionIds": [
+        "B"
+      ],
+      "explanation": "A: ISO/IEC 42001 certification is not a product test, and the standard does not set accuracy or fairness thresholds for a specific tool. The hospital still needs to evaluate the tool's clinical performance itself.\n\nB: ISO/IEC 42001 specifies requirements for an AI management system: how an organization establishes, implements, maintains, and continually improves the way it manages AI risks and responsibilities. An accredited certification means that an independent third party audited that system. The certification gives assurance about how the vendor governs AI, not about the results of a specific tool.\n\nC: Shared AI terminology and descriptions of the components of machine learning systems are the subject of other standards, such as ISO/IEC 23053. ISO/IEC 42001 sets requirements for how an organization manages AI, not a vocabulary that the vendor must use.\n\nD: An information security management system is the subject of ISO/IEC 27001. ISO/IEC 42001 covers the management of AI more broadly, including AI risks and impacts beyond data security, so this statement describes a different certification."
+    },
+    {
+      "id": "gen-2026-11-15-b-07",
+      "domainId": "domain-1",
+      "taskId": "1.2",
+      "skillId": "1.2.1",
+      "type": "single",
+      "text": "An insurer fast-tracks small home insurance claims that meet four written conditions: the claim is under $1,500, the policy is active, the loss type is covered, and the policyholder has made no claims in 12 months. Each claim form records the amount, the policy number, and a loss-type code. Staff check the conditions by hand for about 2,000 claims each week.\n\nWhich approach BEST suits automating this check?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Train a model on five years of past fast-track decisions to predict which claims qualify, and send low-confidence predictions to staff."
+        },
+        {
+          "id": "B",
+          "text": "Use a generative AI model to read each claim form and the policy, decide whether the claim qualifies, and record a written reason."
+        },
+        {
+          "id": "C",
+          "text": "Check each condition against the claim and policy records with fixed rules, and route other claims to adjusters for normal handling."
+        },
+        {
+          "id": "D",
+          "text": "Check each condition against the claim and policy records with fixed rules, and deny claims that do not qualify with a letter."
+        }
+      ],
+      "correctOptionIds": [
+        "C"
+      ],
+      "explanation": "A: A model trained on past decisions learns to approximate how staff decided, including any inconsistencies. The four conditions are already known and can be checked directly from structured fields, so a learned approximation adds uncertainty and maintenance without benefit.\n\nB: A generative AI model is useful for interpreting unstructured content, but every input here is a structured field or a record lookup. Its interpretation can vary, and it adds cost to a check that has a definite yes-or-no answer.\n\nC: Rule-based automation fits when the logic can be written down completely and the inputs are structured. Each condition is a yes-or-no test on a recorded field or policy record, so fixed rules apply them identically to every claim and show which condition passed or failed. Claims that do not qualify still receive a normal adjuster review.\n\nD: Fixed rules suit the check, but the conditions decide only whether a claim is fast-tracked. A claim that fails them, for example a claim over $1,500, may still be valid and needs a normal adjuster review instead of an automatic denial."
+    },
+    {
+      "id": "gen-2026-11-15-b-08",
+      "domainId": "domain-1",
+      "taskId": "1.2",
+      "skillId": "1.2.1",
+      "type": "multiple",
+      "text": "A logistics company is reviewing five tasks that it plans to automate. For each task, the company will choose either rule-based automation or an AI solution.\n\nWhich tasks are BEST suited to rule-based automation? (Choose TWO.)",
+      "options": [
+        {
+          "id": "A",
+          "text": "Calculating each customer's weekly fuel surcharge from a published diesel price index by using the formula in the customer's contract"
+        },
+        {
+          "id": "B",
+          "text": "Estimating each route's delivery time from the planned distance, expected traffic, weather forecasts, and the driver's past delivery times"
+        },
+        {
+          "id": "C",
+          "text": "Sorting incoming customer emails into complaints, damage claims, and quote requests, based on what each customer wrote"
+        },
+        {
+          "id": "D",
+          "text": "Holding any hazardous materials shipment whose electronic shipping record is missing any of the six fields that regulations require"
+        },
+        {
+          "id": "E",
+          "text": "Flagging carrier invoices whose mix of charges, routes, and fees looks unusual compared with each carrier's billing history"
+        }
+      ],
+      "correctOptionIds": [
+        "A",
+        "D"
+      ],
+      "explanation": "A: The surcharge follows a contractual formula applied to a published index. The same inputs must always produce the same result, and the logic can be written down completely. This task suits rule-based automation.\n\nB: Delivery time depends on many interacting factors whose combined effect is difficult to express as rules. A machine learning model can learn these relationships from historical deliveries.\n\nC: Customers describe their needs in free text with many variations in wording. Keyword rules miss or misroute many messages, but an AI model can classify emails by their meaning.\n\nD: Whether a required field is present is a fixed condition that regulations define. A rule can check it exactly every time. An AI model would add uncertainty to a compliance check that must not miss a case.\n\nE: What counts as unusual depends on combinations of charges, routes, and fees that differ by carrier and change over time, so fixed thresholds do not capture it. A machine learning anomaly detection model can learn each carrier's normal billing patterns."
+    },
+    {
+      "id": "gen-2026-11-15-b-09",
+      "domainId": "domain-1",
+      "taskId": "1.2",
+      "skillId": "1.2.4",
+      "type": "single",
+      "text": "A consulting firm classifies AI tools as approved, blocked, or under evaluation, and it publishes the list on its intranet. Last year, the firm approved a meeting-notes app. The app has now added a summary feature that sends meeting transcripts to a third-party model provider. Administrators can turn the feature on or off for the whole firm.\n\nWhich action should the firm take?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Keep the app and all its features on the approved list, because the firm already reviewed the app's vendor and accepted its contract terms."
+        },
+        {
+          "id": "B",
+          "text": "Turn off the summary feature, list it as under evaluation, and keep the rest of the app on the approved list while the review is completed."
+        },
+        {
+          "id": "C",
+          "text": "Move the app to the blocked list, and keep it there until the firm has reviewed both the new summary feature and the model provider."
+        },
+        {
+          "id": "D",
+          "text": "Turn on the summary feature for internal meetings only, list it as approved for that use, and review the model provider at the next annual review."
+        }
+      ],
+      "correctOptionIds": [
+        "B"
+      ],
+      "explanation": "A: The earlier approval covered the app as it was. The new feature sends transcripts to a third-party provider that the firm has not reviewed, which creates a new data risk. Keeping every feature approved would hide that risk from employees.\n\nB: A new AI capability needs its own classification, even when it appears in an approved tool. Because administrators can turn the feature off, the firm can hold it as under evaluation while the reviewed parts of the app remain approved. Employees can see the feature's status and keep using what was reviewed.\n\nC: Blocking the whole app removes features that the firm already reviewed and approved. Because the new feature can be turned off on its own, a full block disrupts work without reducing the risk further and can push employees toward unapproved alternatives.\n\nD: Internal meetings also contain confidential firm information, and approving the feature for that use sends it to a provider that has not been reviewed. Classifying an unreviewed capability as approved misstates its status to employees."
+    },
+    {
+      "id": "gen-2026-11-15-b-10",
+      "domainId": "domain-1",
+      "taskId": "1.2",
+      "skillId": "1.2.4",
+      "type": "single",
+      "text": "A law firm blocked a popular AI transcription tool on its network after learning that the tool stores recordings on servers outside the country. The firm has not approved any other transcription tool. Two months later, partners learn that several associates still use the blocked tool by recording client calls on their personal phones.\n\nWhich action will MOST effectively reduce this risk?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Extend the block to personal phones through mobile device management, and alert IT whenever someone tries to reach the tool."
+        },
+        {
+          "id": "B",
+          "text": "Hold mandatory training on the firm's data residency obligations, and require every associate to complete it within 30 days."
+        },
+        {
+          "id": "C",
+          "text": "Allow the tool for calls that do not involve client matters, and record that condition next to the tool in the published list."
+        },
+        {
+          "id": "D",
+          "text": "Approve a transcription service that meets the firm's data residency requirements, and list it as the alternative to the blocked tool."
+        }
+      ],
+      "correctOptionIds": [
+        "D"
+      ],
+      "explanation": "A: Device controls are difficult to enforce on personal phones, and the network block alone did not stop use. With no approved transcription tool, associates would likely move to another unapproved tool.\n\nB: Training explains the risk, but it does not give associates a sanctioned way to get transcripts. When employees have a business need and no approved tool, they tend to keep using unapproved tools.\n\nC: A conditional approval is a valid classification for some tools, but this tool stores every recording outside the country, whatever the call is about. Associates are already using it for client calls, so the condition would not address the use that creates the risk.\n\nD: Shadow AI grows when employees have a business need and no approved tool. Approving a transcription service that meets the firm's requirements, and listing it alongside the blocked tool, gives associates a safe way to do the work and makes the governed path easier than the workaround."
+    },
+    {
+      "id": "gen-2026-11-15-b-11",
+      "domainId": "domain-1",
+      "taskId": "1.1",
+      "skillId": "1.1.5",
+      "type": "single",
+      "text": "A hotel chain trained a model on two years of bookings to predict which reservations will be cancelled. On the bookings used for training, the model's predictions were correct 97% of the time. On a random sample of bookings from the same two years that had been held out from training, its predictions were correct 70% of the time. Results on last month's bookings were similar.\n\nWhat is the MOST likely cause?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Guests' booking behavior has changed since the training period, so the patterns that the model learned no longer apply."
+        },
+        {
+          "id": "B",
+          "text": "The model is too simple to capture the relationship between the details of a booking and whether the booking is cancelled."
+        },
+        {
+          "id": "C",
+          "text": "The model learned details that are specific to the training bookings instead of patterns that apply to other bookings."
+        },
+        {
+          "id": "D",
+          "text": "Most bookings are never cancelled, so the model can achieve high accuracy by rarely predicting that a booking will be cancelled."
+        }
+      ],
+      "correctOptionIds": [
+        "C"
+      ],
+      "explanation": "A: A change in behavior over time would affect bookings made after the training period. The held-out bookings came from the same two years, and the model also performed poorly on them, so a change over time does not explain the results.\n\nB: A model that is too simple (underfitting) performs poorly on its training data too. This model was correct 97% of the time on its training data.\n\nC: A model overfits when it performs well on its training data but poorly on data that it has not seen. The model memorized details of the training bookings instead of learning patterns that generalize. The large gap between training results and held-out results from the same period is the typical sign of overfitting.\n\nD: An imbalanced outcome can make accuracy a misleading measure. However, the training data and the held-out data come from the same period with similar cancellation rates, so this would affect both results similarly. It does not explain the gap between 97% and 70%."
+    },
+    {
+      "id": "gen-2026-11-15-b-12",
+      "domainId": "domain-1",
+      "taskId": "1.2",
+      "skillId": "1.2.2",
+      "type": "single",
+      "text": "A wholesaler wants to automate supplier invoice processing. For each invoice, the system must read it, find the matching purchase order, and post the invoice to the accounting system. Invoices arrive from about 400 suppliers in their own layouts. Invoices with no matching purchase order go to accounts payable clerks.\n\nWhich solution BEST fits this process?",
+      "options": [
+        {
+          "id": "A",
+          "text": "An AI agent that has tools to read invoices, search purchase orders, and post entries, and that decides which tools to use for each invoice"
+        },
+        {
+          "id": "B",
+          "text": "A workflow that reads, matches, and posts each invoice in a set order, and that uses a generative AI model only to read the invoice"
+        },
+        {
+          "id": "C",
+          "text": "A team of AI agents with one agent for each task, and a supervisor agent that plans how each invoice will be handled"
+        },
+        {
+          "id": "D",
+          "text": "A rule-based workflow that reads each invoice by using a template for the supplier's layout, and then matches and posts it"
+        }
+      ],
+      "correctOptionIds": [
+        "B"
+      ],
+      "explanation": "A: An agent decides at each step which tool to use, which suits tasks whose path varies from case to case. Each invoice here needs the same sequence of tasks, so letting a model choose the path adds cost, slower processing, and room for unexpected behavior without benefit.\n\nB: When the sequence of tasks is known in advance, a predefined workflow runs it predictably and efficiently. AI is needed only where judgment is required: reading invoices in many layouts. Matching and posting follow defined logic, and exceptions go to clerks.\n\nC: A supervisor agent that plans the work for each case suits complex tasks that need different specialists depending on the case. When every invoice follows the same sequence, planning each invoice adds cost and complexity.\n\nD: Layout templates are rule-based extraction. With about 400 suppliers, the company would need to build and maintain a template for each layout, and a template fails when a supplier changes its layout. Reading varied documents is where AI adds value."
+    },
+    {
+      "id": "gen-2026-11-15-b-13",
+      "domainId": "domain-1",
+      "taskId": "1.2",
+      "skillId": "1.2.3",
+      "type": "single",
+      "text": "A card issuer's fraud model detected about 90% of fraud during its first year in production. A monitoring dashboard compares the distribution of each input feature, such as amount, merchant type, and time of day, with the training data, and it has shown no significant change. However, in the last quarter, confirmed fraud losses rose by 40%, and most confirmed fraud cases had received low risk scores.\n\nWhat is the MOST likely explanation?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Fraud tactics have changed, so transactions that look like past legitimate transactions are now more often fraudulent."
+        },
+        {
+          "id": "B",
+          "text": "A data pipeline error is sending incomplete transactions to the model, so several important features arrive empty."
+        },
+        {
+          "id": "C",
+          "text": "The model overfit its training data, and the problem has appeared now that the model scores a larger number of transactions."
+        },
+        {
+          "id": "D",
+          "text": "Customers' spending patterns have shifted, so incoming transactions now differ from the transactions in the training data."
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "explanation": "A: This is concept drift: the relationship between the inputs and the outcome changes, for example when fraudsters change tactics. The inputs can look statistically the same while their meaning changes, so input distribution monitoring does not detect it. Concept drift appears in outcome measures such as confirmed fraud and missed detections, which is why models need ongoing monitoring of results and retraining on recent labeled data.\n\nB: Empty or incomplete features would change those features' distributions, which the dashboard would show. The dashboard shows no significant change.\n\nC: Overfitting causes poor results on new data from the start. The model detected about 90% of fraud in its first year, so overfitting does not explain a recent decline.\n\nD: A shift in spending patterns is data drift, which is a change in the distribution of the inputs. The dashboard monitors those distributions and has not detected a significant change."
+    },
+    {
+      "id": "gen-2026-11-15-b-14",
+      "domainId": "domain-1",
+      "taskId": "1.3",
+      "skillId": "1.3.1",
+      "type": "single",
+      "text": "A software company uses a generative AI model to summarize customer emails for support agents. The prompt consists of the instruction \"Summarize the following customer email in three sentences for a support agent,\" followed by the email text. Most summaries are good. However, when an email includes requests such as \"please translate this into Spanish,\" the model sometimes does what the email asks instead.\n\nWhich prompt change should the company try FIRST?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Add three example emails with their summaries to the prompt so that the model sees what the expected output looks like."
+        },
+        {
+          "id": "B",
+          "text": "Lower the temperature setting so that the model follows the summarization instruction more consistently across emails."
+        },
+        {
+          "id": "C",
+          "text": "Ask the model to reason step by step about the email's content and the customer's needs before it writes the summary."
+        },
+        {
+          "id": "D",
+          "text": "Place the email inside labeled tags, and state that text within the tags is content to summarize, not instructions to follow."
+        }
+      ],
+      "correctOptionIds": [
+        "D"
+      ],
+      "explanation": "A: Examples show the expected output, but the model still receives the instruction and the email as one block of text. An email that contains its own instructions can still be read as a request to the model.\n\nB: Temperature controls the randomness of the output. It does not help the model distinguish the company's instruction from instructions written inside an email.\n\nC: Step-by-step reasoning helps with tasks that require several logical steps. It does not tell the model which parts of the prompt are instructions and which parts are content.\n\nD: Clear prompts separate instructions from the input data. Enclosing the email in labeled tags and stating how to treat the tagged text helps the model treat the email as content to summarize. This is a simple prompt change that the company can test before it tries anything more complex."
+    },
+    {
+      "id": "gen-2026-11-15-b-15",
+      "domainId": "domain-1",
+      "taskId": "1.3",
+      "skillId": "1.3.3",
+      "type": "single",
+      "text": "An electronics retailer fine-tuned a generative AI model in January on its product catalog and return policy, and it uses the model in a customer chat assistant. The catalog has about 40,000 products, and the retailer adds about 300 products each week and updates return rules each quarter. The assistant now gives wrong details about newer products and quotes outdated return rules.\n\nWhich approach will MOST likely keep answers accurate as this information changes?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Fine-tune the model again each month on the latest product catalog and the current return rules."
+        },
+        {
+          "id": "B",
+          "text": "Include the full product catalog and the current return rules in the prompt for every customer question."
+        },
+        {
+          "id": "C",
+          "text": "Retrieve the relevant catalog entries and return rules for each question, and add them to the prompt."
+        },
+        {
+          "id": "D",
+          "text": "Instruct the model to answer only questions about products and rules that it has reliable information about."
+        }
+      ],
+      "correctOptionIds": [
+        "C"
+      ],
+      "explanation": "A: Fine-tuning can take hours to days and requires specialized skills, so it is a poor fit when information changes often. Monthly fine-tuning would still miss products added since the last run, and a fine-tuned model does not show the sources of its answers.\n\nB: A catalog of about 40,000 products in every prompt would likely exceed the model's context window, and it would greatly increase the cost and response time of every question.\n\nC: Retrieval Augmented Generation (RAG) retrieves current information from the retailer's own data when a question is asked and adds it to the prompt. New products and updated rules become available as soon as the source data is updated, without retraining the model.\n\nD: A model cannot reliably judge which of its learned facts are outdated. An instruction does not give the model current information, so it would still answer from outdated knowledge."
+    }
+  ]
 }

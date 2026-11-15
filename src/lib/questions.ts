@@ -109,8 +109,8 @@ export function validateLaunchCounts(questions: readonly Question[]) {
     const count = questions.filter(
       (question) => question.domainId === id,
     ).length;
-    if (count !== 25)
-      throw new Error(`Launch requires 25 questions for ${id}; found ${count}`);
+    if (count < 25)
+      throw new Error(`Launch requires at least 25 questions for ${id}; found ${count}`);
   }
 }
 

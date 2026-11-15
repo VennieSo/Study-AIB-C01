@@ -19,9 +19,11 @@ show totals, attempted, correct, incorrect, unanswered, and raw percentages.
 
 **Live synthetic preview:** [Try Practice and Exam](https://study-aib-c01-preview.bigthink.workers.dev).
 The preview is clearly labelled, carries `noindex` metadata, and uses synthetic
-interface fixtures that do not assess exam knowledge. The public question banks
-are currently empty, so production correctly disables both modes and remains
-unpublished pending the initial bank in [#9](https://github.com/VennieSo/Study-AIB-C01/issues/9).
+interface fixtures that do not assess exam knowledge.
+
+The production bank contains **135 questions**: 34 in domain 1, 33 in domain 2,
+32 in domain 3, and 36 in domain 4. All Practice sizes and Exam presets are supported.
+Production publication is separate from this local integration.
 Synthetic fixtures never become production question data.
 
 ## Screenshots
@@ -203,13 +205,13 @@ valid pools are allowed; unsupported sessions are disabled instead of shortened.
 
 ```sh
 npm run validate:content  # Structural and semantic validation; allows small pools
-npm run validate:launch   # Also requires exactly 25 public questions in each domain
+npm run validate:launch   # Also requires at least 25 public questions in each domain
 npm run validate:fixtures # Independently checks 100 synthetic questions, 25/domain
 ```
 
-The launch check intentionally fails until all four public banks reach 25
-questions each. The production build uses only the public bank and does not
-fall back to fixtures when content is missing. Answer keys are downloadable in
+The launch check requires at least 25 questions in each public domain bank;
+additional questions remain eligible for sampling. The production build uses only
+the public bank and does not fall back to fixtures when content is missing. Answer keys are downloadable in
 this static study tool by design.
 
 ## Build and deployment boundary
@@ -243,7 +245,7 @@ The [deployment workflow](.github/workflows/deploy.yml) runs type checks, conten
 and session tests, browser journeys, both artifact checks, and Wrangler dry runs.
 Pull requests run checks only. Pushes to `integration/spec-1` deploy the labelled
 synthetic preview. Pushes to `main` deploy production only after the launch check
-confirms 100 questions, 25 per domain. The workflow can also be dispatched with
+confirms at least 25 questions per domain. The workflow can also be dispatched with
 `preview` selected; `production` requires the `main` branch. It reads the real
 HTTPS URL from Wrangler's successful deployment output, downloads the page,
 compares it with the built HTML, and records the verified URL in the run summary.
@@ -322,7 +324,7 @@ selection counts.
 The automated journeys cover Chrome desktop and a mobile viewport, keyboard
 selection/focus, both feedback outcomes, answer locks, no repeats, reload warnings,
 results/restart, every Practice scope/size, an 85-question all-domain completion,
-reduced pools, production empty availability, built homepage SEO, every Exam preset,
+reduced pools, production bank availability, built homepage SEO, every Exam preset,
 numbered-grid keyboard navigation, answer revision and skipping, confirmation
 cancellation, mode changes, and delayed timeout. The session
 tests cover JSON round-trip/continuation and malformed-record rejection for every

@@ -1,4 +1,1110 @@
 {
   "schemaVersion": 2,
-  "questions": []
+  "questions": [
+    {
+      "id": "aib-conversation-reviewed-v1-005",
+      "domainId": "domain-4",
+      "taskId": "4.3",
+      "skillId": "4.3.3",
+      "type": "single",
+      "text": "An insurance company rolled out an AI assistant that prepares claim summaries after a pilot showed that it frees time for complex investigations. Two months later, most claims handlers still gather information manually. In team meetings, handlers ask whether staffing levels will be cut and how their work will be judged once the assistant is in use.\n\nWhich approach will BEST increase adoption?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Run refresher training on writing prompts, and share a quick-reference guide to the assistant's features."
+        },
+        {
+          "id": "b",
+          "text": "Publish the pilot's time-savings results, and recognize the handlers who save the most time each month."
+        },
+        {
+          "id": "c",
+          "text": "Set a weekly usage target for each handler, and have managers review progress in one-to-one meetings."
+        },
+        {
+          "id": "d",
+          "text": "Explain the timeline for changes to roles and evaluation criteria, and answer handlers' questions in team sessions."
+        }
+      ],
+      "correctOptionIds": [
+        "d"
+      ],
+      "explanation": "A: Tool training helps employees use the assistant well. However, the handlers' questions are about job security and how they will be evaluated, not about how to use the tool.\n\nB: Sharing results shows the assistant's value, but it does not answer what will happen to staffing or evaluation. Rewarding the largest time savings could also reinforce fears that saved time will lead to staff cuts.\n\nC: Usage targets can raise how often handlers open the assistant, but they do not address the concerns behind the reluctance and can produce compliance without real adoption.\n\nD: Transparent communication about implementation timelines, expected outcomes and effects on roles addresses workforce concerns directly. Explaining how roles and evaluation will change, and answering questions openly, reduces the uncertainty that is holding back adoption."
+    },
+    {
+      "id": "replacement-v1-07",
+      "domainId": "domain-4",
+      "taskId": "4.2",
+      "skillId": "4.2.2",
+      "type": "multiple",
+      "text": "A hotel group wants to analyze guest-service issues across its 40 properties and reuse the data in future AI initiatives. A trial analysis showed resolution rates from 55% to 97% at properties with similar guest feedback scores. When analysts reported errors in records shared from the properties, the errors remained in later extracts.\n\nWhich actions should the group include in its data strategy? (Choose TWO.)",
+      "options": [
+        {
+          "id": "a",
+          "text": "Have the analytics team correct errors in a central copy of the data and reuse that copy in later projects."
+        },
+        {
+          "id": "b",
+          "text": "Assign each property an owner who is accountable for the quality of the records that it shares."
+        },
+        {
+          "id": "c",
+          "text": "Adopt the definitions of the property with the highest resolution rate as the standard for the whole group."
+        },
+        {
+          "id": "d",
+          "text": "Give all analysts read access to every property's guest-service system so that they can check records at the source."
+        },
+        {
+          "id": "e",
+          "text": "Agree on group-wide definitions for key fields, and document how each property's records map to them."
+        }
+      ],
+      "correctOptionIds": [
+        "b",
+        "e"
+      ],
+      "explanation": "A: Correcting a central copy fixes the symptoms for one team, but the errors remain at the source and return in each new extract. No one at the properties becomes accountable for the data, so the foundation does not improve.\n\nB: Data owners are accountable for the quality of the data that they provide. A named owner at each property gives reported errors someone responsible for fixing them at the source, so shared records improve over time.\n\nC: Resolution rates this far apart at properties with similar feedback suggest that the properties define a resolved issue differently. Choosing the definition that produces the highest rate could adopt the loosest one, and it imposes a standard without agreement across the properties.\n\nD: Direct access lets analysts see source records, but it bypasses purpose-based access controls and does not resolve inconsistent definitions or make anyone responsible for fixing errors.\n\nE: Common business definitions, recorded in a business glossary, let the group interpret records consistently across properties. Documented mappings preserve the meaning of local data when it is combined for analysis and reused."
+    },
+    {
+      "id": "gen-2026-11-14-b-07",
+      "domainId": "domain-4",
+      "taskId": "4.2",
+      "skillId": "4.2.1",
+      "type": "single",
+      "text": "A retail chain's demand forecasting pilot reduced stockouts in one of its four regions. For the pilot, analysts manually combined that region's sales, promotion, and inventory data. Each region runs its own sales system with its own product codes, promotion plans sit in regional spreadsheets, and inventory is in a separate warehouse system. Leaders want company-wide forecasts to guide central purchasing.\n\nWhat should the company do before it expands the model to all regions?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Assign owners and common definitions for the data the forecasts depend on, and make that data available across regions through one governed source."
+        },
+        {
+          "id": "B",
+          "text": "Standardize product codes across the four regional sales systems so that their sales data can be combined into company-wide forecasts."
+        },
+        {
+          "id": "C",
+          "text": "Copy all regional data into a central data lake, and have the data science team resolve inconsistencies as it builds each forecast."
+        },
+        {
+          "id": "D",
+          "text": "Train a separate forecasting model for each region on that region's own data, and add the regional forecasts together for central purchasing."
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "explanation": "A: Data readiness depends on quality, accessibility, and consistency across the sources a model needs. Clear ownership and common definitions keep the data consistent over time, and a governed, shared source removes the manual combining that the pilot relied on.\n\nB: Standardizing product codes fixes one inconsistency in sales data. However, the forecasts also depend on promotion and inventory data, which would remain in separate spreadsheets and systems.\n\nC: A central data lake improves accessibility. However, without ownership and common definitions, the inconsistencies remain, and the data science team must repeatedly fix them for each forecast. This creates manual effort and inconsistent results.\n\nD: Separate regional models avoid combining inconsistent data. However, regional forecasts built on different product codes cannot be reliably added together for central purchasing, and each region would still need the manual data combining that the pilot required."
+    },
+    {
+      "id": "gen-2026-11-14-b-08",
+      "domainId": "domain-4",
+      "taskId": "4.3",
+      "skillId": "4.3.5",
+      "type": "single",
+      "text": "A professional services company gave its 2,000 employees an approved generative AI assistant after a 1-hour online course. Three months later, regular use is high in IT but low in finance, HR, and client delivery. Managers in those departments report that most employees tried the assistant once or twice, got generic results, and returned to their usual methods.\n\nWhich approach will MOST effectively build AI literacy in these departments?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Publish a library of tested prompts for common tasks in each department, and link the library from the assistant's home page."
+        },
+        {
+          "id": "B",
+          "text": "Run hands-on sessions in each department in which employees practice with the assistant on their current work and get feedback on their results."
+        },
+        {
+          "id": "C",
+          "text": "Run a hackathon in which finance, HR, and client delivery teams work with IT developers to build generative AI applications for their departments."
+        },
+        {
+          "id": "D",
+          "text": "Appoint an AI champion in each department to answer questions and share success stories at monthly team meetings."
+        }
+      ],
+      "correctOptionIds": [
+        "B"
+      ],
+      "explanation": "A: A prompt library gives employees useful starting points, but it is a passive resource. Employees who already gave up after generic results are unlikely to seek it out, and copying prompts does not build the judgment needed to adapt them to their own work.\n\nB: Literacy grows through practice on real tasks with feedback. Hands-on sessions in each department show employees how to get useful results for their own work and build the skills they need to keep using the assistant, which addresses why they stopped.\n\nC: A hackathon can generate ideas and engage participants. However, it focuses on building new applications with a limited group rather than helping most employees use the existing assistant in their daily work.\n\nD: Champions help sustain adoption by answering questions and sharing examples. However, monthly stories and on-request help do not give most employees direct practice, so they still might not learn how to get useful results."
+    },
+    {
+      "id": "gen-2026-11-14-07",
+      "domainId": "domain-4",
+      "taskId": "4.1",
+      "skillId": "4.1.2",
+      "type": "single",
+      "text": "A retailer assesses itself with a generative AI maturity model that has Envision, Experiment, Launch and Scale stages. A product-description generator is used in one department's daily work, but nobody measures its output quality or business results, and staff publish its drafts unchecked. Four other use cases are pilots with a cross-functional team, approved models and initial governance policies.\n\nWhich assessment is MOST appropriate?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Launch stage. Next, extend the product-description generator to other departments to increase its business value."
+        },
+        {
+          "id": "b",
+          "text": "Experiment stage. Next, start pilots in more departments to find further use cases before investing in production controls."
+        },
+        {
+          "id": "c",
+          "text": "Experiment stage. Next, establish production-grade observability, governance and human-in-the-loop oversight to launch proven use cases."
+        },
+        {
+          "id": "d",
+          "text": "Launch stage. Next, build reusable components so that other departments can create similar generators themselves."
+        }
+      ],
+      "correctOptionIds": [
+        "c"
+      ],
+      "explanation": "A: A solution in daily use does not by itself place the company at the Launch stage. That stage requires production solutions that deliver measurable outcomes, with monitoring and alerting and a defined human-in-the-loop process. Extending an unmonitored generator would spread its gaps to more departments.\n\nB: The company is at the Experiment stage, but more pilots would not move it forward. To progress, it needs to make proven use cases production-ready rather than add experiments.\n\nC: Active pilots, a cross-functional team, validated models and initial governance match the Experiment stage. The generator lacks outcome measurement, monitoring and human oversight, so it does not yet meet Launch criteria. Production-grade governance and observability are the steps that move an organization to Launch.\n\nD: Reusable components and adoption across departments are steps toward the Scale stage. The company has not met Launch criteria yet, so building for scale would skip the controls that production use requires."
+    },
+    {
+      "id": "gen-2026-11-14-08",
+      "domainId": "domain-4",
+      "taskId": "4.4",
+      "skillId": "4.4.3",
+      "type": "single",
+      "text": "A company's 12 business units each build generative AI applications independently, with their own models, safety policies and evaluation methods. Leaders have found duplicated spending and inconsistent risk practices, and lessons from one unit rarely reach the others. The company wants to scale AI while each unit stays responsible for the applications that serve its customers.\n\nWhich approach will meet these requirements?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Establish an AI center of excellence that sets common practices and shares reusable assets across the units."
+        },
+        {
+          "id": "b",
+          "text": "Establish an AI governance board that reviews each unit's projects against a common risk checklist."
+        },
+        {
+          "id": "c",
+          "text": "Establish a central AI platform team that offers shared models and tools for the units to adopt."
+        },
+        {
+          "id": "d",
+          "text": "Appoint an AI lead in each unit who reports the unit's projects and spending to executives."
+        }
+      ],
+      "correctOptionIds": [
+        "a"
+      ],
+      "explanation": "A: An AI center of excellence defines common standards and practices, maintains shared repositories and assets, and spreads knowledge across the organization. The units keep building their own applications, while shared practices make risk handling consistent and reusable assets reduce duplicated spending.\n\nB: A governance board can make risk reviews consistent. However, approving projects does not reduce duplicated spending or help lessons move between units.\n\nC: A shared platform can reduce duplicated tooling. However, it does not set common safety or evaluation practices, so risk handling can remain inconsistent, and it does not give units a way to share lessons.\n\nD: Unit leads who report to executives improve visibility into projects and spending. Visibility alone does not establish common practices, reduce duplication or spread lessons between units."
+    },
+    {
+      "id": "gen-2026-11-14-c-07",
+      "domainId": "domain-4",
+      "taskId": "4.4",
+      "skillId": "4.4.5",
+      "type": "single",
+      "text": "A data science team built a generative AI contract-review prototype that 20 lawyers used for 2 months with strong feedback. The team updates the prompts most weeks based on user comments, and two data scientists fix problems when users message them. Legal leadership wants to offer the tool to 600 staff in three regions next quarter.\n\nWhat should the company do FIRST?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Extend the pilot to 100 more lawyers, and collect structured feedback to confirm that results hold before the launch."
+        },
+        {
+          "id": "B",
+          "text": "Version the prompts and model with approved changes, and assign an owner to monitor quality and incidents after launch."
+        },
+        {
+          "id": "C",
+          "text": "Fine-tune the model on the firm's past contract reviews, and benchmark its accuracy against the current prototype."
+        },
+        {
+          "id": "D",
+          "text": "Train the 600 staff on writing prompts, and publish a guide on how to review the tool's output before relying on it."
+        }
+      ],
+      "correctOptionIds": [
+        "B"
+      ],
+      "explanation": "A: A larger pilot can confirm results in more conditions. However, the prototype already shows value, and a larger pilot would still run on informal weekly prompt changes and ad hoc support, which do not hold up for 600 users.\n\nB: Moving from experiment to production requires operational and governance practices, such as controlled versions, change approval, monitoring, and clear ownership. Without them, weekly prompt edits can change results for all users without review, and support depends on two people answering messages.\n\nC: Fine-tuning can improve accuracy, but feedback is already strong. It does not address how the tool is changed, monitored, or supported once many people depend on it.\n\nD: User training supports adoption and is useful before launch. It does not address the uncontrolled changes and informal support that make the prototype unready for production use."
+    },
+    {
+      "id": "gen-2026-11-14-c-08",
+      "domainId": "domain-4",
+      "taskId": "4.3",
+      "skillId": "4.3.4",
+      "type": "single",
+      "text": "A company gave all staff access to a generative AI assistant with the same training. Usage is high in sales but near zero in finance. Finance staff say they would rather wait until the assistant is proven. Last quarter, a finance analyst was criticized in a leadership meeting for an error in a report drafted with the assistant.\n\nWhich action will MOST likely increase adoption in finance?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Have finance leaders openly use the assistant on low-stakes work, share what went wrong, and recognize staff who try new uses."
+        },
+        {
+          "id": "B",
+          "text": "Pair each finance analyst with a sales colleague who uses the assistant often, so that they can share practical ways to apply it."
+        },
+        {
+          "id": "C",
+          "text": "Set an assistant usage target for each finance employee, and include progress toward the target in performance reviews."
+        },
+        {
+          "id": "D",
+          "text": "Replace the assistant with a more accurate model for finance so that reports drafted with it are less likely to contain errors."
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "explanation": "A: Fear of failure and risk aversion are cultural barriers, and leadership behavior is the main lever for addressing them. When leaders use the tool openly, admit mistakes, and reward experimentation, staff see that careful trial is safe, which counters the signal sent by the public criticism.\n\nB: Peer pairing spreads practical know-how, which helps when people do not know how to apply a tool. The hesitation here follows how leaders reacted to an error, and sales colleagues cannot change what finance leaders reward or criticize.\n\nC: A usage target can raise activity, but it adds pressure in a team that already fears being blamed for errors. Staff may comply in name only without trusting the tool.\n\nD: A more accurate model treats the hesitation as a technical problem. Any model can make mistakes, and staff would still expect blame for the errors that remain, so they would keep waiting."
+    },
+    {
+      "id": "gen-2026-11-15-g-01",
+      "domainId": "domain-4",
+      "taskId": "4.1",
+      "skillId": "4.1.1",
+      "type": "multiple",
+      "text": "A utility plans to launch a generative AI assistant on Amazon Bedrock in four months. The assistant will use the company's knowledge base articles to draft replies to customer emails, and 300 customer service agents will review each draft before sending it. A readiness assessment produced five findings.\n\nWhich findings pose the GREATEST risk to the launch plan? (Choose TWO.)",
+      "options": [
+        {
+          "id": "A",
+          "text": "The company has no data scientists or machine learning engineers, and its IT team has not deployed an AI model before."
+        },
+        {
+          "id": "B",
+          "text": "The customer service director sponsors the project, but the CFO wants evidence of savings before funding a second phase."
+        },
+        {
+          "id": "C",
+          "text": "About a third of the knowledge base articles were last reviewed more than two years ago, and agents often confirm answers with colleagues in team chat."
+        },
+        {
+          "id": "D",
+          "text": "In a survey, about half of the agents said they were eager to try the assistant, and a third doubted that it would save them time."
+        },
+        {
+          "id": "E",
+          "text": "No one has decided which customer details may be included in prompts or who can approve changes to how the assistant answers."
+        }
+      ],
+      "correctOptionIds": [
+        "C",
+        "E"
+      ],
+      "explanation": "A: A managed service such as Amazon Bedrock provides pre-trained foundation models, so the company does not need to build or train a model. The IT team needs to integrate and operate the assistant, which is ordinary application work. Lack of in-house machine learning specialists is not a major risk for this plan.\n\nB: Leadership alignment matters, and the project already has a sponsor for the launch. A CFO who wants evidence of savings before funding a second phase is a normal condition for later investment. It does not threaten the first launch, and the launch is how that evidence will be produced.\n\nC: The assistant drafts replies from the knowledge base, so the quality of its answers depends on the quality of those articles. Many articles have not been reviewed in years, and agents rely on colleagues to confirm answers, which suggests that the articles are not a dependable source. The assistant would produce outdated answers at scale, and reviewers would have to catch them on every email.\n\nD: Mixed attitudes are typical before a launch. Half the agents are eager, and doubts about time savings can be addressed through communication, training and early results during the four months. This is a cultural factor to manage, not a gap that blocks the launch.\n\nE: Governance readiness covers decisions about data use and accountability. Without rules on which customer details may be sent in prompts, the assistant could process personal data in ways the company has not approved. Without a named approver for changes to its answers, no one is accountable for what agents are given to send to customers. Both decisions are needed before a customer-facing launch."
+    },
+    {
+      "id": "gen-2026-11-15-g-02",
+      "domainId": "domain-4",
+      "taskId": "4.1",
+      "skillId": "4.1.3",
+      "type": "single",
+      "text": "An insurer launched a model that flags claims that are likely to be fraudulent, and spot checks show that the flags are accurate. Each morning, the flags are emailed to investigation team leads in a report. Several investigators say they are unsure what the risk scores mean. Investigators' caseloads are no larger than before launch, yet flagged claims wait an average of nine days for review, and fraud losses have not changed.\n\nWhich capability gap MOST likely explains these results?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Flagged claims are not assigned to investigators as part of the way that cases are distributed and prioritized."
+        },
+        {
+          "id": "B",
+          "text": "Investigators have not been trained to interpret the model's risk scores, so they hesitate to act on flagged claims."
+        },
+        {
+          "id": "C",
+          "text": "The investigation team does not have enough investigators to review the additional claims that the model flags."
+        },
+        {
+          "id": "D",
+          "text": "The claims system does not show why each claim was flagged, so investigators cannot judge which flags to pursue first."
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "explanation": "A: This is a process gap. The model produces accurate flags, but they arrive as a report to team leads, and investigators' caseloads have not grown, which shows that flagged claims are not being added to their work. Without a step that assigns and prioritizes flagged claims, they wait for days and the model cannot reduce losses. An AI solution delivers value only when its output is built into the process where the work is done.\n\nB: Uncertainty about risk scores is a real people gap, and training would help. However, it would not explain why flagged claims are not reaching investigators' caseloads. Investigators who understood the scores would still not receive the claims.\n\nC: A capacity gap would show up as larger caseloads and growing backlogs. Caseloads are no larger than before launch, so the flagged claims are not adding to investigators' work. Hiring more investigators would not change how flags reach them.\n\nD: Explanations help investigators prioritize flagged claims once they are working on them. The flagged claims are not reaching investigators' caseloads in the first place, so better explanations would not shorten the wait."
+    },
+    {
+      "id": "gen-2026-11-15-g-03",
+      "domainId": "domain-4",
+      "taskId": "4.1",
+      "skillId": "4.1.4",
+      "type": "single",
+      "text": "A regional insurer's strategy targets a 30% cut in claim cycle time within two years. The company has no AI in production. Of its three generative AI pilots in claims, one that summarizes claim files met its success criteria, and pilot adjusters reduced their file-review time by a third. The board has approved AI funding for the next 12 months.\n\nWhich investment plan BEST fits the company's position?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Fund four more claims pilots in parallel to find which use case reduces cycle time the most before committing to production."
+        },
+        {
+          "id": "B",
+          "text": "Rebuild the summary pilot on a model fine-tuned on the insurer's own claim files to raise accuracy before moving it to production."
+        },
+        {
+          "id": "C",
+          "text": "Build a shared AI platform with reusable components and self-service tools that claims and other departments can use."
+        },
+        {
+          "id": "D",
+          "text": "Move the claim-file summary pilot into production with the monitoring and support that it needs."
+        }
+      ],
+      "correctOptionIds": [
+        "D"
+      ],
+      "explanation": "A: More experimentation keeps the company at its current maturity level. It already has a claims pilot with proven results that supports the strategic objective. Running more pilots before taking any into production delays value and leaves the company without production experience.\n\nB: The pilot already met its success criteria, so the main gap is not accuracy. Fine-tuning adds cost and months of work before any value is delivered, while the company still gains no experience of running AI in production.\n\nC: A shared platform with self-service tools suits an organization that already runs several AI solutions in production and needs to scale them. A company with no AI in production has not yet learned what its production solutions need, so this investment comes too early.\n\nD: The company is at the experimentation stage, so its next step is to move a proven pilot into production with the operational support it needs. The summary pilot directly supports the cycle-time objective and has shown measurable results. Running it in production builds operational capability and provides the evidence for the next investment."
+    },
+    {
+      "id": "gen-2026-11-15-g-04",
+      "domainId": "domain-4",
+      "taskId": "4.2",
+      "skillId": "4.2.3",
+      "type": "single",
+      "text": "An accounting firm with 400 staff wants a generative AI tool that drafts summaries of client documents. Use will be heavy from February to April and light for the rest of the year. The firm's IT team manages cloud applications but has no machine learning experience. Partners are concerned that client documents could be used to train a model provider's models.\n\nWhich approach BEST meets these needs?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Use a foundation model in Amazon Bedrock with Provisioned Throughput sized for the February-to-April peak."
+        },
+        {
+          "id": "B",
+          "text": "Use a foundation model in Amazon Bedrock with on-demand pricing based on the tokens processed."
+        },
+        {
+          "id": "C",
+          "text": "Host an open-source model on Amazon SageMaker AI endpoints, and add instances during the busy season."
+        },
+        {
+          "id": "D",
+          "text": "Run an open-source model on servers in the firm's own data center so that client documents stay on its premises."
+        }
+      ],
+      "correctOptionIds": [
+        "B"
+      ],
+      "explanation": "A: Provisioned Throughput reserves dedicated capacity at a fixed hourly cost and suits steady, predictable workloads. Sized for a three-month peak, it would leave paid capacity idle for most of the year.\n\nB: Amazon Bedrock provides managed foundation models that teams without machine learning expertise can use. On-demand pricing charges only for tokens processed, with no commitment, which suits seasonal and variable use. Amazon Bedrock does not use prompts or outputs to train models and does not share them with model providers, which addresses the partners' concern.\n\nC: Hosting a model on Amazon SageMaker AI endpoints gives the firm control, but its team must select, deploy, scale and maintain the model and its instances. The IT team has no machine learning experience, so this approach adds risk and work that a managed service avoids.\n\nD: On-premises servers would need to be sized for the peak and would sit mostly idle for nine months. The firm would also have to deploy and operate the model itself without machine learning experience. The partners' concern does not require on-premises hosting, because Amazon Bedrock does not use customer inputs to train models."
+    },
+    {
+      "id": "gen-2026-11-15-g-05",
+      "domainId": "domain-4",
+      "taskId": "4.2",
+      "skillId": "4.2.3",
+      "type": "single",
+      "text": "A manufacturer wants to predict which of its 300 production machines are likely to fail within the next week. It has five years of sensor readings and maintenance records in structured tables, and a team of four data scientists. Maintenance planners would use the predictions each morning to schedule work.\n\nWhich foundation should the company plan to use?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Amazon Bedrock, with each machine's recent readings sent in a prompt to a foundation model that estimates its failure risk."
+        },
+        {
+          "id": "B",
+          "text": "Amazon Bedrock, with a foundation model fine-tuned on maintenance logs so that it learns the language of past failures."
+        },
+        {
+          "id": "C",
+          "text": "Amazon SageMaker AI, with a custom prediction model trained and deployed on the company's own failure history."
+        },
+        {
+          "id": "D",
+          "text": "Amazon Quick, with dashboards of sensor trends that planners review each morning to identify machines at risk."
+        }
+      ],
+      "correctOptionIds": [
+        "C"
+      ],
+      "explanation": "A: A foundation model in a prompt sees only the readings it is given. It has not learned the relationships between this company's sensor patterns and failures over five years, so its estimates would not be a reliable prediction. Foundation models suit language and content tasks more than numeric prediction from structured data.\n\nB: Fine-tuning a foundation model on maintenance logs adapts its language, not its ability to predict failures from numeric sensor data. The prediction depends on patterns in structured readings, which a custom predictive model is designed to learn.\n\nC: Predicting failures from historical structured data is a classic machine learning task. Amazon SageMaker AI supports building, training and deploying custom predictive models, and the company has data scientists to build one. The model can score every machine each day for the planners.\n\nD: Dashboards in Amazon Quick help people explore trends, but they rely on planners to spot risk across 300 machines by eye. They do not learn the combinations of readings that come before failures, so they would not provide consistent predictions."
+    },
+    {
+      "id": "gen-2026-11-15-g-06",
+      "domainId": "domain-4",
+      "taskId": "4.3",
+      "skillId": "4.3.1",
+      "type": "single",
+      "text": "A logistics company's CIO has sponsored its generative AI program for a year, and three tools are live. Use is high in IT but low in operations and finance. In those departments, managers refer staff questions about the tools to IT, and staff who tried the tools say they need help applying them to their work. The CEO wants adoption to spread.\n\nWhat should the CEO do FIRST?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Ask the operations and finance heads to nominate staff for IT-run training so that those staff become AI champions in their units."
+        },
+        {
+          "id": "B",
+          "text": "Ask the CIO to present each tool's results to the executive committee every quarter to build support across the company."
+        },
+        {
+          "id": "C",
+          "text": "Place IT staff who built the tools in operations and finance as champions who coach employees on their own work."
+        },
+        {
+          "id": "D",
+          "text": "Make the operations and finance heads co-sponsors of the program, accountable for adoption in their units."
+        }
+      ],
+      "correctOptionIds": [
+        "D"
+      ],
+      "explanation": "A: Nominating staff involves the department heads, but only to supply people for a program that IT still owns. Champions need their leaders' backing and time to support colleagues, and managers who send questions back to IT are unlikely to provide either.\n\nB: Regular reporting raises visibility, but it keeps the program owned by IT. It does not give operations and finance leaders any responsibility for adoption, so it does not change why use is low in their units.\n\nC: IT champions can coach staff on the tools, but they would work in units whose leaders have not committed to AI. Without that commitment, coaching competes with daily work and managers continue to treat AI as an IT matter.\n\nD: Managers who send questions to IT show that sponsorship has not reached the business units. Making the department heads co-sponsors aligns leadership across the company and gives them responsibility for adoption. Champions, coaching and training work best once those leaders back them, so alignment comes first."
+    },
+    {
+      "id": "gen-2026-11-15-g-07",
+      "domainId": "domain-4",
+      "taskId": "4.3",
+      "skillId": "4.3.2",
+      "type": "single",
+      "text": "A bank is forming a team to build a generative AI assistant that answers customers' questions about mortgage fees. The project's success will be judged by fewer fee-related calls and complaints. On the bank's last customer-facing AI project, legal problems found at the pre-launch review delayed the launch by four months.\n\nWhich team structure is MOST appropriate?",
+      "options": [
+        {
+          "id": "A",
+          "text": "A data science lead owns the project, and compliance reviews the assistant's answers at the end of each development phase."
+        },
+        {
+          "id": "B",
+          "text": "The mortgage business lead owns the project's results, and a compliance specialist works on the team from the start of design."
+        },
+        {
+          "id": "C",
+          "text": "The mortgage business lead and the compliance manager share ownership of the project, and both work on it from the start of design."
+        },
+        {
+          "id": "D",
+          "text": "The mortgage business lead owns the project's results, and a technology lead checks answers against the fee schedule throughout development."
+        }
+      ],
+      "correctOptionIds": [
+        "B"
+      ],
+      "explanation": "A: Reviews at the end of each phase find problems earlier than a single pre-launch review, but they still find them after work is done. A data science lead also does not own the business results by which the project is judged.\n\nB: The success measures, fewer fee-related calls and complaints, are business outcomes, so the business lead is the natural single owner. A compliance specialist on the team from the start shapes the design as it is built. This combines one clear point of accountability with the regulatory expertise the project needs.\n\nC: Early involvement of compliance is right, but shared ownership blurs accountability. When results slip or the two owners disagree, no single person is answerable for the outcome. Compliance should shape the work without co-owning business results.\n\nD: Checking answers against the fee schedule confirms that amounts are correct, but it is not a legal or compliance review. A technology lead does not bring the regulatory expertise needed to catch the kind of problems that delayed the last project."
+    },
+    {
+      "id": "gen-2026-11-15-g-08",
+      "domainId": "domain-4",
+      "taskId": "4.3",
+      "skillId": "4.3.6",
+      "type": "single",
+      "text": "A home insurer's model now estimates repair costs from customer photos for claims under $10,000. In a six-month trial, its estimates were within 5% of adjusters' estimates on most claims, and claims settled in two days instead of ten. The insurer's 60 adjusters currently inspect every such claim.\n\nHow should the insurer redesign the adjusters' role?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Have adjusters handle claims that customers dispute or that the model flags as unusual, and audit a sample of model-settled claims."
+        },
+        {
+          "id": "B",
+          "text": "Have adjusters review and approve every model estimate before payment, and inspect in person any claim whose estimate they question."
+        },
+        {
+          "id": "C",
+          "text": "Have adjusters inspect claims above $5,000 in person, and audit a sample of the model's settlements below that amount."
+        },
+        {
+          "id": "D",
+          "text": "Have adjusters label photos from settled claims and correct the model's estimates, so that over time fewer claims need a person."
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "explanation": "A: This moves adjusters from routine estimating to work that needs human strengths. Disputed claims need negotiation and empathy, and unusual claims need investigation and critical thinking. Auditing a sample of automated settlements keeps human oversight of the model without slowing every claim.\n\nB: Approving every estimate keeps a person accountable, but it makes adjusters a checkpoint on all claims and gives up much of the faster settlement. When reviewers approve large volumes of mostly correct outputs, they also tend to accept them without real scrutiny.\n\nC: A dollar threshold is simple, and sampling adds oversight, but claims that need human judgment are defined by their circumstances, not their size. A disputed or suspicious $3,000 claim would be settled by the model, while routine claims above $5,000 would still take an adjuster's time.\n\nD: Labeling and corrections can improve the model, but they use adjusters for data work rather than for judgment and customer contact. Aiming to remove people from more claims also ignores the cases that continue to need human involvement."
+    },
+    {
+      "id": "gen-2026-11-15-g-10",
+      "domainId": "domain-4",
+      "taskId": "4.4",
+      "skillId": "4.4.1",
+      "type": "single",
+      "text": "A retailer follows the AWS Cloud Adoption Framework (AWS CAF) for its AI transformation. In a leadership workshop, it chose three AI initiatives with measurable business outcomes and funded pilots immediately. Four months later, security has blocked one pilot's use of customer data, store managers will not change staff schedules for another, and the third needs a data platform that no one budgeted for.\n\nWhat should the retailer do now?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Escalate each blocked pilot to the executive sponsor, who decides how to resolve the issue so that the pilot can resume."
+        },
+        {
+          "id": "B",
+          "text": "Assess readiness gaps and cross-team dependencies with the affected stakeholders, and agree on a plan to close them before continuing."
+        },
+        {
+          "id": "C",
+          "text": "Move the least obstructed pilot into production with a limited scope while the other two pilots remain paused."
+        },
+        {
+          "id": "D",
+          "text": "Fund a shared data platform and enterprise governance standards so that all three pilots and future initiatives can proceed."
+        }
+      ],
+      "correctOptionIds": [
+        "B"
+      ],
+      "explanation": "A: Escalation can unblock one decision at a time, but it treats each blocker as a separate incident. It does not find the wider gaps in security, people and platform readiness that will block later initiatives too, and decisions imposed from above do not build stakeholder alignment.\n\nB: The retailer moved from Envision to pilots without the Align phase. In AWS CAF, Align identifies capability gaps across the perspectives (business, people, governance, platform, security and operations), identifies cross-organizational dependencies and surfaces stakeholder concerns, which produces a plan for improving readiness. Each stalled pilot shows one of these gaps.\n\nC: Delivering a pilot in production is the Launch phase. Every pilot has an unresolved blocker, so pushing one forward without understanding its gaps is likely to stall again or create risk.\n\nD: A shared platform and enterprise standards are investments for the Scale phase, after pilots have proven value in production. Funding them now addresses only some blockers, such as the platform, and commits money before the retailer knows what its initiatives need."
+    },
+    {
+      "id": "gen-2026-11-15-g-11",
+      "domainId": "domain-4",
+      "taskId": "4.4",
+      "skillId": "4.4.2",
+      "type": "single",
+      "text": "A telecom company plans to scale generative AI across customer service over two years. Its long-term goal is an AI agent that resolves billing disputes end to end. Leaders need early results to secure funding for later phases. Four candidates are proposed for the first deployment.\n\nWhich candidate should the company start with?",
+      "options": [
+        {
+          "id": "A",
+          "text": "The billing-dispute agent itself, which has the largest projected savings and needs integration with four billing systems over about nine months."
+        },
+        {
+          "id": "B",
+          "text": "An HR policy chatbot for employees, ready in about four weeks and built on the same AI platform that the dispute agent will use."
+        },
+        {
+          "id": "C",
+          "text": "Real-time sentiment alerts for supervisors in one call center, ready in about six weeks and using the transcript feed that the dispute agent will need."
+        },
+        {
+          "id": "D",
+          "text": "Call summaries for all 3,000 agents, ready in about eight weeks and using the call transcripts that the dispute agent will also need."
+        }
+      ],
+      "correctOptionIds": [
+        "D"
+      ],
+      "explanation": "A: The dispute agent is the destination, not a starting point. Nine months of integration before any result conflicts with the need for early results to secure further funding, and it puts the largest risk first.\n\nB: The chatbot is fast and reuses the platform, but it sits outside customer service. Its results would say little about value in the area that leaders are being asked to fund.\n\nC: The alerts are fast and build the same transcript feed, but they cover one call center, and their benefit to coaching is difficult to express in money. A narrow, hard-to-measure win is weak evidence for funding enterprise-wide phases.\n\nD: A short-term win should deliver measurable value quickly and build toward the larger goal. Call summaries reach all agents within weeks, and time saved per call is easy to measure across the whole operation. The work also builds the transcript foundation that the dispute agent will need."
+    },
+    {
+      "id": "gen-2026-11-15-g-12",
+      "domainId": "domain-4",
+      "taskId": "4.4",
+      "skillId": "4.4.4",
+      "type": "multiple",
+      "text": "A software company launched a generative AI assistant that drafts sales proposals from its product and pricing documents. Six months later, its dashboard shows weekly active users and proposals drafted, both rising every month. The CFO must decide whether to fund the assistant for another year.\n\nWhich additions will BEST support the assistant's long-term value? (Choose TWO.)",
+      "options": [
+        {
+          "id": "A",
+          "text": "Weekly active users as a share of all sales reps, broken down by region, to find teams that need more training."
+        },
+        {
+          "id": "B",
+          "text": "Win rate and sales cycle length for proposals drafted with the assistant, compared with proposals from before launch."
+        },
+        {
+          "id": "C",
+          "text": "A quarterly survey of sales reps' satisfaction with the assistant, with results reported to the sales leadership team."
+        },
+        {
+          "id": "D",
+          "text": "A way for reps to flag inaccurate content in drafts, with flags reviewed each month to correct the assistant's source documents."
+        },
+        {
+          "id": "E",
+          "text": "Average time to generate a draft, monitored against a target so that slow responses do not drive reps away from the tool."
+        }
+      ],
+      "correctOptionIds": [
+        "B",
+        "D"
+      ],
+      "explanation": "A: Adoption by region is useful for targeting training, but it is another usage measure. The dashboard already shows rising use, and more detail about use does not show whether the assistant improves sales results.\n\nB: Usage shows that people use the assistant, not that it creates value. Win rate and sales cycle length are business outcomes, and comparing them with a pre-launch baseline shows whether the assistant improves results. This is the evidence the CFO needs for a funding decision.\n\nC: A satisfaction survey gives a periodic view of sentiment, but quarterly scores do not identify which content is wrong or lead to specific corrections.\n\nD: Product and pricing documents change over time, and errors in drafts erode value and trust. A continuous feedback mechanism that captures specific errors and feeds a regular correction process keeps the assistant accurate, which sustains its value.\n\nE: Response time is an operational performance measure. It can protect the user experience, but it does not show business value or keep the assistant's content accurate."
+    },
+    {
+      "id": "gen-2026-11-15-g-13",
+      "domainId": "domain-4",
+      "taskId": "4.4",
+      "skillId": "4.4.4",
+      "type": "single",
+      "text": "A clinic network uses a model that predicts which patients are likely to miss appointments and sends them extra reminders. For a year, the program's monthly report has shown green: 95% of appointments are screened by the model, and its prediction accuracy is above target. Finance now reports that revenue lost to empty appointment slots has returned to pre-launch levels.\n\nWhich change to the program's tracking is MOST important?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Track the model's prediction accuracy by clinic and patient group each month so that drift in any segment is found early."
+        },
+        {
+          "id": "B",
+          "text": "Track reminder delivery and open rates by clinic so that the team can see whether patients receive and read the messages."
+        },
+        {
+          "id": "C",
+          "text": "Track the missed-appointment rate by clinic each month, compared with the rate before the program began."
+        },
+        {
+          "id": "D",
+          "text": "Survey patients each quarter about whether the reminders are clear and arrive at useful times before their appointments."
+        }
+      ],
+      "correctOptionIds": [
+        "C"
+      ],
+      "explanation": "A: Segment-level accuracy can reveal drift that an overall figure hides, so it is a sound technical check. However, it still measures how well the model predicts, not whether the program reduces missed appointments. The report could stay green while losses grow.\n\nB: Delivery and open rates show whether reminders reach patients, which is closer to the outcome than screening coverage. But a patient can open a reminder and still miss the appointment. These are activity measures, not the result the program exists to achieve.\n\nC: The report tracks coverage and model accuracy, neither of which measures the business outcome that the program exists to improve. The missed-appointment rate compared with the rate before the program shows whether the program is still delivering value. Success metrics for long-term value must track outcomes, not only activity or technical performance.\n\nD: A patient survey can help explain why reminders stop working once the team knows there is a problem. Quarterly opinions do not measure missed appointments, so the program could again fail for months before the team notices."
+    },
+    {
+      "id": "gen-2026-11-15-g-14",
+      "domainId": "domain-4",
+      "taskId": "4.4",
+      "skillId": "4.4.6",
+      "type": "single",
+      "text": "A bank's generative AI chat assistant resolves 30% of customer chats without an agent in its home country. The bank plans to launch it in three more countries next quarter, each with its own language and product rules. Next year's budget assumes the same 30% resolution rate in each country from launch and reduces contact center staffing to match.\n\nWhat should the bank do to protect service as it expands?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Delay all three launches until the assistant resolves 30% of test chats that employees in each country write."
+        },
+        {
+          "id": "B",
+          "text": "Keep current agent capacity in each new country until the assistant's resolution rate there is measured, then adjust it in steps."
+        },
+        {
+          "id": "C",
+          "text": "Translate the home country's knowledge content into each language, and reuse its tested prompts to reach the same resolution rate."
+        },
+        {
+          "id": "D",
+          "text": "Give customers in each country a button to reach a human agent at any point in the chat, so that no customer is left without help."
+        }
+      ],
+      "correctOptionIds": [
+        "B"
+      ],
+      "explanation": "A: Testing before launch is useful, but chats that employees write do not reflect how real customers ask questions. Holding all launches for an internal benchmark delays value without showing the rate that real customers will produce.\n\nB: The resolution rate in each new country is unknown because language and product rules differ. Reducing staff on the assumption that the home-country rate will carry over puts service at risk if the assistant resolves fewer chats. Keeping agent capacity until the rate is measured, then reducing it in steps, protects continuity while the bank learns how the assistant performs.\n\nC: Translation and reuse can speed the launch, but the countries have different product rules. Content and prompts built for the home country may give wrong answers elsewhere, and reuse does not show what rate the assistant will achieve.\n\nD: An escalation path is good practice, but it depends on agents being available. If staffing has already been reduced based on an assumed rate, more escalations would create long waits instead of protecting service."
+    },
+    {
+      "id": "gen-2026-11-15-h-01",
+      "domainId": "domain-4",
+      "taskId": "4.1",
+      "skillId": "4.1.1",
+      "type": "single",
+      "text": "An insurer will choose one department for its first generative AI assistant, which will answer staff questions from the department's own documents. Leaders want results within six months to support a decision on wider AI investment. A readiness review summarized four candidate departments.\n\nWhich department is the BEST choice for the first assistant?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Underwriting: The department head has assigned staff to test the assistant, and staff have asked for it. Many of the guidelines it would draw on have not been updated since a product change two years ago."
+        },
+        {
+          "id": "B",
+          "text": "Claims: The department head has assigned staff to test the assistant, and its documents are current and kept in one system. Most documents contain customers' medical details, and the company has not yet set rules for using such data with AI."
+        },
+        {
+          "id": "C",
+          "text": "Broker relations: Its documents are current and kept in one system, and staff have asked for the assistant. The department head has declined to assign staff time, saying broker relationships are too sensitive for AI."
+        },
+        {
+          "id": "D",
+          "text": "Customer service: The department head has assigned staff to test the assistant, and its documents are current and kept in one system. Many agents worry that the assistant is a first step toward job cuts."
+        }
+      ],
+      "correctOptionIds": [
+        "D"
+      ],
+      "explanation": "A: Leadership support and staff interest are in place, but data quality is weak. An assistant that answers from outdated guidelines will give wrong answers with confidence, and bringing two years of guidelines up to date is substantial work that must come before useful results. A first use case built on poor source data is likely to undermine confidence in AI rather than support wider investment.\n\nB: The documents and sponsorship are ready, but the governance foundation is not. Sensitive health data cannot be used responsibly until the company defines rules for it, so the first use case would depend on governance work that has not started. A first use case is better placed where governance gaps do not block it.\n\nC: The data is ready and staff are interested, but leadership alignment is missing. Without the department head's commitment of staff time, there is no one to test the assistant or drive its use, and the head's objection would carry into any evaluation of results.\n\nD: Customer service is ready on the dimensions that are hardest to fix quickly: an engaged sponsor who has committed staff time and current, accessible source data. Concern about job effects is a common cultural barrier to AI adoption. Leaders can address it during the pilot through honest communication about how roles will change, and the testers' involvement helps. Of the four, this department has the fewest blocking gaps for results in six months."
+    },
+    {
+      "id": "gen-2026-11-15-h-02",
+      "domainId": "domain-4",
+      "taskId": "4.1",
+      "skillId": "4.1.2",
+      "type": "single",
+      "text": "A manufacturer is deciding whether to fund a self-service AI platform for all 14 of its plants. In two years, it has run 25 AI pilots, trained 600 employees and formed a central team that approves models and tools. Four pilots are still used daily at the plants that built them, where pilot team members fix problems when they have time. No pilot's results have been compared with performance before the pilot.\n\nWhich assessment of the company's AI maturity is MOST accurate?",
+      "options": [
+        {
+          "id": "A",
+          "text": "It is operating at enterprise scale, because AI use spans several plants and is supported by trained staff and central approval of models and tools."
+        },
+        {
+          "id": "B",
+          "text": "It is still experimenting, because it has not yet run any AI use as a supported production service with proven business results."
+        },
+        {
+          "id": "C",
+          "text": "It has reached production, because four AI uses have run daily for months on models and tools that the central team approved."
+        },
+        {
+          "id": "D",
+          "text": "It is ready to scale, because its central team and 600 trained employees give it the capacity to roll the four tools out to other plants."
+        }
+      ],
+      "correctOptionIds": [
+        "B"
+      ],
+      "explanation": "A: Enterprise scale means that many teams build on shared, governed and largely automated foundations, and most of the business is onboarded. Pilot volume, training numbers and a central approval team are signs of structured experimentation, not of AI operating across the enterprise.\n\nB: Maturity models judge progress by what a company can operate and prove, not by how much activity it has. Active pilots, training programs and initial governance of models and tools place the company in the experimentation stage. Moving beyond it requires production-ready uses with operational support, monitoring and measurable business outcomes. Pilots that are fixed in spare time and have never been compared with prior performance do not meet that bar.\n\nC: Daily use and approved models are not the same as production readiness. Production-grade AI has defined owners, support and monitoring, and it shows measurable business outcomes. The four pilots have none of these, so they are still pilots that happen to be in regular use.\n\nD: Scaling builds on proven production uses with reusable patterns. Training and a central approval team provide capacity, but the four tools have no operational support and no measured results, so rolling them out would spread unproven tools that no one is responsible for running."
+    },
+    {
+      "id": "gen-2026-11-15-h-03",
+      "domainId": "domain-4",
+      "taskId": "4.1",
+      "skillId": "4.1.3",
+      "type": "single",
+      "text": "A bank's business teams have built six generative AI prototypes on Amazon Bedrock in the past year. All met their accuracy targets in testing, but none has launched. Each is waiting on the risk team, whose reviews have taken five to eight months and have asked for a different set of tests and documents for each prototype. The same team approves changes to the bank's credit models in about three weeks by using an established checklist.\n\nWhich capability gap MOST likely explains the stalled launches?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Governance: the bank has no agreed requirements or approval path for taking generative AI uses into production."
+        },
+        {
+          "id": "B",
+          "text": "People: the business teams lack the risk knowledge to prepare complete evidence for the reviews."
+        },
+        {
+          "id": "C",
+          "text": "Process: the business teams bring each prototype to the risk team only after building it, rather than involving it from the start."
+        },
+        {
+          "id": "D",
+          "text": "People: the risk team lacks staff with the generative AI expertise needed to assess the prototypes."
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "explanation": "A: Every prototype is stopped at the same point, and each review defines its own evidence from scratch. That pattern points to a governance gap: there is no agreed set of requirements, such as risk tiers, evaluation criteria and documentation, for moving generative AI into production. The same team works quickly where such a framework exists for credit models, which shows that the missing piece is the framework rather than the people or the timing.\n\nB: Incomplete submissions can slow reviews, and business teams often need help preparing evidence. However, the requests themselves differ from one prototype to the next. Even well-prepared teams cannot meet requirements that have not been defined.\n\nC: Involving risk early is good practice and would surface concerns sooner. However, earlier involvement without agreed requirements would still leave reviewers to decide the evidence case by case, so reviews would stay inconsistent.\n\nD: More expertise could help reviewers ask better questions. However, the same team reviews credit models quickly when it has an established checklist. Without agreed requirements for generative AI, expert reviewers would still define the evidence for each prototype separately."
+    },
+    {
+      "id": "gen-2026-11-15-h-04",
+      "domainId": "domain-4",
+      "taskId": "4.1",
+      "skillId": "4.1.4",
+      "type": "single",
+      "text": "An insurer's strategy calls for AI in claims, underwriting and customer service within three years. Its claims division runs three generative AI applications in production, each with measured savings. Each was built by a separate team that set up its own tooling, and each took about nine months. Twelve more use cases have been approved across the three divisions.\n\nWhich investment should the insurer prioritize for the next 12 months?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Fund pilots of all twelve approved use cases at the same time so that each division can find its highest-value applications quickly."
+        },
+        {
+          "id": "B",
+          "text": "Fund a dedicated delivery team in underwriting and in customer service, each staffed to build applications the way the claims teams did."
+        },
+        {
+          "id": "C",
+          "text": "Build a shared platform of reusable components and deployment patterns that teams in every division build on."
+        },
+        {
+          "id": "D",
+          "text": "Have the claims teams document how they built and released their applications as a guide for teams in the other divisions."
+        }
+      ],
+      "correctOptionIds": [
+        "C"
+      ],
+      "explanation": "A: Running many pilots at once fits a company that is still testing where AI creates value. This insurer has already proven value in production, and the twelve use cases are approved. More pilots would not change how slowly each application is delivered.\n\nB: More teams add capacity, but each would repeat the nine-month build of its own tooling. This adds cost and inconsistency without building the repeatable capability that the next stage of maturity requires.\n\nC: The insurer has moved past experimentation: it runs several production applications with measured value. The next step on the maturity path is to scale through reusable components, standard patterns and a shared path to production. A shared platform reduces the time and risk of each new use case, which matters most when twelve approved use cases and a three-year goal are waiting.\n\nD: Documenting lessons spreads knowledge, but each new team would still build and maintain its own tooling by following the guide. The work that makes each application take nine months would be repeated rather than reused."
+    },
+    {
+      "id": "gen-2026-11-15-h-05",
+      "domainId": "domain-4",
+      "taskId": "4.2",
+      "skillId": "4.2.1",
+      "type": "single",
+      "text": "A grocery chain wants to forecast weekly demand for each product in each store. Five years of sales data are in a central warehouse that is updated nightly, though about 3% of records are missing a store code. Category managers keep promotion plans in their own spreadsheets. A pilot model trained on the sales data was accurate in normal weeks but missed badly in weeks with promotions.\n\nWhat should the company address FIRST?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Add sales history from before the five-year period so that the model has more examples of past promotion weeks."
+        },
+        {
+          "id": "B",
+          "text": "Replace the pilot model with a more advanced model that can detect promotion effects from patterns in the sales data."
+        },
+        {
+          "id": "C",
+          "text": "Fill in the missing store codes in the sales records so that the model learns from complete data for every store."
+        },
+        {
+          "id": "D",
+          "text": "Make the promotion plans available to the model as data it can learn from, alongside the sales history."
+        }
+      ],
+      "correctOptionIds": [
+        "D"
+      ],
+      "explanation": "A: More history adds examples of past promotion weeks, but it still contains only sales. The model would see more spikes without the information that explains them, such as which product was promoted, when and how.\n\nB: A more advanced model cannot learn from information it never receives. Without the promotion plans, any model must guess at promotion effects from sales alone, so the problem is data readiness, not model choice.\n\nC: Missing store codes are a real data quality issue and should be fixed. However, a small share of incomplete records would reduce accuracy across all weeks. It would not explain why the model is accurate in normal weeks and misses badly only in promotion weeks.\n\nD: Data readiness includes whether the data that drives an outcome is accessible to the AI system. Promotions affect demand, but the plans sit in separate spreadsheets that the model never sees, so the forecasts fail in exactly the weeks they shape. Making promotion data available to the model is the prerequisite for accurate forecasts in those weeks."
+    },
+    {
+      "id": "gen-2026-11-15-h-06",
+      "domainId": "domain-4",
+      "taskId": "4.2",
+      "skillId": "4.2.2",
+      "type": "single",
+      "text": "An insurer's AI teams need customer and claims data held by four business units. Requests for data often take three to five months. Several AI teams have also built models on extracts whose figures differ from those that the units report to regulators.\n\nWhich approach will BEST give AI teams dependable access to trustworthy data?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Name data owners in each unit who are accountable for their data's quality and who share it under company-wide access rules."
+        },
+        {
+          "id": "B",
+          "text": "Copy the units' data into a central store that the IT team manages and opens to every approved AI project."
+        },
+        {
+          "id": "C",
+          "text": "Publish a catalog of the units' data sets so that AI teams can find data and request it through one form."
+        },
+        {
+          "id": "D",
+          "text": "Give AI teams direct read access to the units' systems so that they can pull the data they need without requests."
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "explanation": "A: A data strategy for AI needs clear ownership and an agreed way to share. Owners in each unit know their data and are accountable for its quality, which addresses the conflicting figures at the source. Company-wide access rules let data be shared on known terms instead of through slow, one-off requests. Ownership stays where the knowledge is, and sharing becomes predictable.\n\nB: A central store can speed access, but copying data to a team that does not own it leaves no one accountable for its quality. Copies can drift from the units' source figures, which is the problem the extracts already show.\n\nC: A catalog makes data easier to find and request, but it sets no ownership for quality or rules for granting access. Requests could still take months, and the figures could still conflict.\n\nD: Direct access removes the request delay, but it bypasses governance of who may use which data and for what. It also does not establish who is accountable for the data's quality, so teams could still build models on inconsistent figures."
+    },
+    {
+      "id": "gen-2026-11-15-h-07",
+      "domainId": "domain-4",
+      "taskId": "4.3",
+      "skillId": "4.3.1",
+      "type": "single",
+      "text": "A retailer's COO sponsors its generative AI program. Six months ago, she recruited 40 volunteer AI champions from stores and head office to coach colleagues. In finance and logistics, where the department heads use the tools themselves and ask about AI in team meetings, champions are still active. Elsewhere, most champions have stopped coaching, saying they cannot fit it around their targets.\n\nWhat should the COO do to sustain the program's momentum?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Recruit replacement champions from the employees who use the AI tools most, so that each department again has an active coach."
+        },
+        {
+          "id": "B",
+          "text": "Recognize the most active champions at company meetings and give them early access to new AI tools."
+        },
+        {
+          "id": "C",
+          "text": "Have every department head build champions' coaching time and goals into their team plans and report progress to her."
+        },
+        {
+          "id": "D",
+          "text": "Move coaching to the central AI team, whose full-time staff can support every department consistently."
+        }
+      ],
+      "correctOptionIds": [
+        "C"
+      ],
+      "explanation": "A: New champions would face the same conditions as the ones who stopped. Without time and priority set by their own leaders, replacements would likely drop away for the same reason.\n\nB: Recognition can motivate champions, but it does not give them time to coach or change the targets they are measured against. The champions who stopped are not short of motivation; their own leadership has not made room for the work.\n\nC: Champions sustain momentum only when leaders across the business support them. Executive sponsorship has to carry through to department heads who give champions time and make AI adoption part of their teams' goals. The departments where heads are engaged show this working. Making champion time and goals part of each department's plan, with progress reported to the sponsor, extends that alignment to the departments where coaching has stalled.\n\nD: Central coaching gives consistent support, but it replaces peer champions who know their colleagues' work. It also leaves department heads uninvolved, which is the condition under which adoption has stalled."
+    },
+    {
+      "id": "gen-2026-11-15-h-08",
+      "domainId": "domain-4",
+      "taskId": "4.3",
+      "skillId": "4.3.2",
+      "type": "single",
+      "text": "An insurer's claims-triage model is ready for launch. For eight months, a team from claims operations, data science, IT, legal and compliance has met weekly to prepare it. Launch has slipped three times. Each time, a team member raised a new concern shortly before the date, and the team reopened decisions it had already made. Success will be measured by claims cycle time.\n\nWhich change should the insurer make?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Make the data science lead accountable for the launch, with the other functions advising on their areas."
+        },
+        {
+          "id": "B",
+          "text": "Make the claims operations director accountable for launch and results, with each function signing off its area by a set date."
+        },
+        {
+          "id": "C",
+          "text": "Require written approval from every function before launch, and track open concerns in a shared log."
+        },
+        {
+          "id": "D",
+          "text": "Send each disputed concern to the executive committee for a decision, and keep the weekly meetings to coordinate the work."
+        }
+      ],
+      "correctOptionIds": [
+        "B"
+      ],
+      "explanation": "A: The data science lead knows the model best, but the measure of success is a claims operations outcome. Making a technical lead accountable for a business result separates accountability from the people who run the process. Treating legal and compliance as advisers also weakens their responsibility for their areas.\n\nB: Cross-functional teams need clear accountability as well as broad representation. The business leader whose process the model changes, and whose metric defines success, is the natural owner of the launch decision and its results. Giving each function responsibility for signing off its own area by a set date keeps expert input while preventing late concerns from reopening settled decisions.\n\nC: Written approval from every function documents responsibilities, but it gives each function a veto with no deadline. Concerns could still be raised late, and a log records open issues without deciding them.\n\nD: Escalation can settle individual disputes, but it moves decisions away from the team and slows each one. Without an accountable owner, the team would continue to depend on the executive committee whenever a new concern arises."
+    },
+    {
+      "id": "gen-2026-11-15-h-09",
+      "domainId": "domain-4",
+      "taskId": "4.3",
+      "skillId": "4.3.3",
+      "type": "single",
+      "text": "A company will introduce generative AI into its 120-person finance shared-services team over 18 months. Leaders have approved a plan that will reduce the team by about 30 roles over that period, without layoffs, by not refilling vacancies and moving some staff into other teams. Rumors of layoffs are spreading, and two experienced staff members have resigned.\n\nWhat should leaders communicate now?",
+      "options": [
+        {
+          "id": "A",
+          "text": "That no one will be laid off and that the AI will support staff in their work rather than replace them."
+        },
+        {
+          "id": "B",
+          "text": "That effects on roles will be announced after a pilot confirms the savings, with managers taking questions until then."
+        },
+        {
+          "id": "C",
+          "text": "The expected gains in month-end close speed and accuracy, and the training everyone will receive to use the tool."
+        },
+        {
+          "id": "D",
+          "text": "The rollout timeline, how many roles will be cut and how, and what support affected staff will receive."
+        }
+      ],
+      "correctOptionIds": [
+        "D"
+      ],
+      "explanation": "A: The statement about layoffs is accurate, but the claim that AI will not replace work is not. About 30 roles will disappear. When staff see vacancies go unfilled and colleagues move, the message will lose credibility and increase distrust.\n\nB: Waiting for confirmed numbers can seem prudent, but leaders have already approved the plan, and rumors are filling the gap. Delaying what is known lets speculation continue and suggests that leaders are hiding the effects.\n\nC: Expected benefits and training are useful parts of the message, but they leave out the question staff are asking: what happens to their jobs. Communication that avoids role effects does not address the concern behind the rumors and resignations.\n\nD: Transparent communication addresses workforce concerns directly: when changes will happen, what outcomes leaders expect and how roles will be affected. Leaders have an approved plan, so they can share its timeline, the scale of role reductions and how these will be handled, together with the support for affected staff. Sharing this now replaces rumor with facts and shows that people will not lose their jobs, which helps retain experienced staff."
+    },
+    {
+      "id": "gen-2026-11-15-h-10",
+      "domainId": "domain-4",
+      "taskId": "4.3",
+      "skillId": "4.3.4",
+      "type": "single",
+      "text": "Employee surveys at an insurer show strong interest in AI, but the AI program has received only four project ideas this year. Two years ago, an automation project that missed its targets was criticized at a company meeting, and its sponsor was later moved to a smaller role. Department managers now propose only projects with guaranteed savings.\n\nWhich leadership action will MOST likely increase the number of AI ideas?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Fund small, time-limited experiments, and have executives publicly credit teams that stop an experiment early and share what they learned."
+        },
+        {
+          "id": "B",
+          "text": "Offer bonuses to teams whose AI ideas reach production and deliver measured savings within a year."
+        },
+        {
+          "id": "C",
+          "text": "Train all managers in AI skills so that they can spot more opportunities to apply AI in their own areas."
+        },
+        {
+          "id": "D",
+          "text": "Have the central AI team find use cases in each department and run the projects for the departments."
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "explanation": "A: The pattern points to fear of failure: interest is high, but managers propose only safe projects after a past failure was punished. Leaders address this barrier by lowering the cost of trying and changing how failure is treated. Small, time-limited experiments limit the downside. When executives publicly value a well-run experiment that ends early, they show that learning is rewarded rather than penalized.\n\nB: Bonuses add an incentive, but only for ideas that succeed. This raises the stakes of each proposal and reinforces the belief that only guaranteed wins are worth proposing, so it does not reduce the fear behind the low number of ideas.\n\nC: Training builds the ability to spot opportunities, but managers are not short of interest or ideas. They are holding back because of how failure is treated, and more skills do not change that risk.\n\nD: Central delivery can produce use cases, but it bypasses the cultural barrier rather than addressing it. Departments would still avoid proposing or owning AI work, so the company would not build a culture of experimentation."
+    },
+    {
+      "id": "gen-2026-11-15-h-11",
+      "domainId": "domain-4",
+      "taskId": "4.3",
+      "skillId": "4.3.5",
+      "type": "single",
+      "text": "A law firm has approved a generative AI tool and wants all 900 lawyers and paralegals to use it in their regular work within three months. Practice groups handle very different documents, from contracts to court filings. Partners worry that staff may put client details into prompts in ways the firm does not allow.\n\nWhich workforce development approach BEST meets these goals?",
+      "options": [
+        {
+          "id": "A",
+          "text": "A firm-wide hackathon in which volunteer teams compete to build new uses of the tool, with prizes for the best ideas."
+        },
+        {
+          "id": "B",
+          "text": "Online modules tailored to each practice group's documents and the firm's client-data rules, with completion tracked for every employee."
+        },
+        {
+          "id": "C",
+          "text": "Workshops in each practice group where staff complete real tasks with the tool, following the firm's client-data rules during each task."
+        },
+        {
+          "id": "D",
+          "text": "Briefings in each practice group where partners demonstrate the tool on the group's documents and explain the client-data rules."
+        }
+      ],
+      "correctOptionIds": [
+        "C"
+      ],
+      "explanation": "A: Hackathons generate enthusiasm and new ideas, but they reach the volunteers who take part. The goal is regular use by all 900 staff, and building new uses does not teach most staff to apply the tool safely to their own work.\n\nB: Tailored online modules reach everyone and cover the right documents and rules, but they build knowledge rather than applied skill. Staff who have read how the tool applies to their work still need practice using it before they rely on it in daily tasks.\n\nC: The approach should match the goal. The firm wants every staff member to use the tool in daily work, and work differs by practice group. Hands-on sessions in which staff complete real tasks build practical skill for the work they actually do. Applying the client-data rules during each task teaches people to protect client information in the situations where they will face it.\n\nD: Partner-led demonstrations show the tool in context and signal leadership support, but staff watch rather than practice. Seeing a demonstration does not build the skill and habits that regular, responsible use requires."
+    },
+    {
+      "id": "gen-2026-11-15-h-12",
+      "domainId": "domain-4",
+      "taskId": "4.3",
+      "skillId": "4.3.6",
+      "type": "single",
+      "text": "A hotel group's generative AI assistant can now draft replies to guest messages. In testing, its replies to routine questions, such as checkout times and parking, were accurate. Guests also write to complain about issues such as noisy rooms or billing errors, and resolving these often involves offering compensation. Front-desk staff currently write every reply themselves.\n\nHow should the hotel group change the staff's role?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Staff review and approve every reply the assistant drafts before it is sent, editing any that need changes."
+        },
+        {
+          "id": "B",
+          "text": "Staff take over messages that call for judgment about a guest's situation, and they check a weekly sample of routine replies."
+        },
+        {
+          "id": "C",
+          "text": "Staff answer messages during the day, and the assistant answers all messages overnight, when fewer staff are on duty."
+        },
+        {
+          "id": "D",
+          "text": "The assistant answers all messages, and staff adjust its instructions when guests rate replies poorly."
+        }
+      ],
+      "correctOptionIds": [
+        "B"
+      ],
+      "explanation": "A: Reviewing every reply keeps humans in control, but it spends staff time checking routine answers that tested as accurate. Most of the efficiency gain is lost, and reviewer fatigue can make checks less careful over time.\n\nB: Redesigning roles means assigning work by strength. The assistant handles routine questions that it answers accurately. Staff focus on situations that need empathy and judgment, such as complaints and compensation decisions. Checking a sample of routine replies gives staff an oversight role that catches errors without reviewing everything.\n\nC: Splitting by time of day keeps staff busy with routine questions during the day and leaves complaints to the assistant overnight. The work is divided by staffing levels rather than by what humans and AI each do best.\n\nD: Letting the assistant handle everything includes complaints that require judgment about compensation and the guest's experience. Adjusting instructions after poor ratings reacts to harm that has already reached guests."
+    },
+    {
+      "id": "gen-2026-11-15-h-13",
+      "domainId": "domain-4",
+      "taskId": "4.4",
+      "skillId": "4.4.1",
+      "type": "single",
+      "text": "A distributor piloted a generative AI tool that drafts customer quotes with 8 inside-sales reps, all of whom sell standard catalog items. Their quote time fell by 40%. After launch to all 50 reps, quote time fell by only 10% overall. Reps who quote custom-configured systems, about 60% of quotes, say they rewrite most drafts. Leaders had planned to extend the tool to other regions next quarter.\n\nWhat should the company do next?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Extend the tool to the other regions as planned, and collect feedback from configured-system reps there to guide later improvements."
+        },
+        {
+          "id": "B",
+          "text": "Withdraw the tool and reassess whether AI suits quoting, since results after launch fell well short of the pilot."
+        },
+        {
+          "id": "C",
+          "text": "Keep the tool for all reps, and train the configured-system reps in prompt writing to bring their results up to the pilot level."
+        },
+        {
+          "id": "D",
+          "text": "Keep the tool for catalog quotes, and run a new experiment on configured-system quotes before extending the tool further."
+        }
+      ],
+      "correctOptionIds": [
+        "D"
+      ],
+      "explanation": "A: Scaling now would spread a tool that works for only part of the quoting work. Most quotes would gain little, and feedback collected after a wider rollout would arrive after more cost and frustration. Scaling should follow validated results for the work being scaled.\n\nB: Withdrawing the tool discards proven value. The catalog results match the pilot, so the evidence supports keeping that use while the rest is investigated.\n\nC: Prompt training assumes the reps are using the tool poorly. The pilot covered only catalog items, so no one has tested whether the tool can draft configured-system quotes well, and better prompts may not supply what it lacks.\n\nD: AI transformation works iteratively: test, launch and expand in phases, and return to testing when results reveal a gap that the earlier phase did not cover. The pilot validated catalog quoting only. Keeping the proven use and running a focused experiment on configured-system quotes tests what is needed for that work before the company extends the tool to other regions."
+    },
+    {
+      "id": "gen-2026-11-15-h-14",
+      "domainId": "domain-4",
+      "taskId": "4.4",
+      "skillId": "4.4.3",
+      "type": "multiple",
+      "text": "A company with 12 business units is setting up an AI center of excellence (CoE). The units have requested 30 AI use cases. Three units have already built AI tools on their own. Each took about nine months, most of it spent before any use-case work began, and the three tools handle customer data under different rules.\n\nWhich CoE responsibilities will do the MOST to help the units deliver the requested use cases? (Choose TWO.)",
+      "options": [
+        {
+          "id": "A",
+          "text": "Run AI awareness training for employees in all 12 units so that more staff can identify opportunities to apply AI."
+        },
+        {
+          "id": "B",
+          "text": "Provide a shared environment with approved models, data connections and security controls that unit teams build on."
+        },
+        {
+          "id": "C",
+          "text": "Publish a library of example prompts and lessons learned from the three units' projects for other units to consult."
+        },
+        {
+          "id": "D",
+          "text": "Build and run the AI applications that units request, working through them in one company-wide priority order."
+        },
+        {
+          "id": "E",
+          "text": "Set requirements that every use case must meet before launch, with lighter review for lower-risk uses."
+        }
+      ],
+      "correctOptionIds": [
+        "B",
+        "E"
+      ],
+      "explanation": "A: Awareness training is a common CoE activity, but the units have already identified 30 use cases. More ideas do not help them deliver the ones they have, and training does not remove the setup work or the inconsistent data handling.\n\nB: A CoE helps AI scale by providing shared capabilities that units build on. The three units each spent most of nine months on groundwork before use-case work began. A shared environment with approved models, data connections and controls already in place removes that repeated effort, so units can start on the use case itself.\n\nC: Sharing lessons and examples is useful, but each unit would still set up its own environment and decide its own data rules. The library spreads knowledge without removing the repeated groundwork or making data handling consistent.\n\nD: A CoE that builds everything becomes a bottleneck when 12 units request 30 use cases. It also takes ownership of AI applications away from the units that understand the problems and will use the results.\n\nE: The three tools handle customer data under different rules, which leaves the company with inconsistent protection. Common pre-launch requirements give every unit the same bar to meet. Scaling the review to risk keeps low-risk uses moving quickly while concentrating scrutiny where harm is more likely."
+    },
+    {
+      "id": "gen-2026-11-15-h-15",
+      "domainId": "domain-4",
+      "taskId": "4.4",
+      "skillId": "4.4.5",
+      "type": "multiple",
+      "text": "An innovation team built a generative AI assistant as a proof of concept in six weeks. It answers employees' HR questions from the company's policy documents. In a trial with 300 employees, its answers were accurate and well rated. Leaders now want it available to all 20,000 employees next month.\n\nWhich actions should the company take before the wider launch? (Choose TWO.)",
+      "options": [
+        {
+          "id": "A",
+          "text": "Name an HR owner and a support team who are responsible for the assistant's incidents, content updates and changes after launch."
+        },
+        {
+          "id": "B",
+          "text": "Switch to a larger foundation model in Amazon Bedrock so that answer quality holds up as more employees rely on it."
+        },
+        {
+          "id": "C",
+          "text": "Have HR staff review each answer before employees see it until the assistant has served the full workforce for a quarter."
+        },
+        {
+          "id": "D",
+          "text": "Set up ongoing checks of answer accuracy, with alerts and a way for employees to report wrong answers."
+        },
+        {
+          "id": "E",
+          "text": "Extend the trial for six more months under the innovation team to collect more feedback before deciding."
+        }
+      ],
+      "correctOptionIds": [
+        "A",
+        "D"
+      ],
+      "explanation": "A: A proof of concept is built to test value, not to be operated. Production-grade AI needs defined ownership and support: someone accountable for the assistant, a team that handles incidents and keeps its content current as policies change, and a process for managing changes. Without this, problems after launch have no owner.\n\nB: The trial showed accurate, well-rated answers, so model capability is not the gap. A larger model adds cost and does not provide the ownership, support or monitoring that production use requires.\n\nC: Reviewing every answer would prevent errors from reaching employees, but it would turn a self-service assistant into an HR queue for 20,000 employees. Targeted oversight through monitoring and escalation fits the risk of HR questions better than full review.\n\nD: Answer quality in a 300-person trial does not guarantee quality over time or across a much larger population. Production readiness includes ongoing monitoring of output quality, alerts when it drops, and a feedback path that lets the owner find and fix wrong answers.\n\nE: The trial already met its goals. Extending it under a team that is not set up to run the assistant delays value without building the operational capability needed for launch."
+    }
+  ]
 }

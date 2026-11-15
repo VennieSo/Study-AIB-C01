@@ -75,11 +75,14 @@ it('rejects version-1 banks, including empty banks, without inferring classifica
   }
 });
 
-it('keeps all production wrappers empty at version 2 and fixtures separate with full skill coverage', () => {
+it('loads a launch-ready public bank with full skill coverage and keeps fixtures separate', () => {
   expect(Object.values(publicBanks)).toHaveLength(4);
-  for (const bank of Object.values(publicBanks))
-    expect(bank).toEqual({ schemaVersion: 2, questions: [] });
-  expect(loadQuestionBanks(publicBanks)).toEqual([]);
+  const initial = loadQuestionBanks(publicBanks);
+  expect(() => validateLaunchCounts(initial)).not.toThrow();
+  expect(new Set(initial.map(({ skillId }) => skillId))).toEqual(
+    new Set(skills.map(({ id }) => id)),
+  );
+  expect(initial.every(({ id }) => !id.includes('synthetic-'))).toBe(true);
   const fixtures = loadQuestionBanks(syntheticBanks());
   expect(() => validateLaunchCounts(fixtures)).not.toThrow();
   expect(new Set(fixtures.map(({ skillId }) => skillId))).toEqual(

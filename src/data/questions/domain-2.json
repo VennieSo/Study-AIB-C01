@@ -1,4 +1,1030 @@
 {
   "schemaVersion": 2,
-  "questions": []
+  "questions": [
+    {
+      "id": "aib-conversation-reviewed-v1-002",
+      "domainId": "domain-2",
+      "taskId": "2.1",
+      "skillId": "2.1.5",
+      "type": "single",
+      "text": "A wholesale distributor's purchasing staff use an AI assistant every day to draft purchase requests. The assistant's prompts were refined over several months for its current foundation model. The company plans to move the assistant to a newer model whose per-token price is 40% lower. Leaders want the savings without disrupting purchasing.\n\nWhat should the company do FIRST?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Run both models on a representative set of past requests with the current prompts, and compare quality, latency and cost per request."
+        },
+        {
+          "id": "b",
+          "text": "Compare the two models' published benchmark scores and context window sizes to confirm that the newer model is at least as capable."
+        },
+        {
+          "id": "c",
+          "text": "Switch all users to the newer model at once, and keep the current model available as a fallback for reported problems."
+        },
+        {
+          "id": "d",
+          "text": "Estimate the annual savings from the per-token price difference, and schedule the switch for the start of the next budget period."
+        }
+      ],
+      "correctOptionIds": [
+        "a"
+      ],
+      "explanation": "A: Moving to a different model can change output quality, response time and cost. Prompts refined for one model may behave differently on another, and models tokenize the same text differently and vary in output length, so cost per request can differ from what the per-token price suggests. Testing both models on the company's own requests shows the real effect before the transition.\n\nB: Published benchmarks help narrow choices, but they do not show how a model performs on the company's own requests with its existing prompts. A higher benchmark score does not guarantee equal results for this task.\n\nC: A fallback reduces the impact of failures, but switching everyone at once exposes daily purchasing to untested changes in quality and cost. Users would find problems after the switch instead of the company finding them before it.\n\nD: Per-token price is only one factor in cost. Token counts and response lengths can differ between models, and the estimate does not show whether the newer model produces acceptable requests."
+    },
+    {
+      "id": "aib-conversation-reviewed-v1-003",
+      "domainId": "domain-2",
+      "taskId": "2.1",
+      "skillId": "2.1.2",
+      "type": "single",
+      "text": "A logistics company wants AI to help agents resolve delivery exceptions within six months. Its exception-handling process includes several company-specific steps that commercial tools on the market do not support, and the company expects to keep refining those steps. Its IT team runs standard business software but has not built AI applications.\n\nWhich sourcing approach is MOST appropriate?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Hire an AI engineering team, and build a custom solution on a managed AI platform."
+        },
+        {
+          "id": "b",
+          "text": "License a configurable commercial exception-management product, and adapt the company's steps to its configuration options."
+        },
+        {
+          "id": "c",
+          "text": "Engage an AI partner to build on existing AI services while transferring skills to the IT team."
+        },
+        {
+          "id": "d",
+          "text": "Contract a managed service provider to run exception handling for the company under service-level agreements."
+        }
+      ],
+      "correctOptionIds": [
+        "c"
+      ],
+      "explanation": "A: Building internally gives full control and customization. However, the company would first need to recruit AI engineers and develop new capabilities, which makes a six-month timeline difficult to meet.\n\nB: A commercial product can be the fastest option when its capabilities fit the need. Here, available tools do not support several of the company's steps, so adapting the steps to the product's options would change the process that the company wants to keep refining.\n\nC: A partner supplies the AI expertise that the company lacks and can build its specific steps on existing services, which supports the six-month goal. Transferring skills to the IT team lets the company keep refining the steps after delivery.\n\nD: A managed service reduces the need for internal expertise. However, the provider would run the process, so each refinement would depend on the provider, and the company would build no capability of its own."
+    },
+    {
+      "id": "replacement-v1-03",
+      "domainId": "domain-2",
+      "taskId": "2.2",
+      "skillId": "2.2.2",
+      "type": "multiple",
+      "text": "A utilities company plans to pilot an AI assistant that helps employees prepare inspection reports. Leaders want to know whether the assistant reduces preparation effort without increasing report corrections. Teams currently handle different mixes of simple and complex inspections.\n\nWhich measurements should the company establish BEFORE the pilot to support a meaningful comparison? (Choose TWO.)",
+      "options": [
+        {
+          "id": "A",
+          "text": "The number of employees who have volunteered to use the assistant."
+        },
+        {
+          "id": "B",
+          "text": "The current employee time spent preparing reports, separated by inspection complexity."
+        },
+        {
+          "id": "C",
+          "text": "The number of reports the assistant vendor processes for other customers."
+        },
+        {
+          "id": "D",
+          "text": "The target number of assistant sessions per employee during the pilot."
+        },
+        {
+          "id": "E",
+          "text": "The current proportion of reports returned for correction, separated by inspection complexity."
+        }
+      ],
+      "correctOptionIds": [
+        "B",
+        "E"
+      ],
+      "explanation": "A: Volunteer numbers indicate interest in participating. They do not measure the existing effort or correction rate that the assistant is intended to improve.\n\nB: Preparation time establishes the existing effort baseline. Separating inspections by complexity helps the company avoid attributing a change in the work mix to the assistant.\n\nC: Vendor processing volume describes another operating context. It does not establish how this company performs the reporting task before adoption.\n\nD: A session target is a planned usage measure. It does not describe existing reporting performance or show whether the tool improves outcomes.\n\nE: The correction rate establishes the quality baseline needed to assess the requirement to avoid additional corrections. Using the same complexity categories supports comparison with the pilot results."
+    },
+    {
+      "id": "gen-2026-11-14-b-03",
+      "domainId": "domain-2",
+      "taskId": "2.2",
+      "skillId": "2.2.4",
+      "type": "multiple",
+      "text": "A company deployed a generative AI assistant for its 600 customer service agents 6 weeks ago. The assistant suggests replies and summarizes customer history. The business case targets a 15% lower cost per contact within 12 months. Leaders want early signals of whether the initiative is on track so that they can adjust training or the rollout before year-end results are available.\n\nWhich metrics should leaders track? (Choose THREE.)",
+      "options": [
+        {
+          "id": "A",
+          "text": "The change in cost per contact for the full year compared with the pre-launch baseline."
+        },
+        {
+          "id": "B",
+          "text": "The percentage of agents who use the assistant during most of their shifts."
+        },
+        {
+          "id": "C",
+          "text": "The percentage of suggested replies that agents send with few or no edits."
+        },
+        {
+          "id": "D",
+          "text": "The assistant's accuracy score on the vendor's standard benchmark test set."
+        },
+        {
+          "id": "E",
+          "text": "The change in average handling time for contacts in which agents use the assistant."
+        },
+        {
+          "id": "F",
+          "text": "The number of knowledge articles that have been loaded into the assistant's knowledge base."
+        }
+      ],
+      "correctOptionIds": [
+        "B",
+        "C",
+        "E"
+      ],
+      "explanation": "A: Full-year cost per contact is the outcome the business case targets. It is a lagging indicator that is available only at year end, too late to adjust training or the rollout.\n\nB: Value depends on adoption. If few agents use the assistant regularly, cost per contact cannot fall as planned. Regular usage is available within weeks and predicts whether the target is reachable.\n\nC: The share of suggestions that agents use with little editing shows whether agents find the output useful and trust it. Low acceptance signals a quality or training problem early.\n\nD: A benchmark score measures model performance on a general test set. It does not show whether agents use the assistant or whether it improves this company's contacts, so it does not connect to the business outcome.\n\nE: Handling time is a direct driver of cost per contact and can be measured weekly. A shorter handling time for assisted contacts is an early sign that the cost target is achievable.\n\nF: The number of loaded articles measures setup activity. More content does not show that agents use the assistant or that contacts become cheaper."
+    },
+    {
+      "id": "gen-2026-11-14-b-04",
+      "domainId": "domain-2",
+      "taskId": "2.3",
+      "skillId": "2.3.4",
+      "type": "single",
+      "text": "A regional insurer is losing policyholders to larger competitors. Most insurers in its market adopted AI claims triage several years ago, and customers now expect simple claims to be decided within a day. The insurer takes 5 days. The board is deciding how much to invest in AI for the business.\n\nWhich investment approach should the board choose?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Fund a multi-year program to build proprietary claims AI that goes beyond current industry capabilities so that the insurer can lead the market."
+        },
+        {
+          "id": "B",
+          "text": "Fund small, low-cost experiments with several claims AI approaches, and increase investment after one approach shows a clear advantage."
+        },
+        {
+          "id": "C",
+          "text": "Invest enough to reach the industry's claims decision speed quickly by using established approaches, and consider differentiating investments later."
+        },
+        {
+          "id": "D",
+          "text": "Direct AI investment to underwriting, where competitors have not yet adopted AI widely, to gain an advantage while that area is still open."
+        }
+      ],
+      "correctOptionIds": [
+        "C"
+      ],
+      "explanation": "A: Investing to lead the market can make sense where AI capability is still developing. In claims, AI triage is already widespread, and customers are leaving now. A multi-year build leaves the gap open while the insurer pursues capabilities beyond what customers currently require.\n\nB: Small, exploratory investments suit an early-stage market where the value of AI is uncertain. Here, the capability is mature across the industry and customers already expect it, so slow, incremental investment under-responds to the competitive pressure.\n\nC: When an AI capability has become an industry expectation, a company that lags must invest enough to reach parity quickly. Established approaches reduce time and risk. After the insurer closes the gap, it can consider investments that differentiate it.\n\nD: Pursuing an area where competitors have not adopted AI can create advantage. However, the insurer is losing customers because of its slow claims decisions. Investing elsewhere leaves the immediate competitive gap unaddressed."
+    },
+    {
+      "id": "gen-2026-11-14-04",
+      "domainId": "domain-2",
+      "taskId": "2.2",
+      "skillId": "2.2.5",
+      "type": "multiple",
+      "text": "A marketing department will give 400 employees a writing assistant that is built on Amazon Bedrock with on-demand, per-token pricing. Usage is expected to rise and fall sharply around campaign launches. Before rollout, the finance team must approve a monthly cost plan. Leaders want to control costs while keeping the assistant useful for all employees.\n\nWhich actions should the department take? (Choose TWO.)",
+      "options": [
+        {
+          "id": "a",
+          "text": "Before rollout, use AWS Cost Explorer to forecast the assistant's monthly costs for the finance team."
+        },
+        {
+          "id": "b",
+          "text": "Before rollout, use AWS Pricing Calculator to estimate monthly costs from expected request volumes and token counts."
+        },
+        {
+          "id": "c",
+          "text": "Before rollout, commit to fixed hourly model capacity that is sized for peak campaign demand to make monthly costs predictable."
+        },
+        {
+          "id": "d",
+          "text": "After rollout, use AWS Pricing Calculator each month to report the assistant's actual spending to the finance team."
+        },
+        {
+          "id": "e",
+          "text": "From rollout, send routine drafting requests to a smaller, lower-cost model and complex requests to a more capable model."
+        }
+      ],
+      "correctOptionIds": [
+        "b",
+        "e"
+      ],
+      "explanation": "A: Cost Explorer forecasts are based on past usage, and Cost Explorer does not provide a forecast without enough history. A new assistant has no usage history, so Cost Explorer cannot produce the plan that finance needs before rollout.\n\nB: AWS Pricing Calculator estimates the cost of a new workload from the usage parameters that you specify. On-demand costs depend on the number of input and output tokens, so an estimate from expected volumes and token counts gives finance a monthly plan to approve.\n\nC: Fixed capacity is billed by the hour whether or not it is used, so it suits steady, predictable volume. Capacity sized for campaign peaks would sit idle between launches, and spiky workloads typically cost less with on-demand pricing.\n\nD: AWS Pricing Calculator produces estimates from the inputs that you enter, not records of actual charges. Actual costs depend on actual usage, which a tool such as Cost Explorer reports.\n\nE: Different models charge different amounts per token, and larger models often cost more. Routing routine requests to a smaller model reduces cost, while complex requests still go to a more capable model, so the assistant stays useful."
+    },
+    {
+      "id": "gen-2026-11-14-c-03",
+      "domainId": "domain-2",
+      "taskId": "2.1",
+      "skillId": "2.1.3",
+      "type": "single",
+      "text": "A company piloted a generative AI assistant that drafts sales proposals. For 15 pilot users, preparation time fell by 35% and win rates held steady. Rolling it out to all 400 sales staff requires a connection to the pricing system, which will be replaced in 8 months. In the pilot, staff copied prices into drafts by hand, and two errors forced discounts to honor quoted prices.\n\nWhich decision is MOST appropriate for the initiative?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Keep the assistant running for the pilot users, and defer the wider rollout until the new pricing system is live and connected."
+        },
+        {
+          "id": "B",
+          "text": "Roll out the assistant to all 400 sales staff now with a required manual price check, and connect it to the new system later."
+        },
+        {
+          "id": "C",
+          "text": "End the initiative, because its value depends on a pricing connection that the company cannot deliver for 8 months."
+        },
+        {
+          "id": "D",
+          "text": "Connect the assistant to the current pricing system now so that the wider rollout can proceed before the new system goes live."
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "explanation": "A: Prioritization weighs value against feasibility and risk, and pausing suits an initiative whose value is shown but whose scaling depends on something not yet in place. The pilot shows real time savings, but scaling depends on a pricing connection that will exist in 8 months. Keeping the pilot running preserves the gains and learning while avoiding a rollout that multiplies a known source of costly errors.\n\nB: A rapid rollout captures savings sooner, which can be worth it when remaining risks are small. Here, manual price handling already caused costly errors with 15 users. Spreading the same process to 400 users raises the exposure, and the manual check consumes part of the time saved.\n\nC: Ending an initiative suits one that fails to show value or no longer fits strategy. This pilot showed clear value, and the blocker is temporary, so ending it gives up proven benefits.\n\nD: Connecting to the current system would remove the manual step, but that system will be retired in 8 months. The company would pay for an integration that it must rebuild soon after, which is poor value compared with waiting for the new system."
+    },
+    {
+      "id": "gen-2026-11-15-c-01",
+      "domainId": "domain-2",
+      "taskId": "2.1",
+      "skillId": "2.1.1",
+      "type": "single",
+      "text": "A software company sells an analytics platform on annual contracts. Customers who start using the platform within 45 days of signing renew at 92%, but customers who take longer renew at 61%. About half of new customers take longer. Each new customer waits about five weeks for an implementation specialist, and specialists report that about 40% of their hours go to looking up how to configure features for each customer's systems.\n\nWhich AI use case would MOST improve the company's renewal rate?",
+      "options": [
+        {
+          "id": "A",
+          "text": "A machine learning model that scores each customer's risk of not renewing so that account managers can contact high-risk customers before renewal."
+        },
+        {
+          "id": "B",
+          "text": "An AI scheduling tool that assigns specialists to new customers in order of contract value so that the largest accounts start first."
+        },
+        {
+          "id": "C",
+          "text": "An AI chat assistant inside the platform that answers users' questions about building reports and dashboards."
+        },
+        {
+          "id": "D",
+          "text": "A generative AI assistant that answers specialists' setup questions from the company's technical documentation and earlier implementations."
+        }
+      ],
+      "correctOptionIds": [
+        "D"
+      ],
+      "explanation": "A: A churn-risk model is a common AI use case for renewals, but here the customers at risk are already known: they are the ones who have not started within 45 days. Contacting them shortly before renewal does not change the late start that the renewal figures point to.\n\nB: Scheduling by contract value changes who waits, not how long the queue is. Specialists have the same number of hours, so about the same share of customers starts within 45 days, and smaller customers wait longer than before.\n\nC: An in-platform assistant helps people who are already using the platform. The customers who renew less are those still waiting for setup, so this use case helps after the point where the problem occurs.\n\nD: A high-impact use case maps an AI capability to the business driver behind the outcome. Renewal depends on how quickly customers start, and the start date depends on specialist capacity: customers wait five weeks, and specialists spend about 40% of their time looking up configuration information. An assistant that answers those questions frees specialist time, which shortens the wait and moves more customers into the group that renews at 92%."
+    },
+    {
+      "id": "gen-2026-11-15-c-02",
+      "domainId": "domain-2",
+      "taskId": "2.1",
+      "skillId": "2.1.1",
+      "type": "single",
+      "text": "A specialty coatings manufacturer wants to bring new products to market faster. A new coating currently takes about 20 months: 2 months of literature and patent review, 11 months of lab testing in which about 1 in 30 candidate formulations meets its targets, and about 7 months for regulators to review the submitted dossier. The company has 12 years of structured results from earlier lab tests.\n\nWhich AI use case would MOST shorten time to market?",
+      "options": [
+        {
+          "id": "A",
+          "text": "A generative AI assistant that drafts regulatory dossiers from lab reports and earlier approved submissions."
+        },
+        {
+          "id": "B",
+          "text": "A generative AI tool that summarizes relevant research papers and patents for chemists at the start of each project."
+        },
+        {
+          "id": "C",
+          "text": "A machine learning model that estimates each candidate formulation's chance of passing so that the lab tests the most promising ones first."
+        },
+        {
+          "id": "D",
+          "text": "A generative AI model that proposes many additional candidate formulations for the lab to evaluate."
+        }
+      ],
+      "correctOptionIds": [
+        "C"
+      ],
+      "explanation": "A: Drafting dossiers faster helps only the preparation step. Most of the 7 months is the regulators' review, which the company does not control, so faster drafting saves little time.\n\nB: Literature and patent review takes about 2 months of the 20. Even a large improvement in this step has a small effect on total time to market.\n\nC: To find a high-impact use case, match an AI capability to the step that limits the outcome. Lab testing is the longest step, and most candidates fail. The company has 12 years of structured test results, which is the kind of historical data a predictive model learns from. Testing the most promising candidates first reduces the time spent on formulations that would fail.\n\nD: Generating more candidates is a real R&D use of generative AI, but testing is already the bottleneck and only about 1 in 30 candidates passes. More candidates add to the testing workload unless something helps the lab decide which ones to test."
+    },
+    {
+      "id": "gen-2026-11-15-c-04",
+      "domainId": "domain-2",
+      "taskId": "2.1",
+      "skillId": "2.1.4",
+      "type": "single",
+      "text": "Questions about refund status have become the largest category of contacts to an online retailer's service center. Customers wait an average of nine days for a refund because every refund waits for a finance clerk's approval, a step that was added years ago when refund fraud was common. Last year, confirmed fraud affected fewer than 0.1% of refunds. Leaders want fewer customers to need to ask about their refunds.\n\nWhich approach should the retailer take?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Issue refunds below a set order value automatically and keep clerk approval for higher-value refunds."
+        },
+        {
+          "id": "B",
+          "text": "Deploy a generative AI assistant that tells customers the status of their refund and its expected approval date."
+        },
+        {
+          "id": "C",
+          "text": "Train a machine learning model to score each refund's fraud risk so that clerks approve the lowest-risk refunds first."
+        },
+        {
+          "id": "D",
+          "text": "Hire temporary clerks to clear the approval queue and show the expected refund time on each order page."
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "explanation": "A: AI is not the right answer when the cause of a problem is a process step that no longer adds value. Customers ask about refunds because they wait nine days for an approval step designed for a fraud level that no longer exists. Removing that step for lower-value refunds shortens the wait for most customers, so fewer need to ask, and it costs less than building and running an AI system. Clerk review remains for the refunds where a loss would matter most.\n\nB: An assistant makes status easier to check, but customers still wait nine days and still need to ask, now through the assistant. It adds the cost of an AI system while leaving the cause of the questions in place.\n\nC: Scoring fraud risk changes the order in which clerks work, but every refund still waits for approval. With fraud under 0.1%, the model would spend effort ranking refunds that are almost all legitimate, and average wait times would change little.\n\nD: Extra clerks can shorten the queue for a while, and showing expected timing may answer some questions. But it adds ongoing labor cost to keep a step that has little value, and refunds still wait for manual approval."
+    },
+    {
+      "id": "gen-2026-11-15-c-05",
+      "domainId": "domain-2",
+      "taskId": "2.1",
+      "skillId": "2.1.4",
+      "type": "single",
+      "text": "A machinery parts maker supplies six industrial customers. Each customer signs an annual agreement that fixes its quarterly delivery quantities, and any change must be submitted through the company's ordering portal at least 60 days in advance. Planners copy these quantities into a planning spreadsheet. A few orders each year are short of materials, and each shortage so far came from a portal change that was missed during copying. The operations director proposes an AI model to forecast demand.\n\nWhat should the director do?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Train a demand forecasting model in Amazon SageMaker AI on the company's order history and retrain it each quarter."
+        },
+        {
+          "id": "B",
+          "text": "Feed contracted volumes and approved change requests directly into the material plan."
+        },
+        {
+          "id": "C",
+          "text": "Use a foundation model in Amazon Bedrock to analyze past orders and recommend material purchases each quarter."
+        },
+        {
+          "id": "D",
+          "text": "Set a minimum stock level for each material and reorder automatically whenever inventory falls below it."
+        }
+      ],
+      "correctOptionIds": [
+        "B"
+      ],
+      "explanation": "A: Forecasting models are valuable when future demand is uncertain and must be estimated from patterns. Here, customers commit to quantities in advance and give 60 days' notice of changes, so the demand is already known. A model would estimate numbers the company already has, would not catch a missed change any better, and would add training, retraining and monitoring costs.\n\nB: AI is not the right solution when the needed answer can be determined directly from information the business already holds. The shortages came from portal changes missed during manual copying. Using the contracted quantities and approved changes as the plan's inputs removes that copying step, without the cost and maintenance of a model.\n\nC: A foundation model recommendation is still an estimate based on past orders. It would be less reliable than the committed quantities, and the planners would have to check it against the agreements and portal changes anyway.\n\nD: A minimum stock level is a common non-AI control, but it reacts after inventory falls. It ignores the known delivery schedule, so the company would either hold extra stock all year or still run short when a changed quarterly order is larger than expected."
+    },
+    {
+      "id": "gen-2026-11-15-c-06",
+      "domainId": "domain-2",
+      "taskId": "2.2",
+      "skillId": "2.2.1",
+      "type": "single",
+      "text": "A company with 12,000 employees will launch a generative AI assistant that answers questions about HR policies. The business case expects two benefits: a lighter workload for the 40-person HR service team, and a better experience for employees, who now wait about two days for an answer. Leaders want one tangible and one intangible KPI to judge the assistant after six months.\n\nWhich pair of KPIs should the company use?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Monthly HR service tickets per 1,000 employees, and the company's annual employee engagement score."
+        },
+        {
+          "id": "B",
+          "text": "Number of questions the assistant answers each month, and employees' satisfaction with how their HR questions were resolved."
+        },
+        {
+          "id": "C",
+          "text": "Monthly HR service tickets per 1,000 employees, and employees' satisfaction with how their HR questions were resolved."
+        },
+        {
+          "id": "D",
+          "text": "Number of questions the assistant answers each month, and the company's annual employee engagement score."
+        }
+      ],
+      "correctOptionIds": [
+        "C"
+      ],
+      "explanation": "A: Tickets per 1,000 employees is a suitable tangible KPI. The annual engagement score is too broad for the intangible benefit: pay, management and many other factors move it, and an annual survey gives only one reading during the six months.\n\nB: Employee satisfaction with how HR questions were resolved fits the intangible benefit. The count of answered questions measures activity, not workload reduction. The assistant can answer many questions that would never have become tickets, so this number can rise while the HR team's workload stays the same.\n\nC: KPIs should measure the benefits that the business case claims. Tickets per 1,000 employees shows whether work reaching the HR team has fallen, adjusted for headcount changes. Satisfaction with how HR questions were resolved measures the employee experience benefit directly and can be collected throughout the six months.\n\nD: Both measures fall short. The answer count measures usage rather than reduced workload, and the engagement score is too broad to show the effect of one HR assistant."
+    },
+    {
+      "id": "gen-2026-11-15-c-07",
+      "domainId": "domain-2",
+      "taskId": "2.2",
+      "skillId": "2.2.1",
+      "type": "multiple",
+      "text": "An online home-goods retailer has 20,000 products, and 14,000 of them have only a one-line description. It will use generative AI to write full descriptions for those products, and staff will spot-check a sample before publishing. The goal is to grow net sales of those products. The updates will be released in batches over three months.\n\nWhich KPIs should the retailer use to judge whether the goal is met? (Choose TWO.)",
+      "options": [
+        {
+          "id": "A",
+          "text": "Total online sales during the three-month rollout compared with the previous three months"
+        },
+        {
+          "id": "B",
+          "text": "Conversion rate of updated products compared with products still waiting for an update"
+        },
+        {
+          "id": "C",
+          "text": "Average time staff spend spot-checking each description"
+        },
+        {
+          "id": "D",
+          "text": "Return rate of updated products before and after their new descriptions are published"
+        },
+        {
+          "id": "E",
+          "text": "Search engine visits to updated product pages compared with before the update"
+        }
+      ],
+      "correctOptionIds": [
+        "B",
+        "D"
+      ],
+      "explanation": "A: Total online sales include the 6,000 products that are not being updated, and a comparison with the previous three months mixes in seasonal and market changes. The figure cannot show what the new descriptions did.\n\nB: KPIs should measure the business outcome the initiative is meant to change. Conversion rate shows whether visitors buy more often after reading the new descriptions. Because updates are released in batches, products still waiting for an update give a comparison group for the same period, which separates the effect of the descriptions from seasonal changes.\n\nC: Review time is an efficiency measure for the content process. It helps manage the project's cost, but it does not show whether net sales grow.\n\nD: Net sales are sales after returns. Fuller descriptions change what customers expect from a product, so they can lower returns, or raise them if the text overstates the product. Tracking the return rate of updated products shows whether the sales gain holds after returns.\n\nE: More search visits are an early signal that more people find the products, but visits are not sales. Traffic can rise without more purchases or with more returns, so it does not show whether the goal is met."
+    },
+    {
+      "id": "gen-2026-11-15-c-08",
+      "domainId": "domain-2",
+      "taskId": "2.2",
+      "skillId": "2.2.3",
+      "type": "single",
+      "text": "A logistics company is estimating the first-year ROI of a generative AI tool that drafts customs declarations. The draft counts $500,000 of broker time saved and $120,000 of model usage costs. The saved time will absorb next year's volume growth, so four planned broker hires will not be needed. Connecting the tool to the filing system will cost $150,000. Last year, the company spent $80,000 cleaning the declaration records that the tool will use.\n\nWhich change should the company make to the estimate?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Add the $80,000 data cleanup as a cost, because the tool depends on the cleaned records."
+        },
+        {
+          "id": "B",
+          "text": "Add the $150,000 integration with the filing system as a first-year cost."
+        },
+        {
+          "id": "C",
+          "text": "Remove the $500,000 of saved broker time, because no current brokers will leave the company."
+        },
+        {
+          "id": "D",
+          "text": "Add the salaries of the four planned hires as a benefit alongside the saved broker time."
+        }
+      ],
+      "correctOptionIds": [
+        "B"
+      ],
+      "explanation": "A: The cleanup was paid last year, whether or not the company adopts the tool. ROI for this decision counts only costs and benefits that the decision causes, so a past cost does not belong in it, even though the tool uses the result.\n\nB: An AI ROI calculation must include all costs that the investment causes, not only model usage. Integration with the filing system is a one-time cost that the company pays only because it adopts the tool, so it belongs in the first-year cost.\n\nC: Saved time does not have to mean job cuts to have value. Here the saved time replaces four hires the company would otherwise make, so it is a real cost the company avoids.\n\nD: The $500,000 of saved time is the value of the work that the four hires would have done. Adding their salaries as a separate benefit counts the same saving twice."
+    },
+    {
+      "id": "gen-2026-11-15-c-09",
+      "domainId": "domain-2",
+      "taskId": "2.2",
+      "skillId": "2.2.3",
+      "type": "single",
+      "text": "A retailer launched AI product recommendations on its online stores in 5 of the 10 countries where it sells. In the next quarter, online revenue grew 10% in those 5 countries and 6% in the other 5, whose growth had tracked the launch countries closely before the launch. The launch countries had $20 million of online revenue in the quarter before launch.\n\nWhat quarterly revenue gain should the retailer attribute to the recommendations in its ROI calculation?",
+      "options": [
+        {
+          "id": "A",
+          "text": "About $2.0 million, the full growth in the launch countries."
+        },
+        {
+          "id": "B",
+          "text": "About $0.4 million, half of the extra growth, because some extra purchases would have happened without recommendations."
+        },
+        {
+          "id": "C",
+          "text": "None yet, because a single quarter of results could reflect seasonal effects."
+        },
+        {
+          "id": "D",
+          "text": "About $0.8 million, the growth beyond the rate in the other countries."
+        }
+      ],
+      "correctOptionIds": [
+        "D"
+      ],
+      "explanation": "A: Counting all $2.0 million includes growth that would have happened anyway. The other countries grew 6% without recommendations, so the full figure overstates the return.\n\nB: The comparison countries already show what would have happened without recommendations. Halving the remaining difference removes the same effect a second time and understates the return.\n\nC: Seasonal effects apply to both groups in the same quarter. Because the two groups had tracked each other before launch, the difference between them already accounts for the season, so the result does not have to wait.\n\nD: An ROI calculation should count only the benefit caused by the investment, measured against what would have happened without it. The 5 countries without recommendations show that baseline. The launch countries grew 4 points more, and 4% of $20 million is about $0.8 million for the quarter."
+    },
+    {
+      "id": "gen-2026-11-15-c-10",
+      "domainId": "domain-2",
+      "taskId": "2.3",
+      "skillId": "2.3.1",
+      "type": "single",
+      "text": "A regional bank is losing small-business borrowers to online lenders that use AI to make credit decisions within a day. The bank takes about 10 days, mostly while relationship managers collect and review statements and tax returns. In surveys, the bank's borrowers name their relationship manager's advice as their main reason for staying. National banks have recently launched AI chat assistants for routine account questions.\n\nWhich AI investment would MOST improve the bank's competitive position?",
+      "options": [
+        {
+          "id": "A",
+          "text": "AI that extracts and analyzes figures from applicants' financial documents so that relationship managers can decide within two days."
+        },
+        {
+          "id": "B",
+          "text": "An AI chat assistant that handles routine account questions so that the bank's service keeps pace with national banks."
+        },
+        {
+          "id": "C",
+          "text": "An AI credit model that approves small-business loans automatically, matching online lenders' one-day decisions."
+        },
+        {
+          "id": "D",
+          "text": "A generative AI service that sends each business customer a monthly cash-flow report, a feature no competitor offers."
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "explanation": "A: Assessing the competitive landscape means finding where the company is losing and which strengths it can build on. The bank is losing on decision speed, and the delay comes from manual document work. AI that handles that work narrows the speed gap while keeping relationship managers in the decision, which is what borrowers value most. The bank would compete on speed plus advice, which online lenders do not offer.\n\nB: A chat assistant keeps pace with national banks on routine service, but borrowers are leaving for online lenders because of decision speed. This investment addresses a different competitor and a different reason for choosing a bank.\n\nC: Automatic approvals would match the online lenders on their own terms but remove the relationship manager advice that keeps borrowers with the bank. The bank would give up its main difference and compete on speed alone against lenders that already lead on it.\n\nD: A feature that no competitor offers can attract attention, but it does not address the delay that is costing the bank borrowers. Borrowers who need a fast decision would still leave."
+    },
+    {
+      "id": "gen-2026-11-15-c-11",
+      "domainId": "domain-2",
+      "taskId": "2.3",
+      "skillId": "2.3.1",
+      "type": "multiple",
+      "text": "An industrial parts distributor competes with three similar distributors in its region. Its leaders are assessing whether AI could give the company an advantage, and they have listed several observations about the market and the company.\n\nWhich observations point to a potential competitive advantage from AI? (Choose TWO.)",
+      "options": [
+        {
+          "id": "A",
+          "text": "The distributor's own field technicians have logged 12 years of repairs and part failures for equipment at customer sites."
+        },
+        {
+          "id": "B",
+          "text": "Two competitors already use an AI quoting product that the distributor is evaluating, which a large software vendor sells by subscription."
+        },
+        {
+          "id": "C",
+          "text": "Customers most often switch suppliers after late deliveries, and most of the distributor's late deliveries come from stock-outs caused by inaccurate demand planning."
+        },
+        {
+          "id": "D",
+          "text": "Industry analysts expect customers to soon want chat-based ordering and other AI features from their distributors."
+        },
+        {
+          "id": "E",
+          "text": "None of the competitors has launched a generative AI chat assistant yet, so the distributor could be the first to offer one."
+        }
+      ],
+      "correctOptionIds": [
+        "A",
+        "C"
+      ],
+      "explanation": "A: Data that a company generates through its own operations is a strong basis for an AI advantage. These repair and failure records come from the distributor's own technicians, so rivals cannot buy them. Models trained on them could predict which parts customers will need, which competitors would find hard to copy.\n\nB: A subscription product from a software vendor is available to any distributor that pays for it, and two competitors already use it. Adopting it would bring the distributor level with them rather than set it apart.\n\nC: An advantage is most valuable where it affects how customers choose suppliers. Customers switch after late deliveries, and the distributor's delays come from planning that AI forecasting can improve. Better reliability on the factor that decides customer choice can win business from competitors.\n\nD: Rising customer expectations are a reason AI may become necessary to stay competitive. Features that customers expect from all their distributors become a basic requirement rather than a source of advantage.\n\nE: Being first with a generally available chat assistant gives, at best, a short lead. Competitors can launch similar assistants quickly, and the stated facts do not show that chat support affects customers' choice of supplier."
+    },
+    {
+      "id": "gen-2026-11-15-c-12",
+      "domainId": "domain-2",
+      "taskId": "2.3",
+      "skillId": "2.3.2",
+      "type": "single",
+      "text": "An accounting firm bills small-business clients by the hour for monthly bookkeeping. A generative AI tool has cut the time this work takes by about 60% with no loss in quality. Demand for bookkeeping in the firm's region is steady, and competing firms are adopting similar tools.\n\nWhich change would BEST let the firm capture the value that the tool creates?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Lower hourly rates to win bookkeeping clients from competing firms."
+        },
+        {
+          "id": "B",
+          "text": "License its configured AI tool to other accounting firms as a software product."
+        },
+        {
+          "id": "C",
+          "text": "Use the freed hours to reduce overtime and temporary staffing costs."
+        },
+        {
+          "id": "D",
+          "text": "Charge a fixed monthly fee for bookkeeping, set by each client's transaction volume."
+        }
+      ],
+      "correctOptionIds": [
+        "D"
+      ],
+      "explanation": "A: Lower rates on top of 60% fewer hours cut bookkeeping revenue further. With steady demand and competitors adopting similar tools, rivals can match the lower rates, which leads to a price war rather than a lasting gain.\n\nB: Other firms can already adopt similar tools, so a configured version of a commercially available tool has little to set it apart as a product. It would also move the firm into a software business that it has no evidence it can win in.\n\nC: Cost savings help, but under hourly billing, bookkeeping revenue falls by about 60% because clients pay for fewer hours. The firm keeps some savings, but most of the value that the tool creates reaches clients as lower bills.\n\nD: AI can change how a business earns revenue, not only how it does the work. Under hourly billing, the time savings reduce what clients pay. A fixed fee based on the client's transaction volume ties revenue to the service delivered rather than to hours, so the firm keeps the margin that the tool creates."
+    },
+    {
+      "id": "gen-2026-11-15-c-13",
+      "domainId": "domain-2",
+      "taskId": "2.3",
+      "skillId": "2.3.2",
+      "type": "single",
+      "text": "An educational publisher sells textbooks to university courses, and sales have fallen for five years as instructors adopt free online materials. The publisher owns the rights to 20 years of its textbook content and graded practice problems. Surveys show that more students now pay for homework-help apps on their own.\n\nWhich AI initiative would BEST address the decline in the publisher's revenue?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Use generative AI to produce new textbook editions faster and at lower cost so that list prices can be reduced."
+        },
+        {
+          "id": "B",
+          "text": "Sell students a subscription to an AI tutor that explains concepts and generates practice using the publisher's content."
+        },
+        {
+          "id": "C",
+          "text": "License its practice problems to a popular homework-help app for a fixed annual fee."
+        },
+        {
+          "id": "D",
+          "text": "Add an AI assistant to the publisher's e-textbook platform that helps instructors find and adapt teaching materials."
+        }
+      ],
+      "correctOptionIds": [
+        "B"
+      ],
+      "explanation": "A: Lower production costs improve the existing model, but the publisher is losing to free materials. A lower price still competes with a price of zero, so the decline continues.\n\nB: AI can create new revenue models when it combines an asset the company owns with demand that already exists. Students already pay for study help, and the publisher's content and graded problems give its tutor material it owns. A subscription sold directly to students creates recurring revenue that grows with student demand and does not depend on instructors choosing a textbook.\n\nC: Licensing earns money from the same student demand, but the app keeps the relationship with students and the growing subscription revenue, while the publisher receives a fixed fee. The publisher's content would also strengthen the app that competes for students' spending.\n\nD: An instructor assistant improves the current product, but instructors are the buyers who are moving to free materials. Better tools for them do not open a new source of revenue."
+    },
+    {
+      "id": "gen-2026-11-15-c-14",
+      "domainId": "domain-2",
+      "taskId": "2.3",
+      "skillId": "2.3.3",
+      "type": "single",
+      "text": "A freight brokerage built a generative AI tool on Amazon Bedrock that recommends quote prices to its brokers, and its margins improved. Within six months, two competitors launched similar tools that use the same foundation models. The brokerage handles about three times as many quotes as any competitor.\n\nWhich investment would BEST help the brokerage sustain its advantage?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Move the tool to each new foundation model as soon as the model becomes available."
+        },
+        {
+          "id": "B",
+          "text": "Commit to a multi-year usage agreement that lowers the tool's per-request model costs."
+        },
+        {
+          "id": "C",
+          "text": "Record each quote's outcome and final margin, and use them to improve the tool's recommendations."
+        },
+        {
+          "id": "D",
+          "text": "Keep the tool's prompts and configuration confidential, and limit who can access them."
+        }
+      ],
+      "correctOptionIds": [
+        "C"
+      ],
+      "explanation": "A: New foundation models are available to every company. Competitors that use the same models can upgrade just as quickly, so model choice does not keep the brokerage ahead.\n\nB: Lower usage costs improve margins, but competitors can negotiate similar terms. A cost advantage that others can buy does not last.\n\nC: A sustainable AI advantage comes from assets that competitors cannot easily copy, such as proprietary data that grows with use. The brokerage handles three times as many quotes as any rival, so learning from its own quote results improves its recommendations faster than competitors can improve theirs. The gap widens over time.\n\nD: Protecting prompts is a reasonable control, but competitors have already built similar tools without them. Prompts and configuration can be rebuilt with moderate effort, so secrecy does not make the advantage last."
+    },
+    {
+      "id": "gen-2026-11-15-d-02",
+      "domainId": "domain-2",
+      "taskId": "2.1",
+      "skillId": "2.1.3",
+      "type": "single",
+      "text": "An insurer has run a generative AI underwriting assistant with 20 underwriters for eight months, at about $40,000 a month. Underwriters like it, but they accept only 60% of its recommendations, and four months of prompt tuning have not raised that rate. Most rejected recommendations lacked the policyholder's claim history, which is held in regional systems that a funded project will connect in about a year. Leaders estimate that the assistant would save $3 million a year at an 85% acceptance rate.\n\nWhat should the steering committee decide?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Expand the assistant to all underwriters now, because wider use will give the team more feedback for tuning and spread the benefit sooner."
+        },
+        {
+          "id": "B",
+          "text": "Keep the pilot running at its current size, so that the team keeps its momentum and is ready to improve the assistant when the data arrives."
+        },
+        {
+          "id": "C",
+          "text": "Stop spending on the pilot, record what the team has learned, and revisit the assistant once the missing data is connected."
+        },
+        {
+          "id": "D",
+          "text": "End the initiative and remove it from the roadmap, because acceptance has not improved after four months of tuning."
+        }
+      ],
+      "correctOptionIds": [
+        "C"
+      ],
+      "explanation": "A: Scaling is justified when a pilot shows value that wider use can capture. At 60% acceptance, wider use spreads a tool that underwriters often reject, and more feedback cannot supply claim history that the assistant cannot see.\n\nB: Continuing a pilot makes sense when more time will improve results. Four months of tuning have not raised acceptance, and the cause is data that will not be available for about a year, so keeping the pilot running would spend roughly $480,000 with little to show for it.\n\nC: Pausing fits an initiative that is still valuable and aligned with strategy but blocked by a dependency that has a timeline. The expected $3 million a year depends on claim history that a funded project will connect in about a year. Stopping the $40,000 monthly spend now and revisiting the assistant when the data is available keeps that value within reach at little cost.\n\nD: Terminating fits an initiative whose value or feasibility has collapsed. Here the blocker is known, funded and time-bound, and the potential savings are large, so ending the initiative would discard the work and the opportunity."
+    },
+    {
+      "id": "gen-2026-11-15-d-03",
+      "domainId": "domain-2",
+      "taskId": "2.1",
+      "skillId": "2.1.5",
+      "type": "single",
+      "text": "A travel company's customer chat assistant runs on a model that its provider will retire in five months. The team plans to move to a different model in Amazon Bedrock whose per-token price is about 40% lower. Over the past year, the team refined the assistant's prompts for the current model. The assistant handles all chats overnight, when no human agents are on duty.\n\nWhat should the team do FIRST?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Run a set of recorded past chats through the new model with the current prompts, and compare answer quality and cost per chat."
+        },
+        {
+          "id": "B",
+          "text": "Fine-tune the new model on a year of chat transcripts so that it reproduces the current assistant's answers before customers use it."
+        },
+        {
+          "id": "C",
+          "text": "Move all chats to the new model during the quietest week, and keep the current model available as a fallback until it is retired."
+        },
+        {
+          "id": "D",
+          "text": "Estimate the yearly saving by applying the 40% lower price to the current monthly bill, and present the figure to finance for approval."
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "explanation": "A: Moving to a different model can change both performance and cost. Prompts written for one model may not work as well on another, and models count tokens differently and produce answers of different length, so a lower per-token price does not guarantee a lower cost per chat. Testing recorded chats first shows how much prompt work, cost and continuity planning the move needs.\n\nB: Fine-tuning adds cost and effort and is premature before the team knows whether the new model, with existing or revised prompts, already performs well enough. Evaluation should come first.\n\nC: A quiet-week cutover with a fallback supports business continuity, but it exposes customers to an untested model. Overnight, no agents are available to catch poor answers, and the fallback lasts only until the current model is retired.\n\nD: Per-token prices cannot be applied directly to the current bill, because the new model may use a different number of tokens for the same chats. The saving should be estimated from the new model's actual token use, after quality is confirmed."
+    },
+    {
+      "id": "gen-2026-11-15-d-04",
+      "domainId": "domain-2",
+      "taskId": "2.2",
+      "skillId": "2.2.2",
+      "type": "single",
+      "text": "A contact center will launch a generative AI tool in six weeks that drafts case notes after each call. Leaders want to show how much after-call work time the tool saves. The phone system records talk time for every call, but nobody currently measures after-call work. The new tool will log after-call work time automatically from launch.\n\nHow should the company establish the baseline?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Survey agents before launch for their estimate of average after-call work time, and compare it with the times the tool logs."
+        },
+        {
+          "id": "B",
+          "text": "Treat the tool's logs from the first month after launch as the baseline, and measure savings in later months as agents get used to it."
+        },
+        {
+          "id": "C",
+          "text": "Use the past year's talk time as the baseline, because it is already recorded for every call and covers seasonal swings."
+        },
+        {
+          "id": "D",
+          "text": "Time after-call work on a sample of calls in the weeks before launch, using the same start and end points that the tool will log."
+        }
+      ],
+      "correctOptionIds": [
+        "D"
+      ],
+      "explanation": "A: Surveys can show how agents feel about their workload, but estimates of time are unreliable. Comparing self-reported estimates with system-logged times mixes two measurement methods, so any difference cannot be attributed to the tool.\n\nB: A baseline must describe performance without the AI. The first month after launch already includes the tool, so later comparisons would show only how agents improved with it, not how much time it saved.\n\nC: Talk time is already available, but it measures the conversation, not the work after it. The tool affects after-call work, so talk time cannot show its effect.\n\nD: A baseline is the measured performance of the current process before AI is introduced, captured the same way the post-launch results will be. After-call work is not measured today, and six weeks allows time to collect it on a sample of calls with the same definition the tool will use. The results before and after launch can then be compared directly."
+    },
+    {
+      "id": "gen-2026-11-15-d-06",
+      "domainId": "domain-2",
+      "taskId": "2.2",
+      "skillId": "2.2.5",
+      "type": "single",
+      "text": "Six weeks ago, a manufacturer launched a generative AI assistant on Amazon Bedrock for its 4,000 office employees, paying on-demand rates. Daily requests have ranged from 3,000 to 19,000 as departments experiment, and the assistant will roll out to two more regions next quarter. Finance wants a lower cost per request and asks whether to commit now to six months of dedicated capacity.\n\nWhat should the AI lead recommend?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Commit to dedicated capacity sized to the average daily volume, and let requests above that level run at on-demand rates."
+        },
+        {
+          "id": "B",
+          "text": "Stay on on-demand pricing, and review usage in AWS Cost Explorer after the regional rollout before deciding on a commitment."
+        },
+        {
+          "id": "C",
+          "text": "Stay on on-demand pricing, and set a monthly spending cap for each department that blocks requests once the cap is reached."
+        },
+        {
+          "id": "D",
+          "text": "Commit to dedicated capacity sized for the busiest days, so that departments are not slowed during heavy use and the rate is locked in."
+        }
+      ],
+      "correctOptionIds": [
+        "B"
+      ],
+      "explanation": "A: Dedicated capacity in Amazon Bedrock is billed by the hour for the commitment term whether or not it is used. With daily volume swinging from 3,000 to 19,000 requests, capacity sized to the average would sit partly idle on quiet days, and the regional rollout will change the pattern within the term.\n\nB: On-demand pricing charges only for the tokens used and suits new or unpredictable workloads. Committed capacity lowers the cost per request only when it is used steadily. Usage is still changing and will change again with the rollout, so reviewing the trend in AWS Cost Explorer first lets the company commit only when a stable baseline shows the capacity would be well used.\n\nC: Spending caps limit total spend, but they do not lower the cost per request, which is what finance wants. Blocking requests during the launch period would also cut off the use the company is trying to build.\n\nD: Capacity sized for peak days would be largely idle on most days, so the effective cost per request would rise, not fall. A six-month commitment also locks in that size before the rollout changes demand."
+    },
+    {
+      "id": "gen-2026-11-15-d-07",
+      "domainId": "domain-2",
+      "taskId": "2.2",
+      "skillId": "2.2.5",
+      "type": "multiple",
+      "text": "A retailer's support assistant uses a large model in Amazon Bedrock for every customer chat message, and the monthly bill is well above budget. Most messages ask where an order is or how to return an item. In testing, a smaller model that costs about one-tenth as much per token answered those messages as well as the large model but handled complaints less well. Each message also carries the customer's complete order history, often several years long, although the company accepts returns and complaints only for recent purchases.\n\nWhich actions will reduce cost without weakening answers to complaints? (Choose TWO.)",
+      "options": [
+        {
+          "id": "A",
+          "text": "Choose the model for each message by its type, sending complaints to the large model."
+        },
+        {
+          "id": "B",
+          "text": "Move all messages to the smaller model, and add the complaint-handling policy to every prompt to improve its complaint answers."
+        },
+        {
+          "id": "C",
+          "text": "Process the chat messages through batch inference, which is billed at a lower per-token rate than on-demand requests."
+        },
+        {
+          "id": "D",
+          "text": "Include only recent orders in the context sent with each message."
+        },
+        {
+          "id": "E",
+          "text": "Lower the model's temperature setting so that its answers are shorter and use fewer tokens."
+        }
+      ],
+      "correctOptionIds": [
+        "A",
+        "D"
+      ],
+      "explanation": "A: Matching each task to the smallest model that handles it well is one of the largest cost levers. The smaller model matched the large one on order-status and return questions, which are most messages, so sending those to it saves most of their cost while complaints keep the large model.\n\nB: Adding policy text to every prompt adds input tokens, and testing showed weaker complaint answers from the smaller model. Nothing shows that the added text would close that gap, so this risks the complaint quality that must be kept.\n\nC: Batch inference costs less per token, but it processes requests asynchronously and returns results later. It suits work that can wait, such as overnight jobs, not live chat, where customers expect an immediate reply.\n\nD: Input tokens are billed, so sending context that the model does not need adds cost without improving answers. Returns and complaints apply only to recent purchases, so years of older orders are not needed to answer either one.\n\nE: Temperature controls how random or varied the output is, not how long it is. Lowering it would make answers more consistent but would not meaningfully reduce the tokens billed."
+    },
+    {
+      "id": "gen-2026-11-15-d-08",
+      "domainId": "domain-2",
+      "taskId": "2.3",
+      "skillId": "2.3.3",
+      "type": "single",
+      "text": "Two online travel agencies launched generative AI trip-planning assistants in the same month, both built on the same foundation model in Amazon Bedrock. Agency X's assistant can hold, change, and cancel bookings in the chat, while Agency Y's suggests trips and links to booking pages. X sells flights, hotels, and car rentals from one booking platform; Y's products are still on three systems inherited from acquisitions. Y plans to close the gap within six months by moving to a newer model.\n\nWhich assessment of X's advantage is MOST accurate?",
+      "options": [
+        {
+          "id": "A",
+          "text": "It will last only until Y moves to the newer model, because a stronger model will let Y's assistant plan better trips than X's."
+        },
+        {
+          "id": "B",
+          "text": "It is unlikely to last, because both agencies use the same foundation model, so anything X's assistant does can be copied quickly."
+        },
+        {
+          "id": "C",
+          "text": "It is likely to last, because matching it requires Y to change its booking operations, not only its assistant."
+        },
+        {
+          "id": "D",
+          "text": "It is likely to last, because X's prompts and conversation design are tuned to its customers, which gives its assistant a style that Y cannot easily reproduce."
+        }
+      ],
+      "correctOptionIds": [
+        "C"
+      ],
+      "explanation": "A: A newer model may plan trips better, but X's lead is that its assistant completes booking tasks. A model change does not let Y's assistant act across three unconnected booking systems.\n\nB: Access to the same foundation model means the model itself is not a differentiator. It does not mean everything built on it is easy to copy: X's capability depends on its integrated booking platform, which Y would have to build.\n\nC: Foundation models are available to every competitor, so a lasting advantage comes from what a company combines them with, such as proprietary data or integration into its own processes and systems. X's assistant can act on bookings because all its products run on one platform. Y would need to integrate three systems, which a new model cannot do for it.\n\nD: Prompts and conversation design shape the experience, but they are among the easiest parts of an assistant to change. Y can study X's assistant and refine its own prompts in weeks, so this would not be a durable advantage."
+    },
+    {
+      "id": "gen-2026-11-15-d-09",
+      "domainId": "domain-2",
+      "taskId": "2.3",
+      "skillId": "2.3.4",
+      "type": "single",
+      "text": "An insurance group has two businesses and a fixed AI budget for the next two years. Its consumer auto unit competes with carriers that have offered AI-based instant quotes and photo-based claims estimates for several years; customers now expect these features, and the unit has lost market share for three years. Its marine cargo unit sells through brokers in a niche where no carrier has moved AI beyond pilots, and pricing depends on underwriters' judgment and sparse loss data.\n\nWhich allocation is MOST appropriate?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Split the budget evenly, so that both units build AI skills at the same pace and neither falls further behind."
+        },
+        {
+          "id": "B",
+          "text": "Put most of the budget into adopting proven solutions that close the auto unit's gap, and fund a few low-cost experiments in the marine unit."
+        },
+        {
+          "id": "C",
+          "text": "Put most of the budget into the marine unit to become the first carrier with AI pricing in the niche, and have the auto unit adopt low-cost tools later."
+        },
+        {
+          "id": "D",
+          "text": "Put most of the budget into building proprietary auto features that go beyond competitors' offerings, and hold marine spending until competitors show results."
+        }
+      ],
+      "correctOptionIds": [
+        "B"
+      ],
+      "explanation": "A: An even split ignores the difference between the two markets. The auto unit is losing share now because it lacks features customers expect, while the marine niche has no proven AI use and little data to build on.\n\nB: Investment levels should match industry maturity and competitive pressure. In the auto market, AI features are now expected, so the unit needs enough investment to reach parity quickly, and proven solutions are the fastest route. In the marine niche, AI is unproven and data is sparse, so small experiments build knowledge and options at low cost.\n\nC: Being first can pay off in an emerging market, but sparse loss data makes large AI pricing investments in the marine niche risky. Delaying the auto unit would also let its share losses continue.\n\nD: Building features beyond competitors' offerings takes longer and costs more than closing the gap with proven solutions, while the unit keeps losing share. Holding all marine spending also gives up low-cost learning in a market where no one has proven what works."
+    },
+    {
+      "id": "gen-2026-11-15-d-10",
+      "domainId": "domain-2",
+      "taskId": "2.1",
+      "skillId": "2.1.1",
+      "type": "single",
+      "text": "An internet provider's contact center handles 1.2 million calls a year, and about 35% are repeat calls about a fault that an earlier call did not fix. In call recordings, agents across all teams often give different troubleshooting steps for the same router fault, and some steps are incomplete. Each router model has an approved troubleshooting guide, which agents seldom consult. Leaders want to reduce total call volume.\n\nWhich AI use case should the company prioritize?",
+      "options": [
+        {
+          "id": "A",
+          "text": "An assistant that follows each call and prompts the agent with the next diagnostic step from the company's documented fixes"
+        },
+        {
+          "id": "B",
+          "text": "Generative AI that emails customers after each call with a written copy of the troubleshooting steps the agent gave"
+        },
+        {
+          "id": "C",
+          "text": "Generative AI that rewrites each approved guide into a shorter, plainer version for agents to use"
+        },
+        {
+          "id": "D",
+          "text": "A routing model that sends router fault calls to the agents with the best first-call fix rates"
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "explanation": "A: High-impact use cases map an AI capability to the cause of the business outcome. Repeat calls make up about 35% of volume and follow inconsistent or incomplete fixes. Prompting each agent with the next documented step during the call brings the approved fix into every conversation, which reduces repeat calls and total volume.\n\nB: A written follow-up can help customers act on instructions, but it repeats whatever the agent said. When the steps were inconsistent or incomplete, the email carries the same errors, so the fault remains and the customer calls again.\n\nC: Clearer guides help only if agents use them. The approved guides already exist and agents seldom consult them, so rewriting the content does not change what agents tell customers during calls.\n\nD: Routing to the best performers can raise fix rates for some calls, but those agents can take only a small share of the volume. The inconsistency appears across all teams, so most calls would still go to agents who give varying steps."
+    },
+    {
+      "id": "gen-2026-11-15-d-11",
+      "domainId": "domain-2",
+      "taskId": "2.1",
+      "skillId": "2.1.4",
+      "type": "single",
+      "text": "A specialty manufacturer receives about 30 custom quote requests a month. Each quote takes an estimator about three hours with a spreadsheet that applies the company's pricing rules, and estimator time costs about $70 an hour. Customers usually allow two weeks for a quote, and the company's win rate is in line with its competitors'. A vendor offers a generative AI quoting tool for $90,000 a year that drafts quotes in minutes.\n\nWhat should the company do?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Adopt the tool, because quoting in minutes instead of hours will let the company respond faster than competitors and win more work."
+        },
+        {
+          "id": "B",
+          "text": "Run a three-month pilot of the tool to measure how much estimator time it actually saves before making a decision."
+        },
+        {
+          "id": "C",
+          "text": "Keep the current quoting process, because even removing all estimator time spent on quotes would save less than the tool costs."
+        },
+        {
+          "id": "D",
+          "text": "Adopt the tool for only the most complex quotes, where estimators spend the most time, to get the largest saving per quote."
+        }
+      ],
+      "correctOptionIds": [
+        "C"
+      ],
+      "explanation": "A: Faster responses create value when speed decides deals. Customers allow two weeks and the company already wins at the industry rate, so cutting a three-hour task to minutes is unlikely to win more work.\n\nB: A pilot is useful when the result could change the decision. Quoting uses about 1,080 estimator hours a year (30 quotes x 12 months x 3 hours), worth about $75,600. Even if the pilot showed that the tool removed all of that time, the saving would be below the $90,000 fee, so the pilot cannot justify adoption.\n\nC: AI is not the right solution when its cost exceeds the value it can create, even in the best case. The most the tool could save is about $75,600 a year of estimator time, which is less than its $90,000 annual fee, and nothing shows that faster quotes would add revenue.\n\nD: The tool's fee is fixed at $90,000 a year. Using it for only some quotes reduces the time it saves while the cost stays the same, which makes the economics worse."
+    },
+    {
+      "id": "gen-2026-11-15-d-12",
+      "domainId": "domain-2",
+      "taskId": "2.2",
+      "skillId": "2.2.1",
+      "type": "single",
+      "text": "A software company will give its 200 developers a generative AI coding assistant. The business case names two benefits: customers will receive new features sooner, and developers will spend less of their week on repetitive work, which exit interviews cite as a reason for leaving. Leaders want KPIs that show whether both benefits are achieved.\n\nWhich pair of KPIs should the company track?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Time from an approved feature request to its release, and developers' quarterly survey ratings of how their working time is spent"
+        },
+        {
+          "id": "B",
+          "text": "Lines of code merged per developer each week, and the share of the assistant's suggestions that developers accept"
+        },
+        {
+          "id": "C",
+          "text": "Number of features released each quarter, and developers' survey ratings of the assistant's usefulness"
+        },
+        {
+          "id": "D",
+          "text": "Number of defects found after release, and hours logged per feature in the time-tracking system"
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "explanation": "A: KPIs for AI should measure the intended outcomes, both tangible and intangible. Lead time from approval to release measures how soon customers receive features. Survey ratings of how developers spend their time capture the intangible benefit of less repetitive work, which the company links to retention.\n\nB: Lines of code and suggestion acceptance measure activity, not outcomes. More code does not mean features reach customers sooner, and acceptance rates do not show how developers experience their work.\n\nC: A quarterly count of features can rise or fall with feature size and does not show whether each feature arrives sooner. Ratings of the assistant's usefulness measure satisfaction with the tool, not whether repetitive work has decreased.\n\nD: Defects measure quality, which is not one of the stated benefits. Hours logged per feature reflect effort but not developers' experience of their work, so neither KPI captures the intangible benefit."
+    },
+    {
+      "id": "gen-2026-11-15-d-13",
+      "domainId": "domain-2",
+      "taskId": "2.2",
+      "skillId": "2.2.3",
+      "type": "single",
+      "text": "A distributor is calculating the first-year ROI of a generative AI tool that drafts responses to supplier invoice disputes. The license costs $120,000 a year, and connecting the tool to the ERP system is a one-time $80,000 cost. The draft ROI counts $400,000 of clerk time saved, but clerks must review every draft, which takes back $100,000 of that time. Faster resolution of disputes will also let the distributor capture $50,000 a year in early-payment discounts that it now misses.\n\nWhat is the first-year ROI?",
+      "options": [
+        {
+          "id": "A",
+          "text": "50%"
+        },
+        {
+          "id": "B",
+          "text": "75%"
+        },
+        {
+          "id": "C",
+          "text": "125%"
+        },
+        {
+          "id": "D",
+          "text": "About 192%"
+        }
+      ],
+      "correctOptionIds": [
+        "B"
+      ],
+      "explanation": "A: This result counts the time saved net of review but leaves out the $50,000 in early-payment discounts: ($300,000 - $200,000) / $200,000 = 50%. A comprehensive ROI includes every benefit the AI creates, including revenue or savings outside the team's time.\n\nB: ROI = (total benefits - total costs) / total costs. Benefits are $400,000 of time saved, minus $100,000 of review time, plus $50,000 in discounts, which is $350,000. First-year costs are the $120,000 license plus the $80,000 integration, which is $200,000. ($350,000 - $200,000) / $200,000 = 75%.\n\nC: This result ignores the review time: ($450,000 - $200,000) / $200,000 = 125%. Time that clerks spend checking drafts is not saved, so counting it overstates the benefit.\n\nD: This result leaves out the one-time integration cost: ($350,000 - $120,000) / $120,000, about 192%. A first-year ROI must include implementation costs incurred that year, not only the recurring license."
+    },
+    {
+      "id": "gen-2026-11-15-d-14",
+      "domainId": "domain-2",
+      "taskId": "2.3",
+      "skillId": "2.3.1",
+      "type": "single",
+      "text": "A regional hotel group with 30 properties competes with three national chains. The chains use AI to set room rates and have added AI chat assistants to their own booking sites. About 80% of the group's room bookings come through online travel agencies. Weddings and conferences provide 35% of the group's revenue; planners request proposals from several hotels and usually book with whichever sends a full quote first. The group's sales staff take about three days per proposal, and the chains take about two.\n\nWhich AI opportunity offers the group the strongest competitive advantage?",
+      "options": [
+        {
+          "id": "A",
+          "text": "An AI chat assistant on the group's booking site that answers questions and books rooms, matching the chains' assistants"
+        },
+        {
+          "id": "B",
+          "text": "AI-based room pricing on the online travel agencies, where most of the group's room bookings are made"
+        },
+        {
+          "id": "C",
+          "text": "An AI model that forecasts occupancy at each property so that managers can schedule housekeeping staff more precisely"
+        },
+        {
+          "id": "D",
+          "text": "Generative AI that prepares event quotes from inquiry details for sales staff to check and send"
+        }
+      ],
+      "correctOptionIds": [
+        "D"
+      ],
+      "explanation": "A: Matching a competitor's feature can be necessary, but it creates parity, not advantage. Most of the group's room bookings come through travel agencies rather than its own site, so a site assistant would reach few customers.\n\nB: The chains already price rooms with AI, so adopting AI pricing would at best bring the group level with them. It would not create an edge where customers choose between them.\n\nC: Better staff scheduling can lower operating costs, but it does not change how the group wins business against the chains, and the scenario shows no cost disadvantage.\n\nD: A competitive landscape assessment looks for areas where competitors' capabilities, customer needs and the company's position leave room for AI to create an edge. Event business provides 35% of revenue, planners tend to book with the first full quote, and the group is currently a day slower than the chains. Drafting quotes with AI could make the group the fastest responder in a high-value segment."
+    },
+    {
+      "id": "gen-2026-11-15-d-15",
+      "domainId": "domain-2",
+      "taskId": "2.3",
+      "skillId": "2.3.2",
+      "type": "single",
+      "text": "A regional trucking company built an AI load-planning tool that cut its empty miles by 15%. The tool plans loads from each carrier's own shipments and lanes. Several small carriers in other regions, which do not serve the company's routes, have asked to use it. The company's profits come almost entirely from freight on its own routes, where it competes with two large carriers that have similar trucks and rates. Leaders are deciding what to do with the tool beyond their own fleet.\n\nWhich approach should they take?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Keep the tool for internal use only, because sharing it with any carrier would weaken the cost advantage it gives the company."
+        },
+        {
+          "id": "B",
+          "text": "License the tool to a transportation software vendor that will resell it to carriers nationwide, in exchange for a royalty on each sale."
+        },
+        {
+          "id": "C",
+          "text": "Sell monthly subscriptions to the tool to the small carriers in other regions, priced per truck."
+        },
+        {
+          "id": "D",
+          "text": "Give the tool free to the small carriers in exchange for their shipment data, to improve its planning for the company's own fleet."
+        }
+      ],
+      "correctOptionIds": [
+        "C"
+      ],
+      "explanation": "A: Protecting an advantage matters only against companies that compete for the same business. The interested carriers do not serve the company's routes, so keeping the tool internal gives up a new source of revenue without protecting anything.\n\nB: A reseller would reach more carriers, but a nationwide offering would also be available to the two large carriers on the company's routes. They would gain the same cost savings and remove the edge that drives the company's profits.\n\nC: AI can transform a business model by turning an internal capability into a product that earns new revenue. Selling subscriptions to carriers in other regions creates a recurring revenue stream, while the two large competitors on the company's own routes remain without the tool, so its core cost advantage is preserved.\n\nD: Trading a tool for data can be a sound model when the data improves the product. Here the tool plans each carrier's loads from that carrier's own shipments and lanes, so other regions' data would do little for the company's own routes, and giving the tool away earns nothing from it."
+    }
+  ]
 }

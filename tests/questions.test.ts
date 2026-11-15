@@ -224,3 +224,18 @@ it('provides 25 synthetic questions for each domain and covers every valid task'
     '4.4',
   ]);
 });
+
+it('allows a growing bank with unequal domain counts and no fixed total', async () => {
+  const { syntheticBanks } = await import('./fixtures/questions');
+  const banks = syntheticBanks(1000);
+  banks['domain-1'].questions = banks['domain-1'].questions.slice(0, 26);
+  banks['domain-2'].questions = banks['domain-2'].questions.slice(0, 40);
+  banks['domain-3'].questions = banks['domain-3'].questions.slice(0, 100);
+  const questions = loadQuestionBanks(banks);
+  expect(() => validateLaunchCounts(questions)).not.toThrow();
+
+  banks['domain-1'].questions = banks['domain-1'].questions.slice(0, 24);
+  expect(() => validateLaunchCounts(loadQuestionBanks(banks))).toThrow(
+    /at least 25 questions for domain-1; found 24/,
+  );
+});
