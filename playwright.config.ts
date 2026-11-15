@@ -32,6 +32,17 @@ export default defineConfig({
       },
     },
     {
+      name: 'production-mobile',
+      testMatch: 'production.spec.ts',
+      use: {
+        ...devices['iPhone 13'],
+        defaultBrowserType: 'chromium',
+        channel: 'chrome',
+        viewport: { width: 320, height: 900 },
+        baseURL: url(1),
+      },
+    },
+    {
       name: 'reduced-pools',
       testMatch: 'reduced-pools.spec.ts',
       use: { ...devices['Desktop Chrome'], channel: 'chrome', baseURL: url(3) },

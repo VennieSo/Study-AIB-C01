@@ -67,4 +67,5 @@ jobs:
           test -n "$url"
           curl --fail --silent --show-error --retry 5 --retry-all-errors "$url" -o /tmp/aib-live.html
           cmp dist/index.html /tmp/aib-live.html
+          LIVE_BASE_URL="$url" npm run test:live
           printf 'Verified production HTTPS URL: %s\n' "$url" >> "$GITHUB_STEP_SUMMARY"

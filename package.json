@@ -17,6 +17,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:e2e": "playwright test",
+    "test:live": "playwright test --config playwright.live.config.ts",
     "validate:content": "node --import tsx scripts/validate-content.ts",
     "validate:fixtures": "node --import tsx scripts/validate-content.ts --synthetic",
     "validate:launch": "node --import tsx scripts/validate-content.ts --launch",
