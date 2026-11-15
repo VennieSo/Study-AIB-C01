@@ -28,6 +28,15 @@ Synthetic fixtures never become production question data.
 
 ## Screenshots
 
+Local production candidate with the 135-question public bank (2026-11-15):
+
+![Production candidate homepage](docs/screenshots/production-candidate-homepage.png)
+
+[View Practice results](docs/screenshots/production-candidate-practice-results.png)
+and [mobile Exam results](docs/screenshots/production-candidate-exam-results-mobile.png).
+These screenshots show the local build; live publication is tracked in the
+[release verification record](docs/verification/release.md).
+
 Development preview using labelled synthetic interface fixtures:
 
 ![Desktop homepage](docs/screenshots/development-homepage.png)
@@ -84,6 +93,7 @@ reload.
 npm run check             # Astro diagnostics and strict TypeScript
 npm test                 # Content and session public-interface tests
 npm run test:e2e          # Chrome desktop, mobile viewport, built production
+npm run test:live         # Deployed production; requires LIVE_BASE_URL (see below)
 npm run build            # Validate public content, build static dist/
 npm run preview          # Inspect the production build, not the fixture bank
 ```
@@ -95,6 +105,13 @@ The end-to-end suite starts its own development, production, static fixture, and
 servers on ports 4321–4324. Set `PLAYWRIGHT_PORT` to change the first port (the
 other three follow it), for example `PLAYWRIGHT_PORT=4341 npm run test:e2e`.
 It also writes screenshots to the ignored `test-results/` directory.
+
+To verify a production deployment, build the deployed commit, then run
+`LIVE_BASE_URL=https://your-production-hostname npm run test:live`. This runs the
+canonical production journeys on desktop and at 320px mobile width, checks browser
+errors, and downloads every public asset to compare it byte for byte with `dist/`.
+It starts no local servers. See the [release verification record](docs/verification/release.md)
+for coverage, publication status and limitations.
 
 An explicitly synthetic static build is available with `npm run build:fixtures`.
 It writes to **`.qa-dist/`**, separate from production `dist/`, and includes a
@@ -249,6 +266,8 @@ confirms at least 25 questions per domain. The workflow can also be dispatched w
 `preview` selected; `production` requires the `main` branch. It reads the real
 HTTPS URL from Wrangler's successful deployment output, downloads the page,
 compares it with the built HTML, and records the verified URL in the run summary.
+Production also runs desktop and mobile browser journeys against the actual HTTPS
+deployment and checks every served asset against the build before reporting success.
 
 Account setup and first deployment:
 
@@ -288,7 +307,7 @@ Cloudflare environment variables. This does not demonstrate automatic GitHub
 deployment. Do not create a second Cloudflare Builds integration alongside this
 workflow: GitHub Actions is the deployment owner.
 
-**Deployment verified on 2026-11-10 (UTC):** the push-triggered
+**Historical synthetic-preview deployment verified on 2026-11-10 (UTC):** the push-triggered
 [GitHub run 42879251505, attempt 2](https://github.com/VennieSo/Study-AIB-C01/actions/runs/42879251505/attempts/2)
 successfully deployed [commit 0270a2e](https://github.com/VennieSo/Study-AIB-C01/commit/0270a2e6fb390514f5e24c23ce123d0c5f16c333)
 to the [live synthetic preview](https://study-aib-c01-preview.bigthink.workers.dev).
@@ -306,9 +325,11 @@ to the [live synthetic preview](https://study-aib-c01-preview.bigthink.workers.d
   review. The cleared-answer journey also checked a 320px-wide mobile layout.
   Desktop/mobile smoke checks reported no console, page, or network errors and no
   horizontal overflow. Mobile emulation does not verify Safari or a physical phone.
-- Local production and fixture builds passed their allowlists. Production still
-  contains zero questions; `validate:launch` correctly rejects the missing bank.
-  No production Worker was created or deployed.
+- At that time, local production and fixture builds passed their allowlists;
+  production contained zero questions and `validate:launch` rejected the missing
+  bank. That preview run did not create or deploy a production Worker. The current
+  135-question release candidate is documented separately in the
+  [initial bank record](docs/verification/initial-bank.md).
 
 See [Cloudflare's static Astro configuration](https://developers.cloudflare.com/workers/framework-guides/web-apps/astro/#if-you-have-a-static-site)
 and [Static Assets billing and limits](https://developers.cloudflare.com/workers/static-assets/billing-and-limitations/).
