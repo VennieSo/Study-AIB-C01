@@ -107,7 +107,7 @@ export function renderSession(
             ? `<section class="feedback ${current.feedback}" aria-labelledby="feedback-heading" role="status">
           <h2 id="feedback-heading" tabindex="-1"><span class="feedback-icon" aria-hidden="true">${current.feedback === 'correct' ? checkIcon : crossIcon}</span>${current.feedback === 'correct' ? 'Correct' : 'Incorrect'}</h2>
           <p class="correct-label">Correct ${question.type === 'multiple' ? 'answers' : 'answer'}: ${escape(correctAnswers.join('; '))}</p>
-          <p>${escape(question.explanation)}</p>
+          <p class="explanation-text">${escape(question.explanation)}</p>
           ${question.references?.length ? `<ul>${question.references.map((reference) => `<li><a href="${escape(reference.url)}" target="_blank" rel="noopener noreferrer">${escape(reference.title)} <span class="sr-only">(opens in a new tab)</span></a></li>`).join('')}</ul>` : ''}
         </section>`
             : ''

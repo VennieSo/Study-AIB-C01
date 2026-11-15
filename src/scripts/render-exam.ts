@@ -97,7 +97,7 @@ export function renderExam(
             return `<li class="review-option${missed ? ' missed-answer' : correct ? ' correct-answer' : selected ? ' wrong-answer' : ''}"><span class="answer-letter" aria-hidden="true">${String.fromCharCode(65 + optionIndex)}</span><span class="answer-text">${escape(option.text)}${correct || selected ? `<span class="answer-status">${missed ? '✓ Missed correct answer' : correct ? '✓ Correct answer' : ''}${correct && selected ? ' · ' : ''}${selected ? `${correct ? '' : '✕ '}Your answer` : ''}</span>` : ''}</span></li>`;
           })
           .join('')}</ul>
-        <div class="review-explanation"><h4>Explanation</h4><p>${escape(question.explanation)}</p>${question.references?.length ? `<h4>AWS references</h4><ul>${question.references.map((reference) => `<li><a href="${escape(reference.url)}" target="_blank" rel="noopener noreferrer">${escape(reference.title)} <span class="sr-only">(opens in a new tab)</span></a></li>`).join('')}</ul>` : ''}</div>
+        <div class="review-explanation"><h4>Explanation</h4><p class="explanation-text">${escape(question.explanation)}</p>${question.references?.length ? `<h4>AWS references</h4><ul>${question.references.map((reference) => `<li><a href="${escape(reference.url)}" target="_blank" rel="noopener noreferrer">${escape(reference.title)} <span class="sr-only">(opens in a new tab)</span></a></li>`).join('')}</ul>` : ''}</div>
       </div></details>`;
       })
       .join('')}

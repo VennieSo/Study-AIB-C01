@@ -817,6 +817,9 @@ fieldset {
   margin-right: 4px;
   vertical-align: -2px;
 }
+.explanation-text {
+  white-space: pre-line;
+}
 .feedback {
   padding: 20px;
   margin: 26px 0 0;

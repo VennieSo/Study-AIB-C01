@@ -58,6 +58,57 @@ async function answer(page: Page, name: string, ids: string[]) {
   }
 }
 
+for (const mode of ['Practice', 'Exam'] as const) {
+  test(`production ${mode} preserves explanation line breaks`, async ({
+    page,
+  }) => {
+    await page.goto('/');
+    if (mode === 'Exam')
+      await page.getByLabel('Exam length', { exact: true }).selectOption('20');
+    await page
+      .getByRole('button', {
+        name: mode === 'Practice' ? 'Start practice' : 'Start exam',
+        exact: true,
+      })
+      .click();
+    const question = await currentQuestion(page);
+    expect(question.explanation).toContain('\n\n');
+    await answer(
+      page,
+      mode === 'Practice' ? 'answer' : 'exam-answer',
+      question.correctOptionIds,
+    );
+    if (mode === 'Practice') {
+      await page
+        .getByRole('button', { name: 'Submit answer', exact: true })
+        .click();
+    } else {
+      page.once('dialog', (dialog) => dialog.accept());
+      await page
+        .getByRole('button', { name: 'Submit exam', exact: true })
+        .click();
+      await page
+        .locator('.exam-review-item')
+        .first()
+        .locator('summary')
+        .click();
+    }
+    const text =
+      mode === 'Practice'
+        ? page
+            .locator('.feedback')
+            .getByText(question.explanation, { exact: true })
+        : page
+            .locator('.exam-review-item')
+            .first()
+            .locator('.review-explanation > p');
+    await expect(text).toBeVisible();
+    expect(await text.innerText()).toBe(
+      question.explanation.replace(/\r\n/g, '\n'),
+    );
+  });
+}
+
 test('production serves every built public asset unchanged', async ({
   page,
 }) => {
