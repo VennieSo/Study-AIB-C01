@@ -1,5 +1,6 @@
 ---
 import AnalyticsConsent from '../components/AnalyticsConsent.astro';
+import ExamFaq from '../components/ExamFaq.astro';
 import { site } from '../content/site';
 import { examPresets, examAvailability } from '../lib/exam-session';
 import { domains } from '../lib/exam-scope';
@@ -92,10 +93,7 @@ const payload = JSON.stringify(questions).replace(/</g, '\\u003c');
             {availability.map((domain) => <article class="domain-card"><div class="domain-card-top"><span class="domain-number">0{domain.number}</span><span class="weight">{domain.weight}% of exam</span></div><h3>{domain.name}</h3><p>{domain.description}</p><span class="domain-availability">{domain.count} questions available</span></article>)}
           </div>
         </section>
-        <section class="how-section" aria-labelledby="how-heading">
-          <h2 id="how-heading">A small session, a useful habit.</h2>
-          <ol class="steps"><li><strong>Choose your focus.</strong><span>Choose one domain or all domains and a supported session size.</span></li><li><strong>Think it through.</strong><span>Submit each answer to see the correct choice and explanation.</span></li><li><strong>Take the next step.</strong><span>See your results, then start another randomized session.</span></li></ol>
-        </section>
+        <ExamFaq />
       </div>
       <section id="session-view" class="session-shell" aria-label="Practice session" hidden></section>
       <section id="exam-session-view" class="session-shell" aria-label="Exam session" hidden></section>
