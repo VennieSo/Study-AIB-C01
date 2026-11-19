@@ -14,7 +14,7 @@ An additional 20 live WebKit desktop/mobile journeys passed against the producti
 
 ## Reproduce the checks
 
-Use Node 22.23.4 or newer and npm 10 or newer:
+Use Node 24.22.3 or newer and npm 10 or newer:
 
 ```sh
 npm ci

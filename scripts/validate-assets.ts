@@ -14,9 +14,10 @@ const directory = resolve(
   values.directory ?? (values.fixtures ? '.qa-dist' : 'dist'),
 );
 
-// The public deployment boundary: one page, one favicon, and generated browser assets.
+// Shared assets for both builds. Production also serves the Google verification file.
 const allowed =
-  /^(?:index\.html|favicon\.svg|_astro\/[A-Za-z0-9_-]+(?:\.[A-Za-z0-9_-]+)*\.[A-Za-z0-9_-]+\.(?:js|css|woff2))$/;
+  /^(?:index\.html|_redirects|favicon\.svg|_astro\/[A-Za-z0-9_-]+(?:\.[A-Za-z0-9_-]+)*\.[A-Za-z0-9_-]+\.(?:js|css|woff2))$/;
+const verificationFile = 'googlee0841d149f9fdcc6.html';
 const credential =
   /-----BEGIN (?:[A-Z]+ )?PRIVATE KEY-----|\b(?:gh[pousr]_[A-Za-z0-9]{20,}|github_pat_[A-Za-z0-9_]{20,}|(?:AKIA|ASIA)[A-Z0-9]{16})\b|(?:CLOUDFLARE_API_TOKEN|oauth_token|refresh_token|api[_-]?secret|api[_-]?token)\s*["']?\s*[:=]\s*["'][^"']{8,}["']/i;
 async function inspect(relative = ''): Promise<void> {
@@ -26,10 +27,16 @@ async function inspect(relative = ''): Promise<void> {
     const path = relative ? `${relative}/${entry.name}` : entry.name;
     if (entry.isDirectory() && path === '_astro') await inspect(path);
     else {
-      if (!entry.isFile() || !allowed.test(path))
+      const isVerificationFile = !values.fixtures && path === verificationFile;
+      if (!entry.isFile() || (!allowed.test(path) && !isVerificationFile))
         throw new Error(`Public asset not allowed: ${path}`);
       if (!path.endsWith('.woff2')) {
         const content = await readFile(resolve(directory, path), 'utf8');
+        if (
+          isVerificationFile &&
+          content.trimEnd() !== `google-site-verification: ${verificationFile}`
+        )
+          throw new Error('Google verification file content does not match its filename.');
         if (credential.test(content))
           throw new Error(`Possible credential in public asset: ${path}`);
         if (

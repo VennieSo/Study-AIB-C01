@@ -471,3 +471,53 @@ test('production mode changes can be cancelled and reload discards an active ses
   await expect(page.locator('#session-view')).toBeHidden();
   await expect(page.locator('#exam-session-view')).toBeHidden();
 });
+
+test('analytics requires consent and can be withdrawn from cookie settings', async ({ page }) => {
+  await page.addInitScript(() => {
+    Object.defineProperty(navigator, 'webdriver', { get: () => false });
+  });
+  let tagRequests = 0;
+  await page.route('https://www.googletagmanager.com/gtm.js?id=GTM-PFCNQPKV', async (route) => {
+    tagRequests += 1;
+    await route.fulfill({ contentType: 'application/javascript', body: '' });
+  });
+
+  const banner = page.getByRole('region', { name: 'Cookie Consent' });
+  const preferences = page.getByRole('dialog', { name: 'Consent Preferences' });
+  const openSettings = () =>
+    page.getByRole('button', { name: 'Cookie settings', exact: true }).click();
+
+  await page.goto('/');
+  await expect(banner).toBeVisible();
+  expect(tagRequests).toBe(0);
+  await banner.getByRole('button', { name: 'Decline' }).click();
+  await page.reload();
+  await expect(banner).toBeHidden();
+  await openSettings();
+  await expect(preferences).toBeVisible();
+  expect(tagRequests).toBe(0);
+
+  await preferences.getByRole('button', { name: 'Accept' }).click();
+  await expect.poll(() => tagRequests).toBe(1);
+  await page.reload();
+  await expect.poll(() => tagRequests).toBe(2);
+
+  await page.evaluate(() => {
+    document.cookie = '_ga=example; path=/';
+  });
+  await openSettings();
+  await preferences.getByRole('button', { name: 'Decline' }).click();
+  await expect.poll(() => page.evaluate(() => {
+    const entries = Reflect.get(window, 'dataLayer') as ArrayLike<unknown>[];
+    return entries.some((entry) =>
+      entry[0] === 'consent' &&
+      entry[1] === 'update' &&
+      (entry[2] as { analytics_storage?: string })?.analytics_storage === 'denied',
+    );
+  })).toBe(true);
+  expect((await page.context().cookies()).some(({ name }) => name === '_ga')).toBe(false);
+  await page.reload();
+  await openSettings();
+  await expect(preferences).toBeVisible();
+  expect(tagRequests).toBe(2);
+});

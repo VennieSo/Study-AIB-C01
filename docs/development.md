@@ -6,7 +6,7 @@ the time; see the [release record](verification/release.md) for publication stat
 
 ## Local development
 
-Use Node **22.23.4 or newer** and npm 10 or newer. `.nvmrc` pins a compatible
+Use Node **24.22.3 or newer** and npm 10 or newer. `.nvmrc` pins a compatible
 runtime; if you use nvm, run `nvm install` and `nvm use` first.
 
 ```sh

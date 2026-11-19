@@ -1,0 +1,124 @@
+<button type="button" class="analytics-preferences" data-cc="show-preferencesModal">
+  Cookie settings
+</button>
+
+<script>
+  import { acceptedCategory, run } from 'vanilla-cookieconsent';
+  import 'vanilla-cookieconsent/dist/cookieconsent.css';
+
+  const containerId = 'GTM-PFCNQPKV';
+  const analyticsWindow = window as Window & {
+    dataLayer?: (IArguments | { 'gtm.start': number; event: 'gtm.js' })[];
+    gtag?: typeof gtag;
+  };
+  let tagLoaded = false;
+
+  function gtag(..._command: unknown[]) {
+    (analyticsWindow.dataLayer ??= []).push(arguments);
+  }
+
+  function updateAnalytics() {
+    const accepted = acceptedCategory('analytics');
+    if (accepted || tagLoaded) {
+      gtag('consent', 'update', {
+        analytics_storage: accepted ? 'granted' : 'denied',
+      });
+    }
+    if (!accepted) return;
+    if (tagLoaded) return;
+    tagLoaded = true;
+    gtag('js', new Date());
+    (analyticsWindow.dataLayer ??= []).push({
+      'gtm.start': Date.now(),
+      event: 'gtm.js',
+    });
+
+    const script = document.createElement('script');
+    script.async = true;
+    script.src = `https://www.googletagmanager.com/gtm.js?id=${containerId}`;
+    document.head.append(script);
+  }
+
+  if (document.querySelector('.analytics-preferences')) {
+    analyticsWindow.gtag = gtag;
+    gtag('consent', 'default', {
+      analytics_storage: 'denied',
+      ad_storage: 'denied',
+      ad_user_data: 'denied',
+      ad_personalization: 'denied',
+    });
+
+    void run({
+      guiOptions: {
+        consentModal: {
+          layout: 'bar inline',
+          position: 'bottom',
+          equalWeightButtons: false,
+          flipButtons: false,
+        },
+        preferencesModal: {
+          layout: 'box',
+          position: 'right',
+          equalWeightButtons: false,
+          flipButtons: true,
+        },
+      },
+      onConsent: updateAnalytics,
+      onChange: updateAnalytics,
+      categories: {
+        necessary: { enabled: true, readOnly: true },
+        analytics: {
+          autoClear: {
+            cookies: [{ name: /^_ga(?:_|$)/, path: '/' }],
+          },
+        },
+      },
+      language: {
+        default: 'en',
+        translations: {
+          en: {
+            consentModal: {
+              title: 'Cookie Consent',
+              description: 'We use cookies to make this website work and to understand how it is used.',
+              acceptAllBtn: 'Accept',
+              acceptNecessaryBtn: 'Decline',
+              showPreferencesBtn: 'Manage preferences',
+            },
+            preferencesModal: {
+              title: 'Consent Preferences',
+              acceptAllBtn: 'Accept',
+              acceptNecessaryBtn: 'Decline',
+              savePreferencesBtn: 'Save preferences',
+              closeIconLabel: 'Close',
+              sections: [
+                {
+                  title: 'Strictly Necessary Cookies <span class=\"pm__badge\">Always Enabled</span>',
+                  description: 'These cookies are essential for the website to work properly, for example to keep you signed in or to remember your cookie preferences. They cannot be disabled.',
+                  linkedCategory: 'necessary',
+                },
+                {
+                  title: 'Analytics Cookies',
+                  description: 'These cookies collect anonymous information about how visitors use the website, such as the pages visited and the time spent on them, so we can improve it.',
+                  linkedCategory: 'analytics',
+                },
+              ],
+            },
+          },
+        },
+      },
+    });
+  }
+</script>
+
+<style>
+  .analytics-preferences {
+    justify-self: start;
+    border: 0;
+    padding: 0;
+    background: none;
+    color: inherit;
+    font: inherit;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+</style>
