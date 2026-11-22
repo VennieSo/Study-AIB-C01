@@ -139,7 +139,7 @@ test('production includes the complete initial bank and enables every configurat
   expect(html).toContain('name="description"');
   for (const marker of ['synthetic-', 'Fixture target', 'Development preview'])
     expect(html).not.toContain(marker);
-  expect(bank).toHaveLength(135);
+  expect(bank).toHaveLength(233);
   await expect(page).toHaveTitle(/Study AIB-C01/);
   await expect(page.locator('meta[name="description"]')).toHaveAttribute(
     'content',

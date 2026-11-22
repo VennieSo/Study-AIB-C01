@@ -1,7 +1,7 @@
 # Study AIB-C01
 
 Free, unofficial practice for **AWS Certified AI Business Strategist (AIB-C01)**.
-Study one domain or all four with **135 questions**, explanations, and no account.
+Study one domain or all four with **233 questions**, explanations, and no account.
 
 **[Start studying](https://study-aib-c01.bigthink.workers.dev)** — free, no sign-up.
 
@@ -47,7 +47,7 @@ you want to practise again.
 
 ## Screenshots
 
-Study setup and results with the 135-question bank.
+Study setup and results with the 233-question bank.
 
 <img src="docs/screenshots/production-homepage.png" alt="Choose a Practice domain and session size, or a timed Exam preset" width="720" />
 

@@ -980,6 +980,556 @@
         "D"
       ],
       "explanation": "A: The summaries contain hallucinations: statements not supported by the source. An automated grounding check, such as the contextual grounding check in Amazon Bedrock Guardrails, compares a response with its source and filters information the source does not contain, which suits summarization at this volume.\n\nB: Fine-tuning on past summaries teaches format and style. It does not make the model stick to the facts in each new contract and could even teach it to produce plausible-looking terms.\n\nC: A temperature of zero makes output more consistent, but a model can still consistently state terms that are not in its source. Lower randomness does not check the summary against the contract.\n\nD: Requiring the model to cite its evidence makes each stated term traceable to the source. Reviewers can confirm a term in seconds, and a term that has no matching clause becomes easy to spot, which makes human review practical for 300 contracts a month.\n\nE: A model's rating of its own confidence is not a reliable signal of accuracy. A model can state an invented penalty amount as confidently as a real one, so these summaries could avoid review."
+    },
+    {
+      "id": "gen-2026-11-20-06",
+      "domainId": "domain-3",
+      "taskId": "3.2",
+      "skillId": "3.2.2",
+      "type": "single",
+      "text": "A health insurer uses a machine learning (ML) model in claims processing. When the model was introduced 18 months ago, it recommended an outcome for each claim and an adjuster made every decision. The compliance team assessed and approved the model on that basis. To clear a growing backlog, the operations team changed the workflow three months ago:\n\n- Claims under $500 that the model recommends paying are now paid without an adjuster.\n- Claims that the model scores as clearly not covered are now declined without an adjuster, and the member receives a standard letter.\n- Adjusters check a 5% sample of both groups each week. In the latest audit, 97% of the sampled decisions were correct.\n\nThe operations lead says that the compliance position is unchanged because the model and its data are the same as when they were approved.\n\nWhat should the strategist recommend?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Rely on the original approval, and keep the weekly sample as evidence that the automated decisions remain accurate."
+        },
+        {
+          "id": "B",
+          "text": "Have compliance assess the workflow as it now operates, and have adjusters decide the declined claims until that is complete."
+        },
+        {
+          "id": "C",
+          "text": "Have the data science team re-validate the model on recent claims, and have adjusters decide every claim until that is complete."
+        },
+        {
+          "id": "D",
+          "text": "Have compliance assess the workflow once a full year of audit results is available, and raise the weekly sample to 20% until then."
+        }
+      ],
+      "correctOptionIds": [
+        "B"
+      ],
+      "explanation": "A: The approval covered a model that advised adjusters. Compliance obligations depend on how AI is used in a business process, and rules on automated decisions about individuals commonly require notice, an explanation, or access to human review. Those questions did not arise when a person made every decision, so the earlier approval does not answer them. Sampling shows accuracy; it does not show that the obligations are met.\n\nB: Regulatory risk follows the use of the model. Moving from a recommendation to a decision made without a person changes the insurer's obligations even though the model is the same, so the workflow needs a new assessment. Declined claims are adverse decisions about members and carry the most exposure. Returning them to adjusters limits the risk while small payments continue to ease the backlog.\n\nC: This is the most cautious option, and re-validation is the right response when a model or its data has changed. Here they have not. What changed is the role the model plays in the decision, which a technical re-validation does not examine. Sending every claim back to adjusters also gives up the relief on small payments, where the exposure is low.\n\nD: A larger sample and a longer audit record would strengthen the evidence of accuracy. However, members are receiving automated declines now, and deferring the assessment for a year leaves any breach in place for that time. A review after the fact also does not give a member the human decision that rules of this kind are designed to protect."
+    },
+    {
+      "id": "gen-2026-11-20-07",
+      "domainId": "domain-3",
+      "taskId": "3.3",
+      "skillId": "3.3.1",
+      "type": "single",
+      "text": "A bank uses a machine learning (ML) model to flag card transactions as possible fraud. Policy requires an analyst to confirm each flag before a card is blocked, and the bank's risk register lists this review as the main control against wrongly blocked cards. A strategist who reviewed the control a year after launch found the following:\n\n- Analysts confirmed 91% of flags in the first quarter and 99.7% in the latest quarter.\n- Average review time fell from three minutes to six seconds for each flag.\n- Analysts are measured on flags cleared per hour.\n- A quarterly audit that investigates a sample of flags in depth has found about 4% of them to be wrong in every quarter since launch.\n- Complaints about blocked cards have doubled.\n\nWhich change should the strategist recommend?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Have analysts review a risk-based sample of flags instead of every flag, because the confirmation rate shows that the model has become reliable."
+        },
+        {
+          "id": "B",
+          "text": "Have a second analyst confirm each flag before a card is blocked, because a single review is no longer catching the errors."
+        },
+        {
+          "id": "C",
+          "text": "Compare analysts' decisions with the audit's findings as a standing measure, and stop measuring analysts on flags cleared per hour."
+        },
+        {
+          "id": "D",
+          "text": "Retrain the model on the flags that the audit found to be wrong, and keep the analyst review as it is."
+        }
+      ],
+      "correctOptionIds": [
+        "C"
+      ],
+      "explanation": "A: Risk-based sampling is appropriate when evidence shows that a model's errors are rare or low in impact. The confirmation rate is not that evidence. The independent audit finds the same 4% of wrong flags as at launch, so the model has not improved. Analysts are simply rejecting fewer flags, and reducing the review would formalize that.\n\nB: A second review adds assurance when each reviewer exercises independent judgment. Here, the first review has shrunk to six seconds because analysts are rewarded for speed. A second analyst working under the same measure would be likely to confirm just as quickly, at twice the cost.\n\nC: A control in production needs monitoring of its own. The audit shows that 4% of flags are wrong, yet analysts now reject 0.3%, so the review is no longer catching most errors even though it still appears in the risk register. Measuring analysts' decisions against audited cases shows whether the control works, and removing the speed measure addresses why it stopped working.\n\nD: Retraining on known errors may reduce the number of wrong flags over time. It leaves the bank relying on a human review that is not functioning and that nobody is measuring. Whatever error rate the retrained model has would still pass through to customers unchecked."
+    },
+    {
+      "id": "gen-2026-11-20-b-06",
+      "domainId": "domain-3",
+      "taskId": "3.1",
+      "skillId": "3.1.2",
+      "type": "single",
+      "text": "A car insurer prices policy renewals with a machine learning (ML) model that has lowered its claims costs. This year, complaints about unexplained renewal increases have doubled, and customers who complain are twice as likely to leave. The pricing director does not want to disclose how the model weights its inputs, because competitors could copy the pricing approach. A review finds the following:\n\n- The model uses about 40 inputs. An attribution analysis can show, for each customer, which of them moved that customer's price most.\n- The insurer's website states in general terms that a model helps set premiums.\n- Customer service agents can see a customer's new price but not what changed it.\n- Most customers who complain say they were given no reason for the increase.\n\nWhat should the insurer do?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Print in each renewal notice the main reasons that customer's price changed, taken from the attribution analysis, without showing the model's weights."
+        },
+        {
+          "id": "B",
+          "text": "Publish a web page that lists all 40 inputs and explains how pricing models work, without revealing the weight the model gives each input."
+        },
+        {
+          "id": "C",
+          "text": "State in each renewal notice that an AI model set the price, and offer an underwriter's review of the price to any customer who asks."
+        },
+        {
+          "id": "D",
+          "text": "Give service agents each customer's attribution results so that they can explain the main reasons for an increase when the customer calls."
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "explanation": "A: The conflict is between protecting the pricing approach and the customer's need to understand a decision about them. A local explanation gives the reasons for one customer's result without describing how the model works overall. Putting it in the renewal notice reaches every customer before they decide to complain or leave, while the model's weights stay confidential.\n\nB: This adds general transparency about what the model considers, but it is a global description of the model. A customer still cannot tell why their own price rose, which is what most complainants say they were missing.\n\nC: Disclosing AI use and offering human review support transparency about the process and the ability to challenge it, but the notice still gives no reason for the increase. Customers would have to ask to learn why, and asking is the pattern linked to leaving.\n\nD: This uses the right kind of explanation, and agents need it. But customers receive it only after they call, which is when complaints already happen. The reason reaches a customer only once they are dissatisfied enough to contact the insurer, rather than with the price itself."
+    },
+    {
+      "id": "gen-2026-11-20-b-07",
+      "domainId": "domain-3",
+      "taskId": "3.2",
+      "skillId": "3.2.3",
+      "type": "single",
+      "text": "An online retailer is launching an AI agent that answers customers' questions about their orders. The agent can issue refunds of up to $150 without staff involvement, which is expected to cut refund handling from two days to a few minutes. Before launch, a security review finds the following:\n\n- The agent connects to the order system through the integration account that the warehouse and pricing tools already use.\n- The agent's system prompt lists the actions it may take and tells it to refuse all other requests.\n- In testing, a tester persuaded the agent to explain how a product's price could be changed, although it did not change one.\n- The finance team expects refund abuse to be highest in the first weeks after launch.\n- Every action the agent takes is recorded in the order system's log.\n\nWhat should the retailer do before launch?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Add an input filter that blocks customer messages asking about prices, product changes or other customers' records before they reach the agent."
+        },
+        {
+          "id": "B",
+          "text": "Create a separate account for the agent whose permissions cover only the two tasks it performs, and connect the agent through that account."
+        },
+        {
+          "id": "C",
+          "text": "Lower the refund limit to $50 for the first three months so that any misuse during the launch period has a small cost."
+        },
+        {
+          "id": "D",
+          "text": "Set an alert on the order system's log that notifies security whenever the agent's account makes any change other than a refund."
+        }
+      ],
+      "correctOptionIds": [
+        "B"
+      ],
+      "explanation": "A: Input filters reduce harmful or off-topic requests, and the test shows that the agent can be talked into discussing price changes. But a filter judges wording, and manipulation can be phrased in ways it does not catch. The agent would still act through an account that the pricing tools use, so one missed message could change prices.\n\nB: Access for an AI system should follow least privilege: it gets only the permissions its tasks need, enforced outside the model. An account shared with the warehouse and pricing tools carries their permissions, and the system prompt guides the agent's behavior without limiting what that account can do. A dedicated account scoped to order lookups and refunds means that even a successful manipulation cannot change prices, while refunds still happen without staff.\n\nC: A lower limit reduces the cost of refund abuse, which finance expects early on. It does nothing about the shared account's other permissions, such as those the pricing tools use, so the larger exposure remains.\n\nD: Logging and alerts detect misuse, but only after the action has happened, so a changed price would already have affected customers. Detection complements access control; it does not replace it."
+    },
+    {
+      "id": "gen-2026-11-20-b-08",
+      "domainId": "domain-3",
+      "taskId": "3.3",
+      "skillId": "3.3.3",
+      "type": "single",
+      "text": "A furniture retailer plans to fine-tune an image generation model so that it can create lifestyle images of its own products, such as sofas shown in styled living rooms. The images are for a spring campaign that launches in eight weeks. The retailer's photo library holds about 12,000 product photos. A review finds the following:\n\n- About 70% of the photos were taken by the retailer's own studio. The rest were licensed from a stock agency under terms that allow display on the retailer's website and in its printed catalogs.\n- The model provider offers an indemnity against intellectual property (IP) claims arising from outputs of its base model.\n- The marketing team worries that fine-tuning may not finish in time for the launch.\n\nWhat should the retailer do?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Use all 12,000 photos for fine-tuning, and rely on the provider's indemnity to cover any IP claims that arise from the generated images."
+        },
+        {
+          "id": "B",
+          "text": "Begin fine-tuning on the full library now, and ask the stock agency to confirm before launch that its license allows use in model training."
+        },
+        {
+          "id": "C",
+          "text": "Fine-tune only on the roughly 8,400 photos from the retailer's own studio, and leave the stock-agency photos out of the training data."
+        },
+        {
+          "id": "D",
+          "text": "Postpone fine-tuning, and create the campaign images with the base model by describing each product in detail in the prompt."
+        }
+      ],
+      "correctOptionIds": [
+        "C"
+      ],
+      "explanation": "A: The indemnity covers claims arising from outputs of the provider's base model. It does not change the stock agency's license, which the retailer agreed to and which names display on the website and in catalogs. Using those photos to train a model may breach that license, whatever the provider covers.\n\nB: Asking the agency is reasonable, but the use in question happens when the photos are used for training, not when images are published. If the agency says no, the photos are already part of the fine-tuned model, and removing their influence means training again without them.\n\nC: Managing IP risk in fine-tuning starts with the rights to the training data. The retailer owns its studio photos, and about 8,400 of them give the model ample examples of its products. The stock license names display uses only, so leaving those photos out avoids using them in a way the license does not cover, without delaying the campaign.\n\nD: The base model has not learned the retailer's own products, so descriptions in a prompt are unlikely to reproduce its designs accurately, which is why fine-tuning was planned. The retailer owns most of its photos, so it does not need to give up fine-tuning to manage the license issue."
+    },
+    {
+      "id": "gen-2026-11-21-05",
+      "domainId": "domain-3",
+      "taskId": "3.1",
+      "skillId": "3.1.1",
+      "type": "single",
+      "text": "A quick-service restaurant chain tested an AI voice assistant that takes drive-through orders. On recordings made in the chain's test kitchen, it entered 96 percent of orders correctly. Two months after launch at 40 restaurants, a review found:\n\n- Order accuracy averages 83 percent, falling to about 70 percent at restaurants beside major roads and during the lunch rush.\n- Most customer complaints describe items that were added to orders but never requested.\n- Some customers say they did not realize they were speaking to an AI system.\n- A franchise owner believes the assistant struggles with regional accents; error rates have not yet been compared across customer groups.\n\nThe chain plans to extend the assistant to 300 more restaurants next quarter, and the chief operating officer has asked which responsible AI concern to address before that happens.\n\nWhich concern should the strategist prioritize, and how?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Transparency: open every order with a message that an AI assistant is taking it, and let customers ask for a staff member instead."
+        },
+        {
+          "id": "B",
+          "text": "Robustness: test the assistant on recordings from busy, noisy drive-through lanes and improve it until its accuracy holds in those conditions."
+        },
+        {
+          "id": "C",
+          "text": "Fairness: compare error rates across accents and customer groups, and add recordings from the groups with the most errors to its training."
+        },
+        {
+          "id": "D",
+          "text": "Controllability: have staff check every order on screen before it reaches the kitchen until accuracy returns to the level seen in testing."
+        }
+      ],
+      "correctOptionIds": [
+        "B"
+      ],
+      "explanation": "A: Telling customers they are speaking to an AI system is good practice and answers the comments from customers who did not realize it. It does not make the assistant enter orders correctly, and the accuracy loss is what the review measured.\n\nB: Robustness means a system keeps producing correct outputs under the varied and difficult conditions it meets in real use. The assistant was tested only on quiet test-kitchen recordings, and its errors concentrate where and when drive-throughs are loudest. Testing and improving it under those conditions addresses the measured failure before it is copied to 300 more restaurants.\n\nC: Checking error rates across groups is an important fairness practice and may be worth doing. But the measured pattern follows location and time of day, which points to operating conditions, while the accent concern is an untested belief. Adding accent data first would not fix the noise problem the figures show.\n\nD: Staff checks would catch wrong orders, but checking every order removes most of the benefit of the assistant across 340 restaurants and does nothing to make it more accurate. It treats the symptom while the cause stays in place for the expansion."
+    },
+    {
+      "id": "gen-2026-11-21-06",
+      "domainId": "domain-3",
+      "taskId": "3.2",
+      "skillId": "3.2.1",
+      "type": "single",
+      "text": "A pharmaceutical manufacturer formed an AI governance board a year ago. Its members are the chief information officer (chair), the chief data officer, the chief information security officer, the general counsel and the head of data science. The board has approved nine AI use cases, each with a named technical owner in the data science team. Reviews take about six weeks, and teams have complained about the wait.\n\nA business strategist reviewing the year finds two problems. A tool that drafts batch production records was withdrawn after launch because the quality department found that it let users change records without the audit trail its procedures require; fixing this means rebuilding the tool. A scheduling tool for the packaging lines is largely unused because plant supervisors say it ignores shift rules agreed with staff. The chief executive has asked for changes to the board.\n\nWhich change is MOST appropriate?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Add the heads of quality and of manufacturing operations as voting members who review each use case before the board approves it."
+        },
+        {
+          "id": "B",
+          "text": "Add a validation step after board approval, run by the quality department, that every tool must pass before it goes live."
+        },
+        {
+          "id": "C",
+          "text": "Make each use case's technical owner responsible for confirming that the tool meets quality procedures and plant rules before launch."
+        },
+        {
+          "id": "D",
+          "text": "Delegate low-risk use cases to the head of data science, and keep full board review for use cases with higher risk."
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "explanation": "A: An AI governance board needs representation from the functions that carry the risks and run the processes AI will change. Both problems came from requirements the board could not see: quality's audit-trail rules and the operations agreement on shifts. Making the heads of quality and manufacturing operations voting members brings those requirements into each decision before approval, when they can still shape how a tool is designed.\n\nB: A quality gate before go-live would have stopped the records tool from launching, so it is a reasonable control. But it would have found the missing audit trail only after the tool was built, still forcing a rebuild, and it would do nothing about the scheduling tool, whose problem was operational rather than a quality failure. Quality and operations would still have no voice when use cases are approved.\n\nC: Every use case already has a technical owner, and the problems arose anyway. Data scientists do not set or apply the quality procedures or the shift agreements, so this assigns the check to the people least able to make it, and the board still decides without those functions.\n\nD: Tiering reviews by risk could shorten the six-week wait, which is a real complaint. It does not address why approved tools failed, and it moves more decisions to a technical leader, further from the functions whose requirements were missed."
+    },
+    {
+      "id": "gen-2026-11-21-b-05",
+      "domainId": "domain-3",
+      "taskId": "3.1",
+      "skillId": "3.1.3",
+      "type": "single",
+      "text": "A supermarket chain with 300 stores plans to buy an AI tool that assigns weekly shifts to its 40,000 hourly workers, so their hours and pay will depend on the tool's output. Procurement has shortlisted three vendors and will score bids on price, features and integration effort.\n\nThe plan is to sign a contract within ten weeks so that stores can use the tool before the holiday peak. After signing, the legal team will run its standard four-week AI review before any store goes live. All three vendors hold ISO/IEC 42001 certification. The leading vendor's standard contract does not give customers access to shift-assignment records or to the vendor's test results.\n\nWhat should the business strategist recommend?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Keep the bid scoring as planned, and start the legal team's four-week review on the day of signing so that it finishes before the holiday peak."
+        },
+        {
+          "id": "B",
+          "text": "Accept the vendors' ISO/IEC 42001 certification in place of the legal review, so that stores can begin using the tool sooner in the holiday period."
+        },
+        {
+          "id": "C",
+          "text": "Add responsible AI criteria, such as evidence of fairness testing and the right to audit how hours are allocated, to bid scoring and the contract."
+        },
+        {
+          "id": "D",
+          "text": "Pause the purchase until the company has written a responsible AI policy that covers every AI tool and has trained procurement staff to apply it."
+        }
+      ],
+      "correctOptionIds": [
+        "C"
+      ],
+      "explanation": "A: A review before go-live is useful, but by then the vendor has been chosen on price and features and the contract is signed. The leading vendor's standard terms withhold assignment records and test results, so a post-signing review may have nothing to examine and no leverage to obtain it. Responsible AI checks added after the key decisions cannot shape them.\n\nB: ISO/IEC 42001 certification shows that a vendor runs an AI management system, with processes for managing AI risk. It does not show that this tool allocates hours fairly across the chain's workforce, and a customer is not covered by a supplier's certificate. Dropping the review removes the only check of the tool's effect on workers' pay.\n\nC: Governance by design means building responsible AI requirements into the decisions that fix a system's behavior, and for a bought tool the vendor choice and contract are those decisions. Shift allocation affects workers' hours and pay, so fairness evidence and the right to audit outcomes belong in the bid scoring and contract terms, while the company can still choose among vendors and negotiate. This also keeps the timeline, because the criteria join the scoring that is already planned.\n\nD: A company-wide responsible AI policy is valuable, but it is not a precondition for setting requirements for this purchase. Pausing would miss the holiday peak, and the criteria this tool needs can be set now as part of vendor selection."
+    },
+    {
+      "id": "gen-2026-11-21-b-06",
+      "domainId": "domain-3",
+      "taskId": "3.3",
+      "skillId": "3.3.2",
+      "type": "multiple",
+      "text": "An online marketplace uses a machine learning (ML) model to flag new seller accounts for manual identity checks. Flagged sellers cannot list items for up to five days. The model was trained on three years of past checks, each labeled by whether the check confirmed fraud. Fourteen months after launch, rural sellers are flagged at three times the rate of urban sellers, although confirmed fraud rates are similar. A review finds:\n\n- Before the model, investigators chose which accounts to check, and they mostly checked accounts registered with prepaid phone numbers, which rural sellers use more often.\n- At launch, rural sellers were flagged at 1.2 times the urban rate.\n- Location is not a model input.\n- Last year, the marketplace began recruiting small farm and craft sellers, most of them in rural areas.\n\nWhich explanations BEST account for the disparity? (Choose TWO.)",
+      "options": [
+        {
+          "id": "A",
+          "text": "Because location is not an input, the disparity must come from differences in rural sellers' own account details rather than from the model or its data."
+        },
+        {
+          "id": "B",
+          "text": "The labels reflect which accounts investigators chose to check, so the model learned to flag accounts that resemble those checked in the past."
+        },
+        {
+          "id": "C",
+          "text": "Training optimized accuracy across all sellers, so the model fits the larger urban group closely and makes more errors on the smaller rural group."
+        },
+        {
+          "id": "D",
+          "text": "The mix of new sellers has shifted since launch, so a disparity that was small at launch has grown as the newer sellers arrived."
+        },
+        {
+          "id": "E",
+          "text": "Fraud was more common among rural sellers during the years used for training, so the model learned a regional pattern that has since faded."
+        }
+      ],
+      "correctOptionIds": [
+        "B",
+        "D"
+      ],
+      "explanation": "A: Leaving location out does not keep bias out. Information linked to location, such as the type of phone number, can still reach the model through other details, and the labels themselves came from a biased choice of which accounts to check. With similar confirmed fraud rates, a gap in flags points to the model and its data, not to a real difference in risk.\n\nB: Bias can enter before training through how data is collected and labeled. Only accounts that investigators chose to check received a label, and they mostly checked accounts with prepaid numbers, which rural sellers use more often. The model learned from a sample shaped by past choices about where to look, so it reproduces those choices as more flags for sellers who resemble the accounts that were checked.\n\nC: Optimizing for overall accuracy can produce weaker results for a smaller group, and that can contribute to a gap. But training happened once, before launch, and the gap was 1.2 times then. A fixed training choice does not explain why the gap has grown to three times since launch.\n\nD: Bias can also develop after deployment when the live data differs from the training data. The gap was 1.2 times at launch and is now three times, and the marketplace has since recruited many new sellers, mostly rural. A fairness check at launch could not reveal bias that grew later, which is why bias metrics need ongoing monitoring against a baseline in production.\n\nE: Historical differences in the training period could create a gap, but the labels only cover accounts that investigators chose to check, so they do not show how common fraud was across all rural sellers. A pattern that had faded would also shrink the gap over time, whereas it has grown since launch."
+    },
+    {
+      "id": "gen-2026-11-21-d-05",
+      "domainId": "domain-3",
+      "taskId": "3.2",
+      "skillId": "3.2.2",
+      "type": "single",
+      "text": "A recruitment agency holds CVs and interview notes for about 400,000 candidates. Candidates submitted them when applying for specific roles, and the consent form they signed says their details will be shared with the employers for the roles they apply for. The agency now wants to train a model on this archive that ranks candidates for any new vacancy, and it plans to sell anonymized hiring-trend reports built from the model's outputs. The agency operates under a national data protection law. Its registration terms include a clause allowing it to use candidate data \"to improve our services.\" The model provider it has chosen holds current security certifications for data processing. An internal review notes that past hiring decisions in the archive favored candidates from a few universities.\n\nWhat should the strategist recommend FIRST?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Rely on the registration terms' clause on improving services, which every candidate accepted when they first registered with the agency."
+        },
+        {
+          "id": "B",
+          "text": "Confirm that the provider's security certifications cover the training environment, and encrypt the archive before it is transferred."
+        },
+        {
+          "id": "C",
+          "text": "Establish a lawful basis for the new uses, updating candidate notices and seeking consent where needed, before training on the archive."
+        },
+        {
+          "id": "D",
+          "text": "Test the ranking model for bias against candidates from other universities, and correct it before it is used on any live vacancy."
+        }
+      ],
+      "correctOptionIds": [
+        "C"
+      ],
+      "explanation": "A: Data protection principles apply to AI in the same way as to any other processing. A general clause about improving services is unlikely to cover a materially different use, such as ranking candidates for any vacancy and selling reports, that candidates were not told about when they submitted their details for specific roles. Relying on it leaves the agency exposed.\n\nB: Security certifications and encryption protect the data from unauthorized access, which matters. They do not make the new use of the data permitted. A compliant, secure environment can still process personal data for a purpose that the agency has no right to pursue.\n\nC: Privacy laws restrict how personal data is used, not only how it is stored. The candidates provided their details to be shared with employers for roles they applied for. Ranking them for any vacancy and building commercial reports are new purposes, so the agency must first establish that it may use the archive this way, through updated notices and consent or another lawful basis confirmed with its legal advisers. Until then, every later step builds on data it may not be allowed to use.\n\nD: The university skew is a real fairness risk, and bias testing belongs in the plan. It is a test of the trained model, however, and it comes after a question that blocks training itself: whether the agency may use the archive for this purpose at all."
+    },
+    {
+      "id": "gen-2026-11-21-d-06",
+      "domainId": "domain-3",
+      "taskId": "3.3",
+      "skillId": "3.3.4",
+      "type": "single",
+      "text": "A cruise line's onboard assistant answers guests' questions about shore excursions, including meeting times, tender boat rules and accessibility. It retrieves passages from the line's excursion documents and generates an answer with a foundation model on Amazon Bedrock. The model version it uses reaches end of life in four months, so the team must move to a newer version. The strategist reviews the evidence gathered so far:\n\n- The model provider's published benchmarks show the newer version scoring higher on reasoning and summarization tests.\n- In a two-day trial, crew members rated the newer version's answers as more helpful and better written.\n- Each ship's assistant keeps a record of every guest question, and guests can flag an answer as wrong; flags average two a week per ship.\n- Peak cruise season starts in six weeks, and the operations lead wants the change finished before then.\n\nWhat should the strategist recommend?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Switch the whole fleet to the newer version now, given its higher benchmark scores and crew ratings, so the change is done before peak season."
+        },
+        {
+          "id": "B",
+          "text": "Check both versions' answers to a set of past guest questions against correct answers, and move the fleet once the newer one matches the current one."
+        },
+        {
+          "id": "C",
+          "text": "Move one ship to the newer version first, and extend it to the fleet once that ship's weekly count of guest-flagged answers stays at today's level."
+        },
+        {
+          "id": "D",
+          "text": "Switch the whole fleet to the newer version now, and have crew check the assistant's answers on tender rules and accessibility for the first month."
+        }
+      ],
+      "correctOptionIds": [
+        "B"
+      ],
+      "explanation": "A: A new model version can change how a system behaves even when nothing else changes. Public benchmarks measure general skills, and crew ratings measured helpfulness and style. Neither shows whether the newer version gives factually correct answers from these excursion documents, which is the reliability risk that matters for guests.\n\nB: Changing models is a reliability risk because a newer version can answer differently, including misreading or inventing details. The dependable test is the organization's own questions with known correct answers. Every ship already records guest questions, so a set can be drawn from them and answered by people who know the excursions, letting the team compare factual accuracy before guests see the change and still leaving time to adjust before peak season.\n\nC: A one-ship trial limits exposure, which makes it attractive, but guest flags are a weak measure of accuracy. Guests flag an answer only when they notice it is wrong, and a guest who is told the wrong tender time often learns it only by missing the boat. At two flags a week, a stable count says little, and the errors would reach guests before they were found.\n\nD: Crew checks would catch some errors on two topics, but only after they reach guests, and meeting times and other topics would go unchecked. Reviewing outputs after the switch is a weaker control than measuring accuracy before it."
+    },
+    {
+      "id": "gen-2026-11-21-c-05",
+      "domainId": "domain-3",
+      "taskId": "3.1",
+      "skillId": "3.1.4",
+      "type": "single",
+      "text": "A debt collection agency uses a generative AI chat agent to agree repayment plans with customers who owe money to its clients. The agent applies the agency's affordability rules, and the agency wants most chats completed without staff. A review of the first quarter found:\n\n- Audits found that the plans the agent offered matched the affordability rules in 99% of sampled chats.\n- Plans above $5,000 already go to a staff member for approval before they are confirmed.\n- Of 14 complaints, 11 came from customers who had mentioned a recent hospital stay, job loss or bereavement before accepting a standard plan.\n- Customers can cancel a plan within 14 days without penalty.\n\nWhich safeguard should the agency add?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Lower the staff approval limit from $5,000 to $1,000, and let the agent continue to confirm smaller plans without staff involvement."
+        },
+        {
+          "id": "B",
+          "text": "Have staff review each day's chats that mention health, work or family problems, and contact those customers to offer a revised plan."
+        },
+        {
+          "id": "C",
+          "text": "Add a guardrail that declines to discuss health or bereavement and gives the customer contact details for debt advice charities instead."
+        },
+        {
+          "id": "D",
+          "text": "Pass the chat to trained staff before any plan is offered when a customer mentions illness, job loss, bereavement or a similar hardship."
+        }
+      ],
+      "correctOptionIds": [
+        "D"
+      ],
+      "explanation": "A: An approval limit ties oversight to the size of the debt. The complaints are about customers in difficult circumstances who received standard plans, and those customers can owe small amounts. A lower limit adds staff work to many routine plans while still missing a customer with a $900 debt who has just lost their job.\n\nB: Reviewing chats afterward is a detective control. Because plans can be cancelled within 14 days, it may seem enough to fix problems later, but the customer has already been pressed into an unsuitable plan at a vulnerable moment, and the fix depends on reaching them in time.\n\nC: A guardrail can keep an agent off topics it should not handle, but here it would ignore the very information that should change how the customer is treated, and send the customer away while the debt remains unresolved.\n\nD: Human oversight is needed where an automated decision meets a situation the rules were not designed for and the consequences for a person are serious. The agent applies affordability rules accurately, yet most complaints came from customers who had disclosed hardship. Defining those disclosures as escalation criteria brings in a trained person before any plan is agreed, while routine chats stay automated."
+    },
+    {
+      "id": "gen-2026-11-21-c-06",
+      "domainId": "domain-3",
+      "taskId": "3.2",
+      "skillId": "3.2.4",
+      "type": "single",
+      "text": "A residential care home operator has adopted a risk classification framework for its AI systems. Its small governance team is deciding how to apply it to the three licensed products in use, which support seven uses across its homes. The strategist notes:\n\n- One generative AI product drafts staff rotas, writes monthly update emails to residents' families, and summarizes nightly care notes into a fall-risk list that changes each resident's checks for the next day.\n- Vendors rate all three products as low risk.\n- A senior carer can see the fall-risk list but does not approve it before checks are changed.\n- Four of the seven uses process residents' health records.\n\nHow should the operator apply its risk classification framework?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Rate each use separately, starting from the vendor's rating of the product it runs on, and review the rating when the vendor issues a major update."
+        },
+        {
+          "id": "B",
+          "text": "Rate each use separately by the harm its errors could cause residents and how far it acts without staff approval, and set controls by that rating."
+        },
+        {
+          "id": "C",
+          "text": "Rate each use separately by the sensitivity of the data it processes, placing the four uses of health records in the highest tier."
+        },
+        {
+          "id": "D",
+          "text": "Rate each product once by the riskiest use known at purchase, and apply that rating's controls to every use the product supports."
+        }
+      ],
+      "correctOptionIds": [
+        "B"
+      ],
+      "explanation": "A: Rating each use is the right unit, but a vendor's rating describes a general-purpose product, not what the operator does with it. All three products are rated low, yet one of them now changes residents' care checks with no approval; starting from the vendor's view would understate that use.\n\nB: Risk classification assesses the use case: who is affected, how severe the harm from an error could be and how likely it is. The same product carries little risk when it drafts rotas and much more when its fall-risk list changes residents' checks without a staff member approving it. Rating each use on harm and autonomy puts the team's effort where an error could hurt a resident.\n\nC: Health records raise privacy and security requirements, and data sensitivity is one input to risk. But it is not a measure of harm from errors: a family email that uses health records sits in the same tier as the fall-risk list, while the rating says nothing about the list acting without approval.\n\nD: Rating by the riskiest use is cautious, but it puts rota drafting under the controls meant for the fall-risk list, which a small team cannot sustain, and it misses risky uses that begin after purchase."
+    },
+    {
+      "id": "gen-2026-11-21-f-05",
+      "domainId": "domain-3",
+      "taskId": "3.3",
+      "skillId": "3.3.1",
+      "type": "multiple",
+      "text": "A mobile game publisher is about to launch an AI agent that handles player reports of bugs. The agent reads each report, checks the player's game history, decides whether compensation is due and grants up to 500 gems through the game's admin tool. Players buy gems with real money. The launch review finds:\n\n- In pre-launch testing, the agent's compensation decisions matched experienced support staff in 95 percent of 2,000 cases.\n- When a bug went viral last year, coordinated false reports arrived within hours, and staff granted gems to hundreds of accounts before anyone noticed.\n- The admin tool logs every grant, but nobody reviews the logs.\n- The game's item catalogue changes with each weekly update.\n\nWhich measures should be in place when the agent goes live? (Choose TWO.)",
+      "options": [
+        {
+          "id": "A",
+          "text": "Add instructions to the agent's prompt to refuse compensation when several reports describe the same bug in similar words within a short period."
+        },
+        {
+          "id": "B",
+          "text": "Set limits in the admin tool on the gems that one grant, one account and the agent as a whole can issue per day, whatever the agent requests."
+        },
+        {
+          "id": "C",
+          "text": "Have support staff review a random sample of 200 of the agent's grants each month and report the error rate to the game's product lead."
+        },
+        {
+          "id": "D",
+          "text": "Expand the test set to 5,000 cases, including reports about recently added catalogue items, and repeat the evaluation before the launch date."
+        },
+        {
+          "id": "E",
+          "text": "Track the number and value of grants against expected levels in near real time, with alerts to a named owner who has authority to pause the agent."
+        }
+      ],
+      "correctOptionIds": [
+        "B",
+        "E"
+      ],
+      "explanation": "A: A prompt instruction shapes what the model tends to do, but it is not an enforced control: a model can misjudge the pattern, and genuine reports of a real bug also arrive together in similar words. Controls on what an agent can spend need to sit outside the model.\n\nB: An agent's decisions are not deterministic, so limits on what it can grant should be enforced in the system that carries out the action, regardless of what the agent asks for. Caps per grant, per account and in total bound the loss from a wave of false reports or an agent error to a known amount while monitoring catches up.\n\nC: Periodic sampling is useful for measuring quality over time, but last year's abuse spread within hours. A monthly review would find a coordinated attack weeks after the gems had been granted.\n\nD: A larger test set improves confidence before launch, but it is still a pre-launch measure. It cannot detect behavior that only appears in production, such as a sudden surge of coordinated reports, and the catalogue keeps changing after launch.\n\nE: Production AI systems need monitoring that compares live behavior with expected levels and reaches someone who can act. The grant logs already exist but nobody watches them. Near-real-time tracking of grant volume and value with alerts to an owner who can pause the agent turns those logs into a control that works on the timescale of last year's abuse."
+    },
+    {
+      "id": "gen-2026-11-21-e-05",
+      "domainId": "domain-3",
+      "taskId": "3.3",
+      "skillId": "3.3.3",
+      "type": "single",
+      "text": "A sexual health charity has built an information assistant on Amazon Bedrock. It answers questions about contraception, infections and testing, and it points users to clinics. A guardrail applies content filters, and every filter is set to its highest strength for both user questions and model answers. Testing before launch found:\n\n- About a quarter of genuine questions about contraception and infection symptoms received the guardrail's standard blocked message.\n- The guardrail's records show that almost all of these blocks were triggered by the wording of the questions, not by the answers.\n- When the team sent the same questions to the model with no guardrail, its answers were accurate and appropriate.\n- Many users are 16 or 17, and the charity must never return sexually explicit content.\n- A newer model from another provider is marketed as refusing fewer harmless requests.\n\nWhat should the charity do?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Remove the guardrail and rely on a system prompt that forbids explicit content, since the model alone answered the test questions appropriately."
+        },
+        {
+          "id": "B",
+          "text": "Move to the newer model that is marketed as refusing fewer harmless requests, and keep the current guardrail settings for questions and answers."
+        },
+        {
+          "id": "C",
+          "text": "Keep the current guardrail settings, and route every blocked question to a clinic nurse who replies to the user by email within one working day."
+        },
+        {
+          "id": "D",
+          "text": "Lower the sexual-content filter strength for user questions, keep it at the highest strength for answers, and retest with real questions."
+        }
+      ],
+      "correctOptionIds": [
+        "D"
+      ],
+      "explanation": "A: Good test answers do not show that the model will always behave. A system prompt is an instruction the model can be talked out of, and with young users the charity needs a control that checks every answer whatever the prompt says. Removing the guardrail removes that control.\n\nB: The guardrail checks inputs and outputs separately from the model, and a question it blocks never reaches the model. Because the blocks come from the wording of the questions, changing the model would leave them unchanged.\n\nC: Nurse follow-up keeps users safe, but it turns a quarter of legitimate questions into a day's wait and adds clinical workload, while leaving the over-strict setting that causes the blocks in place.\n\nD: Content filters are set by category and separately for prompts and responses, so they can be calibrated to the use case. The over-blocking comes from questions that must use sexual terms, so easing that filter on inputs lets them through. Keeping answers at the highest strength still stops explicit output, and retesting checks the balance before launch."
+    },
+    {
+      "id": "gen-2026-11-21-e-06",
+      "domainId": "domain-3",
+      "taskId": "3.2",
+      "skillId": "3.2.3",
+      "type": "single",
+      "text": "A video streaming service is building a model to predict which subscribers will cancel. A partner firm supplies 12 of the 20 data scientists on the project. To get started quickly, the team was given a full copy of the subscriber table in a shared development workspace. A security review found:\n\n- The copy includes names, email addresses, home addresses and the last four digits of payment cards.\n- The model's planned inputs are viewing patterns, plan type, length of subscription and region.\n- Workspace storage is encrypted at rest with keys that the company manages.\n- Nobody reviews the workspace access logs.\n- The partner's contract runs until the end of next March.\n\nWhich measure BEST reduces the risk to subscriber data in this project?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Replace the copy with a table that drops direct identifiers and card digits and links records through a pseudonymous subscriber key."
+        },
+        {
+          "id": "B",
+          "text": "Limit the customer-level copy to the company's own employees, and give partner staff only summary tables until their contract ends."
+        },
+        {
+          "id": "C",
+          "text": "Rotate the workspace encryption keys and allow only the data science team's roles to use them, keeping the full copy for modelling."
+        },
+        {
+          "id": "D",
+          "text": "Review the workspace access logs every week, and alert the security team when anyone exports more than a set number of subscriber rows."
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "explanation": "A: Data minimization means giving a workload only the data it needs. The model uses viewing, plan, tenure and region, so names, contact details and card digits serve no purpose in the workspace. Removing them, and joining records through a pseudonymous key, keeps the data fully usable for modelling while sharply reducing what anyone could expose, whoever they work for.\n\nB: Treating partner staff as the risk overlooks that the company's own employees do not need identifiers either. It also cuts most of the team off from the customer-level records that a churn model is built from, while leaving the unneeded fields in place.\n\nC: Encryption at rest protects stored data from people without access, but everyone on the team can still read the identifiers once the workspace decrypts them. Rotating keys does not change who sees what.\n\nD: Log review is a useful detective control, but it reports misuse after it happens and leaves the unneeded personal data in the workspace. It should complement minimization, not replace it."
+    },
+    {
+      "id": "gen-2026-11-21-g-05",
+      "domainId": "domain-3",
+      "taskId": "3.3",
+      "skillId": "3.3.2",
+      "type": "single",
+      "text": "A food delivery platform operating in 30 cities uses a machine learning (ML) model to score each courier's reliability, and higher-scoring couriers are offered more orders. The model is retrained every quarter on recent deliveries. Before launch, a fairness test found no meaningful score gaps by courier age or gender.\n\nA year later, the model's overall accuracy in predicting late deliveries has stayed at about 92%. Four months ago, an app update reduced how often location is reported by phones running in battery-saving mode. Over the same period, offers to couriers in outer suburbs have fallen by 15%, while orders there have grown. The courier council has asked for the age and gender test to be repeated and published.\n\nWhat should the AI lead recommend?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Repeat the age and gender fairness test every quarter, as the courier council has asked, and publish each set of results to couriers."
+        },
+        {
+          "id": "B",
+          "text": "Retrain the model now on the most recent four months of deliveries, so that the scores reflect how couriers are working today."
+        },
+        {
+          "id": "C",
+          "text": "Monitor scores and offers continuously for courier groups beyond those tested at launch, and trace any gap back to the data the model receives."
+        },
+        {
+          "id": "D",
+          "text": "Guarantee couriers in outer suburbs a minimum share of offers in their area until the reason for the drop in offers is understood."
+        }
+      ],
+      "correctOptionIds": [
+        "C"
+      ],
+      "explanation": "A: Repeating the original test is responsive and transparent, but it checks only the groups examined before launch. Bias can enter after deployment through changes in the live data, and here the gap has appeared by area while overall accuracy looks stable. A quarterly age and gender test could pass every time and still miss it.\n\nB: Retraining is the usual response to changing conditions, but the last four months are exactly the period in which some couriers' location data became sparse. Training on that data could teach the model to treat weaker location records as unreliability and fix the gap into the next version.\n\nC: Bias can be introduced at several stages of the lifecycle, including after launch when the data a model sees changes. A stable overall accuracy figure and a passed pre-launch test do not show how outcomes are spread across groups. Monitoring scores and offers continuously across a wider set of groups, such as where couriers work and what devices they use, and tracing gaps to inputs such as the reduced location reporting, lets the platform detect bias drift and fix its source rather than its symptoms.\n\nD: A minimum offer share would limit harm to outer-suburb couriers in the short term, but it overrides the scores without finding why they changed, and it covers only the one gap already noticed. The next group affected by a change in the data would go unseen until offers fell again."
+    },
+    {
+      "id": "gen-2026-11-21-g-06",
+      "domainId": "domain-3",
+      "taskId": "3.1",
+      "skillId": "3.1.3",
+      "type": "single",
+      "text": "An education app company is building a generative AI tutor for children aged 8 to 12. Its project plan is:\n\n- Weeks 1–2: choose a foundation model and write the tutor's instructions.\n- Weeks 3–8: build the conversation features and connect them to the company's lesson library; consent forms go to parents of pilot pupils in week 6.\n- Weeks 9–12: pilot the tutor with ten partner schools.\n- Week 13: responsible AI review, followed by general release.\n\nThe company's responsible AI lead is finishing another review and can join the project in week 9. The product director points out that a rival's similar tutor passed its launch review with only minor changes, and wants to keep the release date.\n\nWhat should the company do about responsible AI for the tutor?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Keep the week-13 review, and add red-team testing of the tutor's answers during the school pilot so that problems surface before general release."
+        },
+        {
+          "id": "B",
+          "text": "Set child-safety and data-retention requirements in week 1, and use them to choose the model, write the instructions and draft the consent forms."
+        },
+        {
+          "id": "C",
+          "text": "Delay the school pilot until the responsible AI lead has completed a full review of the built tutor, then run the pilot and release as planned."
+        },
+        {
+          "id": "D",
+          "text": "Keep the schedule, and have the product team complete a responsible AI self-assessment in week 8 for the lead to check when she joins."
+        }
+      ],
+      "correctOptionIds": [
+        "B"
+      ],
+      "explanation": "A: Red-team testing during the pilot is a useful control, but it finds problems after the model, instructions and data handling are built, and while children are already using the tutor. Fixes at that point mean rework, and the parents' consent forms will already have described the tutor's data handling.\n\nB: Responsible AI works best when it shapes decisions as they are made. In this plan the model and its instructions are fixed in the first two weeks, and parents are told in week 6 what the tutor does with their children's data. Setting age-appropriate content and data-retention requirements at the start lets them act as selection criteria and design inputs, so the consent forms describe settled choices and the week-13 review confirms rather than discovers.\n\nC: Holding the pilot until a review is done protects pupils, which makes this the most cautious option. But the review would still come after the model is chosen and the features are built, so any problem it finds means rework and further delay, and the consent forms would still go out before the review.\n\nD: A self-assessment in week 8 brings responsible AI forward, but by then the model, instructions and lesson connections are built and the consent forms have gone out. It is a check on finished work, not an input to the design decisions made earlier."
     }
   ]
 }

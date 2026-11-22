@@ -1040,6 +1040,671 @@
         "C"
       ],
       "explanation": "A: Fine-tuning can take hours to days and requires specialized skills, so it is a poor fit when information changes often. Monthly fine-tuning would still miss products added since the last run, and a fine-tuned model does not show the sources of its answers.\n\nB: A catalog of about 40,000 products in every prompt would likely exceed the model's context window, and it would greatly increase the cost and response time of every question.\n\nC: Retrieval Augmented Generation (RAG) retrieves current information from the retailer's own data when a question is asked and adds it to the prompt. New products and updated rules become available as soon as the source data is updated, without retraining the model.\n\nD: A model cannot reliably judge which of its learned facts are outdated. An instruction does not give the model current information, so it would still answer from outdated knowledge."
+    },
+    {
+      "id": "gen-2026-11-20-01",
+      "domainId": "domain-1",
+      "taskId": "1.1",
+      "skillId": "1.1.1",
+      "type": "single",
+      "text": "A consumer lender uses a machine learning (ML) model to predict which customers will miss their next loan payment. Each week, the model gives every customer a score from 0% to 100%. The collections system marks customers who score above 50% as \"likely to miss,\" and agents phone marked customers to offer a payment plan. A review of the process found the following:\n\n- The model was last trained four months ago.\n- About 6,500 customers are marked each week. Agents reach about 2,000 of them, in no particular order.\n- The share of customers who are marked has been stable since the model went into use.\n- In a recent check, 71% of customers who scored above 85% went on to miss a payment, compared with 22% of customers who scored between 50% and 60%.\n\nThe collections manager says that the model marks far too many customers and has asked the data science team to fix it.\n\nWhich response is MOST appropriate?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Retrain the model on the most recent four months of payment records, because a model that marks this many customers no longer reflects how customers behave."
+        },
+        {
+          "id": "B",
+          "text": "Keep the model, and have agents work through the marked customers at random each week, so that every marked customer has the same chance of an offer."
+        },
+        {
+          "id": "C",
+          "text": "Keep the model, and have agents phone customers from the highest score downward each week, as far as their calls reach."
+        },
+        {
+          "id": "D",
+          "text": "Have the data science team rescale the scores so that a score above 50% means a customer is more likely than not to miss, and keep the 50% mark."
+        }
+      ],
+      "correctOptionIds": [
+        "C"
+      ],
+      "explanation": "A: Retraining updates the patterns that a model has learned, and it is the right response when predictions have become less reliable. Here the check shows that higher scores do correspond to more missed payments, and the marked share has been stable since launch. The list is long because of where the 50% line was drawn, and a retrained model would still be read against that line.\n\nB: This keeps the model, which is sound, but it treats every customer above 50% as the same prediction. The model's output is a probability. A customer who scores above 85% is about three times as likely to miss a payment as one who scores just above 50%, so a random order spends most calls on customers who are less likely to need a plan. That is what happens today.\n\nC: A model's prediction is a score, and deciding what to do at each score is a business choice that is separate from the model. The check shows that the scores rank customers well. Working down from the highest score puts the calls that agents can make on the customers who are most likely to miss a payment, without any change to the model.\n\nD: The check does suggest that scores just above 50% overstate the chance of a missed payment, and rescaling would shorten the list. However, rescaling changes the numbers attached to customers and leaves their order the same. The list would still be set by a fixed line and not by what agents can act on, and agents would still call marked customers in no particular order."
+    },
+    {
+      "id": "gen-2026-11-20-02",
+      "domainId": "domain-1",
+      "taskId": "1.3",
+      "skillId": "1.3.1",
+      "type": "single",
+      "text": "An insurance broker uses a generative AI (GenAI) model to draft renewal summaries that account managers send to business clients. The prompt has grown over several months as managers added rules after individual complaints. It now runs to about 900 words and includes these rules: keep every summary under 150 words; write in plain language; list every change in cover with the old limit and the new limit; and end with the renewal date.\n\nManagers report that summaries for clients with one to three changes in cover are consistently good. For clients with eight or more changes, some summaries run to 300 words, and others stay short but leave changes out. Regenerating a summary for the same client can produce either result.\n\nWhich change should the team make FIRST?",
+      "options": [
+        {
+          "id": "A",
+          "text": "State in the prompt which rule gives way when a renewal has more changes than the word limit can hold."
+        },
+        {
+          "id": "B",
+          "text": "Lower the model's temperature setting so that regenerating a summary for the same client gives the same result."
+        },
+        {
+          "id": "C",
+          "text": "Shorten the prompt to a few core rules so that it uses less of the model's context window and later rules are not lost."
+        },
+        {
+          "id": "D",
+          "text": "Add an instruction at the top of the prompt to follow every rule exactly and to check the summary against the rules before answering."
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "explanation": "A: Clear prompts give instructions that can all be followed, and say what to do when they cannot. Eight changes with old and new limits do not fit in 150 words, so for these clients the model must break one rule and the prompt does not say which. That explains why the output is either long or incomplete. Stating the priority removes the conflict.\n\nB: Temperature controls how much the output varies between runs. A lower setting would make the model resolve the conflict the same way each time, but it would still produce a summary that is either too long or missing changes. The variation is a symptom of the conflicting rules.\n\nC: A context window limits how much text a model can take in at once, and it is measured in many thousands of words. A 900-word prompt uses a small fraction of it, and the summaries for simple renewals show that the model is following the rules. Trimming the prompt does not settle which rule wins unless one of the two conflicting rules happens to be removed.\n\nD: Emphasis and self-checking can help a model follow instructions that it sometimes overlooks. Here the two rules cannot both be met for clients with many changes, so an instruction to follow every rule exactly asks for something impossible and leaves the model to choose."
+    },
+    {
+      "id": "gen-2026-11-20-b-01",
+      "domainId": "domain-1",
+      "taskId": "1.1",
+      "skillId": "1.1.2",
+      "type": "single",
+      "text": "A regional law firm wants to use AI in two areas. First, it wants an early warning of which client matters are likely to run over their agreed fee budget, so that partners can step in. Second, it wants first drafts of routine letters that update clients on their matters. A business strategist gathers these facts:\n\n- The billing system holds six years of matter records, including each matter's type, staffing, hours and whether it ran over budget.\n- Only about 200 past update letters were saved, and their quality varies.\n- Staff already use a licensed generative AI assistant to summarize documents.\n- The managing partner wants one AI approach for both areas so that IT supports a single system.\n\nWhich plan should the strategist recommend?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Use the licensed assistant for both, drafting letters from prompts and sample letters and rating each matter's overrun risk from its billing details."
+        },
+        {
+          "id": "B",
+          "text": "Train a prediction model on past matters and their budget outcomes, and draft letters with a pretrained generative model guided by prompts and examples."
+        },
+        {
+          "id": "C",
+          "text": "Fine-tune one generative model on the billing records and the saved letters, so that a single model flags overruns and drafts letters."
+        },
+        {
+          "id": "D",
+          "text": "Fine-tune the licensed assistant on the billing records to flag overruns, and hold the letters until enough good examples exist to fine-tune for them too."
+        }
+      ],
+      "correctOptionIds": [
+        "B"
+      ],
+      "explanation": "A: Drafting letters from prompts and sample letters is a sound use of generative AI. Rating overrun risk is a different kind of task: it predicts a known outcome, and a generative assistant shown one matter's details has not learned how the firm's past matters ended. Its rating would not draw on the six years of outcomes, so the plan meets the managing partner's wish for one system at the cost of a reliable warning.\n\nB: The two needs call for different kinds of AI. Machine learning (ML) learns patterns from labeled historical data, so a model trained on six years of matters with known budget outcomes suits the overrun warning. The letters are new text, which a pretrained generative model can draft from prompts and a few good examples without the firm training a model. A single system is not worth having when the tasks differ in kind.\n\nC: Fine-tuning adapts a generative model's style and content. Learning to predict an outcome from records with known results is what a prediction model trained on the billing data does directly. The 200 saved letters vary in quality, so fine-tuning on them could also teach their weaknesses. One model meets the managing partner's wish at the cost of both tasks.\n\nD: This treats generative AI as if it must be trained on the firm's own examples before it is useful. A pretrained model can already draft letters from prompts and a few good examples, so holding the letters back is unnecessary. Flagging overruns from records with known outcomes is a prediction task that an ML model trained on those records handles directly."
+    },
+    {
+      "id": "gen-2026-11-20-b-02",
+      "domainId": "domain-1",
+      "taskId": "1.1",
+      "skillId": "1.1.6",
+      "type": "multiple",
+      "text": "A payroll software company is adding a generative AI assistant that answers employees' questions about their pay. The assistant runs on Amazon Bedrock. A large public-sector customer has said that its next tender will require AI suppliers to hold ISO/IEC 42001 certification. The company's compliance lead has gathered these facts:\n\n- AWS holds accredited ISO/IEC 42001 certification for a set of its AI services, including Amazon Bedrock.\n- The company does not train its own models. It configures the assistant with prompts and its own payroll guidance documents.\n- Engineers already describe each AI feature's data, model and processing steps by using the terms of ISO/IEC 23053.\n- Two more AI features are planned for next year.\n\nWhich statements about the company's route to certification are accurate? (Choose TWO.)",
+      "options": [
+        {
+          "id": "A",
+          "text": "Because AWS's certificate covers Amazon Bedrock, the company's audit can be limited to the prompts and documents it adds, with the model treated as certified."
+        },
+        {
+          "id": "B",
+          "text": "Each AI feature would need its own certificate, although audits for next year's features could reuse evidence gathered for the assistant."
+        },
+        {
+          "id": "C",
+          "text": "After certification, the company's management system will be checked in periodic audits, so its AI risk processes must keep running between them."
+        },
+        {
+          "id": "D",
+          "text": "The engineers' ISO/IEC 23053 descriptions can provide much of the evidence, since an ISO/IEC 42001 audit checks that AI systems are described in those terms."
+        },
+        {
+          "id": "E",
+          "text": "The standard applies to the company even though it trains no models, because it covers organizations that use AI in the products they provide."
+        }
+      ],
+      "correctOptionIds": [
+        "C",
+        "E"
+      ],
+      "explanation": "A: ISO/IEC 42001 certification belongs to the organization that is audited, and no company is certified by association with a supplier. AWS's certificate covers how AWS manages AI for its listed services. The company's own management system must cover how it governs the assistant as a whole, including its purpose, risks and impact on the employees who use it, not only the prompts and documents it adds. A certified supplier may make that certification easier, but it does not narrow it this way.\n\nB: ISO/IEC 42001 sets requirements for an organization's AI management system, which is certified over a defined scope rather than product by product. One management system, with its policies, roles, risk and impact assessments and improvement process, can cover the assistant and the two planned features.\n\nC: ISO/IEC 42001 requires an AI management system to be established, maintained and continually improved. After the initial certification, the certification body returns for periodic surveillance audits, so the company's risk assessment, monitoring and improvement processes must operate continuously, not only before the first audit.\n\nD: ISO/IEC 23053 is a framework for describing AI systems that use machine learning, such as their components and functions. Consistent descriptions are useful, but an ISO/IEC 42001 audit examines a management system: policies, responsibilities, risk and impact assessment, monitoring and continual improvement. Describing systems in 23053's terms is not what the audit checks.\n\nE: ISO/IEC 42001 is designed for organizations that provide or use AI-based products or services. The company provides an AI-based product to customers, so the standard applies to it even though it configures a model rather than training one."
+    },
+    {
+      "id": "gen-2026-11-20-b-03",
+      "domainId": "domain-1",
+      "taskId": "1.3",
+      "skillId": "1.3.2",
+      "type": "single",
+      "text": "A consulting firm uses a generative AI tool to turn a project summary into a client proposal with 12 standard sections. Consultants paste a summary of about 1,500 words and ask for the complete proposal in one request. Since launch, the firm has observed the following:\n\n- Drafts usually stop partway through section 7 or 8, sometimes in mid-sentence.\n- The tool's settings show a temperature of 0.9, a max tokens setting of 4,000 and a context window of 128,000 tokens.\n- The model provider offers a version with a context window four times larger, at a higher price per token.\n- Some consultants now cut their summaries to about 600 words before pasting them.\n\nWhat should the firm do to get complete proposals?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Ask for the proposal a few sections at a time, including the summary in each request, and join the parts into one document."
+        },
+        {
+          "id": "B",
+          "text": "Move to the model version with the larger context window so that the summary and the whole proposal fit within what the model can handle."
+        },
+        {
+          "id": "C",
+          "text": "Lower the temperature from 0.9 so that the model writes more concisely and reaches the final sections before it stops generating."
+        },
+        {
+          "id": "D",
+          "text": "Have the tool first condense each summary to about 300 words, and then generate the complete proposal from the condensed version."
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "explanation": "A: The max tokens setting caps how many tokens the model may generate in one response, here 4,000, and it is separate from the context window. A 12-section proposal needs more output than one response allows, so drafts stop at about the same point. Requesting a few sections at a time keeps each response under the cap, and the joined parts form the full proposal.\n\nB: The context window limits the total of input and output tokens the model can work with, and a 1,500-word summary plus a proposal is far below 128,000 tokens. A larger window would not raise the 4,000-token response cap, so drafts would still stop early, at a higher price.\n\nC: Temperature controls how likely the model is to choose less probable words, which affects variety, not how long a response may be. A lower setting can make wording more predictable, but the response would still end when it reaches the 4,000-token cap.\n\nD: Condensing the input reduces input tokens, but input size is not what stops the drafts: the summary uses a small fraction of the context window, and the full proposal would still exceed the response cap. A shorter summary could also drop details that the proposal needs."
+    },
+    {
+      "id": "gen-2026-11-21-01",
+      "domainId": "domain-1",
+      "taskId": "1.1",
+      "skillId": "1.1.1",
+      "type": "single",
+      "text": "A university's admissions office trained a machine learning (ML) model to predict which admitted students will enroll, so that it can target scholarship offers each March. Tested on past records, the model was right 92 percent of the time. When the office ran it in March this year, its predictions were barely better than guessing. A business strategist reviews the project:\n\n- The training records hold each admitted student's program, home region, scholarship offered, whether they paid a housing deposit, and whether they enrolled.\n- Students usually pay housing deposits in May or June.\n- The 92 percent figure came from a random fifth of five years' records that was held back from training.\n- This year's admitted students include more applicants from two new partner countries than any earlier year.\n- A vendor has offered a more complex algorithm that it says captures subtler patterns.\n\nWhich explanation BEST accounts for the gap between the test result and this year's predictions?",
+      "options": [
+        {
+          "id": "A",
+          "text": "This year's admitted students differ from the five years the model learned from, so the patterns it learned no longer describe the students it is scoring."
+        },
+        {
+          "id": "B",
+          "text": "The algorithm is too simple to capture how program, region and scholarship combine, so it fits familiar records well but fails on new students."
+        },
+        {
+          "id": "C",
+          "text": "The model relied on a detail that is recorded only after offers go out, so that input is empty for every student when it runs in March."
+        },
+        {
+          "id": "D",
+          "text": "The random fifth let students from the same years appear in both training and testing, so the test rewarded the model for recalling familiar cases."
+        }
+      ],
+      "correctOptionIds": [
+        "C"
+      ],
+      "explanation": "A: A change in the mix of students is a real cause of drift, and a larger share from two partner countries could weaken predictions for those applicants. It would not take a model that was right 92 percent of the time down to guessing across the whole admitted class, because most students still resemble those in earlier years.\n\nB: A more complex algorithm can find subtler patterns, which is the vendor's pitch. But the model did well on records it had not seen during training, so it was not failing to learn the patterns in its data. The problem lies in what the model receives when it makes a prediction, which a different algorithm would not change.\n\nC: A model learns from the inputs in its training records and then makes predictions from the same inputs at the time it is used. Whether a student paid a housing deposit is strongly linked to enrolling, but it is known only in May or June. The test records still contained it, so the model scored well, but in March the deposit field is empty for everyone and the model loses the input it leaned on most. The model must be retrained on inputs that are known when the prediction is made.\n\nD: Splitting test records by year is often a sounder test than a random split, so the concern is reasonable. Here, though, every held-back record would still include the deposit field whichever way the records were split, so a year-based test would also have looked strong. The test design did not cause the gap; the missing input at prediction time did."
+    },
+    {
+      "id": "gen-2026-11-21-b-01",
+      "domainId": "domain-1",
+      "taskId": "1.1",
+      "skillId": "1.1.3",
+      "type": "single",
+      "text": "A city's non-emergency service line takes about 25,000 resident requests a month, such as reports of broken streetlights, missed bin collections and blocked drains. The city wants a model that predicts, when each request arrives, whether it will later need escalation to a supervisor. A data review finds:\n\n- Each request is stored as a row in a relational database, with columns for date, ward, channel, a category that the call handler picks from 12 options, and the resident's description in their own words.\n- Call handlers choose the category \"Other\" for about a third of requests.\n- When supervisors explain why past requests were escalated, they usually quote phrases that residents used.\n- The IT lead says the data is ready for a standard tabular model because every field already sits in database tables.\n\nWhat should the business strategist recommend?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Train the tabular model on the date, ward, channel and category columns, which are complete for every request and need no further preparation."
+        },
+        {
+          "id": "B",
+          "text": "Train the tabular model on all five columns as they are stored, since each description is already held as a field in the request table."
+        },
+        {
+          "id": "C",
+          "text": "Process the descriptions with a language model to extract features such as hazards or repeat reports, then train on these with the other columns."
+        },
+        {
+          "id": "D",
+          "text": "Replace the 12 categories with a longer picklist so that call handlers record more detail, then train the model once a year of new data exists."
+        }
+      ],
+      "correctOptionIds": [
+        "C"
+      ],
+      "explanation": "A: Date, ward, channel and category are structured fields that are easy to use, and they may carry some signal. But a third of requests are categorized as \"Other\", so the category says little about many requests, and the details that supervisors cite when they explain escalations are in the residents' own words. A model limited to these columns leaves out the information that best separates escalated requests.\n\nB: Where data is stored does not decide whether it is structured. Structured data has predefined attributes with consistent values; a description written by a resident has no predefined attributes, so it is unstructured even when it sits in a database column. A standard tabular model would treat each description as a distinct value and could not learn from its wording.\n\nC: The descriptions are unstructured text held inside a structured table. Unstructured data has to be processed before a model can use it, for example by using a language model to turn each description into consistent features such as the type of hazard or whether the resident reports a repeat problem. Those features can then be combined with the structured columns, so the model uses the information that supervisors rely on when they escalate.\n\nD: A longer picklist could improve future data, but a fixed list cannot anticipate every detail that residents describe, and handlers already default to \"Other\" for a third of requests. Waiting a year also discards the descriptions the city already holds, which can be made usable now by processing the text."
+    },
+    {
+      "id": "gen-2026-11-21-d-01",
+      "domainId": "domain-1",
+      "taskId": "1.1",
+      "skillId": "1.1.5",
+      "type": "single",
+      "text": "A ferry operator runs 14 routes, and port managers set deck-crew levels for each sailing from experience. The operator wants a machine learning (ML) model that predicts how many vehicles will be booked on each sailing, so that crew levels can be set from it. The data team has trained a model and reports these findings:\n\n- The operator's new booking system went live in February, and the model was trained on every sailing from February to October.\n- On a random 20% of those sailings held back from training, predictions were within 5% of actual vehicle numbers.\n- The old booking system's six years of records are archived, and mapping its route codes to the new ones would take about two months.\n- The old system's monthly summary reports show total vehicles carried on each route in every past winter.\n\nThe operations director wants crew levels for the winter timetable, which starts next month, to be set from the model.\n\nWhat should the strategist recommend?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Add weather forecasts as an input and retrain on the February-to-October sailings to capture how storms change vehicle numbers."
+        },
+        {
+          "id": "B",
+          "text": "Use the model for the winter timetable as planned, relying on its measured accuracy on sailings that were held back from training."
+        },
+        {
+          "id": "C",
+          "text": "Map the archived records and retrain on several years that include past winters before the model sets crew levels for winter sailings."
+        },
+        {
+          "id": "D",
+          "text": "Use the model this winter, scaling each route's predictions by last winter's change in vehicles carried, taken from the monthly summary reports."
+        }
+      ],
+      "correctOptionIds": [
+        "C"
+      ],
+      "explanation": "A: A model learns how its inputs relate to outcomes only from the examples it is trained on. February to October contains almost no winter sailings, winter timetables or storm-season weeks, so a new weather input would have very few winter examples to learn from. The input may be worth adding later, but it does not fill the gap in the training period.\n\nB: The held-out sailings were drawn at random from the same February-to-October period as the training data. That test shows how well the model handles more of the conditions it has already seen. It says little about a season with a different timetable and travel pattern that never appeared in training, so the 5% figure does not transfer to winter.\n\nC: A model trained on historical data reflects the patterns in that data, and a test drawn from the same period cannot reveal what is missing. Winter lies outside what this model has learned. The archived records hold six winters of sailing-level examples, which retraining needs. Crew levels for the first weeks of winter would still be set as they are today, a short delay compared with running a whole season on a model that has never seen winter.\n\nD: Monthly route totals give a rough seasonal factor, but multiplying a summer-trained model's output by one ratio assumes winter differs from summer by a single proportion. Winter brings a different timetable and different patterns by sailing time and day, which the model has never learned and the totals cannot teach it. Sailing-level winter examples are what the model needs, and the archive holds them."
+    },
+    {
+      "id": "gen-2026-11-21-d-02",
+      "domainId": "domain-1",
+      "taskId": "1.3",
+      "skillId": "1.3.3",
+      "type": "single",
+      "text": "A mining company operates sites in two states, each with its own mine safety code. It wants a generative AI assistant that shift supervisors can ask about safety requirements, such as ventilation checks or exclusion zones. Each code runs to about 1,200 pages and is revised roughly every three years. Inspectors check that every safety decision in the shift log records the code clause that supports it. In a trial, a pretrained model with a prompt describing the supervisor's role answered 70% of test questions correctly. Most wrong answers were stated confidently and combined requirements from the two states' codes. A vendor has offered to fine-tune a model on both codes for a one-time fee, noting that the text rarely changes and that the fee would be spread over several years of use.\n\nWhich approach should the strategist recommend?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Retrieve the relevant passages from the supervisor's own state code for each question, and have the model answer from them with their clause numbers."
+        },
+        {
+          "id": "B",
+          "text": "Accept the vendor's offer to fine-tune one model on both codes, spreading the one-time fee over the years in which the text stays unchanged."
+        },
+        {
+          "id": "C",
+          "text": "Fine-tune a separate model on each state's code, and send each supervisor's questions to the model trained on that supervisor's state."
+        },
+        {
+          "id": "D",
+          "text": "Keep the pretrained model, add the supervisor's state to every prompt, and instruct the model to cite the clause number behind each answer."
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "explanation": "A: Retrieval Augmented Generation (RAG) gives the model the actual text of the relevant clauses with each question and returns the sources the answer rests on. Filtering retrieval to the supervisor's state stops requirements from the two codes being mixed, and each answer arrives with the clause numbers that the shift log must record. Stable text does not remove this need: the requirement is traceability to a clause, which retrieval provides and training does not.\n\nB: Fine-tuning adjusts a model's behavior from training examples, but the model does not keep a reliable link from an answer to the passage it came from. It could still blend the two states' codes and could not show the clause behind each answer for the shift log. The stable text makes the one-time fee look efficient, but the cost argument does not meet the inspectors' requirement.\n\nC: Separate models would reduce mixing between the states, which addresses the trial's most visible error. Each model would still answer from what it absorbed in training rather than from a retrieved clause, so supervisors would have no dependable clause reference to record, and the company would maintain two customized models.\n\nD: Naming the state in the prompt may reduce mixing, but the model would still answer from what it learned in pretraining, not from the code itself. Asked to cite a clause it has not been given, a model can produce a plausible but invented clause number, which is the worst outcome when inspectors check citations."
+    },
+    {
+      "id": "gen-2026-11-21-c-01",
+      "domainId": "domain-1",
+      "taskId": "1.1",
+      "skillId": "1.1.4",
+      "type": "single",
+      "text": "A freight forwarder trained a machine learning (ML) model on four years of booking records to predict which import shipments customs will hold for inspection, so that its brokers can prepare documents early. In its first two months of use, the model flagged only about one in five of the shipments that were later held. Brokers say that the type of goods is usually the strongest sign that a shipment will be held. A data review found:\n\n- About 4% of past shipments were held, so the training data contains far more cleared shipments than held ones.\n- Declared value is blank on 6% of records.\n- Commodity type is \"general merchandise\" on 58% of records, while customs filings show that category is about 15% of the forwarder's imports.\n- Records from the first year use an older version of the tariff code list.\n\nWhich action will MOST likely improve the model's predictions?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Give held shipments greater weight in the training data to offset how rarely they occur, and then retrain the model on all four years of records."
+        },
+        {
+          "id": "B",
+          "text": "Fill in the blank declared values from the matching customs filings, and then retrain the model on all four years of records."
+        },
+        {
+          "id": "C",
+          "text": "Record the actual commodity at booking, correct past commodity entries from the customs filings, and then retrain the model on the corrected records."
+        },
+        {
+          "id": "D",
+          "text": "Remove the first year of records, which use the older tariff code list, and then retrain the model on the three most recent years."
+        }
+      ],
+      "correctOptionIds": [
+        "C"
+      ],
+      "explanation": "A: Rare outcomes can make a model favor the common class, and reweighting is a reasonable technique when the inputs are sound. Here, though, the input that brokers say matters most is wrong on many records: 'general merchandise' appears almost four times as often in the bookings as in the customs filings. Giving held shipments more weight teaches the model more strongly from goods descriptions that are often false, so it cannot recover the signal.\n\nB: Blank values are visible and easy to fix, but they affect only 6% of records and a field that is not described as the main predictor. A wrong value that looks valid does more harm than an obvious gap, and the commodity field has that problem on a large share of records.\n\nC: A model can learn only what its data records. The booking records label 58% of shipments 'general merchandise', while customs filings put that category at about 15% of imports, so the commodity field misstates the goods on a large share of records. Because the type of goods is the strongest sign of a hold, the model has been trained on, and is now fed, an unreliable version of its most important input. Fixing how the field is captured and correcting past records addresses the quality problem that most limits the predictions.\n\nD: Codes from an older list are an inconsistency that can usually be mapped to current codes. Dropping a quarter of the history removes held examples that are already scarce and leaves the misrecorded commodity field untouched in the remaining three years."
+    },
+    {
+      "id": "gen-2026-11-21-c-02",
+      "domainId": "domain-1",
+      "taskId": "1.2",
+      "skillId": "1.2.3",
+      "type": "single",
+      "text": "A chain of 60 garden centers is about to launch a machine learning (ML) model that forecasts weekly demand for each plant line in each store, so that buyers can set orders. In testing on three years of past sales, forecasts were within 8% of actual demand. Leaders want one person to own the model after launch. The strategist notes:\n\n- Plants are perishable, and unsold stock is discarded at the end of each season.\n- The model vendor offers automatic nightly retraining at no extra charge, with alerts if a retraining job fails.\n- Weather causes sharp week-to-week swings in demand.\n- The chain adds new plant lines each spring and will open eight stores in new regions this year.\n- Each week's actual sales by store and line are complete by the following Monday.\n\nWhich post-launch arrangement should the strategist recommend?",
+      "options": [
+        {
+          "id": "A",
+          "text": "The owner reviews each store's discarded-stock costs every quarter and asks for the model to be retrained when those costs rise above last year's level."
+        },
+        {
+          "id": "B",
+          "text": "The owner compares each week's forecasts with that week's actual sales against the test result, and has the model retrained and retested when error passes an agreed limit."
+        },
+        {
+          "id": "C",
+          "text": "The owner has the model retrained and retested at the start of every quarter on the latest sales, before each season's new plant lines reach the stores."
+        },
+        {
+          "id": "D",
+          "text": "The owner switches on the vendor's nightly retraining and follows up promptly on any alert that a nightly retraining job has failed to complete."
+        }
+      ],
+      "correctOptionIds": [
+        "B"
+      ],
+      "explanation": "A: Discarded-stock cost is the business result the forecasts are meant to improve, so it is worth watching. On its own it is a lagging and mixed signal: waste also moves with buying decisions, pricing and weather, and a quarterly review finds a problem months after forecasts began to slip. It cannot tell the owner whether the model itself has degraded.\n\nB: Models degrade after launch when the data they see drifts from the data they were trained on, and new plant lines and stores in new regions will cause exactly that. Because actual sales are complete every Monday, live forecast error can be measured weekly against the testing baseline. Retraining when error crosses an agreed threshold, and testing the new model before it is used, responds to drift when it happens rather than on a schedule.\n\nC: Quarterly retraining matches the seasonal rhythm of the business, but drift from new lines and new stores will not arrive on a calendar. Without measuring live error, the owner would not know whether the model slipped in week two of a quarter, or whether a retrained model is any better than the old one.\n\nD: Nightly retraining keeps the model close to recent sales, and job-failure alerts show that the pipeline runs. Neither shows whether forecasts are accurate: a job can succeed and still produce a worse model, for example after a week of unusual weather, and nobody would be comparing the forecasts with actual sales."
+    },
+    {
+      "id": "gen-2026-11-21-f-01",
+      "domainId": "domain-1",
+      "taskId": "1.2",
+      "skillId": "1.2.1",
+      "type": "single",
+      "text": "A mobile network operator handles about 40,000 number-porting requests a month from customers who are switching to it from other networks. Staff process each request by hand across four internal systems, which takes about 20 minutes. A vendor has proposed an AI agent that would read each request, decide what to do and complete the work in those systems. The strategist's review finds:\n\n- All four systems offer APIs that an automated process could call.\n- Staff work from the porting scheme's published procedure, and quality checks find that different staff given the same request take the same actions.\n- About 3 percent of requests fail a scheme check, usually because the customer's details differ slightly between networks; most prove to be genuine switches once staff speak to the customer.\n- Volume is expected to rise by half next year after a competitor closes.\n- Missing the scheme's one-working-day deadline brings a fine from the regulator.\n\nWhich approach should the strategist recommend?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Pilot the vendor's agent on the requests that fail a check, and keep staff on all other requests until the agent's results justify a wider rollout."
+        },
+        {
+          "id": "B",
+          "text": "Have a rule-based process complete passing requests through the APIs, and send the customer an automatic notice to resubmit whenever a check fails."
+        },
+        {
+          "id": "C",
+          "text": "Build a workflow that carries out each porting step in a set order through the APIs, and route any request that fails a check to a staff member."
+        },
+        {
+          "id": "D",
+          "text": "Deploy the vendor's agent for all requests, with fixed validation rules that block any system update that does not match the scheme's message format."
+        }
+      ],
+      "correctOptionIds": [
+        "C"
+      ],
+      "explanation": "A: This puts AI on the small share of work that does need judgment, but leaves the other 97 percent to manual handling even though staff already handle it the same way every time. Work that follows a known procedure identically is where rule-based automation removes the most effort, and the expected rise in volume makes leaving it manual costly.\n\nB: Rules suit the passing requests, but rules cannot judge cases that fall outside them. Failed checks are mostly genuine switches with small differences in details, so an automatic rejection would push valid customers to start again and risk missing the one-day deadline. Exceptions that need judgment should go to a person, or to a tool designed for that judgment, not to a blanket rule.\n\nC: Rule-based automation fits work whose logic can be written down completely: staff follow a published procedure and reach the same actions on the same request, and every system has an API. A fixed-order workflow does that work quickly, predictably and at low cost per request, which suits rising volume and a deadline that carries fines. Requests that fail a check need a conversation to resolve, so routing them to staff keeps judgment where it is needed.\n\nD: An agent earns its place when the path to a goal has to be worked out case by case. Here the steps are already known, so the agent adds cost and variable behavior to every request. Format checks would catch malformed updates but not a well-formed update that takes the wrong step."
+    },
+    {
+      "id": "gen-2026-11-21-f-02",
+      "domainId": "domain-1",
+      "taskId": "1.3",
+      "skillId": "1.3.2",
+      "type": "single",
+      "text": "A furniture retailer receives social-compliance audit reports on its supplier factories in several countries. A generative AI tool summarizes each report and lists every finding that needs corrective action. The tool sends the whole report to the model in one request; the model's context window is about 100,000 tokens, and when a report is too long the tool keeps as much of it as fits. Compliance staff checked a quarter's summaries against the reports:\n\n- English reports of up to 90 pages produce complete lists of findings.\n- For Japanese and Thai reports of 50 to 70 pages, findings in the early sections are listed accurately, but findings in the final sections are missing.\n- More of the Japanese and Thai reports arrive as scanned images, which the tool converts to text before summarizing.\n- The model vendor's newest version scores higher on multilingual benchmarks.\n\nWhich explanation and response should the strategist recommend?",
+      "options": [
+        {
+          "id": "A",
+          "text": "The model handles Japanese and Thai less well; move to the vendor's newest version, which scores higher on multilingual benchmarks, and recheck a sample of reports."
+        },
+        {
+          "id": "B",
+          "text": "Text is lost when scanned pages are converted; improve the conversion of scanned reports before they are summarized, and recheck a sample of reports."
+        },
+        {
+          "id": "C",
+          "text": "Long inputs weaken the model's attention to later content; repeat the instruction to list every finding at the end of the prompt, after the report text."
+        },
+        {
+          "id": "D",
+          "text": "Japanese and Thai text takes more tokens per page, so those reports overrun the window; summarize them section by section and merge the finding lists."
+        }
+      ],
+      "correctOptionIds": [
+        "D"
+      ],
+      "explanation": "A: A weaker grasp of a language would produce errors spread through a summary. Here the early sections are summarized accurately and only the final sections are missing, which is a pattern of content not reaching the model. A newer model with the same context window would receive the same shortened reports.\n\nB: Poor conversion of scanned pages would garble or drop text wherever the scan is poor, not consistently at the end of each report. Better conversion may be worth doing, but it would not explain why the last sections are the ones that go missing.\n\nC: Placing instructions after long content can help a model follow them. It cannot help with sections that never reach the model: if the report is cut to fit the window, the model has nothing from the final sections to list, whatever the instruction says.\n\nD: Context windows are measured in tokens, not pages or words, and the number of tokens a page uses depends on the language and how the model's tokenizer splits it. Languages such as Japanese and Thai often take many more tokens per page than English, so a 60-page report can exceed a window that holds a 90-page English report. The tool then keeps only the opening part. Splitting the report into sections that each fit, and combining the results, keeps every section in view."
+    },
+    {
+      "id": "gen-2026-11-21-e-01",
+      "domainId": "domain-1",
+      "taskId": "1.2",
+      "skillId": "1.2.2",
+      "type": "single",
+      "text": "A car rental company with 90 branches uses an AI agent to handle booking changes in its app. The agent can change dates, switch vehicle classes and add drivers. It works through four tools: the booking system, payments, customer profiles and the loyalty program. A review of last month's conversations found:\n\n- In about 6% of vehicle-class switches, the agent confirmed a class that the branch could not supply, and customers arrived to find no car.\n- Most of these failed switches were for pickups on the same day or the next day.\n- The agent's instructions now run to 14 pages, because a rule has been added after each complaint.\n- Operations already sends branch managers a nightly file that lists every vehicle at each branch.\n- Branch managers have asked to approve every class switch before the customer is told.\n\nWhich change should the company make?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Split the work among specialized agents for bookings, payments and loyalty, with a supervisor agent that routes each customer request to the right one."
+        },
+        {
+          "id": "B",
+          "text": "Give the agent a tool that queries each branch's current fleet, and have it check that tool before it confirms any vehicle-class switch."
+        },
+        {
+          "id": "C",
+          "text": "Load the nightly fleet file into a knowledge base that the agent searches, and have it check that source before it confirms any class switch."
+        },
+        {
+          "id": "D",
+          "text": "Send each vehicle-class switch to the branch manager for approval, and have the agent tell the customer once the manager has replied."
+        }
+      ],
+      "correctOptionIds": [
+        "B"
+      ],
+      "explanation": "A: Specialized agents under a supervisor help when one agent has too many tools and instructions to choose between reliably. Here the failures are confined to class switches, and none of the four tools, in any arrangement, tells an agent which cars a branch has. Splitting the work would leave every agent without that information.\n\nB: An agent acts on the world through its tools. It can only know a fact that changes during the day, such as which cars are on a branch's lot, if a tool lets it look the fact up when it needs it. The four tools cover bookings, payments, profiles and loyalty, so the agent has been confirming switches without any view of the fleet. A live fleet lookup, checked before each confirmation, gives it that view.\n\nC: Retrieving from a knowledge base is the right way to give a model reference content, but a file produced overnight shows the fleet as it was the evening before. Returns, breakdowns and walk-in rentals change it during the day, and most failures were for same-day or next-day pickups, where yesterday's list is most likely to be wrong.\n\nD: Manager approval would stop wrong confirmations, but it puts a person in front of a decision that a live data lookup can settle, delays every switch for the customer and adds work at 90 branches. It treats the symptom rather than giving the agent the information it lacks."
+    },
+    {
+      "id": "gen-2026-11-21-e-02",
+      "domainId": "domain-1",
+      "taskId": "1.2",
+      "skillId": "1.2.4",
+      "type": "single",
+      "text": "An architecture firm with 75 designers keeps a register of AI tools, each marked approved, blocked or under evaluation. Last year it bought 60 seats of a design-image generator under an enterprise agreement, and the register lists the generator as approved. A data protection review found:\n\n- Several designers uploaded client floor plans to the generator while signed in with personal free accounts.\n- The provider's consumer terms allow it to use uploads to improve its models; the firm's enterprise agreement excludes this.\n- Most of these designers completed the firm's AI training last year.\n- Two rival image generators are sold only to organizations and have no personal version.\n- The security team can deploy endpoint monitoring that detects uploads to known AI sites.\n\nWhat should the firm do?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Keep the generator's approved entry, and add a rule to the register that client drawings may be uploaded only to approved AI tools."
+        },
+        {
+          "id": "B",
+          "text": "Block the generator and approve one of the rival generators that are sold only to organizations, so that no personal version exists to misuse."
+        },
+        {
+          "id": "C",
+          "text": "Deploy endpoint monitoring that alerts the security team whenever designers upload files to the generator from accounts the firm did not issue."
+        },
+        {
+          "id": "D",
+          "text": "Split the register entry by account type, approving use through firm-issued enterprise accounts and blocking use through personal accounts."
+        }
+      ],
+      "correctOptionIds": [
+        "D"
+      ],
+      "explanation": "A: A rule about which tools may receive client drawings does not help when the register itself calls the generator approved. A designer using a personal account of that generator would read the rule as satisfied, because nothing in the entry separates the account the firm pays for from a personal one.\n\nB: A tool sold only to organizations removes the personal version, but it also takes away a generator that 60 designers use for approved work and replaces it with one they would have to learn. Blocking a tool that people rely on tends to push them to use it where the firm cannot see, which is the shadow AI the firm is trying to reduce.\n\nC: Endpoint monitoring is a useful detective control, but it reports uploads after client plans have already left the firm. The register would still tell designers that the generator is approved, so the behavior it detects would continue.\n\nD: A tool classification works only if it describes the risk precisely enough for staff to act on. The same generator carries different data terms depending on the account used, so approving it as a whole leaves personal use looking sanctioned, even to trained staff. Classifying by account type matches the register to the actual risk and keeps the approved path open."
+    },
+    {
+      "id": "gen-2026-11-21-g-01",
+      "domainId": "domain-1",
+      "taskId": "1.1",
+      "skillId": "1.1.6",
+      "type": "single",
+      "text": "A national blood service is buying an AI tool that schedules donor appointments and predicts which donors are likely to stop giving. Its procurement policy requires that each supplier's management of AI risk has been independently audited. The leading bid comes from a software vendor whose proposal states, \"Our AI is ISO/IEC 42001 certified.\"\n\nThe vendor's certificate was issued in 2024 by a certification body the service has not dealt with before. In 2025 the vendor bought the company that built the scheduling product, and it still runs that company as a separate business. The scheduling model would use donors' answers to health screening questions. The evaluation team must report on the bid within two weeks.\n\nWhat should the evaluation team do before relying on the certificate for this bid?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Confirm that the certificate is still current and that the certification body is accredited, and then accept the certificate for the whole bid."
+        },
+        {
+          "id": "B",
+          "text": "Ask the vendor for ISO/IEC 27001 certification covering the donor health data, and treat that audit as the evidence the policy requires."
+        },
+        {
+          "id": "C",
+          "text": "Read the scope statement on the certificate to see whether the audited system includes the business that develops and runs the scheduling product."
+        },
+        {
+          "id": "D",
+          "text": "Require the vendor to obtain a separate ISO/IEC 42001 certificate for the scheduling product itself before the contract is signed."
+        }
+      ],
+      "correctOptionIds": [
+        "C"
+      ],
+      "explanation": "A: Checking that a certificate is current and issued by an accredited body is sensible, and an unfamiliar certification body makes it tempting. But a valid certificate only covers the management system within its stated scope, and an organization is not certified by association. Accepting it for the whole bid assumes that a business bought after the certificate was issued is covered, which the checks in this option do not show.\n\nB: ISO/IEC 27001 is an information security management standard. Protecting donors' health answers matters, but a 27001 audit does not examine how the supplier manages AI risks such as model behaviour, impact on individuals or monitoring, which is what the policy asks to see audited.\n\nC: ISO/IEC 42001 certification shows that an independent auditor has examined an organization's AI management system, and the certificate states the scope that audit covered. The certificate was issued before the vendor bought the business that builds and runs the scheduling product, and that business still operates separately. Reading the scope statement shows whether its AI work was inside the audited system, which decides whether the certificate meets the policy for this bid.\n\nD: Any ISO/IEC 42001 certificate is for a management system, not for a product as such, so a new certificate would still be an audit of how the vendor manages AI. The first step is to read the existing certificate's scope; if the scheduling business is outside it, the vendor can extend its audited system to cover it, rather than the service imposing a new certificate it may not need."
+    },
+    {
+      "id": "gen-2026-11-21-g-02",
+      "domainId": "domain-1",
+      "taskId": "1.2",
+      "skillId": "1.2.4",
+      "type": "single",
+      "text": "A pharmacy chain with 900 staff publishes a register of AI tools on its intranet. Each tool is listed as approved, blocked or under evaluation. A security review of the register finds:\n\n- Four tools are approved, six are blocked and eleven are under evaluation; the oldest under-evaluation entries were added ten months ago.\n- Network logs show daily use of two under-evaluation tools, including by pharmacists drafting medicine leaflets for patients.\n- In a staff survey, most respondents said they understood that under-evaluation tools may be used as long as no patient names are entered.\n- One security analyst reviews tool requests alongside other duties.\n\nThe chief pharmacist proposes blocking every under-evaluation tool on the network until its review is finished.\n\nWhat should the chain do?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Block all under-evaluation tools on the network until each review is finished, and tell staff which approved tools to use in the meantime."
+        },
+        {
+          "id": "B",
+          "text": "Define in the register, with immediate effect, what each status permits, including who may use under-evaluation tools and with what data."
+        },
+        {
+          "id": "C",
+          "text": "Add a second analyst to the review work so that all eleven under-evaluation tools are approved or blocked within the next quarter."
+        },
+        {
+          "id": "D",
+          "text": "Remind all staff that under-evaluation tools must not be used with patient information, and move every entry older than six months to blocked."
+        }
+      ],
+      "correctOptionIds": [
+        "B"
+      ],
+      "explanation": "A: Blocking is the cautious reflex after seeing patient leaflets drafted with unreviewed tools. But with a ten-month queue it would cut staff off from eleven tools for an unknown time, and outright bans tend to push people toward personal devices and consumer apps, where the chain sees nothing. It also leaves the status itself undefined for every future entry.\n\nB: A classification only reduces shadow AI if staff read it the way it is meant. The survey shows they read 'under evaluation' as permission with a self-chosen data rule. Defining each status, with immediate effect, can stop the leaflet drafting at once: the chain can state that an under-evaluation tool may be used only by named pilot users, with no patient-related content, or not at all. It does this without banning every tool in the queue, so a governed route stays open and future entries carry the same clear meaning.\n\nC: A single part-time reviewer is a real bottleneck, and more capacity would shorten the queue. But while reviews continue, staff would still treat the eleven entries as usable on their own terms, and every new request would land in the same undefined status.\n\nD: A reminder and an age limit respond to both the survey and the old entries, but the reminder still leaves each person to judge what counts as patient information and lets unreviewed tools keep drafting patient leaflets, and blocking by age makes decisions on how long a review has taken rather than on what is known about each tool. The status still has no defined meaning for the tools that remain."
+    },
+    {
+      "id": "gen-2026-11-21-h-01",
+      "domainId": "domain-1",
+      "taskId": "1.2",
+      "skillId": "1.2.1",
+      "type": "single",
+      "text": "A self-storage company with 180 sites uses a machine learning (ML) model to recommend weekly prices for each unit size at each site. In a six-month pilot at 20 sites, revenue rose 5 percent, and about two-thirds of the gain came from renewal prices for existing tenants. The pilot also produced three renewal notices that broke a state law: an existing tenant's rent may rise by no more than 10 percent in any 12 months, and each increase needs 30 days' written notice. Regulators can fine the company for each notice that breaks the law. Across all sites, the company sends about 9,000 renewal notices a month. The data science team has retrained the model with a penalty for increases above the limit, and in back-testing on last year's prices it produced no violations. The operations director proposes returning existing tenants to the old fixed renewal table.\n\nWhich approach should the company take for existing tenants?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Use the retrained model for all renewal prices at every site, and audit a sample of renewal notices against the state law each quarter."
+        },
+        {
+          "id": "B",
+          "text": "Return existing tenants to the old fixed renewal table, and keep using the model's recommendations for new rentals at every site."
+        },
+        {
+          "id": "C",
+          "text": "Keep the model's renewal recommendations, and pass each one through a coded check that limits it to the legal increase and notice period."
+        },
+        {
+          "id": "D",
+          "text": "Have each site manager approve every renewal increase that the model recommends before its notice is sent, and keep the model at all sites."
+        }
+      ],
+      "correctOptionIds": [
+        "C"
+      ],
+      "explanation": "A: An ML model is probabilistic: a penalty during training makes large increases less likely, but it does not guarantee that the model will never recommend one, and a clean back-test on last year's prices says nothing certain about next year's. A quarterly sample audit finds a breach only after the notice has gone out and the fine has been incurred.\n\nB: Rule-based automation suits the legal limit because the limit is fully specified, but that is a reason to enforce the limit with a rule, not to give up the model. About two-thirds of the pilot's revenue gain came from renewal prices, and the old fixed table would throw that away even though the model can still choose the best price inside the limit.\n\nC: The two parts of the decision call for different tools. Choosing a good renewal price from demand and tenant behaviour is a judgment that ML does well. The legal limit is a fixed, fully stated condition that must hold for every notice, which is what deterministic rules guarantee and a probabilistic model cannot. A coded check after the model keeps the revenue gain and makes a breach impossible rather than unlikely.\n\nD: Human approval is more cautious, but checking a fixed percentage and a notice date is a task that a rule performs exactly and instantly. Asking managers to check about 9,000 notices a month adds cost and delay, and people checking routine figures at that volume still make mistakes, so it gives a weaker guarantee than a coded check."
+    },
+    {
+      "id": "gen-2026-11-21-h-02",
+      "domainId": "domain-1",
+      "taskId": "1.2",
+      "skillId": "1.2.3",
+      "type": "single",
+      "text": "An electric bicycle maker uses a machine learning (ML) classifier to sort customer support emails into eight queues, such as warranty, parts and delivery. The classifier launched two years ago. Since then, the company has added a range of cargo bikes and issued a battery recall. Customers now complain that some emails wait days for a reply. A strategist gathers these facts:\n\n- Each week, the classifier's accuracy on a fixed set of 5,000 labeled emails from its launch year is reported as 93 percent, the same as at launch.\n- The share of emails sent to the general queue has risen from 8 percent to 19 percent over six months.\n- When an agent moves an email to another queue, the support system records the queue it was moved to.\n- Most of the emails that agents moved mention the recall or the cargo range.\n\nWhat should the company do?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Retrain the classifier each month on the emails that agents have moved, and keep reporting its accuracy on the existing labeled test set."
+        },
+        {
+          "id": "B",
+          "text": "Each month, measure the classifier's accuracy on a labeled sample of recent emails, and retrain it when accuracy falls below an agreed level."
+        },
+        {
+          "id": "C",
+          "text": "Route emails that the classifier scores with low confidence to an agent for sorting, and report the share routed this way each week."
+        },
+        {
+          "id": "D",
+          "text": "Add rules that send emails mentioning the recall or the cargo range to the right queues, and leave the classifier as it is."
+        }
+      ],
+      "correctOptionIds": [
+        "B"
+      ],
+      "explanation": "A: Retraining is one of the updates a model needs, but this plan keeps the measurement that failed to show the problem. A test set from the launch year contains no recall or cargo-bike emails, so it would keep reporting about 93 percent whether retraining helped or not. Training only on moved emails also over-represents past errors rather than the current mix of emails.\n\nB: A model is trained and tested on data from one period, and the topics customers write about have changed since then. Accuracy on a fixed launch-year test set cannot reveal that change, which is why the dashboard stayed at 93 percent while the general queue grew. Ongoing monitoring has to compare predictions with correct labels on current data. The agents' moves supply those labels, and measuring against them tells the company when an update is due and whether it worked.\n\nC: Confidence-based routing is a useful safeguard, but a classifier's confidence is not the same as its accuracy. A model can be confident and wrong on topics it never saw, such as a recall, and routing uncertain emails does not show the company whether the model itself needs updating.\n\nD: Rules would fix today's two known topics, but the classifier would still be measured against launch-year data. The next product launch or recall would degrade it again without any measure showing the change. The problem is the absence of monitoring on current data, not these two topics."
+    },
+    {
+      "id": "gen-2026-11-21-i-01",
+      "domainId": "domain-1",
+      "taskId": "1.1",
+      "skillId": "1.1.1",
+      "type": "single",
+      "text": "A commercial waste collection company serves 9,000 business customers. Last year it bought a machine learning (ML) model from a vendor that predicts, each evening, which bins will overflow before their next scheduled collection, so that a spare truck can empty those bins early. The vendor reported that the model was 95 percent accurate on a year of the company's records that had been held back from training. After three months in use, an operations review found that about 5 percent of bins overflow before their scheduled collection in a typical week. The model flags about 0.4 percent of bins each evening, and most of the flagged bins would have overflowed. Complaints about overflowing bins are at the same level as before. Since the model was trained, the company has added 600 restaurant customers, whose bins fill faster than average.\n\nWhich explanation BEST accounts for these results?",
+      "options": [
+        {
+          "id": "A",
+          "text": "The model has drifted, because the restaurant customers added since training fill their bins in patterns that the model never learned from."
+        },
+        {
+          "id": "B",
+          "text": "The model is overfitted to the years it was trained on, so it scores well on past records but poorly on the bins it sees each evening."
+        },
+        {
+          "id": "C",
+          "text": "The model's accuracy figure is high mainly because few bins overflow, so it says little about how many of the overflows the model catches."
+        },
+        {
+          "id": "D",
+          "text": "The evening predictions arrive too late for the spare truck's rounds, so many bins that the model flags overflow before the truck can reach them."
+        }
+      ],
+      "correctOptionIds": [
+        "C"
+      ],
+      "explanation": "A: Drift happens when the data a model sees in use moves away from the data it learned from, and the restaurant customers are a real change. But they are 600 of 9,000 customers, and the shortfall is far larger: the model flags about 0.4 percent of bins when about 5 percent overflow. A model that flags so few bins would also have scored about 95 percent on the held-back year, so the gap existed before any drift.\n\nB: An overfitted model does well on its training data and poorly on new data. The 95 percent figure came from a year that was held back from training, so it already measured the model on records it had not seen. The flagged bins also mostly do overflow, which is not the pattern of a model that has stopped working on new bins.\n\nC: Accuracy is the share of all predictions that are correct. When one outcome is rare, a model can score highly by predicting the common outcome almost every time. With about 5 percent of bins overflowing, predicting that no bin overflows would already be about 95 percent accurate. The model flags about 0.4 percent of bins and is usually right when it does, so it catches only a small share of overflows, and complaints have not fallen. Measures such as recall, the share of actual overflows that the model catches, show this; overall accuracy hides it.\n\nD: Timing would matter if the model flagged most overflowing bins and the truck missed them. Here the model flags about 0.4 percent of bins while about 5 percent overflow, so most overflowing bins are never flagged at all. Moving the truck earlier would not change how few bins the model identifies."
+    },
+    {
+      "id": "gen-2026-11-21-i-03",
+      "domainId": "domain-1",
+      "taskId": "1.2",
+      "skillId": "1.2.4",
+      "type": "single",
+      "text": "A market research agency with 300 staff keeps a register that lists each AI tool as approved, blocked or under evaluation. Two years ago, the security team blocked a popular transcription tool for focus-group recordings because the vendor's terms allowed it to train its models on customer uploads. The register still lists the tool as blocked. Since then, the vendor has launched a business plan whose terms exclude training on customer data. The agency's approved transcription tool works only in English, and about a third of its focus groups are held in other languages. An expense audit this quarter found 14 researchers claiming for personal subscriptions to the blocked tool, and several said they had assumed the block no longer applied. The security team reviews register entries only when someone requests a new tool.\n\nWhat should the agency do?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Add the reason for each block and the approved alternative to every blocked entry, and remind researchers that personal subscriptions break the policy."
+        },
+        {
+          "id": "B",
+          "text": "List the transcription tool as under evaluation while its business plan is assessed, and give every blocked entry a date for its next review."
+        },
+        {
+          "id": "C",
+          "text": "Approve the tool's business plan now, and move the 14 researchers who pay for personal subscriptions onto seats that the company pays for."
+        },
+        {
+          "id": "D",
+          "text": "Block the tool's web address on all company devices, and stop reimbursing any AI subscription that does not appear on the approved list."
+        }
+      ],
+      "correctOptionIds": [
+        "B"
+      ],
+      "explanation": "A: Giving reasons and alternatives makes a register more transparent, and some researchers did misread the block. But the reason recorded for this block may no longer hold, and the approved alternative does not cover the third of focus groups held in other languages, so researchers would still have a need the register does not meet. Reminders do not change an entry that may be out of date.\n\nB: A tool classification is only useful while it reflects current facts. The vendor's terms have changed, so the tool's blocked status needs reassessment, and listing it as under evaluation tells staff that a decision is in progress rather than leaving a stale block that they have started to ignore. Because entries are reviewed only when a new tool is requested, other blocks can go out of date in the same way; scheduled reviews keep the register credible. The assessment still checks the new plan before anyone is cleared to use it.\n\nC: The new terms address the original reason for the block, which makes quick approval tempting, and it would bring the 14 researchers into a managed arrangement. But a change in a vendor's terms is a reason to evaluate the plan, not proof that it meets the agency's security, storage and contract requirements. Approving without that assessment skips the step the classification exists for.\n\nD: Tighter blocking enforces the current entry. But researchers are already paying personally for the tool because the approved one cannot handle a third of their work, and blocking company devices pushes that use onto personal devices where the agency has no visibility. It also hardens a block whose original reason may no longer apply."
+    },
+    {
+      "id": "gen-2026-11-21-j-01",
+      "domainId": "domain-1",
+      "taskId": "1.2",
+      "skillId": "1.2.4",
+      "type": "single",
+      "text": "A contract research organization that runs clinical trials for drug companies has 1,100 staff. Its IT security team keeps a register of AI tools, each marked approved, blocked or under evaluation. A review this quarter found:\n\n- The biostatistics group's intranet page lists the AI tools it recommends for writing analysis code. One of them is marked blocked in the register.\n- Asked where they check whether a tool is allowed, most biostatisticians named their group's page.\n- Audit logs show the blocked coding tool being reached from home connections, where the office network filter does not apply.\n- Staff completed the company's annual AI policy course last spring, and pass rates were high.\n- The group's page also holds worked examples and prompting tips that staff rate highly.\n\nWhat should the company change?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Extend the network filter to company laptops on home connections, so that the blocked coding tool cannot be reached from any company device."
+        },
+        {
+          "id": "B",
+          "text": "Add a module about the blocked coding tool to the annual AI policy course, and require biostatisticians to retake the course this quarter."
+        },
+        {
+          "id": "C",
+          "text": "Keep tool status in the register alone, and change the group's page so that each tool it recommends links to its entry in the register."
+        },
+        {
+          "id": "D",
+          "text": "Ask the biostatistics group to compare its page with the register each quarter and correct any tool whose status differs from it."
+        }
+      ],
+      "correctOptionIds": [
+        "C"
+      ],
+      "explanation": "A: A wider filter closes one route to one tool, but it treats the use as deliberate rule-breaking. The biostatisticians checked the source they trust, and that source told them the tool was fine. While a second list keeps giving its own answers, staff will keep choosing tools the register blocks, on personal devices or with tools the filter does not know about. Blocking supports a classification; it does not replace a clear one.\n\nB: The policy course explains rules, but staff already passed it and still followed their group's page, because the page answers the everyday question of which tool to use. Training about one blocked tool does not stop the next conflict between the two lists, and it leaves staff with two sources that disagree.\n\nC: Shadow AI falls when every employee can find one trusted answer to whether a tool is allowed. Here two lists give conflicting answers, and staff follow the one closer to their work. Making the register the only place where a tool's status is set, and pointing the group's page at it, removes the conflict while keeping the examples and tips that make the page useful.\n\nD: Quarterly reconciliation keeps two lists that each claim to classify tools, so they will drift apart between checks, and staff will still treat the group's page as the authority. For up to three months at a time, a tool the register blocks can still appear as recommended. A single source of status avoids the drift instead of correcting it afterward."
     }
   ]
 }

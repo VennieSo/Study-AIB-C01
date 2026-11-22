@@ -1105,6 +1105,1226 @@
         "D"
       ],
       "explanation": "A: A proof of concept is built to test value, not to be operated. Production-grade AI needs defined ownership and support: someone accountable for the assistant, a team that handles incidents and keeps its content current as policies change, and a process for managing changes. Without this, problems after launch have no owner.\n\nB: The trial showed accurate, well-rated answers, so model capability is not the gap. A larger model adds cost and does not provide the ownership, support or monitoring that production use requires.\n\nC: Reviewing every answer would prevent errors from reaching employees, but it would turn a self-service assistant into an HR queue for 20,000 employees. Targeted oversight through monitoring and escalation fits the risk of HR questions better than full review.\n\nD: Answer quality in a 300-person trial does not guarantee quality over time or across a much larger population. Production readiness includes ongoing monitoring of output quality, alerts when it drops, and a feedback path that lets the owner find and fix wrong answers.\n\nE: The trial already met its goals. Extending it under a team that is not set up to run the assistant delays value without building the operational capability needed for launch."
+    },
+    {
+      "id": "gen-2026-11-20-08",
+      "domainId": "domain-4",
+      "taskId": "4.2",
+      "skillId": "4.2.1",
+      "type": "single",
+      "text": "An equipment rental company wants a machine learning (ML) model that predicts which machines are likely to break down in the next 30 days, so that they can be serviced before they go out to a customer. A data readiness review found the following:\n\n- Sensor readings for the whole fleet are in a cloud data warehouse. They cover three years and are 96% complete.\n- Breakdowns and repairs are recorded as work orders in a field-service system that another division runs. Technicians describe each fault in free text.\n- The warehouse identifies machines by sensor serial number, and the field-service system identifies them by fleet number. One planner keeps a spreadsheet that matches the two for about 60% of the fleet.\n\nThe data science team proposes to start modeling on the sensor data now and to bring in the work orders later.\n\nWhich assessment of data readiness is MOST accurate?",
+      "options": [
+        {
+          "id": "A",
+          "text": "The data is not ready: the model must learn from past breakdowns matched to sensor readings, so completing the match between the two identifiers comes first."
+        },
+        {
+          "id": "B",
+          "text": "The data is ready: three years of nearly complete readings is enough to begin, and the work orders can be used to refine the model later."
+        },
+        {
+          "id": "C",
+          "text": "The data is not ready: the 4% of sensor readings that are missing must be recovered or estimated before any model is trained."
+        },
+        {
+          "id": "D",
+          "text": "The data is not ready: both systems should be moved to one platform under a single owner before any modeling begins."
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "explanation": "A: Data readiness is judged against the use case. A model that predicts breakdowns learns from examples of machines that did and did not break down, so it needs the breakdown history joined to the sensor readings. That history sits in another division's system under a different identifier, and the only link covers 60% of the fleet. Closing that gap is the first task.\n\nB: The sensor data is the most visible asset and is in good condition. However, readings alone do not say which machines went on to fail. Without the work orders, the team can neither train a model to predict breakdowns nor test whether its predictions are right, so the work orders cannot wait.\n\nC: Completeness is a real dimension of data quality, and gaps should be understood. A 4% gap in three years of readings is small and is unlikely to prevent a useful model. This assessment concentrates on the dataset that is nearly ready and overlooks the one that cannot yet be used.\n\nD: Silos do slow AI work, and shared ownership would help over time. Consolidating two systems is a large program that this use case does not need. The model requires the two datasets to be linked by a common machine identifier, which can be done while each system stays where it is."
+    },
+    {
+      "id": "gen-2026-11-20-09",
+      "domainId": "domain-4",
+      "taskId": "4.4",
+      "skillId": "4.4.2",
+      "type": "single",
+      "text": "Over 18 months, a commercial insurer has completed nine small generative AI (GenAI) projects, each in a different business unit. All nine met their targets, and unit heads are keen to do more. The Chief Executive asks why the company is still no closer to using AI across the enterprise. A strategist's review finds the following:\n\n- Each unit chose its own vendor and tools and paid from its own budget.\n- Three of the nine projects extract data from incoming documents, each in a different way.\n- No project has been adopted by a second unit.\n- Units have submitted six new proposals. Four of them involve reading incoming documents.\n- The technology group proposes to pause new projects for a year and build an enterprise AI platform.\n\nWhich approach should the strategist recommend for the next phase?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Approve the six proposals, on condition that the four document proposals all buy from the same vendor."
+        },
+        {
+          "id": "B",
+          "text": "Pause new projects for a year and build the enterprise platform, so that later projects start from a common foundation."
+        },
+        {
+          "id": "C",
+          "text": "Turn one of the three document projects into a shared service, deliver the four document proposals on it, and approve the other two."
+        },
+        {
+          "id": "D",
+          "text": "Have the technology group build a new document capability to an enterprise standard, hold the four document proposals until it is ready, and approve the other two."
+        }
+      ],
+      "correctOptionIds": [
+        "C"
+      ],
+      "explanation": "A: A common vendor simplifies purchasing and is a step toward consistency. However, each unit would still build and run its own solution, so the company would have seven document solutions and none that is shared. The pattern that has kept nine wins from adding up would continue.\n\nB: A common foundation is what the company lacks. Stopping all delivery for a year gives up the regular results that sustain support and funding, and it sets aside three working document solutions that could be the start of that foundation.\n\nC: A scaling approach uses short-term wins as steps toward enterprise deployment: each win should leave behind something that the next one reuses. Document extraction has been solved three times and is needed four more times. Promoting one proven solution to a shared service keeps results coming, and it creates the first capability that several units use.\n\nD: This also aims at a shared document capability, and it keeps the other two proposals moving. However, it starts again when three working solutions already exist, and four units wait for a result in the meantime. Building on a proven win reaches the same capability sooner and with less risk."
+    },
+    {
+      "id": "gen-2026-11-20-10",
+      "domainId": "domain-4",
+      "taskId": "4.4",
+      "skillId": "4.4.6",
+      "type": "multiple",
+      "text": "A parcel carrier piloted an AI route-planning tool at two small depots, which kept their existing planning software during the pilot. Fuel use fell by 7%, and drivers and planners at both depots support the tool. The carrier now plans to roll the tool out to all 40 depots in five waves over six months. A strategist who reviewed the rollout plan notes the following:\n\n- Each night, the tool took about 12 minutes to plan the next day's routes at each pilot depot. The largest depots handle five times as many stops.\n- The largest depots are in the final wave.\n- The plan removes the existing planning software at each depot on the day that the depot goes live.\n- The vendor charges a fee for each route that the tool plans.\n- The business case assumes a 7% fuel saving at every depot.\n\nWhich actions should the strategist require before the rollout proceeds? (Choose TWO.)",
+      "options": [
+        {
+          "id": "A",
+          "text": "Negotiate a fixed annual fee with the vendor to replace the charge for each route."
+        },
+        {
+          "id": "B",
+          "text": "Retain the existing planning software at each depot for a period after it goes live."
+        },
+        {
+          "id": "C",
+          "text": "Move the largest depots into the first wave so that the biggest fuel savings arrive early."
+        },
+        {
+          "id": "D",
+          "text": "Commit each depot manager to a 7% fuel saving from the first full month after go-live."
+        },
+        {
+          "id": "E",
+          "text": "Run the tool against a full night's stops from one of the largest depots."
+        }
+      ],
+      "correctOptionIds": [
+        "B",
+        "E"
+      ],
+      "explanation": "A: Pricing deserves attention as volume grows. A fee for each route rises in step with the routes that produce the fuel saving, so cost and benefit scale together. A fixed fee might be worth negotiating, but nothing in the plan makes it a condition for proceeding.\n\nB: Scaling should not remove the ability to keep operating if the new system fails. The pilot depots kept their existing software, so the tool has never run without a fallback. Removing the software on go-live day means that a failed nightly run leaves a depot with no routes for the next morning. Keeping it for a period protects continuity at the cost of some license fees.\n\nC: Bringing the largest depots forward would deliver more of the saving sooner. However, the tool has only run at depots one-fifth their size, so this puts the least-tested conditions and the most deliveries at risk first. Early waves are for learning at lower stakes.\n\nD: Clear targets and named owners help a rollout. However, the 7% comes from two small depots, and a depot's first month includes the change itself. Holding every manager to that figure from the start tests the business case assumption on people, and it does nothing to protect daily operations.\n\nE: A result at small scale does not show performance at large scale. The largest depots have five times the stops, and the time to plan routes may grow faster than the number of stops. Running a full night's stops from a large depot shows whether routes would be ready in time. Because those depots are in the final wave, the plan would otherwise discover a problem only when most of the network already depends on the tool."
+    },
+    {
+      "id": "gen-2026-11-20-b-10",
+      "domainId": "domain-4",
+      "taskId": "4.4",
+      "skillId": "4.4.1",
+      "type": "single",
+      "text": "A grocery chain is using the AWS Cloud Adoption Framework for Artificial Intelligence (AWS CAF-AI) to plan its AI transformation. After a series of leadership workshops, it has a ranked list of six AI opportunities, including fresh-food demand forecasting and personalized offers. For each opportunity, the list gives an executive sponsor, a target outcome such as a 15% cut in fresh-food waste, an estimated annual value and a planned start quarter. A strategist reviewing the list notes the following:\n\n- The chief information officer plans to begin an assessment of capability gaps and cross-team dependencies next month.\n- Two category managers want to start a demand forecasting proof of concept right away.\n- An earlier analytics project stalled for months when the team discovered that store waste records could not be read at head office.\n\nWhat should the chain do next?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Add to each opportunity on the list the systems, records and outside feeds it would need, and who owns each, before the assessment begins."
+        },
+        {
+          "id": "B",
+          "text": "Begin the capability assessment next month as planned, covering all six of the framework's perspectives so that data gaps are found alongside others."
+        },
+        {
+          "id": "C",
+          "text": "Start the forecasting proof of concept now, and use what it reveals about data quality and access to plan the other five opportunities."
+        },
+        {
+          "id": "D",
+          "text": "Fund a company-wide data catalog first, so that every opportunity can locate usable data once the assessment and pilots begin."
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "explanation": "A: In AWS CAF-AI, the first phase, Envision, does more than prioritize opportunities and tie them to sponsors and measurable outcomes. It also establishes what data each opportunity depends on. The list covers sponsors, outcomes, value and timing but says nothing about data, so the chain has not finished that phase. Adding each opportunity's data needs and owners lets the next phase look for gaps in the data these six opportunities actually need, and avoids the kind of late discovery that stalled the earlier project.\n\nB: Assessing capability gaps and cross-team dependencies is the work of the next phase, Align, so this is the planned next step. Without knowing which data each opportunity needs, though, the assessment can judge data readiness only in general, not for the six chosen opportunities.\n\nC: Taking pilots from proof of concept toward production belongs to the Launch phase. Starting one before the opportunity's data needs and capability gaps are understood risks the same kind of stall as the earlier project, and one forecasting proof of concept says little about the data behind personalized offers.\n\nD: A catalog may help later, and the stalled project makes data access look urgent. But building one company-wide before the chain knows which data its six opportunities need invests in breadth rather than in the sources that matter."
+    },
+    {
+      "id": "gen-2026-11-21-07",
+      "domainId": "domain-4",
+      "taskId": "4.1",
+      "skillId": "4.1.1",
+      "type": "single",
+      "text": "A veterinary group with 120 clinics plans to launch a generative AI (GenAI) tool in four months. With pet owners' consent, the tool will record consultations and draft clinical notes for vets to review and sign. A readiness assessment found:\n\n- The chief executive's business case assumes consultations will shorten from 20 to 15 minutes so that clinics can book more appointments.\n- The chief veterinary officer has told vets that the tool is meant to reduce after-hours note writing and that appointment lengths will not change.\n- Fifteen clinics have unreliable internet connections, and upgrades for them are planned over the next six months.\n- Thirty vets volunteered for early testing, and most describe note writing as the worst part of their job.\n\nThe project team's plan for the next month focuses on the connection upgrades and on training materials.\n\nWhich readiness gap should the group address FIRST?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Bring forward the internet upgrades at the 15 affected clinics, and launch the tool in all 120 clinics on the same date."
+        },
+        {
+          "id": "B",
+          "text": "Survey vets beyond the 30 volunteers about the tool before launch, and adjust the training plan to the concerns they raise."
+        },
+        {
+          "id": "C",
+          "text": "Have the chief executive and the chief veterinary officer agree on what the tool should achieve and how any time it frees will be used."
+        },
+        {
+          "id": "D",
+          "text": "Launch first in the 105 clinics with reliable connections, and add the other 15 clinics as their upgrades are completed."
+        }
+      ],
+      "correctOptionIds": [
+        "C"
+      ],
+      "explanation": "A: Connectivity is a real technical gap, but it affects 15 of 120 clinics and is already planned. Fixing it sooner does nothing about the larger risk that the group's two senior leaders expect the tool to deliver different and incompatible results.\n\nB: Volunteers can be more enthusiastic than their colleagues, so a wider survey is a reasonable cultural check. But the vets' views will be shaped by what leaders tell them the tool is for, and at present they have been given one purpose while the business case depends on another.\n\nC: Leadership alignment is a core readiness dimension. The chief executive's business case counts the benefit as shorter appointments, while the chief veterinary officer has promised vets that appointment lengths will not change. Until the leaders agree on the goal and how freed time will be used, the group cannot define success, and vets who were told one thing are likely to stop trusting the tool when schedules change.\n\nD: Phasing around the connectivity gap is sensible technically, but it launches into every reliable clinic with the leadership conflict unresolved. The disagreement about what the tool is for would surface in all 105 clinics at once."
+    },
+    {
+      "id": "gen-2026-11-21-08",
+      "domainId": "domain-4",
+      "taskId": "4.2",
+      "skillId": "4.2.3",
+      "type": "single",
+      "text": "An online hotel booking site shows each visitor a row of suggested hotels. A model retrained every Sunday scores each known customer in an overnight batch run, using past bookings, and the site displays the stored results. About 70 percent of visitors are signed out or new, and they all see the same popular hotels. The product director wants these visitors to see suggestions based on the hotels they have just viewed.\n\nFour teams have made proposals. The data science team wants to retrain the model every hour on the newest clicks. The operations team wants to run the scoring batch every hour instead of nightly. A vendor offers a deep learning model that learns from browsing sequences and fits into the existing nightly run. The web engineering team wants to stream page events to a model that is called on each page request.\n\nWhich proposal should the strategist support?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Retrain the model every hour on the newest clicks, so that what it has learned reflects the hotels visitors have just viewed on the site."
+        },
+        {
+          "id": "B",
+          "text": "Run the scoring batch every hour instead of nightly, so that the stored suggestions are refreshed with the latest clicks and searches."
+        },
+        {
+          "id": "C",
+          "text": "Adopt the vendor's sequence model in the nightly run, so that suggestions follow the order in which visitors have viewed hotels."
+        },
+        {
+          "id": "D",
+          "text": "Stream page events to a model called on each page request, so that it scores the visitor with the events received up to that moment."
+        }
+      ],
+      "correctOptionIds": [
+        "D"
+      ],
+      "explanation": "A: Retraining changes what the model has learned from past data, but it does not change when or for whom predictions are made. The suggestions would still be produced in the overnight batch for known customers, so a signed-out or new visitor would see nothing based on the hotels they are viewing now.\n\nB: Scoring more often makes stored suggestions fresher, but batch inference still scores a fixed set of visitors ahead of time. A new visitor's clicks would be used only in a later run, after the pages they were viewing had been shown, and a visitor with no history must be scored when they arrive.\n\nC: A sequence model can learn useful patterns from browsing, but a model can use only the inputs it receives when it makes a prediction. Run in the nightly batch, it would see each visit's browsing only after the visit ended.\n\nD: Using what a visitor has just done requires real-time inference: the visitor's events must reach the model as they happen, and the model must score at request time rather than ahead of time in a batch. Streaming events to a model called on each page request is the infrastructure change that makes this possible, whichever model is used and however often it is retrained."
+    },
+    {
+      "id": "gen-2026-11-21-09",
+      "domainId": "domain-4",
+      "taskId": "4.3",
+      "skillId": "4.3.1",
+      "type": "multiple",
+      "text": "A construction company's chief operating officer (COO) sponsors a program that introduces generative AI tools for site reports, safety briefings and subcontractor queries. Eight months in, 15 percent of site staff use the tools each week. The IT director nominated 12 junior IT analysts as AI champions, each covering several sites. A review found:\n\n- Site managers say they take questions about new tools to experienced site colleagues rather than to the champions.\n- Champions have logged 40 blockers, such as tablet access and permissions to project files; six have been resolved, most through the IT ticket queue.\n- Each champion visits each of their sites about once a month.\n- In a survey, many site staff said they lack time for training during the building season.\n\nWhich actions should the COO take to sustain the program? (Choose TWO.)",
+      "options": [
+        {
+          "id": "A",
+          "text": "Have the 12 IT analyst champions hold weekly drop-in sessions at each of their sites, giving staff a regular time to bring questions."
+        },
+        {
+          "id": "B",
+          "text": "Ask each regional director to name respected, experienced site staff as champions, working alongside the IT analysts on their own sites."
+        },
+        {
+          "id": "C",
+          "text": "Link part of each site manager's bonus to weekly use of the tools on their sites, with results reviewed at the COO's monthly meeting."
+        },
+        {
+          "id": "D",
+          "text": "Move tool training into short sessions held at site offices during the quieter winter months, when staff have more time available."
+        },
+        {
+          "id": "E",
+          "text": "Review the champions' unresolved blockers with the COO every two weeks, and give a named leader a deadline for resolving each one."
+        }
+      ],
+      "correctOptionIds": [
+        "B",
+        "E"
+      ],
+      "explanation": "A: More frequent visits answer the finding that champions reach each site only monthly, but site staff already prefer to ask experienced colleagues rather than junior IT analysts, and more sessions would not clear the blockers that champions cannot resolve. It adds time without adding trust or authority.\n\nB: Champions sustain adoption when colleagues trust them and they understand the work. Site staff already turn to experienced site colleagues, not to junior IT analysts who each cover several sites. Having regional leaders choose respected site staff as champions puts help where people already look for it, while the IT analysts provide technical support.\n\nC: Tying bonuses to use puts pressure on managers, but it rewards logging in rather than useful work, and it does nothing to fix the access problems or the lack of trusted help that keep use low.\n\nD: Fitting training around the building season answers a real survey finding, but it delays help for months and does not address why the champions are not being used or why their blockers go unresolved.\n\nE: An executive sponsor empowers champions by removing the obstacles they cannot remove themselves. Only six of 40 blockers have been cleared, mostly through the IT ticket queue, so champions cannot deliver what they promise. Regular sponsor review with named owners and deadlines gives champions real authority and shows staff that leadership acts on the issues they raise."
+    },
+    {
+      "id": "gen-2026-11-21-10",
+      "domainId": "domain-4",
+      "taskId": "4.4",
+      "skillId": "4.4.3",
+      "type": "single",
+      "text": "A food manufacturer set up an AI center of excellence (CoE) two years ago with 14 data scientists and engineers. The CoE builds every AI solution for the company's nine business units on a shared platform with standard security and review steps. It has delivered 11 solutions, and 38 requests are waiting, for nine months on average. The CoE director has asked for 12 more hires.\n\nA business strategist finds that analysts in seven units already build reports and forecasts and have asked for access to the shared platform. The three solutions that unit staff helped design are used far more than the others. Two units have started buying AI tools from vendors without CoE review, and most waiting requests resemble solutions the CoE has already built for other units.\n\nWhat should the company do to scale AI across the units?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Approve the 12 hires, and keep every solution built by the CoE itself on its one shared platform and standard review steps."
+        },
+        {
+          "id": "B",
+          "text": "Let each business unit hire its own AI staff and choose its own tools, with the CoE reduced to setting company-wide policy."
+        },
+        {
+          "id": "C",
+          "text": "Train and support unit analysts to build on the shared platform from CoE templates, with a CoE review before each solution launches."
+        },
+        {
+          "id": "D",
+          "text": "Contract a partner to build the waiting requests on the shared platform, working to the CoE's templates and review before each launch."
+        }
+      ],
+      "correctOptionIds": [
+        "C"
+      ],
+      "explanation": "A: More staff would shorten the queue for a while, but a CoE that builds everything itself grows only as fast as its headcount while demand keeps rising. It also keeps unit staff out of the work, although the solutions they helped design are the ones that get used.\n\nB: Units moving to their own tools shows the cost of the bottleneck, but full decentralization gives up the shared platform, standards and reuse that the CoE provides. It would spread the unreviewed vendor buying that has already begun, along with duplicated spending.\n\nC: A CoE usually starts by building solutions centrally, and as it matures it shifts toward enabling the wider organization to build on shared assets under common standards. Here unit analysts are ready and asking, most requests resemble existing solutions that can become templates, and solutions with unit involvement are used more. The CoE keeps quality through templates and launch reviews while capacity grows with the units.\n\nD: A partner working to the CoE's standards would clear the current queue and keep solutions on the shared platform. But it buys capacity once without building any capability in the units, leaves them dependent on outside builders for the next requests, and keeps unit staff out of design, which the findings link to low use."
+    },
+    {
+      "id": "gen-2026-11-21-b-08",
+      "domainId": "domain-4",
+      "taskId": "4.2",
+      "skillId": "4.2.2",
+      "type": "single",
+      "text": "A grain cooperative wants to pool yield, soil and planting data from its 1,200 member farms to train a model that recommends planting dates and seed rates. A pilot using data from 40 farms produced recommendations that members rated highly. Before expanding, the cooperative's board reviews these findings:\n\n- Members' data sits in three brands of farm-management software that use different field names and units.\n- The board has budgeted for a cloud data platform to hold the pooled data.\n- A seed company has offered to fund the platform in exchange for access to the pooled data.\n- After the plan was presented at the annual meeting, about 300 members signed up. Most who did not gave no reason, and several mentioned the seed company.\n\nWhat should the cooperative do FIRST?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Map the three software brands' field names and units to one common format, since the model needs consistent inputs from every farm."
+        },
+        {
+          "id": "B",
+          "text": "Accept the seed company's funding under a contract that limits it to regional averages, so that no individual farm's records are shared."
+        },
+        {
+          "id": "C",
+          "text": "Limit the program to the 300 members who have signed up, and keep their data on the cooperative's own platform with no outside access."
+        },
+        {
+          "id": "D",
+          "text": "Agree written rules with members on who owns the pooled data, who can access it, and what it may be used for."
+        }
+      ],
+      "correctOptionIds": [
+        "D"
+      ],
+      "explanation": "A: Standardizing formats will be needed, and three software brands is a real integration task. But it is technical work that can follow once members agree to share. With three-quarters of members not signed up, a common format for 300 farms will not deliver a model for 1,200.\n\nB: Limiting the seed company to regional averages is a sensible protection, which makes this option attractive. But the board would be deciding on its own how members' data is used, before members have agreed on ownership or permitted uses. Several members who held back mentioned the seed company, so settling its access first, without them, risks deepening the hesitation that is holding back sign-ups.\n\nC: Keeping data in-house protects the members who have signed up, but it leaves the reasons why most members held back unaddressed. The pool, and the model's coverage, would stay at a quarter of the membership.\n\nD: Pooling data that belongs to separate owners depends on a data sharing framework that sets ownership, access and permitted uses. Most members have not joined, and those who gave a reason pointed to the seed company, which suggests uncertainty about what will happen to their data. Agreed rules give members a basis for joining and settle the seed company's offer on known terms, before platform and formatting work begins."
+    },
+    {
+      "id": "gen-2026-11-21-b-09",
+      "domainId": "domain-4",
+      "taskId": "4.3",
+      "skillId": "4.3.2",
+      "type": "single",
+      "text": "An electricity distributor built a model that estimates when power will be restored during an outage and texts the estimate to affected customers. The project team includes leads from grid operations, customer service, data science, IT and legal, and it has met weekly with full attendance for a year. Complaints about wrong estimates have not fallen.\n\nWhen an estimate is wrong, data science points to late repair updates from field crews, and grid operations says accuracy is the model's job. Crews often enter repair status in their field app only after a job is finished. Each lead's annual objectives come from their own department, and none mentions the estimates. Changes to the model or to crew procedures need approval from a committee of five directors.\n\nWhat should the business strategist recommend?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Name one business owner accountable for the accuracy of customer estimates, with authority to set priorities across grid operations and data science."
+        },
+        {
+          "id": "B",
+          "text": "Require field crews to update repair status in the app at each stage of a job, and report each crew's update timeliness every week."
+        },
+        {
+          "id": "C",
+          "text": "Add a customer representative and a regulator liaison to the committee, so that every affected group has a voice in each change."
+        },
+        {
+          "id": "D",
+          "text": "Make the data science lead accountable for estimate accuracy, since the estimates come from the model and that team can retrain it."
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "explanation": "A: A cross-functional team needs clear accountability for the outcome, not only the right members. Here every function attends, yet each lead is measured on departmental goals, problems are passed between data science and grid operations, and changes wait for a committee. One owner who is accountable for estimate accuracy and can set priorities across functions can decide, for example, how crews report status and how the model uses those updates.\n\nB: Late status updates are a real cause of wrong estimates, and fixing them may be part of the answer. But issuing the requirement still leaves nobody accountable for the estimates, and grid operations has no objective that would make crews' timeliness a priority. The same gaps would reappear with the next problem.\n\nC: Broader representation helps when the team lacks a perspective, but every relevant function already attends. Adding members to a consensus committee makes decisions slower and spreads responsibility further, without giving anyone ownership of the result.\n\nD: A single accountable person is the right idea, but the data science lead cannot change how crews report status, and the estimates depend on those updates. Making the technical team own a business outcome that depends on operations repeats the current blame-shifting with a name attached."
+    },
+    {
+      "id": "gen-2026-11-21-b-10",
+      "domainId": "domain-4",
+      "taskId": "4.4",
+      "skillId": "4.4.4",
+      "type": "single",
+      "text": "A school district gave its 3,000 teachers a generative AI (GenAI) assistant that drafts lesson plans from the district's curriculum documents. Nine months after launch, the district must decide within four months whether to renew the seat-based contract. The program dashboard shows:\n\n- 94% of rated answers receive a thumbs-up, a share that has held steady since launch.\n- About 4% of answers are rated, and most ratings come from teachers at the six schools that piloted the assistant.\n- Teachers using the assistant at least weekly fell from 1,400 at the start of term to 700.\n- Planning activity across the district usually dips in mid-term, when teachers reuse earlier plans.\n\nWhat should the district do before the renewal decision?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Prompt teachers for a rating after every answer, so that the satisfaction figure rests on many more responses before the renewal."
+        },
+        {
+          "id": "B",
+          "text": "Survey a random sample of teachers each term, including those who have stopped using it, and track their reasons alongside weekly use."
+        },
+        {
+          "id": "C",
+          "text": "Reduce the contract to the 700 weekly users at renewal, and add seats again if weekly use recovers at the start of next term."
+        },
+        {
+          "id": "D",
+          "text": "Treat the fall as the usual mid-term dip in planning, and compare weekly use again once the next term's planning period begins."
+        }
+      ],
+      "correctOptionIds": [
+        "B"
+      ],
+      "explanation": "A: More ratings would add volume, but they would still come from teachers who keep using the assistant. Teachers who stopped never see the prompt, so the figure would stay high while use falls. A bigger sample from the same self-selected group does not correct the bias.\n\nB: Feedback that tracks long-term value has to reach the whole user base, not only the users who choose to rate answers. Ratings come from a small, self-selected group, mostly at the pilot schools, while weekly use has halved. A regular random survey that includes lapsed users, read alongside usage, shows why teachers stop and whether the cause can be fixed, so the renewal and any improvements rest on evidence from all teachers.\n\nC: Cutting seats manages cost, but it acts on a usage figure whose cause is unknown. If teachers left because of fixable problems with the drafts, the district would shrink a tool that could recover, and it would still have no feedback mechanism to tell it why use fell.\n\nD: Part of the fall may be seasonal, which makes waiting tempting. But a seasonal explanation is an assumption that the current dashboard cannot test, because it has no signal from teachers who stopped. Waiting gives the district another usage number but still no reasons."
+    },
+    {
+      "id": "gen-2026-11-21-d-10",
+      "domainId": "domain-4",
+      "taskId": "4.4",
+      "skillId": "4.4.6",
+      "type": "single",
+      "text": "A national tax authority piloted a generative AI assistant that answers taxpayers' questions on its website. It runs on Amazon Bedrock with on-demand model access in one AWS Region and answers from the authority's published guidance pages. The pilot ran from June to August with 5,000 volunteer users, and the authority plans to open the assistant to all taxpayers before the filing season. The strategist reviews the plan:\n\n- Pilot answers were 94% accurate against reviewed answers, and users rated the assistant highly.\n- Traffic in the two weeks before the filing deadline is about 20 times the yearly daily average.\n- The guidance pages are updated each January for new tax rules.\n- Finance has budgeted model usage as the pilot's cost per question multiplied by forecast question volume.\n- The contact centre plans to hire 40% fewer temporary staff for the filing season.\n\nWhich untested factor should the strategist have the team evaluate FIRST?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Whether answers stay accurate once January's rule changes are made to the guidance pages that the assistant answers from."
+        },
+        {
+          "id": "B",
+          "text": "Whether the account's request and token quotas for the model can carry deadline-week traffic without requests being throttled."
+        },
+        {
+          "id": "C",
+          "text": "Whether accuracy and ratings hold among the wider public, who may be less confident online users than the 5,000 volunteers."
+        },
+        {
+          "id": "D",
+          "text": "Whether the cost per question rises at full volume, pushing model usage above the amount that finance has budgeted for it."
+        }
+      ],
+      "correctOptionIds": [
+        "B"
+      ],
+      "explanation": "A: The assistant answers from the guidance pages, so updating the pages updates what it retrieves. A check after January is sensible routine work, but the pilot already showed that answering from the published guidance is accurate, and this is not the factor most likely to stop the service.\n\nB: On-demand access is subject to account quotas on requests and tokens per minute for each model in a Region, and requests above them are throttled. The pilot never came near those limits, while deadline traffic runs about 20 times the average, at the moment the contact centre will have fewer staff to absorb failures. Load-testing at peak volume and arranging quota increases or reserved capacity in advance is the continuity factor to settle first.\n\nC: A broader population could rate the assistant differently, and representativeness is worth monitoring after launch. It would affect quality at the margin, whereas a capacity failure at peak would stop answers altogether when the reduced contact centre cannot take the overflow.\n\nD: On-demand use is billed per input and output token, so the cost of a question does not rise because more people ask questions. Total spend grows with volume, which finance has already built into the budget by multiplying by forecast volume."
+    },
+    {
+      "id": "gen-2026-11-21-c-09",
+      "domainId": "domain-4",
+      "taskId": "4.4",
+      "skillId": "4.4.2",
+      "type": "single",
+      "text": "A beverage wholesaler's board stopped a two-year AI program last year after it overran its budget without showing results. A new Chief Digital Officer aims to use AI across sales, operations and service within three years, and the board will approve funding one stage at a time. Four first projects are proposed:\n\n- Generative AI drafts of replies to retailers' order and delivery queries, about eight weeks to deliver; the service team already reports handling time and backlog every week.\n- Route optimization across all 11 depots, with the largest estimated value at $4 million a year, about ten months to deliver.\n- An assistant that summarizes industry reports for the strategy team, about four weeks to deliver, requested by two board members.\n- Demand forecasting for one product category at one depot, about twelve weeks to deliver; the depot does not track how accurate its current forecasts are.\n\nWhich project should the wholesaler start with?",
+      "options": [
+        {
+          "id": "A",
+          "text": "The retailer query replies, because a result measured against the service team's existing weekly figures can be shown to the board within a quarter."
+        },
+        {
+          "id": "B",
+          "text": "Route optimization, because its value is large enough to show the board that AI can recover the money lost on the earlier program."
+        },
+        {
+          "id": "C",
+          "text": "The industry report assistant, because it is the fastest to deliver and two of the board members who will judge the next stage asked for it."
+        },
+        {
+          "id": "D",
+          "text": "Demand forecasting at one depot, because forecasting is central to operations and a one-depot model can later be copied to the other ten."
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "explanation": "A: A first project in a staged scaling plan has to produce a credible, measurable win quickly, so that it earns funding and trust for the next stage. With a board that stopped the last program for failing to show results, the query replies stand out: they can be delivered in about eight weeks, and the service team's existing weekly figures give a before-and-after comparison that the board can see. Drafting from company information is also a pattern that sales and other teams can reuse.\n\nB: Route optimization has the largest value and belongs in the longer plan, but a ten-month first stage with large upfront costs repeats the pattern the board has just stopped: a long wait before any result can be shown.\n\nC: Speed and board interest are appealing, but the benefit of report summaries for a small strategy team is hard to measure. A win the board cannot quantify does little to restore its confidence, and it builds little toward use in sales, operations or service.\n\nD: Starting small in a core process is sound and could later spread across depots, but the depot does not track its current forecast accuracy. Without a baseline, the twelve-week result cannot be shown as an improvement, which is what this board needs before funding the next stage."
+    },
+    {
+      "id": "gen-2026-11-21-c-10",
+      "domainId": "domain-4",
+      "taskId": "4.4",
+      "skillId": "4.4.5",
+      "type": "single",
+      "text": "A sporting goods retailer built a generative AI assistant on Amazon Bedrock that answers store staff's questions about products, sizing and warranties. A data scientist loaded its knowledge base once, from a product catalog export taken in March, and the assistant was piloted in five stores in April and May. Staff rated it highly, and leaders want it in all 400 stores next quarter. The strategist notes:\n\n- Head office adds or withdraws about 300 products each month.\n- Pilot inference costs were about $900 a month on pay-per-use pricing.\n- Staff in the pilot most often asked for live stock levels to be added.\n- Satisfaction was lower in the two small-format stores than in the three large ones.\n\nWhat should the retailer put in place before the wider rollout?",
+      "options": [
+        {
+          "id": "A",
+          "text": "A fixed monthly capacity commitment sized from pilot usage, so that inference costs for 400 stores are predictable from the first month."
+        },
+        {
+          "id": "B",
+          "text": "A three-month pilot in 20 more stores of varied formats, so that satisfaction is confirmed in small stores before the rollout decision."
+        },
+        {
+          "id": "C",
+          "text": "A scheduled update of the assistant's product content from the catalog system, owned by a named team, so that answers match the current range."
+        },
+        {
+          "id": "D",
+          "text": "Live stock-level lookups for every store, so that the wider launch delivers the feature that pilot staff asked for most often."
+        }
+      ],
+      "correctOptionIds": [
+        "C"
+      ],
+      "explanation": "A: Committed capacity can lower unit costs for steady, predictable workloads, but usage in five stores is a weak guide to 400, and pay-per-use pricing suits a launch whose demand is still unknown. Fixing capacity now risks paying for idle capacity or running short, and it does nothing about the quality of answers.\n\nB: Lower satisfaction in small stores is worth investigating, and the rollout can track it by format. But another three-month pilot delays the rollout and still leaves the assistant answering from a one-off export, the gap that will grow worse with every month in production.\n\nC: Moving from experiment to production means replacing what the pilot team did by hand with owned, repeatable operations. The knowledge base was loaded once from a March export, and about 300 products change each month, so by rollout its answers about products, sizing and warranties will increasingly be out of date. A scheduled update from the catalog with a named owner keeps the content the assistant draws on current at 400 stores.\n\nD: Live stock levels are a popular request and may be a good later addition, but adding a feature before launch increases scope without fixing the assistant's existing content, which is falling further out of date."
+    },
+    {
+      "id": "gen-2026-11-21-f-08",
+      "domainId": "domain-4",
+      "taskId": "4.3",
+      "skillId": "4.3.1",
+      "type": "single",
+      "text": "An advertising agency group with 6,000 staff launched a generative AI program a year ago. The chief executive sponsors the program, opened it at a company-wide meeting and reports on its progress to the board each quarter. Sixty staff volunteered as AI champions to run drop-in sessions and share examples in their offices. The strategist finds:\n\n- Weekly use rose to 30 percent of staff in the first three months and has not moved since.\n- Half the champions have stopped their sessions, and cancelled sessions cluster in the weeks before major client pitches and at month-end billing.\n- Champions' AI work is not recorded in the timesheet system, which measures each person's billable utilization.\n- Offices with the lowest use have the fewest active champions.\n- Staff rate the training courses highly, but few have taken the advanced course.\n\nWhat should the strategist recommend to the chief executive?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Send a monthly message from the chief executive to all staff with examples of AI use, to show that the program still has visible support at the top."
+        },
+        {
+          "id": "B",
+          "text": "Recruit a second wave of volunteer champions in the offices where use is lowest, and give every champion a toolkit of ready-made sessions."
+        },
+        {
+          "id": "C",
+          "text": "Agree with office heads a set share of each champion's time for AI work, recorded in timesheets and counted in their targets and reviews."
+        },
+        {
+          "id": "D",
+          "text": "Make the advanced course mandatory for every client team, with course hours recorded in timesheets as time that counts toward utilization."
+        }
+      ],
+      "correctOptionIds": [
+        "C"
+      ],
+      "explanation": "A: Visible executive support matters, and this sponsor already provides it through the launch meeting and quarterly board reports. Sessions are being cancelled when client deadlines peak, which a message from the top does not change.\n\nB: The offices with low use do lack active champions, but new volunteers would face the same billing pressure and the same unrecorded time, so a second wave is likely to fade the way the first did. A toolkit makes sessions easier to run but does not give champions time to run them.\n\nC: Champions sustain momentum only when the organization makes room for their work. Here champion time is invisible in the system that measures performance, and it gives way whenever billable pressure rises. That is an alignment gap between the sponsor's program and the targets office heads manage to, which senior leaders have to close. Protected time that is recorded and counted lets managers and champions work toward the same goals.\n\nD: Counting course hours removes one cost of training, but training is already rated highly and is not what stalled. The champions who keep adoption moving would still have their own time unrecorded and would still be pulled back at busy periods."
+    },
+    {
+      "id": "gen-2026-11-21-f-09",
+      "domainId": "domain-4",
+      "taskId": "4.3",
+      "skillId": "4.3.2",
+      "type": "single",
+      "text": "A dental group with 120 clinics is building a generative AI tool that drafts letters explaining each patient's proposed treatment, its risks and its cost. The project team includes a product manager from marketing, a clinical operations manager who runs clinic scheduling and staffing, two data scientists, an IT integration lead and a lawyer, and the chief operating officer is the sponsor. A six-clinic trial has just ended:\n\n- Dentists edited about 70 percent of drafts, most often rewriting how procedures and their risks were described.\n- Several patients said the letters read as formal and hard to follow.\n- The lawyer takes about three weeks to approve each new letter template.\n\nThe chief operating officer wants the tool in every clinic by spring.\n\nWhat should the strategist recommend for the project team?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Add a practising dentist to the team, accountable for clinical accuracy and for defining what each description of a procedure and its risks must contain."
+        },
+        {
+          "id": "B",
+          "text": "Give the data scientists a library of clinical guidelines for the tool to retrieve from, so that drafts describe procedures and risks from approved sources."
+        },
+        {
+          "id": "C",
+          "text": "Add a second lawyer to the team so that letter templates are approved in days rather than weeks, keeping the spring rollout on schedule."
+        },
+        {
+          "id": "D",
+          "text": "Have the marketing product manager rewrite the prompts for warmer, plainer language, and retest the new drafts with patients at the trial clinics."
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "explanation": "A: A cross-functional AI team needs the expertise of the people whose judgment the output must satisfy, with clear accountability for that part of quality. The clinical operations manager runs scheduling and staffing, not treatment, so nobody on the team practises dentistry, and the edits concentrate on exactly the clinical content. A dentist who owns clinical accuracy can set what a correct description must contain and judge whether drafts meet it.\n\nB: Retrieving from clinical guidelines could improve the source material, but someone still has to decide what a correct, patient-specific description looks like and whether drafts meet it. Without clinical expertise on the team, the data scientists would be tuning toward a standard nobody on the team can define.\n\nC: Faster legal approval addresses the timeline, but legal review does not judge whether a procedure's risks are described correctly. More templates approved quickly would still be rewritten by dentists.\n\nD: Plainer language would answer the patients' comments, but most dentist edits change what the letters say about procedures and risks, not how they sound. A marketing-led rewrite cannot tell whether the clinical content is right."
+    },
+    {
+      "id": "gen-2026-11-21-f-10",
+      "domainId": "domain-4",
+      "taskId": "4.2",
+      "skillId": "4.2.1",
+      "type": "single",
+      "text": "A fitness club chain formed by the merger of two brands wants a machine learning (ML) model that predicts which members will leave in the next three months, so that club managers can contact them first. Six years of member records from both brands' systems now sit in one data warehouse. A data readiness review finds:\n\n- About 8 percent of member records have no email address.\n- The first brand's system records a membership freeze as a status; the second brand's system closed a frozen membership and opened a new one when the member returned.\n- Since last year, both brands' records load into the warehouse through the same quality checks on formats and required fields.\n- The second brand accounts for 55 percent of members.\n- Marketing wants the model live before the January joining season.\n\nWhat should the strategist recommend as the FIRST step?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Fill in missing email addresses from club sign-in records, so that every member the model flags can be contacted by club managers."
+        },
+        {
+          "id": "B",
+          "text": "Train a separate model on each brand's records, so that each model learns the patterns of its own system and its own members."
+        },
+        {
+          "id": "C",
+          "text": "Agree one definition of a member leaving, and correct the second brand's history so that paused memberships are not counted as departures."
+        },
+        {
+          "id": "D",
+          "text": "Train only on the most recent 12 months, when both brands' records were loading through the warehouse's shared quality checks."
+        }
+      ],
+      "correctOptionIds": [
+        "C"
+      ],
+      "explanation": "A: Missing contact details limit how clubs reach flagged members, but they do not affect what the model learns. The gap is small and can be closed alongside model work.\n\nB: Separate models avoid mixing two systems, but the second brand's model would still learn from history in which every freeze looks like a member leaving. It would predict freezes as departures for most of the chain's members.\n\nC: A model learns whatever its training label records. In the second brand's history, a freeze looks like a cancellation followed by a new join, so for 55 percent of members the data counts temporary pauses as departures. Until both brands record leaving the same way, the model would learn to predict freezes as well as genuine departures. Agreeing the definition and correcting the history is the step that makes the rest of the work meaningful.\n\nD: Shared quality checks confirm formats and required fields, not what a closed membership means. Recent records from the second brand still record freezes as closures, and dropping five years of history also removes the seasonal patterns a churn model needs."
+    },
+    {
+      "id": "gen-2026-11-21-e-09",
+      "domainId": "domain-4",
+      "taskId": "4.2",
+      "skillId": "4.2.2",
+      "type": "single",
+      "text": "A theme park operator wants AI to forecast daily attendance and the queue time at each of its 38 rides, so that it can plan staffing and open extra ride capacity before queues build. Attendance follows strong yearly patterns driven by school holidays and weather. Ride sensors and queue cameras produce detailed records, but a storage policy that IT set years ago to control costs deletes them after 30 days. Finance keeps seven years of ticket sales by day and ticket type. A vendor offers industry attendance benchmarks for regional parks, and the data science team proposes starting now with the 30 days of ride data and refining the model later.\n\nWhat should the operator do?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Start the model on the 30 days of ride data now, and ask IT to extend retention once early results justify the extra storage cost."
+        },
+        {
+          "id": "B",
+          "text": "Buy the vendor's regional benchmarks and combine them with the park's ticket sales history to cover the seasons that the ride data lacks."
+        },
+        {
+          "id": "C",
+          "text": "Have business owners decide how long ride and queue data is kept, based on its planned AI uses, and keep it in low-cost archive storage."
+        },
+        {
+          "id": "D",
+          "text": "Build both forecasts from the seven years of ticket sales held by finance, and leave the 30-day retention policy for ride data unchanged."
+        }
+      ],
+      "correctOptionIds": [
+        "C"
+      ],
+      "explanation": "A: Starting small is often sensible, but 30 days cannot show a yearly pattern, so early results would be weak and would argue against keeping more data. Every month of delay also deletes another month of the history the model will need.\n\nB: Benchmarks describe other parks' attendance in general. They cannot show queue times at this park's rides, and the park's own ride records would still be deleted every 30 days.\n\nC: A data strategy treats data as an asset whose value is set by the business uses it supports, with owners accountable for decisions such as retention. A rule set by IT only for cost is destroying the ride history that queue forecasting depends on. Owners setting retention by planned use, kept in cheap archive storage, builds the seasonal history at low cost.\n\nD: Ticket history supports the attendance forecast, but it records entries to the park, not queues at individual rides. Leaving the policy unchanged means the queue forecast never gets the data it needs."
+    },
+    {
+      "id": "gen-2026-11-21-g-07",
+      "domainId": "domain-4",
+      "taskId": "4.1",
+      "skillId": "4.1.4",
+      "type": "single",
+      "text": "A network of 12 pathology laboratories aims to use AI in 30 workflows within three years, including several that support diagnosis. It has five machine learning (ML) models in production, each with measured gains in turnaround time. A maturity assessment found:\n\n- Each model took four to six months to go from a working prototype to approval for use, with a review group assembled separately for each model.\n- Data scientists report that training jobs wait up to three days for compute on the shared cloud environment.\n- Most laboratory staff have had no AI training and rely on two enthusiasts in each lab for help.\n- A vendor offers a pathology AI suite covering 14 workflows under one licence.\n\nThe board can fund one major investment this year.\n\nWhich investment should the strategist recommend?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Expand the shared environment with reserved compute and reusable training pipelines, so that data scientists can build new models faster."
+        },
+        {
+          "id": "B",
+          "text": "Fund AI training for all laboratory staff, so that more people can suggest, use and support new models across the network."
+        },
+        {
+          "id": "C",
+          "text": "License the vendor's suite, so that 14 of the 30 workflows are covered at once without building those models in-house."
+        },
+        {
+          "id": "D",
+          "text": "Create a standing review process with checks scaled to each model's risk, so that every new model passes through the same route."
+        }
+      ],
+      "correctOptionIds": [
+        "D"
+      ],
+      "explanation": "A: Compute queues slow data scientists down, and reusable pipelines help at scale. But a wait of up to three days is small beside four to six months of approval per model. Faster building would only lengthen the line of models waiting for sign-off.\n\nB: Staff literacy matters for adoption, and reliance on a few enthusiasts is a gap. It is not what limits the number of models reaching production, however, and training staff on models that cannot get approved quickly does not move the network toward 30 workflows.\n\nC: A suite covering 14 workflows looks like the fastest route to the target. But each vendor model still has to be approved for use in laboratories, including diagnostic ones, and under today's one-off review groups that would take years. Buying does not remove the step that is holding the network back.\n\nD: Development investment should target the capability gap that stands between the current maturity and the objective. The network can already build and run models; what it lacks is a repeatable way to approve them. At four to six months per model with a new review group each time, 30 workflows in three years is out of reach. A standing process with checks proportionate to risk, stricter for diagnostic uses, makes approval predictable and lets the other investments pay off later."
+    },
+    {
+      "id": "gen-2026-11-21-g-08",
+      "domainId": "domain-4",
+      "taskId": "4.3",
+      "skillId": "4.3.4",
+      "type": "single",
+      "text": "An auction house with 40 specialists introduced an AI tool that drafts lot descriptions and suggests estimate ranges from photographs and past sales. In a six-month test, its estimates were as close to final sale prices as the specialists' own. Few specialists use it.\n\nSenior specialists call the tool \"a catalogue machine,\" and the head of Old Masters has told her department that valuing a painting cannot be learned from sales data. Several junior specialists use the tool but rewrite its drafts completely, so that colleagues cannot tell. Specialists' bonuses depend on the total value of the lots they sell. Half the specialists attended a two-hour training session on the tool.\n\nWhich leadership intervention should the managing director lead?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Invite the department heads to compare the tool's estimates with their own on recent sales, and decide with them where its drafts are used."
+        },
+        {
+          "id": "B",
+          "text": "Add tool usage to each specialist's bonus scorecard alongside the value of lots sold, and report usage by department each month."
+        },
+        {
+          "id": "C",
+          "text": "Begin with the junior specialists, who already use the tool, and publish the time they save to persuade the senior specialists."
+        },
+        {
+          "id": "D",
+          "text": "Make the training session compulsory for all specialists, and add a second session explaining how the tool forms its estimates."
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "explanation": "A: The barrier is cultural: senior experts see the tool as a threat to the judgment their status rests on, and their stance makes juniors hide their use. Leaders address that kind of resistance by involving the resisters and giving them real authority, not by pressing around them. Having department heads test the tool against their own valuations and set where it is used turns them from opponents into owners, and makes open use acceptable for everyone else.\n\nB: Paying for usage produces token use and resentment among specialists who already doubt the tool. The bonus does not penalize using the tool, so changing it does not touch the reason for avoiding it, which is how seniors regard it.\n\nC: Juniors look like natural early adopters, but they hide their use because of how their seniors view the tool. Publicizing their time savings exposes them and frames adoption as juniors against seniors, which is likely to harden the resistance it is meant to overcome.\n\nD: More training treats the problem as a gap in knowledge. The senior specialists object to what the tool means for their expertise, not to how it works, and the test results they would hear in training already exist without changing their view."
+    },
+    {
+      "id": "gen-2026-11-21-g-10",
+      "domainId": "domain-4",
+      "taskId": "4.4",
+      "skillId": "4.4.1",
+      "type": "single",
+      "text": "A cinema chain with 22 sites used the AWS Cloud Adoption Framework for Artificial Intelligence (AWS CAF-AI) to plan its first AI initiative. A dynamic ticket-pricing model now runs at every site, with measured revenue gains. The chief executive wants to follow it with a generative AI assistant in the chain's app that answers customer questions.\n\nOver 14 months, the pricing team built a deployment pipeline, monitoring and a site-by-site rollout playbook. A rival chain launched an in-app assistant last month, and the chief executive wants one within a quarter. The board paper describes the assistant's benefit as \"keeping pace with the rival.\" The customer service manager, whose team handles most app enquiries, has not yet been involved.\n\nWhat should the strategist recommend?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Build a proof of concept on a foundation model using the customer service FAQs, so that the board can see a working assistant within the quarter."
+        },
+        {
+          "id": "B",
+          "text": "Release the assistant to a share of app users for a month, measuring how often they use it, before deciding on a full release."
+        },
+        {
+          "id": "C",
+          "text": "Start a new cycle for the assistant by agreeing the customer outcome it must improve and who owns it, before any build begins."
+        },
+        {
+          "id": "D",
+          "text": "Give the assistant to the pricing team, so that the team that delivered the first initiative owns it and reuses its pipeline and playbook."
+        }
+      ],
+      "correctOptionIds": [
+        "C"
+      ],
+      "explanation": "A: A quick proof of concept on existing FAQs is a low-risk way to meet the chief executive's timetable, and a demo can build support. But it shows only that an assistant can be built. With no agreed outcome and no involvement from the team that handles app enquiries, the demo cannot show the board whether the assistant is worth having.\n\nB: A limited release is the reflex for a new initiative and fits the time pressure. But a pilot is meant to show business value against a measurable outcome, and usage counts are not one. Without an agreed outcome or the customer service team's involvement, a month of usage data cannot show whether the assistant is worth scaling.\n\nC: The CAF-AI journey is iterative: each new opportunity goes through its own cycle. It starts by tying the opportunity to a measurable business outcome and to stakeholders who can drive the change. The pricing model's success does not carry that work over to a different use. Here the stated benefit is matching a rival and the team that handles customer enquiries is not involved. Agreeing the outcome and owner first gives any later pilot something to prove.\n\nD: Reusing a proven team and its pipeline is efficient, and later stages can draw on those assets. But the pricing team's experience is in pricing, and handing it the assistant skips the step of deciding what the assistant must achieve for customers and engaging the business owner whose team answers their questions."
+    },
+    {
+      "id": "gen-2026-11-21-h-05",
+      "domainId": "domain-4",
+      "taskId": "4.1",
+      "skillId": "4.1.2",
+      "type": "single",
+      "text": "A consumer electronics retailer uses a four-phase MLOps maturity model (Initial, Repeatable, Reliable and Scalable) to report its machine learning (ML) progress to the board. Over two years, three separate product teams have put five models into production, for demand forecasting, pricing, fraud detection and two recommendation uses. Data preparation and training run as automated pipelines, and every trained model is stored with its version in a model registry. Data scientists still explore new ideas in notebooks. Before a model goes live, its data scientist runs checks by hand in the development environment, and the head of data science formally approves the release, which is then deployed straight to production. Each product team starts every new model from an empty project.\n\nWhich phase does this evidence BEST support?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Initial, because data scientists still explore new ideas in notebooks and each product team starts every model from an empty project."
+        },
+        {
+          "id": "B",
+          "text": "Repeatable, because training runs in automated pipelines with a model registry, and release checks are run by hand in development."
+        },
+        {
+          "id": "C",
+          "text": "Reliable, because every model is checked before it goes live and the head of data science formally approves each release."
+        },
+        {
+          "id": "D",
+          "text": "Scalable, because three product teams have put five models into production for different uses on automated pipelines."
+        }
+      ],
+      "correctOptionIds": [
+        "B"
+      ],
+      "explanation": "A: Notebook exploration happens at every phase, so it does not mark the Initial phase. Initial describes teams that experiment, train and deploy without automated workflows. This retailer already runs automated pipelines and versions its models in a registry, which places it beyond that phase.\n\nB: In this maturity model, the Repeatable phase adds automated pipelines for data preparation and training and stores versioned models in a registry, which the retailer has. The Reliable phase adds automated testing in a separate pre-production environment that mirrors production before models are promoted. The retailer's checks are manual and run in development, and releases go straight to production, so it has not reached Reliable.\n\nC: Manual approval does appear in the Reliable phase, which makes this tempting. What defines Reliable, however, is automated testing of models in an isolated staging environment before promotion. A sign-off on hand-run checks in development lacks that, so the approval alone does not show Reliable maturity.\n\nD: Having several teams in production can look like scale, but the Scalable phase is about templates and automated environments that let many teams reuse solutions and shorten the time from idea to production. Every model here starts from an empty project, so there is no template library, and the earlier Reliable capabilities are also missing."
+    },
+    {
+      "id": "gen-2026-11-21-h-06",
+      "domainId": "domain-4",
+      "taskId": "4.1",
+      "skillId": "4.1.3",
+      "type": "single",
+      "text": "A paper packaging manufacturer set up a data science team of six people two years ago. The team has built seven machine learning (ML) models, for uses such as predicting machine downtime and paper waste, and each met its accuracy target in testing. Only one is in regular use. A capability review found:\n\n- Data scientists pick projects from a list of plant data sets that are complete and easy to reach.\n- Model results appear in a web dashboard, not on the control-room screens that shift supervisors use.\n- Plant managers say that several models predict figures their teams already track closely on every shift.\n- Shift supervisors completed a one-day AI awareness course last year.\n- A steering committee approves each project's budget after reviewing its expected accuracy.\n\nWhich gap MOST likely explains why so few of the models are used?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Model results are not built into the control-room screens and shift routines where supervisors make their decisions during each shift."
+        },
+        {
+          "id": "B",
+          "text": "Shift supervisors lack the skills to interpret model results and to act on them with confidence during each shift."
+        },
+        {
+          "id": "C",
+          "text": "No one in a product role works with plant managers to choose problems whose answers would change decisions at the plants."
+        },
+        {
+          "id": "D",
+          "text": "The steering committee does not review how each model is being used after it approves the project's budget."
+        }
+      ],
+      "correctOptionIds": [
+        "C"
+      ],
+      "explanation": "A: Placing results where people work matters for adoption, and the dashboard finding makes this attractive. But plant managers say several models predict figures their teams already track closely. Moving those predictions onto control-room screens would put them in view without giving supervisors anything new to act on.\n\nB: Skills gaps do block adoption, and supervisors have had only an awareness course. The managers' complaint, however, is not that they cannot understand the results; it is that the results tell them what they already know. More training would not make those models useful.\n\nC: The team chooses work by what data is easy to use, and managers report that the models answer questions they have already solved. That points to a missing role, not a missing tool: someone in an AI product role who works backwards from the decisions plant managers need to improve and turns them into problems for the data scientists. Without that link, accurate models will keep going unused.\n\nD: Reviewing use after launch is good governance and would reveal the low use, but it would only report the problem after each model is built. It does not change how projects are chosen, which is where the mismatch with plant needs begins."
+    },
+    {
+      "id": "gen-2026-11-21-h-07",
+      "domainId": "domain-4",
+      "taskId": "4.2",
+      "skillId": "4.2.1",
+      "type": "single",
+      "text": "A commercial cleaning company serves 1,400 office and retail sites. It wants a machine learning (ML) model that predicts how many cleaning hours each site will need on each day, so that supervisors can set daily rosters instead of fixed weekly ones. A data readiness review found:\n\n- Six years of timesheets are held in a central database, and cleaners record one total of hours per site for each week.\n- About 5 percent of timesheet records have no site code, but the missing codes can be matched from the billing records.\n- Site contracts, which list floor area and cleaning tasks, are held in the finance system, separate from the timesheets.\n- Site managers say the work needed varies a lot from day to day, for example after weekend events at retail sites.\n\nWhat should the company do FIRST?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Start recording cleaners' hours by site and by day, and plan to train the model once enough daily history has built up."
+        },
+        {
+          "id": "B",
+          "text": "Train the model on the weekly totals now, and split each week's predicted hours across the days in proportion to past rosters."
+        },
+        {
+          "id": "C",
+          "text": "Hold off training until the missing site codes are restored from the billing records, and then train on all six years of timesheets."
+        },
+        {
+          "id": "D",
+          "text": "Join the site contracts from the finance system to the timesheets first, and train the model on floor area, tasks and weekly hours."
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "explanation": "A: Data readiness includes whether the data records the outcome at the level of detail the prediction needs. The company wants daily predictions, but six years of timesheets hold only weekly totals, so no history shows how hours vary from day to day. A model cannot learn a pattern its data does not contain. Capturing daily hours now is the step that makes a daily model possible.\n\nB: Six years of history makes this tempting, but past rosters were fixed weekly patterns. Splitting weekly predictions by those rosters reproduces the fixed pattern that the company wants to replace and cannot reflect the daily swings that site managers describe.\n\nC: Waiting for clean data is often right, and the missing codes are a real quality issue that would be a sensible early fix if the timesheets were daily. Complete weekly records, however, still contain no daily detail, so the delay would end with data that still cannot teach the model daily needs.\n\nD: Bringing contract data out of the finance system breaks down a silo and would add useful features. It still leaves weekly hours as the only outcome to learn from, so the model could predict weekly totals better but not the daily figures the rosters need."
+    },
+    {
+      "id": "gen-2026-11-21-h-08",
+      "domainId": "domain-4",
+      "taskId": "4.3",
+      "skillId": "4.3.3",
+      "type": "single",
+      "text": "A chain of 150 opticians' stores will introduce an AI system that books appointments and answers routine customer questions by phone and chat. Over the next year, the 300 store receptionists will spend less time on calls and more time helping customers choose frames. No jobs will be cut, but shift patterns will change. The system goes live in six weeks. Store managers first heard about the project from staff who had seen a supplier's demonstration, and some receptionists have asked whether their jobs are safe. HR has drafted written answers to likely questions. The chief executive plans to announce the change next week on a live video call for all 2,400 employees, so that everyone hears the same message at the same time.\n\nHow should the company plan its communication about the change?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Hold the all-staff call next week as planned, and then send HR's written answers to store managers to use with their teams' questions."
+        },
+        {
+          "id": "B",
+          "text": "Tell the receptionists first, in small sessions led by HR, how their work will change, and then announce the project to all other staff."
+        },
+        {
+          "id": "C",
+          "text": "Publish the timeline and HR's answers on the intranet next week, and have the project team run open question sessions until the system goes live."
+        },
+        {
+          "id": "D",
+          "text": "Brief store managers on what changes in their stores before the chief executive's call, and have them meet their own teams that week."
+        }
+      ],
+      "correctOptionIds": [
+        "D"
+      ],
+      "explanation": "A: A single message from the chief executive feels fair, and sending managers the written answers does involve them. But managers would hear the news at the same moment as their staff and would then face questions about shifts and job security with only a document that others have also read. Managers need to be briefed before an announcement, not equipped after it.\n\nB: Telling the most affected group first is a thoughtful sequence, but it chooses the wrong messenger and leaves store managers uninformed for a second time. Employees prefer to hear how a change affects them personally from their own manager, and the managers will have to answer for the new shift patterns in their stores.\n\nC: Written answers and open sessions are useful supports, but an intranet page and a central project team are distant channels for news that changes people's working week. Store managers would again be left out, although they are the people receptionists work with every day.\n\nD: Change communication works best when a senior leader explains the business reasons and each person's direct manager explains what the change means for them. The managers learned of the project through rumour, so briefing them before the call lets them answer questions about shifts and job security in their own stores. The chief executive's call still sets the direction, and the team meetings that week handle the personal questions."
+    },
+    {
+      "id": "gen-2026-11-21-h-10",
+      "domainId": "domain-4",
+      "taskId": "4.4",
+      "skillId": "4.4.3",
+      "type": "single",
+      "text": "A consumer goods company runs eight country business units, each with its own small AI team. Two years ago it set up an AI center of excellence (CoE) of ten people, which runs a shared platform and keeps a library of finished, reusable code and templates on the intranet. Last year, four countries separately built nearly identical models to forecast promotion sales, and two built similar tools that draft product listings for online retailers. Country leads say they learn about each other's projects only when the projects are presented at the annual AI conference. Downloads from the library are low, and the CoE head believes country teams do not know what it contains. The chief operating officer wants to cut duplicated AI spending.\n\nWhat should the company do?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Promote the CoE library through a monthly newsletter and a search tool, and ask each country team to check it before starting new work."
+        },
+        {
+          "id": "B",
+          "text": "Move all AI building into the CoE, and have the country teams submit requests for the CoE to deliver on the shared platform."
+        },
+        {
+          "id": "C",
+          "text": "Hold a quarterly review in which country leads and the CoE see all planned AI work before it starts and agree which builds to share."
+        },
+        {
+          "id": "D",
+          "text": "Require each country to get CoE approval of its model design before building, with the CoE checking each design against its library."
+        }
+      ],
+      "correctOptionIds": [
+        "C"
+      ],
+      "explanation": "A: Promoting reusable assets is part of a CoE's job, and the CoE head's view makes this attractive. But the library holds finished work, while the duplicates were built at the same time in different countries. Checking the library would not have shown four countries starting the same forecasting model in parallel.\n\nB: Centralizing all building removes duplication, but it turns a ten-person CoE into the only delivery team for eight countries, which creates a queue. It also discards the country teams' capacity and market knowledge rather than coordinating them.\n\nC: A CoE supports scaling through collaboration mechanisms as well as shared assets. The duplication happened because countries saw each other's work only after it was finished. A regular review of planned work gives country leads and the CoE an early view of overlapping ideas, so they can agree to build once and share, while the countries keep building for their own markets.\n\nD: An approval gate adds control, but checking designs against the library has the same blind spot as option A: the library shows finished work, not projects that other countries are planning. It also makes the CoE a bottleneck without giving countries a way to work together."
+    },
+    {
+      "id": "gen-2026-11-21-i-04",
+      "domainId": "domain-4",
+      "taskId": "4.1",
+      "skillId": "4.1.3",
+      "type": "single",
+      "text": "A ski resort group runs six resorts. Last season, a machine learning (ML) model that plans overnight snowmaking cut energy use by 18 percent at the pilot resort without delaying its opening. Most of the saving came from waiting for colder nights before making snow. This season the model was given to two more resorts, along with a day's training for their snowmaking crews. A review in January found:\n\n- At both new resorts, crews followed most of the model's plans from mid-December but overrode most of them in November and early December.\n- Crews at the new resorts say the model's screens are hard to read at night.\n- One of the new resorts has gaps in its weather-station records.\n- At the pilot resort, the snowmaking team leader helped build the model and checks its plan each evening.\n- Resort managers are assessed on opening date and season revenue. Energy is paid for from a group budget.\n\nWhich capability gap MOST likely explains the overrides?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Crews have not built the skills to read and trust the model's plans, so they fall back on their own judgment whenever they are unsure."
+        },
+        {
+          "id": "B",
+          "text": "Weather data at the new resorts is incomplete, so the model's plans there are less reliable than the plans it produced at the pilot resort."
+        },
+        {
+          "id": "C",
+          "text": "Managers answer for late openings but not for energy costs, so a plan that delays snowmaking gives them risk without any reward."
+        },
+        {
+          "id": "D",
+          "text": "No one at the new resorts reviews the model's plan each evening, so plans that look wrong are not corrected before crews start work."
+        }
+      ],
+      "correctOptionIds": [
+        "C"
+      ],
+      "explanation": "A: Skills and readable screens matter, and the crews had only a day's training. But a skills or interface problem would affect the whole season, and the crews followed most plans from mid-December onward. The overrides cluster in the weeks before opening, which points to something that matters only then.\n\nB: Incomplete data does weaken a model's output. But the gaps are at one of the new resorts, and the overrides happened at both, in the same weeks. Unreliable data would also not explain why crews accepted the plans from mid-December.\n\nC: Capability gaps include how people are measured and rewarded, not only skills and technology. The model saves energy mainly by waiting for colder nights, which in the early season can mean later snowmaking. Resort managers are judged on opening date and revenue while energy is paid centrally, so before opening each delay carries risk for them and the saving goes to someone else. The overrides fall exactly in those weeks and stop once the resorts are open. Until managers' measures reflect the energy goal, more training or tooling will not change the behavior.\n\nD: The pilot resort's evening check is a real difference, and it helps explain the pilot's smooth results. But a missing review would let wrong plans through all season, and the crews were content with the plans from mid-December. The crews were not correcting errors; they were rejecting plans that delay snowmaking before opening."
+    },
+    {
+      "id": "gen-2026-11-21-i-05",
+      "domainId": "domain-4",
+      "taskId": "4.1",
+      "skillId": "4.1.4",
+      "type": "single",
+      "text": "A coffee subscription retailer sells to 220,000 customers online. Its three-year strategy makes personalized offers the main source of growth, and leaders see them as what sets the company apart from supermarket brands. The marketing team wants to try new kinds of offers frequently. A maturity assessment found:\n\n- Two machine learning (ML) models are in production: one recommends coffees, and one predicts which customers will respond to a discount.\n- A consultancy built both models and refreshes them each quarter. Response to discount offers tends to fall in the weeks before each refresh.\n- The consultancy charges for each change to a model, and adding a new kind of offer has taken six to eight weeks.\n- The consultancy built the cloud data platform in the company's own account and documented it. Two marketing analysts use it to write queries and reports.\n\nThis year's budget funds one development investment.\n\nWhich investment should the company make?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Have the consultancy build a third model for new kinds of offers, and negotiate faster turnaround on changes when the contract is renewed."
+        },
+        {
+          "id": "B",
+          "text": "Automate the retraining of both models on the cloud data platform, so that each model is refreshed with new customer data every week."
+        },
+        {
+          "id": "C",
+          "text": "Run an AI course for the whole marketing team, so that staff can specify the model changes they need more clearly for the consultancy."
+        },
+        {
+          "id": "D",
+          "text": "Build a small in-house data science team, so that the company takes over both models and develops new kinds of offer models itself."
+        }
+      ],
+      "correctOptionIds": [
+        "D"
+      ],
+      "explanation": "A: A third model and faster turnaround would help in the short term, and the consultancy knows the models. But it leaves the capability that the strategy depends on outside the company, with every new idea priced and queued as a contract change. Investments should build the capabilities that the strategy relies on most, and here that is the ability to create and change offer models quickly.\n\nB: The falling response before each refresh suggests the models go stale, and automated retraining is a sound practice for models in production. But it only keeps the two existing models current. The strategy depends on trying new kinds of offers frequently, which needs new modeling work, and that work would still be bought change by change from the consultancy.\n\nC: Literacy helps staff work with AI and could make requests clearer. But better requests still go through the same per-change contract and the same six-to-eight-week queue, so the company would still be unable to build or change a model itself.\n\nD: Progression should follow the strategic objective and build on what the company already has. Personalized offers are the main growth source and the company's point of difference, so the ability to develop offer models is a core capability; AWS CAF for AI notes that some AI roles can be outsourced while others only have their impact in the in-house workforce. With two models in production on a documented platform in its own account, the company can take the models over, retrain them as often as needed and build new offer models without a contract change for each idea."
+    },
+    {
+      "id": "gen-2026-11-21-i-06",
+      "domainId": "domain-4",
+      "taskId": "4.2",
+      "skillId": "4.2.1",
+      "type": "single",
+      "text": "A home removals company completes about 2,000 house moves a month. It wants a machine learning (ML) model that predicts how long each move will take, so that it can quote more accurately and plan its crews. A data readiness review found:\n\n- The job system holds seven years of moves, with volume, number of floors, distance, crew size and recorded hours.\n- Since 2022, most moves have been sold at a fixed price, and the job app asks the crew leader to confirm the quoted hours at sign-off.\n- Each van's tracking system logs when it arrives at and leaves every address.\n- Surveyors describe each home's contents in free-text notes rather than as item counts.\n- About 4 percent of jobs have no floor count.\n\nWhat should the company do FIRST?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Train the model on the recorded hours for all seven years of moves, and refine it once crews have given feedback on its first estimates."
+        },
+        {
+          "id": "B",
+          "text": "Measure each move's duration from the van tracking logs, and use those times in place of the recorded hours when training the model."
+        },
+        {
+          "id": "C",
+          "text": "Use a language model to turn the surveyors' notes into item counts, and add those counts to the job records used for training."
+        },
+        {
+          "id": "D",
+          "text": "Fill in the missing floor counts from property records, and train the model on the complete set of seven years of job records."
+        }
+      ],
+      "correctOptionIds": [
+        "B"
+      ],
+      "explanation": "A: Seven years of records looks like ample history. But since 2022 the crew leader confirms the quoted hours at sign-off, so for most recent moves the recorded hours repeat the quote rather than the time the move took. A model trained on them would learn to reproduce the quotes, which are the estimates the company wants to improve. Crew feedback later would not repair the training data.\n\nB: A model can only be as good as the outcome it learns from. The recorded hours no longer measure how long moves take, because crews confirm the quoted figure at sign-off. The van tracking logs record arrival and departure at each address, which gives an independent measure of actual duration. Replacing the outcome with those times is the first step, because every other improvement to the inputs would still be training the model toward the wrong figure.\n\nC: Contents strongly affect how long a move takes, and structured counts could make a useful input later. But better inputs do not help while the outcome the model learns to predict is the quoted time rather than the actual time. The outcome problem has to be fixed first.\n\nD: Missing values are a real data quality issue, and filling them from property records is reasonable. But 4 percent of jobs missing one input is a small problem beside an outcome field that, for most recent moves, records the quote rather than the work. Completing the records would still train the model on the wrong outcome."
+    },
+    {
+      "id": "gen-2026-11-21-i-07",
+      "domainId": "domain-4",
+      "taskId": "4.2",
+      "skillId": "4.2.2",
+      "type": "single",
+      "text": "A car park operator runs 85 car parks and offers an app that tells drivers where spaces are likely to be free when they arrive. A machine learning (ML) model makes the predictions from entry and exit counts recorded by the barrier systems, which the operations technology team manages. The AI team was given read access to the barrier database two years ago through an IT ticket. Three times this year, the operations team changed how the counts are recorded, once by merging two entrances into a single count. Each time, the app's predictions for the affected car parks were wrong for several days before the AI team noticed. The AI team proposes keeping its own copy of the counts in a fixed format. The chief technology officer has suggested automatic alerts when counts look unusual.\n\nWhat should the operator put in place?",
+      "options": [
+        {
+          "id": "A",
+          "text": "An agreement in which the operations team, as owner of the count data, defines its format and meaning and gives notice before changing either."
+        },
+        {
+          "id": "B",
+          "text": "Automatic checks that alert the AI team when counts look unusual, and pause predictions for a car park until its data is fixed."
+        },
+        {
+          "id": "C",
+          "text": "A copy of the counts in a fixed format that the AI team controls, with the AI team converting each new source format into that copy."
+        },
+        {
+          "id": "D",
+          "text": "A central data team that takes over the barrier count data from the operations team and manages any changes to its format for both teams."
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "explanation": "A: Data that other teams depend on needs an owner and agreed terms for sharing it. In a data mesh, for example, the producing domain owns, maintains and exposes its data for the teams that consume it. The operations team understands the barrier systems and makes the changes, but the AI team's use rests on an old access ticket rather than any agreement. Naming the operations team as owner, recording what the counts mean and requiring notice before changes lets the AI team adapt before predictions go wrong.\n\nB: Alerts are a useful safeguard and would shorten the days of wrong predictions. But they act only after a change has already broken the data, and a merged entrance may not look unusual at all. Pausing predictions also leaves drivers without the app. Detection does not stop changes from arriving unannounced.\n\nC: A fixed format protects the model from changes in layout. But the AI team can only convert a new source format after it discovers the change, which is the delay that caused the wrong predictions. A merged entrance also changes what a count means, not just its layout. The copy adds a second version of the data without giving the AI team any warning.\n\nD: Central stewardship can bring consistency to data that several teams use. But the changes come from how the barrier systems are run, which the operations team still controls, so a central team would face the same lack of notice and add a handoff. Ownership works best with the team that produces and understands the data, under terms agreed with the teams that use it."
+    },
+    {
+      "id": "gen-2026-11-21-i-09",
+      "domainId": "domain-4",
+      "taskId": "4.3",
+      "skillId": "4.3.6",
+      "type": "multiple",
+      "text": "A property valuation firm employs 200 valuers who inspect homes and write valuation reports for mortgage lenders. The firm has introduced an automated valuation model (AVM) that values homes from sales records, property records and listing data. Valuers currently inspect every home in person. A review of six months of testing found:\n\n- For typical suburban homes, the model's figure was within 5 percent of the valuer's in 94 percent of cases.\n- Most large errors involved homes with few recent sales nearby or homes that had been extended since they were last recorded.\n- The model's confidence score for each figure is based on how many comparable sales it found.\n- Valuers spend about half of their working time travelling to inspections.\n\nWhich changes to the valuers' work should the firm make? (Choose TWO.)",
+      "options": [
+        {
+          "id": "A",
+          "text": "Valuers stop reviewing figures that the model scores with high confidence, and inspect in person the homes whose figures it scores with low confidence."
+        },
+        {
+          "id": "B",
+          "text": "Valuers check every figure before it is issued, and go to see a home when local market evidence is thin or there are signs of building work."
+        },
+        {
+          "id": "C",
+          "text": "Valuers keep inspecting every home in person as before, and use the model's figure as a starting point so that they can write reports faster."
+        },
+        {
+          "id": "D",
+          "text": "The model issues figures directly for homes with plenty of nearby sales and no recorded extension, and valuers check a random monthly sample."
+        },
+        {
+          "id": "E",
+          "text": "Valuers record the reason whenever they change a model figure, and the model team uses those records to find where the model needs better data."
+        }
+      ],
+      "correctOptionIds": [
+        "B",
+        "E"
+      ],
+      "explanation": "A: Routing by confidence score is a common way to target human review, and here the score does reflect how many comparable sales the model found. But a home extended since it was last recorded can have plenty of comparable sales, so it receives a high score while the figure is wrong, and under this option it would go out with no review.\n\nB: Human roles should move from doing every task by hand to overseeing the AI where judgment adds most. The review shows where the model goes wrong: thin local sales evidence and homes altered since they were recorded, which a valuer can spot from listing photos, planning records or a visit. Checking every figure keeps a qualified person accountable for each report, and limiting visits to the homes where seeing the property changes the answer frees much of the time now spent travelling.\n\nC: Keeping every inspection protects quality, and a starting figure would save some writing time. But it leaves valuers doing the manual work the model can now handle for typical homes, including the travel that takes half their time, so the firm gains little from the model.\n\nD: Releasing figures directly where sales evidence is plentiful targets the model's strength. But the filter can only use recorded extensions, and the errors involve extensions that were never recorded, so those homes would pass the filter and reach lenders unreviewed. A random sample would find them only by chance.\n\nE: Oversight works best as collaboration in which human corrections feed back into improving the system. Valuers who change a figure know why the model was wrong, such as an extension missing from the records or unusual local sales. Recording those reasons in a consistent form shows the model team where its data falls short, so the model can improve over time."
+    },
+    {
+      "id": "gen-2026-11-21-i-10",
+      "domainId": "domain-4",
+      "taskId": "4.4",
+      "skillId": "4.4.3",
+      "type": "single",
+      "text": "An automotive retail group sells and services cars through 120 dealerships under nine brands. Eighteen months ago, it set up an AI center of excellence (CoE) of 12 people with a shared platform, security standards and reusable components. The CoE charges each brand the full cost of every project it delivers, including a share of the platform's running costs. Brand leaders rate the CoE's work highly on the projects they have used it for. Three brands now hire contractors to build AI tools outside the CoE, citing its prices, and those tools do not follow the CoE's security standards. As brands have left, the CoE has twice raised its project price to cover the platform's fixed costs. Attendance at the CoE's monthly community call has fallen by half.\n\nWhat should the group change?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Require every brand to build AI tools through the CoE, and move the tools built by contractors onto the shared platform within six months."
+        },
+        {
+          "id": "B",
+          "text": "Fund the shared platform and standards from the group budget, and charge brands only for the build work on their own projects."
+        },
+        {
+          "id": "C",
+          "text": "Cut the CoE to six people to lower its project price, and keep charging each brand the full cost of the work that it requests."
+        },
+        {
+          "id": "D",
+          "text": "Publish the CoE's security standards for contractors to follow, and turn the monthly call into a quarterly showcase of brand projects."
+        }
+      ],
+      "correctOptionIds": [
+        "B"
+      ],
+      "explanation": "A: A mandate would bring the contractor tools under the CoE's standards, which addresses a real risk. But it forces brands to pay prices they have already rejected, and those prices keep rising because the platform's fixed cost is spread over fewer projects. Brands that are forced to use a service they see as overpriced tend to resist it.\n\nB: A CoE helps scaling when units can afford to build on its shared foundations. Charging the platform's fixed costs to each project means every brand that leaves raises the price for the rest, which pushes more brands to contractors and outside the security standards. Funding the platform and standards centrally treats them as shared assets that every brand benefits from, while brands still pay for work done for them. AWS CAF for AI advises aligning a CoE's incentives with the business and recognizing the cost of maintaining disparate systems.\n\nC: A smaller team would cut people costs. But the platform's fixed costs remain and are still charged to projects, so the price pressure continues, and the CoE would have half the capacity for the brands that still use it. Brand leaders already rate its work highly; the problem is how it is paid for, not its size.\n\nD: Sharing standards with contractors could reduce some security risk, and a showcase might revive interest. But brands would keep building separately on separate tools, losing the reuse the CoE was set up to provide, while the pricing that drives them away stays unchanged."
+    },
+    {
+      "id": "gen-2026-11-21-j-03",
+      "domainId": "domain-4",
+      "taskId": "4.1",
+      "skillId": "4.1.3",
+      "type": "single",
+      "text": "A wind farm operator runs 600 turbines. Its data science team built a machine learning (ML) model that gives each turbine a percentage chance of a gearbox fault within 60 days, so that planners can schedule inspections before faults occur. After a year, planners have inspected fewer than one in five of the turbines that the model scored above 50 percent. A review found:\n\n- Across the year, turbines scored around 70 percent had gearbox faults about 70 percent of the time.\n- Planners say the model is unreliable, and several pointed to turbines scored at 70 percent that kept running without a fault.\n- Scores appear in a separate web portal, and planners schedule crews from a spreadsheet.\n- Planners have not been told which sensor readings drive each turbine's score.\n\nWhich gap MOST likely explains why planners act on so few of the scores?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Planners cannot see which sensor readings drive each score, so they have no way to judge whether a particular score deserves an inspection."
+        },
+        {
+          "id": "B",
+          "text": "The scores sit in a portal apart from the spreadsheet that planners schedule from, so acting on them means copying them across by hand."
+        },
+        {
+          "id": "C",
+          "text": "The model needs more fault history, since turbines scored at 70 percent that ran without faults show it is often wrong about single turbines."
+        },
+        {
+          "id": "D",
+          "text": "Planners treat each score as a firm yes-or-no forecast, so a likely fault that does not happen looks to them like the model getting it wrong."
+        }
+      ],
+      "correctOptionIds": [
+        "D"
+      ],
+      "explanation": "A: Explanations of which readings drive a score can build trust, but the planners' objection is not that scores are puzzling. They call the model unreliable because some high-scoring turbines did not fail. Knowing the sensor drivers would not change how they read a 70 percent chance, so this people gap is real but not the one blocking action.\n\nB: Copying scores between systems adds effort, and fixing it would help. But planners give a reason for not acting, unreliability, and that reason would remain if the scores appeared in their spreadsheet. A technology fix for a skills gap leaves the scores just as ignored.\n\nC: A 70 percent score means that about three in ten such turbines are expected to run without a fault. The year's results match the scores closely, so the model is well calibrated. Turbines that did not fail are what the scores predicted, not evidence of error, and more history would not change that.\n\nD: The model is doing what it should: turbines scored around 70 percent failed about 70 percent of the time. Planners nevertheless count every high score without a fault as a mistake, which means they read a probability as a promise. That is a people capability gap in understanding probabilistic output, and until it is closed, accurate scores will keep being dismissed."
+    },
+    {
+      "id": "gen-2026-11-21-j-04",
+      "domainId": "domain-4",
+      "taskId": "4.1",
+      "skillId": "4.1.4",
+      "type": "single",
+      "text": "A property letting agency manages 14,000 rented homes for private landlords. Its three-year strategy makes round-the-clock answers to tenants' and landlords' questions the main way it will win landlords from rivals. Staff have used a licensed generative AI (GenAI) assistant for a year to draft emails, and they edit about a third of its drafts before sending. No AI system talks directly to customers.\n\nA rival agency launched a customer chat assistant six months ago and advertises it to landlords. Answers about deposits, repairs and notice periods must follow tenancy law, and a wrong answer can expose the agency to claims. Ten years of tenant emails and staff replies are stored in the agency's archive, and the legal team has offered to review a list of standard answers.\n\nThis year's budget funds one development investment. Which investment should the agency make?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Launch a customer chat assistant this year after testing it on 500 archived tenant questions, with a handover to staff when it cannot answer."
+        },
+        {
+          "id": "B",
+          "text": "Build the assistant first for staff to use when answering tenants, and track where they correct its answers before opening it to customers."
+        },
+        {
+          "id": "C",
+          "text": "Fine-tune a model on the archived emails and replies, check its answers against the staff replies, and launch it to customers this year."
+        },
+        {
+          "id": "D",
+          "text": "Have the legal team approve standard answers to the 200 most common questions this year, and build a customer assistant from them next year."
+        }
+      ],
+      "correctOptionIds": [
+        "B"
+      ],
+      "explanation": "A: A pre-launch test on archived questions is useful, but it moves the agency straight from internal drafting to unsupervised answers about tenancy law. Staff still change a third of the current assistant's drafts, and a handover helps only when the assistant knows it cannot answer; a confident wrong answer about a deposit reaches the tenant. Past questions also cannot show how the assistant handles the questions customers will actually ask.\n\nB: Progression should start from current maturity: AI is used only internally, and its drafts still need frequent human edits. An assistant that staff use to answer tenants delivers value this year, keeps a person between the AI and the customer while answers involve tenancy law, and shows from live use where and how often answers go wrong. That evidence is what the agency needs to decide when, and for which questions, the assistant can safely face customers.\n\nC: Fine-tuning teaches the model to sound like the agency's past replies, and checking against those replies measures resemblance, not legal correctness. Ten years of replies include advice given under earlier rules and mistakes. The agency would launch customer-facing AI with a test that rewards copying its archive.\n\nD: Legally approved answers reduce risk, but spending the year's one investment on a fixed answer list delays any AI capability by a year while the rival's assistant is already advertised. A list of 200 answers also builds no experience of running an AI assistant or judging its output, which is the capability the strategy depends on."
+    },
+    {
+      "id": "gen-2026-11-21-j-05",
+      "domainId": "domain-4",
+      "taskId": "4.2",
+      "skillId": "4.2.1",
+      "type": "single",
+      "text": "A lift and escalator maintenance company employs 900 field technicians. It is piloting a generative AI assistant that answers technicians' questions by retrieving passages from the company's service documents. A review of the pilot found:\n\n- The assistant draws on 40,000 files across three shared drives. About a quarter are scanned pages that it cannot read.\n- On 500 test questions, 81 percent of answers were correct. Most wrong answers quoted, word for word, a procedure found in the files.\n- Manufacturers' service bulletins that change a procedure are filed in a separate folder from the manuals they amend.\n- Many manuals were saved again after each revision under similar file names.\n- Technicians in two regions keep their own repair notes on a team wiki.\n\nWhat should the company do FIRST to improve the assistant's answers?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Convert the scanned pages to searchable text and add them to the files that the assistant searches when it answers technicians."
+        },
+        {
+          "id": "B",
+          "text": "Add the two regions' repair notes from the team wiki to the documents that the assistant searches when it answers technicians."
+        },
+        {
+          "id": "C",
+          "text": "Identify the current revision of each manual and the bulletins that amend it, and remove superseded copies from what the assistant searches."
+        },
+        {
+          "id": "D",
+          "text": "Fine-tune the model on the manuals and bulletins, and have it answer from what it has learned instead of searching the files."
+        }
+      ],
+      "correctOptionIds": [
+        "C"
+      ],
+      "explanation": "A: Unreadable scans leave gaps, which tend to produce missing or partial answers. The wrong answers here quoted text the assistant did find, so adding more files would not correct them, and it would add any outdated scanned revisions to the mix.\n\nB: Field notes may add useful knowledge, but they are another uncontrolled source, and the wrong answers did not come from missing knowledge. Adding them before the existing documents are sorted out gives the assistant more text whose currency nobody has checked.\n\nC: A retrieval-based assistant is only as good as the documents it retrieves. Wrong answers that quote the files word for word mean the assistant found real text, but often the wrong version: manuals saved again after each revision under similar names, and bulletins that change procedures stored apart from the manuals. Establishing which content is current and removing superseded copies fixes the data-quality problem behind the errors.\n\nD: Fine-tuning on the same mixed set of old and new revisions would teach the model the conflicting procedures, and a fine-tuned model cannot show which document an answer came from. It also needs retraining whenever a bulletin changes a procedure, while retrieval picks up current documents once they are indexed."
+    },
+    {
+      "id": "gen-2026-11-21-j-06",
+      "domainId": "domain-4",
+      "taskId": "4.2",
+      "skillId": "4.2.3",
+      "type": "single",
+      "text": "A medical device manufacturer wants a generative AI assistant that answers its 2,500 staff's questions from its 15,000 standard operating procedures (SOPs). The SOPs use the company's own part codes and terms, and about 200 of them are revised each month. Use is expected to grow as more sites join during the first year, though nobody can yet say by how much. The company runs its business applications on AWS. The IT director proposes buying eight GPU servers for the company's data center to host an open-weight model, because SOP content is confidential and must not be used to train any provider's models. The security lead agrees with that concern and asks that SOP content be processed only on capacity reserved for the company.\n\nWhich approach should the company take?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Call a foundation model in Amazon Bedrock on demand, paying for the tokens used, and answer each question from retrieved SOP passages."
+        },
+        {
+          "id": "B",
+          "text": "Buy the GPU servers to host an open-weight model in the company's data center, and answer each question from retrieved SOP passages."
+        },
+        {
+          "id": "C",
+          "text": "Reserve Provisioned Throughput in Amazon Bedrock for the company's own use, and answer each question from retrieved SOP passages."
+        },
+        {
+          "id": "D",
+          "text": "Fine-tune a foundation model in Amazon Bedrock on all 15,000 SOPs so that it learns the company's terms, and answer from the tuned model."
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "explanation": "A: Amazon Bedrock does not use customers' prompts or outputs to train models and does not share them with model providers, so the confidentiality concern is met without owning or reserving capacity. On-demand pricing charges for the tokens processed, which suits a workload whose growth is still unknown, and there is no hardware to run. Retrieving SOP passages for each question supplies the company's own terms and picks up revised SOPs once they are indexed.\n\nB: Owned servers keep data in-house, but so does a managed service that does not train on customer data, so the hardware buys no extra confidentiality. The company would size eight servers before it knows how use will grow, pay up front, and take on running GPU hardware outside the AWS environment where its applications already run.\n\nC: Provisioned Throughput buys dedicated model capacity for higher, consistent throughput at a committed rate; it is a capacity and cost choice, not a data-protection control. On-demand requests are not used for training either. Committing to reserved capacity before usage is known risks paying for capacity that sits idle.\n\nD: Fine-tuning can teach terminology, but it takes hours to days and would need repeating as about 200 SOPs change each month, so answers would lag behind current procedures. A fine-tuned model also cannot point to the SOP an answer came from, and it can mix up procedures. Retrieval is the recommended starting point for answering questions from a company's own documents."
+    },
+    {
+      "id": "gen-2026-11-21-j-07",
+      "domainId": "domain-4",
+      "taskId": "4.3",
+      "skillId": "4.3.3",
+      "type": "single",
+      "text": "A mortgage lender will give its 180 underwriters an AI tool that gathers documents and drafts the first assessment of each application. Leaders expect files to take about 40 percent less time once the tool is in full use, and they have confirmed that no underwriting roles will be cut. The rollout starts in two months, team by team.\n\nIn a three-month pilot, 12 underwriters completed about 15 percent fewer files than usual in the first five weeks, then overtook their old pace. Underwriters earn a monthly bonus based on the number of files they complete. Most underwriters outside the pilot have heard about it only through informal conversations, and the pilot underwriters are keen to describe how the tool has changed their work.\n\nWhat should the communication plan emphasize?",
+      "options": [
+        {
+          "id": "A",
+          "text": "The pilot's time saving per file, with pilot underwriters showing colleagues at team meetings how they now work with the tool."
+        },
+        {
+          "id": "B",
+          "text": "Leaders' commitment that no underwriting roles will be cut, repeated by the head of underwriting at each stage of the rollout."
+        },
+        {
+          "id": "C",
+          "text": "Each team's training and go-live dates, with a named contact in every team who can answer questions as the rollout proceeds."
+        },
+        {
+          "id": "D",
+          "text": "The slower output to expect in the first weeks of use, and when and how bonus targets will be adjusted during that period."
+        }
+      ],
+      "correctOptionIds": [
+        "D"
+      ],
+      "explanation": "A: Peer stories are a strong way to build interest, but leading with the end-state saving sets the expectation that work speeds up at once. When output then falls for several weeks and bonuses shrink, staff will see the gap between the message and their experience, and trust in the change drops just as it matters most.\n\nB: Job security is a common concern, and repeating the commitment does no harm, but it is already settled. The effect underwriters will feel first is on their pay, which the pilot shows will dip before it improves. A message that answers a question already answered leaves the one that will affect them unaddressed.\n\nC: Clear dates and a named contact help a phased rollout run smoothly, and they address timing. They say nothing about what results to expect or how pay will be treated while people learn the tool, which is where this rollout will hurt first.\n\nD: Communication about AI should set realistic outcome expectations, including how performance changes during adoption, and explain the effect on people's own work and pay. The pilot shows a learning dip of about 15 percent before gains appear, and pay is tied to files completed. Saying in advance that the dip is expected, and how targets will treat it, prevents a normal learning curve from being read as failure or as a pay cut."
+    },
+    {
+      "id": "gen-2026-11-21-j-08",
+      "domainId": "domain-4",
+      "taskId": "4.3",
+      "skillId": "4.3.5",
+      "type": "single",
+      "text": "An aerospace parts manufacturer with 3,500 employees wants staff in every function to apply AI to their own work within two years. Last year, 80 percent of staff completed a two-hour online course on generative AI basics, and course ratings were high. The transformation lead reports:\n\n- An ideas portal has collected 240 AI ideas from staff. The AI team reviewed 30 of them and found that most relied on data the company does not hold or repeated what existing software already does.\n- Engineers have asked for an advanced course on how models are trained and evaluated.\n- A two-day hackathon last spring drew 60 staff, and the executive team enjoyed judging the demonstrations.\n- The AI team of five also supports the company's two production models.\n\nWhich approach will do the MOST to build AI literacy across the company?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Offer the advanced course on model training and evaluation to all staff who finished the basics course, starting with the engineers who asked."
+        },
+        {
+          "id": "B",
+          "text": "Fund small proof-of-concept projects in which teams test one of their own portal ideas on company data for a few weeks, then decide whether to continue."
+        },
+        {
+          "id": "C",
+          "text": "Run a hackathon every quarter at each site, with teams building prototypes from portal ideas and the executive team judging the results."
+        },
+        {
+          "id": "D",
+          "text": "Have the AI team publish a monthly review of portal ideas, explaining why each was or was not taken forward, for all staff to read."
+        }
+      ],
+      "correctOptionIds": [
+        "B"
+      ],
+      "explanation": "A: Deeper technical content suits people who will build models, but most staff need to judge where AI fits their work, not how models are trained. Another course adds knowledge of the same kind that the basics course already gave, without the practice of testing an idea against real conditions.\n\nB: Staff know the basics but cannot yet judge which ideas are workable: most ideas reviewed depended on missing data or duplicated existing software. A small proof of concept makes a team test its own idea on the data it would really use and then decide whether it is worth continuing. Doing that on their own work is how judgment about data, feasibility and value is learned, and the decision step ties the learning to a business outcome.\n\nC: Hackathons generate energy and prototypes, and the last one was popular. But two days of building for a judged demonstration rewards what looks impressive, not whether the data exists or the problem is already solved. Teams rarely confront those questions before the event ends, so the judgment that is missing does not develop.\n\nD: Explaining decisions is good feedback, but reading about other people's ideas is passive learning. Staff would learn which ideas failed without practising how to test their own, and the AI team would carry the full review load for every idea."
+    },
+    {
+      "id": "gen-2026-11-21-j-09",
+      "domainId": "domain-4",
+      "taskId": "4.3",
+      "skillId": "4.3.6",
+      "type": "single",
+      "text": "A district heating company supplies hot water to 60,000 homes from three plants. A machine learning (ML) system now adjusts the plants' temperatures and pump settings every few minutes, a task that control-room operators used to do by hand. Each shift has three operators, who now watch the system and take over when it hands back control. A review of the first year found:\n\n- Fuel use fell 9 percent, and operators overrode the system on fewer than one shift in fifty.\n- The system handed back control twice, during a sensor failure and a cold snap. Both times operators took about twice as long as in earlier years to steady the network.\n- Four of the twelve operators joined after the system went live.\n- Operators describe their shifts as long periods of watching screens.\n- The vendor's next release will cover cold snaps.\n\nHow should the company design the operators' roles?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Operators spend regular sessions on a plant simulator practising failures and extreme conditions, while the system handles routine adjustments."
+        },
+        {
+          "id": "B",
+          "text": "Operators approve each of the system's setting changes before it takes effect, which keeps them engaged with how the network is running."
+        },
+        {
+          "id": "C",
+          "text": "Operators stay in their monitoring role, and the company installs the vendor's next release to reduce the events that need a handover."
+        },
+        {
+          "id": "D",
+          "text": "Operators review the system's decisions at the end of each shift and send the vendor notes on any decisions that look wrong."
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "explanation": "A: When an AI system handles routine work, people keep the role it cannot do: taking over in unusual conditions. That role needs the hands-on skill that routine work used to build, and here it is fading: takeovers took twice as long, and a third of the operators have never run the network by hand. Regular simulator practice of failures and extremes keeps that skill ready, so oversight works when it is needed, while the system keeps the fuel savings on routine adjustments.\n\nB: Approving every change adds human involvement, but with changes every few minutes and overrides on fewer than one shift in fifty, approvals soon become routine sign-offs. Operators would still not practise the rare, difficult situations in which they must take over, and the delay could cost some of the fuel savings.\n\nC: Covering cold snaps reduces one kind of handover, but no release can anticipate every sensor failure or new condition, and the system will still hand back control in situations nobody planned for. Operators who only watch will be even less practised when that happens.\n\nD: Feedback to the vendor helps improve the system and is worth having, but reviewing routine decisions after the event does not build the skill of steadying the network in a live failure. The gap shown in the takeovers would remain."
+    },
+    {
+      "id": "gen-2026-11-21-j-10",
+      "domainId": "domain-4",
+      "taskId": "4.4",
+      "skillId": "4.4.6",
+      "type": "multiple",
+      "text": "A car servicing chain is extending a generative AI assistant that drafts repair estimates and plain-language explanations of faults for customers. A four-month pilot at 20 company-owned garages halved the time to send an estimate, and complaints about unclear estimates fell. The chain plans to extend the assistant to all 300 garages over six months, including 120 franchised garages trading under four local brands. A review finds:\n\n- The assistant looks up parts and labour times in the company-owned garages' catalogue system. Franchised garages use a different catalogue system from another supplier.\n- The pilot's monthly AI cost was read from the AWS bill as a single figure for the whole account.\n- In the pilot, a service adviser checked each estimate before it reached the customer.\n- Pilot garage managers volunteered for the pilot and promote the assistant to their staff.\n- Franchise owners want customer explanations to match each brand's own tone.\n\nWhich actions should the chain take as it scales the assistant? (Choose TWO.)",
+      "options": [
+        {
+          "id": "A",
+          "text": "Remove the service adviser's check at garages where the assistant's estimates closely match final invoices during their first month of use."
+        },
+        {
+          "id": "B",
+          "text": "Test the assistant's estimates at a few franchised garages on their own catalogue system before the other franchised garages join."
+        },
+        {
+          "id": "C",
+          "text": "Hold each wave of garages back until every garage in it has a manager who volunteers to champion the assistant, as in the pilot."
+        },
+        {
+          "id": "D",
+          "text": "Fine-tune a separate copy of the model for each of the four franchise brands, and use those copies at the franchised garages."
+        },
+        {
+          "id": "E",
+          "text": "Tag the assistant's usage by garage group, and review its costs in AWS Cost Explorer as each wave of garages goes live."
+        }
+      ],
+      "correctOptionIds": [
+        "B",
+        "E"
+      ],
+      "explanation": "A: One month of matching invoices at a new garage is a thin basis for removing the only human check, especially at franchised garages whose parts data the assistant has never used. The adviser's check is what kept errors away from customers in the pilot, and it should stay until performance is shown across the wider estate.\n\nB: Pilot results hold only for the conditions in which they were measured. The assistant's estimates depend on parts and labour data, and the franchised garages hold that data in a different system from another supplier. Testing at a few franchised garages first shows whether estimates stay accurate on that data before 120 garages depend on it.\n\nC: Volunteer champions can help adoption, but making every garage find one before it joins would stall the rollout on a condition many garages may never meet. Champions support adoption; they do not protect continuity or performance at scale.\n\nD: Tone and style can be set through prompt instructions for each brand, which is the recommended first step before fine-tuning. Four fine-tuned copies would each need training data, testing and upkeep, multiplying cost and maintenance at the moment of scaling, and they do nothing about the catalogue difference.\n\nE: Under consumption-based pricing, costs grow with use, and the chain is going from 20 garages to 300, including garages on a different data system that may use the assistant differently. A single account-wide figure cannot show which garages drive cost. Tagging usage, for example through application inference profiles in Amazon Bedrock, lets Cost Explorer group costs by garage group, so the chain can see each wave's cost against its benefit as it goes live."
     }
   ]
 }

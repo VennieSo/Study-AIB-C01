@@ -1025,6 +1025,546 @@
         "C"
       ],
       "explanation": "A: Protecting an advantage matters only against companies that compete for the same business. The interested carriers do not serve the company's routes, so keeping the tool internal gives up a new source of revenue without protecting anything.\n\nB: A reseller would reach more carriers, but a nationwide offering would also be available to the two large carriers on the company's routes. They would gain the same cost savings and remove the edge that drives the company's profits.\n\nC: AI can transform a business model by turning an internal capability into a product that earns new revenue. Selling subscriptions to carriers in other regions creates a recurring revenue stream, while the two large competitors on the company's own routes remain without the tool, so its core cost advantage is preserved.\n\nD: Trading a tool for data can be a sound model when the data improves the product. Here the tool plans each carrier's loads from that carrier's own shipments and lanes, so other regions' data would do little for the company's own routes, and giving the tool away earns nothing from it."
+    },
+    {
+      "id": "gen-2026-11-20-03",
+      "domainId": "domain-2",
+      "taskId": "2.1",
+      "skillId": "2.1.2",
+      "type": "single",
+      "text": "A freight brokerage competes on a pricing engine that matches loads to carriers. Its six machine learning (ML) engineers built the engine and are midway through a pricing release that the sales team has promised to major customers. The Chief Technology Officer now wants an assistant that answers employees' questions about HR and IT policies. The CTO would prefer to build it so that the company owns the code and avoids a license. A strategist has gathered three options:\n\n- Two of the engineers could build the assistant on Amazon Bedrock in about a quarter. The estimate of $310,000 over three years covers development and usage charges.\n- A product on AWS Marketplace does the same job, runs in the company's own AWS account, and costs $380,000 over three years.\n- A consulting partner would build a custom assistant for $420,000 and hand over the code for the company to maintain.\n\nWhich recommendation is MOST appropriate?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Assign two engineers to build the assistant on Amazon Bedrock over the next quarter."
+        },
+        {
+          "id": "B",
+          "text": "License the Marketplace product, and leave the engineers on the pricing release."
+        },
+        {
+          "id": "C",
+          "text": "Engage the partner to build the custom assistant, and leave the engineers on the pricing release."
+        },
+        {
+          "id": "D",
+          "text": "License the Marketplace product for one year, and build a replacement in-house after the pricing release ships."
+        }
+      ],
+      "correctOptionIds": [
+        "B"
+      ],
+      "explanation": "A: Building suits a capability that sets the company apart and that it has the skills to deliver. The team has the skills, and the estimate is the lowest figure. However, a policy assistant works the same way at any company, the estimate leaves out the cost of maintaining it, and it would take a third of the team off the release that customers have been promised.\n\nB: Buying suits a capability that many companies need in the same form and that does not differentiate the business. Answering policy questions is that kind of capability. The license costs somewhat more than the build estimate, but it keeps scarce engineers on the pricing engine, which is where the company competes, and it leaves maintenance with the vendor.\n\nC: A partner suits a capability that matters strategically when the company lacks the skills or capacity to build it. This option protects the pricing release, but it costs the most and produces custom code for a job that an existing product already does. The engineers would then have to maintain that code.\n\nD: Starting with a product and building later can make sense when a company expects to need behavior that products cannot provide. Nothing here suggests that. An in-house replacement would take engineers away from pricing work next year to rebuild something that already works and brings no competitive benefit."
+    },
+    {
+      "id": "gen-2026-11-20-04",
+      "domainId": "domain-2",
+      "taskId": "2.2",
+      "skillId": "2.2.4",
+      "type": "single",
+      "text": "A hospital group introduced an AI scheduling tool for its operating theatres two months ago. Each afternoon, the tool proposes the next day's list of procedures for each theatre. Schedulers can run the proposed list or build their own. The business case promises 8% more procedures per theatre, to be measured at year-end. The program sponsor plans to tell the board that the project is on track and has shared the two-month dashboard:\n\n- 92% of schedulers open the tool at least weekly, up from 80% in the first month.\n- The tool's estimates of procedure length are within 10 minutes for 78% of procedures, against a target of 75%.\n- Schedulers ran 34% of the proposed lists in the second month, compared with 51% in the first month.\n- In a monthly survey, schedulers rated the tool 3.1 out of 5, compared with 3.6 in the first month.\n- Procedures per theatre are 1% higher than in the same two months of last year.\n\nWhich reading of the dashboard should the strategist give the board?",
+      "options": [
+        {
+          "id": "A",
+          "text": "On track: use is rising and the estimates beat their target, and a dip in lists run and in ratings is normal while schedulers learn where the tool fits."
+        },
+        {
+          "id": "B",
+          "text": "On track: procedures per theatre are already above last year with the tool only two months old, and the gain should grow as more schedulers use it."
+        },
+        {
+          "id": "C",
+          "text": "At risk: schedulers' ratings of the tool are falling, and survey ratings are the earliest available sign of whether the year-end target will be met."
+        },
+        {
+          "id": "D",
+          "text": "At risk: schedulers are choosing their own lists over the tool's more often, and the share of lists run is the closest early measure of the year-end result."
+        }
+      ],
+      "correctOptionIds": [
+        "D"
+      ],
+      "explanation": "A: Use and technical quality are early signals worth tracking, and some settling after a launch is normal. However, opening the tool is not the same as acting on it, and the share of lists run fell by a third in one month while logins rose. A reading that explains away the measure closest to the outcome gives the board false comfort.\n\nB: Procedures per theatre is the outcome in the business case, which makes it a lagging indicator. A 1% difference over two months is too little to project, and it cannot be credited to the tool when schedulers built most of the lists themselves in the second month.\n\nC: The falling ratings are a real warning and point the same way as the key. However, a survey records what people say about a tool. A leading indicator is strongest when it measures the behavior that produces the result, and the dashboard has a direct measure of that behavior.\n\nD: A leading indicator is an early measure that predicts a later result. For a tool that makes proposals, the strongest one is whether people act on them, because the extra procedures can come only from the tool's lists. Schedulers ran about half of the lists in the first month and about a third in the second, so the target is at risk even though logins and accuracy look healthy."
+    },
+    {
+      "id": "gen-2026-11-20-05",
+      "domainId": "domain-2",
+      "taskId": "2.2",
+      "skillId": "2.2.2",
+      "type": "single",
+      "text": "An online retailer will introduce a generative AI (GenAI) tool that drafts replies to customer emails for its 40 service agents. The sponsor must show the board how much the tool reduces the time that customers wait for a reply, and wants a figure that the finance team will accept. The planning notes say:\n\n- Reply times have been logged for every email for two years.\n- Email volume peaks in November and December and is steady from February to May.\n- The tool is scheduled to go live on 1 March.\n- Eight experienced agents will transfer in from another site on 1 March.\n- The project team proposes to use the average reply time in February as the baseline.\n\nWhich baseline plan would give the MOST reliable measure of the tool's effect?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Keep the 1 March launch, and use February's average reply time, because it is the most recent period and has the same volume as the months after launch."
+        },
+        {
+          "id": "B",
+          "text": "Keep the 1 March launch, and use the average reply time for March to May of last year, because it covers the same months as the period after launch."
+        },
+        {
+          "id": "C",
+          "text": "Keep the 1 March launch, and use February's average reply time reduced by one-fifth, because the team will be one-fifth larger after the transfer."
+        },
+        {
+          "id": "D",
+          "text": "Move the tool's launch to 1 April, and use March's average reply time, because it reflects the team that will use the tool."
+        }
+      ],
+      "correctOptionIds": [
+        "D"
+      ],
+      "explanation": "A: A recent baseline with similar volume is usually a sound choice, and February avoids the seasonal peak. However, the team grows by a fifth on the day the tool goes live. Reply times would fall after 1 March with or without the tool, and a February baseline cannot separate the two effects.\n\nB: Matching the same months of an earlier year is a good way to control for seasonality. Volume is already steady from February to May, so that is not the main difficulty here. Last year's figures come from a smaller team, so the comparison would still credit the tool with the effect of eight more agents.\n\nC: This plan recognizes that the added agents will change reply times and tries to allow for them. However, the adjustment is an assumption. Reply time does not fall in simple proportion to the number of agents, so the baseline would be an estimate that the finance team could reasonably dispute.\n\nD: A baseline should be measured before the AI solution is introduced and under the conditions that will apply afterwards, so that the tool is the only thing that changes. Measuring in March, after the transfer and before the launch, records reply times for the enlarged team at a steady volume. The cost is a one-month delay in return for a measured figure."
+    },
+    {
+      "id": "gen-2026-11-20-b-04",
+      "domainId": "domain-2",
+      "taskId": "2.1",
+      "skillId": "2.1.5",
+      "type": "single",
+      "text": "An insurer uses a vendor's software-as-a-service (SaaS) AI product to read claim forms and extract fields such as policy number, date of loss and type of damage. Claims staff check each extraction on the vendor's review screen and correct any errors. The vendor has announced a 40% price increase at renewal in five months, and the insurer's team has built a replacement on Amazon Bedrock. A transition review finds:\n\n- On a test of 2,000 recent forms, the replacement was as accurate as the vendor product.\n- Over three years, staff have made about 180,000 corrections, all stored in the vendor's platform.\n- Brokers send forms in more than 60 layouts, many of which arrive only a few times a year.\n- Claims staff will need about two days of training on the replacement's review screen.\n- Finance has proposed running both products side by side for three months after renewal.\n\nWhat should the insurer do FIRST?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Run both products side by side on all incoming claims for three months after renewal, and compare their extractions before choosing one."
+        },
+        {
+          "id": "B",
+          "text": "Switch to the replacement at renewal, since it matched the vendor's accuracy, and let it learn from the corrections staff make after the switch."
+        },
+        {
+          "id": "C",
+          "text": "Train claims staff on the replacement's review screen before renewal, so that checking and correcting continue at the same pace after the switch."
+        },
+        {
+          "id": "D",
+          "text": "Arrange an export of the correction history in a usable format before the contract ends, and use it to test and tune the replacement."
+        }
+      ],
+      "correctOptionIds": [
+        "D"
+      ],
+      "explanation": "A: A side-by-side run measures performance on live claims and is a sound transition practice. Here, three months of incoming forms will contain few examples of the rarely seen layouts, and the run starts only after paying the higher renewal price. It also does nothing to secure the three years of corrections, which remain in the vendor's platform unless they are exported.\n\nB: The 2,000-form test reflects recent forms, which are mostly common layouts. Many of the more than 60 layouts arrive only a few times a year, so matching accuracy on recent forms does not show performance on them. Collecting corrections only after the switch gives up three years of labeled examples that already cover those layouts.\n\nC: Training supports business continuity and will be needed, but it takes about two days and can be scheduled at any point before the switch. It does not tell the insurer whether the replacement can handle the full range of forms.\n\nD: When a process moves between AI platforms, data readiness and continuity come first. The 180,000 corrections are labeled examples of what each field should contain, across the layouts the insurer receives, including rare ones that a test of recent forms misses. They are held in the vendor's platform, so securing them before the contract ends lets the team test and tune the replacement on the full range of forms."
+    },
+    {
+      "id": "gen-2026-11-20-b-05",
+      "domainId": "domain-2",
+      "taskId": "2.3",
+      "skillId": "2.3.3",
+      "type": "single",
+      "text": "A regional home insurer uses a machine learning (ML) model to price policies. Since the model launched, the insurer's loss ratio has improved by three points, and two larger competitors have announced similar pricing models. The chief executive asks where to invest next so that the insurer's advantage lasts as competitors catch up. A strategist notes the following:\n\n- The model's main input is a hazard dataset from a commercial data provider, renewed each year.\n- The insurer's inspectors photograph the roof and drainage of about 40,000 insured homes each year. The photos are archived and not used.\n- The insurer holds 30 years of claim files on paper; only the last eight years are digital.\n- The data science team believes a custom model architecture could improve the loss ratio by about one more point.\n- A satellite imagery company has offered roof-condition scores for every home in the insurer's region.\n\nWhich investment should the insurer prioritize?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Digitize the 30 years of paper claim files, link them to policy records, and retrain the pricing model on the longer history."
+        },
+        {
+          "id": "B",
+          "text": "Fund the custom model architecture that the data science team proposes, since it is expected to add another point to the loss ratio."
+        },
+        {
+          "id": "C",
+          "text": "Link the inspection photos to the claims those homes later made, and add them to the pricing model as a new input."
+        },
+        {
+          "id": "D",
+          "text": "License the satellite roof-condition scores for every home in the region, and add them to the pricing model as a new input."
+        }
+      ],
+      "correctOptionIds": [
+        "C"
+      ],
+      "explanation": "A: The old claim files are the insurer's own data, but they are a fixed archive. Claims from decades ago reflect housing and conditions that have since changed, and the archive will not grow as the business operates. Digitizing it could give a one-time improvement but does not create a source of advantage that keeps building.\n\nB: A better architecture may add a point for a time, but model designs are widely published and can be copied, and competitors can build similar ones on the same commercial data. The gain comes from technique rather than from anything only this insurer has.\n\nC: A lasting AI advantage usually rests on data that competitors cannot obtain and that grows as the business operates. Only this insurer collects the inspection photos, and linking them to later claims turns them into labeled data. About 40,000 new inspections arrive each year, so the model can keep improving from the insurer's own operations, an advantage that competitors cannot buy.\n\nD: Roof-condition scores would cover homes that inspectors never visit, which is appealing. But they come from a commercial provider that can sell the same scores to competitors, as can the hazard data provider. Purchased inputs can improve a model without creating an advantage that lasts."
+    },
+    {
+      "id": "gen-2026-11-21-03",
+      "domainId": "domain-2",
+      "taskId": "2.1",
+      "skillId": "2.1.3",
+      "type": "single",
+      "text": "An online university piloted a generative AI tool that gives students feedback on essay drafts. In two faculties, 2,000 students used it, tutors' marking time fell by 30 percent, and student ratings were high. Tutors in three other faculties have asked to join, and two rival universities now advertise AI feedback tools to prospective students.\n\nThe portfolio board must decide the tool's next step. Extending it to all faculties would cost about $120,000 a year to run, against an estimated $900,000 a year in tutor time saved. The contractor who wrote the tool's prompts and the sample essays used to test feedback quality left in June, and no staff member has worked on either since. The accreditation body has announced a consultation next year on the use of AI in assessment.\n\nWhat should the board decide?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Extend the tool to all faculties this term to capture the tutor time savings and to match the feedback tools that rival universities advertise."
+        },
+        {
+          "id": "B",
+          "text": "Keep the tool in the two pilot faculties and hold any extension until the accreditation consultation has ended and its outcome is known."
+        },
+        {
+          "id": "C",
+          "text": "Retire the tool and replace it with a vendor's essay feedback product that the supplier maintains, tests and updates for its customers."
+        },
+        {
+          "id": "D",
+          "text": "Keep the tool in the two pilot faculties and hold any extension until university staff can revise the prompts and rerun the quality tests."
+        }
+      ],
+      "correctOptionIds": [
+        "D"
+      ],
+      "explanation": "A: The value case is strong, but prioritizing an initiative also weighs whether it can be sustained. Nobody at the university can change the prompts or check feedback quality, so a quality problem or a change to the underlying model would affect every faculty with no one able to fix or test it. Rival offers add urgency but do not remove that risk.\n\nB: Regulatory change is worth watching, but a consultation that has not started sets no new requirement and has no end date. Waiting for it would delay a value-positive extension indefinitely, and it would leave the real gap untouched: when the consultation ends, the university would still have no one who can adapt the tool to whatever it decides.\n\nC: A supplier-maintained product removes the dependency on one person, but terminating a tool that works and is valued throws away its proven results and adds switching cost. The gap is one of internal ownership, which can be closed, not a sign that the initiative has failed.\n\nD: The tool is value-positive and should keep serving the pilot faculties. What blocks scaling is sustainability: the prompts and the test essays are what keep feedback quality in check, and no one in the university can maintain them since the contractor left. Building that ownership first lets the board scale an initiative it can support, and a capability to test quality also prepares it for whatever the accreditation consultation decides."
+    },
+    {
+      "id": "gen-2026-11-21-04",
+      "domainId": "domain-2",
+      "taskId": "2.3",
+      "skillId": "2.3.4",
+      "type": "single",
+      "text": "A national accounting firm earns 40 percent of its profit from bookkeeping and tax filing for small businesses. Most established firms in its market are still running small generative AI (GenAI) trials. The board is setting the firm's AI investment for the next two years. A business strategist presents these findings:\n\n- Two online providers launched 18 months ago use AI to automate bookkeeping and charge about a third of the firm's fees.\n- The firm's small-business client numbers fell 9 percent last year, mostly to those two providers.\n- Industry surveys show that peer firms plan AI budgets of about 1 percent of revenue.\n- A trial by the firm's technology team showed that a foundation model in Amazon Bedrock could draft bookkeeping entries from scanned receipts.\n- The head of technology proposes building the firm's own accounting model so that competitors cannot copy it.\n\nWhich investment approach is MOST appropriate?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Invest heavily now in automated bookkeeping and tax services for small businesses, built on foundation models that are already available."
+        },
+        {
+          "id": "B",
+          "text": "Hold AI spending near the 1 percent peer level and run targeted trials until established firms show which approaches work."
+        },
+        {
+          "id": "C",
+          "text": "Invest heavily now in building the firm's own accounting model, a capability that rival firms and new providers cannot buy from a supplier."
+        },
+        {
+          "id": "D",
+          "text": "Hold AI spending near the peer level and cut small-business fees to slow client losses while AI accounting products mature."
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "explanation": "A: Investment level should follow the competitive dynamics the firm actually faces, not only the industry's average maturity. Established peers are still experimenting, but AI-native entrants are already taking a segment that produces 40 percent of profit at a third of the price. That threat calls for significant investment now. Available foundation models already do the core task, so the money goes into the service and its rollout rather than into creating a model.\n\nB: Matching peers and running small trials is often right when AI is immature across an industry and no one is competing on it. Here the competition that matters is not the peer firms but the new providers, which are already winning clients, so benchmarking against peers understates the threat.\n\nC: Heavy investment fits the threat, but building a proprietary model is slow and costly when pretrained models already handle the task, as the firm's own trial showed. The entrants compete on service and price, not on owning a model, so the firm would spend its time and budget on the part that gives the least advantage while losses continue.\n\nD: A fee cut may slow losses briefly, but the entrants' low prices come from automation that lowers their cost of service. Cutting fees without changing the firm's own costs shrinks its margin on the segment, and waiting for products to mature lets the entrants grow further."
+    },
+    {
+      "id": "gen-2026-11-21-b-03",
+      "domainId": "domain-2",
+      "taskId": "2.1",
+      "skillId": "2.1.2",
+      "type": "single",
+      "text": "A mid-sized pharmaceutical company must record reports of suspected side effects from emails, call notes and forms, and submit them to regulators within fixed deadlines. Report volume has risen 40% in a year, and the safety team has a backlog.\n\nA vendor sells an AI intake product already used by several drug companies. It charges per report processed and supplies a validation package for regulatory inspections. The company's data science team built an Amazon Bedrock prototype that extracted fields slightly more accurately than the vendor product on 300 past reports. Any change to a system used for safety reporting must be documented and revalidated before use. Regulators specify the content and format of each submission, and every company in the market files the same types of report.\n\nWhich sourcing decision is MOST appropriate?",
+      "options": [
+        {
+          "id": "A",
+          "text": "License the vendor product for intake, and negotiate volume tiers into its per-report pricing before signing, given the growth in reports."
+        },
+        {
+          "id": "B",
+          "text": "Build on the Amazon Bedrock prototype in-house, since its higher accuracy would reduce the corrections that safety staff make as volumes grow."
+        },
+        {
+          "id": "C",
+          "text": "Engage a partner to finish and validate the Amazon Bedrock prototype, so that the company owns a more accurate system without straining its team."
+        },
+        {
+          "id": "D",
+          "text": "Run the prototype and the vendor product side by side on new reports for six months, then choose on accuracy and cost per report."
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "explanation": "A: Building makes sense when a capability differentiates the business; buying fits when a proven product meets the requirements and owning the system would add no competitive advantage. Side-effect intake is a regulated obligation that every company performs in the same way. The vendor product is already in use at other drug companies and comes with a validation package, so the vendor carries much of the validation effort that every change would otherwise require. Negotiating volume tiers addresses the cost exposure of per-report pricing as volumes rise.\n\nB: A small accuracy gain on 300 past reports is weak evidence, and it does not offset the cost of owning a system in a non-differentiating, regulated function. The company would have to validate the system before use and revalidate it after every change, which adds work while the backlog is growing.\n\nC: A partner can add capacity, but ownership is the problem here, not the team's workload. Once the system is the company's own, the company still carries validation for every later change, for a function that gives it no advantage over competitors that file the same reports.\n\nD: A side-by-side run is a careful way to compare options, but it delays relief from the backlog by six months, and processing live safety reports through the prototype would itself require validation first. The comparison would also weigh accuracy and cost while ignoring that the function does not differentiate the company."
+    },
+    {
+      "id": "gen-2026-11-21-b-04",
+      "domainId": "domain-2",
+      "taskId": "2.2",
+      "skillId": "2.2.4",
+      "type": "single",
+      "text": "A meal-kit subscription company launched a model that flags customers likely to cancel within 60 days. A retention team calls each flagged customer and offers three boxes at half price. The program's goal is a lower annual cancellation rate, which the board will review in 12 months.\n\nEight weeks in, the program lead reports that 38% of flagged customers who were reached accepted the offer, twice the planned rate, but the team has reached only 55% of flagged customers within two days of the flag. Finance notes that, in past years, about 70% of customers who matched the flag profile cancelled within 60 days and the rest stayed without any contact. The company keeps these cancellation records for every month.\n\nWhich measure is the BEST early signal of whether the program will reach its goal?",
+      "options": [
+        {
+          "id": "A",
+          "text": "The share of reached customers who accept the half-price offer each week, compared with the acceptance rate that the business case planned."
+        },
+        {
+          "id": "B",
+          "text": "The 60-day cancellation rate of flagged customers who were called, compared with a randomly chosen group of flagged customers who were not."
+        },
+        {
+          "id": "C",
+          "text": "The share of flagged customers whom the retention team reaches within two days of each flag, compared with a weekly contact target."
+        },
+        {
+          "id": "D",
+          "text": "The 60-day cancellation rate of flagged customers who were called, compared with the rate for profile-matching customers in the same months last year."
+        }
+      ],
+      "correctOptionIds": [
+        "B"
+      ],
+      "explanation": "A: Acceptance looks like early success, and it is twice the plan. But about 30% of customers who match the flag profile historically stay without any contact, and they can accept a discount too. Acceptance does not show whether the call changed anyone's decision, so a high rate can mean the company is discounting customers who would have stayed.\n\nB: A leading indicator should predict the outcome the program is meant to change and be available well before that outcome is measured. Comparing called customers with a randomly chosen uncalled group at the same time isolates the effect of the calls from everything else that affects cancellations. Within 60 days it shows whether the program is actually preventing cancellations, well before the 12-month review.\n\nC: Contact speed is an activity measure that the team can act on, and the 55% figure makes it look urgent. But reaching customers faster only helps if contact changes whether they cancel, which this measure cannot show. It tracks effort rather than predicting the annual result.\n\nD: Last year's records make this comparison easy and fast, which is its appeal. But a year-on-year comparison mixes the effect of the calls with everything else that changed between years, such as prices, menus, competitors and who the model now flags. Only a comparison group drawn at random from the same flagged customers, at the same time, separates the calls' effect from those differences."
+    },
+    {
+      "id": "gen-2026-11-21-d-03",
+      "domainId": "domain-2",
+      "taskId": "2.2",
+      "skillId": "2.2.3",
+      "type": "single",
+      "text": "A car rental company piloted an AI tool at the counters of 12 branches, a mix of airport and city locations. At pickup, the tool recommends a vehicle upgrade or extra damage cover based on the customer's booking and rental history. Compared with matched branches that did not use the tool, the pilot branches sold more upgrades and more cover. The finance team has drafted an ROI for rolling the tool out to all 140 branches. It counts $2.4 million a year of added upgrade and cover sales as the benefit, against $700,000 a year of costs: the tool licence, model usage, and integration spread over three years. Customers who upgraded also kept their cars about half a day longer on average, which the draft does not count. Customer satisfaction at pilot counters fell from 8.1 to 7.8 out of 10.\n\nWhich change to the draft ROI is MOST needed?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Charge the full integration cost to the first year rather than spreading it over three years, giving a stricter first-year return."
+        },
+        {
+          "id": "B",
+          "text": "Deduct an estimated value of lost repeat rentals for the fall in counter satisfaction scores that was measured at the pilot branches."
+        },
+        {
+          "id": "C",
+          "text": "Add the revenue from the extra half day that upgraded customers kept their cars, which the draft leaves out of the benefit."
+        },
+        {
+          "id": "D",
+          "text": "Measure the benefit as the margin the added sales earn once the cost of providing them is deducted, rather than as sales revenue."
+        }
+      ],
+      "correctOptionIds": [
+        "D"
+      ],
+      "explanation": "A: How one-time costs are spread is a presentation choice that should be stated clearly, but moving the integration cost into one year changes the cost side by a modest amount. It leaves the larger error in place: the benefit is counted as sales revenue rather than as the return that revenue produces.\n\nB: The satisfaction fall is worth tracking as an intangible effect, and a lasting decline could matter. A drop of 0.3 points in a pilot is small, and any estimate of lost repeat rentals would be speculative. Adding it would adjust the figure slightly while leaving the benefit measured as revenue.\n\nC: Longer rentals may well be a real effect of the tool, but adding them repeats the draft's error: it counts more revenue as benefit without the cost of providing it. Extra rental days use fleet capacity just as upgrades do, so their contribution, not their price, is what belongs in the return.\n\nD: ROI compares the net gain from an initiative with its cost. Sales revenue is not gain: an upgrade puts a customer in a more expensive car, and damage cover makes the company pay for repairs it would otherwise recover. The benefit should be the margin those sales add after the cost of delivering them, compared with the $700,000. Counting $2.4 million of revenue overstates the return far more than any of the other adjustments would change it."
+    },
+    {
+      "id": "gen-2026-11-21-d-04",
+      "domainId": "domain-2",
+      "taskId": "2.3",
+      "skillId": "2.3.1",
+      "type": "single",
+      "text": "An online furniture retailer competes with two larger online rivals. Its leadership team asks a business strategist to assess where AI could give the company an advantage. The strategist's review of the market finds:\n\n- Rival X launched a generative AI room-design assistant last year with wide press coverage and reports 30% more site visits since the launch.\n- Rival Y has made no AI announcements, but its job postings and a packaging supplier's case study show it uses machine learning to flag orders likely to arrive damaged or be returned. Its return rate fell from 9% to 5% over two years, and it now offers free returns.\n- The retailer's return rate is 10%, and its sofa sales, its highest-value range, fell 8% after Rival Y introduced free returns.\n- The chief marketing officer wants a design assistant before the spring sale so that the company does not look behind on AI.\n\nWhich recommendation should the strategist make?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Build a room-design assistant before the spring sale to match Rival X and win back a share of the site visits that it has gained."
+        },
+        {
+          "id": "B",
+          "text": "Apply AI to predicting and preventing damaged and returned orders, the operational area where Rival Y has opened a cost gap."
+        },
+        {
+          "id": "C",
+          "text": "Match Rival Y's free returns on the sofa range now, and fund the policy from the marketing budget planned for the spring sale."
+        },
+        {
+          "id": "D",
+          "text": "Commission a full review of every competitor's AI announcements and investments before committing to any AI use case."
+        }
+      ],
+      "correctOptionIds": [
+        "B"
+      ],
+      "explanation": "A: A design assistant built on a widely available foundation model is visible and quick for rivals to copy, so at best it brings parity. More site visits are not more sales, and following the most publicized move treats attention as advantage.\n\nB: A competitive assessment looks at what rivals' AI has changed in their results, not at what they announce. Rival Y's quiet use of AI on damage and returns has lowered its costs enough to offer free returns, which the retailer cannot afford at a 10% return rate and which is already taking sofa sales. Applying AI to the same drivers of cost is where adoption gives the retailer an advantage, or at least closes a gap that a design feature cannot.\n\nC: Matching the policy answers the lost sofa sales directly, but at a 10% return rate the retailer would absorb return costs that Rival Y has reduced with AI. It copies the result of Rival Y's advantage without the cost base that pays for it, and spends marketing money to do so.\n\nD: A broader review sounds thorough, but announcements are a poor guide: Rival Y made none and holds the more consequential advantage. The evidence already in hand shows where the cost gap is, and a full survey delays action while sofa sales fall."
+    },
+    {
+      "id": "gen-2026-11-21-c-03",
+      "domainId": "domain-2",
+      "taskId": "2.1",
+      "skillId": "2.1.1",
+      "type": "single",
+      "text": "A regional newspaper publisher wants AI to help grow digital subscription revenue, which has been flat for two years. A business strategist gathers these facts:\n\n- Most cancellations happen within 90 days of a new subscription starting.\n- Subscribers who read three or more local council and court stories in their first month renew at about twice the rate of other subscribers.\n- The paper now publishes about four such stories a week, down from twelve five years ago, and has not added reporters.\n- Reporters spend about a third of their week writing routine items, such as sports results and property sales, from public data.\n- About 0.3% of website visitors who reach the paywall subscribe, which is typical for the industry.\n\nWhich AI use case should the publisher prioritize?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Use generative AI to draft the routine items from public data for reporters to check, and move the time saved to council and court coverage."
+        },
+        {
+          "id": "B",
+          "text": "Build a model that predicts which new subscribers are likely to cancel within 90 days, and offer those subscribers a discounted renewal price."
+        },
+        {
+          "id": "C",
+          "text": "Build a model that sets the paywall offer for each visitor based on their reading behavior, to raise the share of visitors who subscribe."
+        },
+        {
+          "id": "D",
+          "text": "Use generative AI to write council and court stories from published meeting agendas and court lists, to increase the number published each week."
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "explanation": "A: A use case creates value when an AI capability is mapped to the outcome that drives the business result. Renewal is linked to local council and court coverage, which has fallen because reporter time is limited, and a third of that time goes to formulaic items built from structured public data. Drafting those items is a strong fit for generative AI with a reporter checking them, and the freed time goes to the reporting that keeps new subscribers.\n\nB: Cancellations are concentrated in the first 90 days, so a churn model looks well aimed. But it only identifies who is likely to leave; the discount lowers revenue per subscriber and does nothing about the shortage of the local coverage that makes subscribers stay.\n\nC: Personalized paywall offers can lift conversion, but conversion is already typical for the industry, and new subscribers gained this way would still meet the same thin local coverage and cancel at the same rate.\n\nD: This aims at the right outcome, but agendas and court lists record what is scheduled, not what was decided or said. Council and court stories need reporting, and generated accounts of court cases carry a serious risk of inaccurate or fabricated detail, so this does not reliably add the coverage that drives renewal."
+    },
+    {
+      "id": "gen-2026-11-21-f-03",
+      "domainId": "domain-2",
+      "taskId": "2.2",
+      "skillId": "2.2.5",
+      "type": "single",
+      "text": "A regional airline uses a generative AI model in Amazon Bedrock to label and summarize customer feedback. Each night, a job sends the previous day's comments to the model one at a time at on-demand rates. The customer experience team reads the results at its weekly review, where it decides which service problems to fix first. The finance director has asked for the job's monthly cost to come down. The strategist notes:\n\n- Volume is steady at about 25,000 comments a day, and the job finishes within two hours.\n- Each request contains a short labelling instruction followed by one comment, and most of each request's tokens are the comment.\n- The team has spent two months checking the current model's labels against hand-labelled samples and trusts them.\n\nWhich change should the strategist recommend?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Buy provisioned throughput for the model, sized for the nightly volume, so that the steady daily load is billed at a lower rate than on-demand use."
+        },
+        {
+          "id": "B",
+          "text": "Turn on prompt caching for the labelling instruction, so that the part of each request that repeats across comments is billed at the cached rate."
+        },
+        {
+          "id": "C",
+          "text": "Submit each night's comments as a batch inference job, so that the model processes them asynchronously at a lower per-token price than on-demand calls."
+        },
+        {
+          "id": "D",
+          "text": "Combine about 20 comments into each request, so that the labelling instruction is sent once per group of comments instead of once for every comment."
+        }
+      ],
+      "correctOptionIds": [
+        "C"
+      ],
+      "explanation": "A: Provisioned throughput reserves model capacity at an hourly rate whether or not it is used. It pays off for sustained traffic through the day. This job runs for about two hours a night, so the reserved capacity would sit idle for most of the hours being paid for. Steady daily volume is not the same as steady hourly use.\n\nB: Prompt caching lowers the cost of a long prompt prefix that repeats across requests, such as a large document queried many times. Here the shared instruction is short and most of each request's tokens are the comment, which differs every time, so the saving would be small. Caching also needs the prefix to meet a minimum token count.\n\nC: Amazon Bedrock batch inference processes large sets of requests asynchronously at a lower per-token price than on-demand inference, documented as about half for supported models. It suits work whose results are not needed straight away. The team reads the results at a weekly review, so a job that completes some hours later costs nothing in usefulness, and the same trusted model produces the labels.\n\nD: Grouping comments saves only the repeated instruction tokens, and the instruction is a small share of each request. It also changes what the model sees in each request, so labels the team has spent two months checking could shift when comments influence one another."
+    },
+    {
+      "id": "gen-2026-11-21-e-04",
+      "domainId": "domain-2",
+      "taskId": "2.3",
+      "skillId": "2.3.2",
+      "type": "single",
+      "text": "A maker of industrial air compressors sells about 4,000 units a year to small factories and earns most of its profit from units and spare parts. Units sold in the last three years carry sensors, and a model trained on their readings predicts most failures two to three weeks ahead; most compressors in customers' factories are older units without sensors. In a trial, predicted failures were emailed to 200 customers, and about one alert in five led to a repair before the unit failed. Most of the customers who ignored alerts have no maintenance staff. Customers rank lost production during breakdowns as their largest compressor-related cost, ahead of the purchase price and repair bills. The company's service division already maintains units for a few large customers under contract.\n\nWhich change would BEST let the company capture value from its failure predictions?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Sell a monthly monitoring subscription that sends failure alerts and repair guidance to each customer's staff, priced per unit like other monitoring apps."
+        },
+        {
+          "id": "B",
+          "text": "Offer extended warranties that cover repair bills, priced by each unit's predicted failure risk and sold alongside every new compressor."
+        },
+        {
+          "id": "C",
+          "text": "Sell compressed air under contracts priced by volume delivered, with the company owning, monitoring and servicing the units on each site."
+        },
+        {
+          "id": "D",
+          "text": "Sell a monthly service plan for each sensor-equipped unit, in which the company sends a technician whenever the model predicts a failure."
+        }
+      ],
+      "correctOptionIds": [
+        "C"
+      ],
+      "explanation": "A: A subscription is a common way to charge for AI insight, but its value depends on customers acting on alerts. In the trial four alerts in five were ignored, mostly by customers with no one to act on them.\n\nB: Risk-based pricing uses the predictions, but a warranty pays for repairs after a breakdown. Customers rank lost production above repair bills, and a warranty does nothing to prevent it.\n\nC: AI can change a business model when it lets a company take over an outcome that customers struggle to manage. If the company owns the units and is paid for air delivered, it can install sensor-equipped units, act on its own predictions with its service division, and keep the benefit of avoided breakdowns, which is the cost customers care most about.\n\nD: Having the company act on alerts solves the problem of customers ignoring them, which makes this the strongest alternative. But predictions exist only for sensor-equipped units, and most compressors in customers' factories are older units without sensors that the customer owns. The plan would protect a minority of the installed base, while a model in which the company owns the units lets it decide which units are installed."
+    },
+    {
+      "id": "gen-2026-11-21-g-03",
+      "domainId": "domain-2",
+      "taskId": "2.3",
+      "skillId": "2.3.3",
+      "type": "single",
+      "text": "A residential solar installer licensed an AI tool that designs a roof panel layout from satellite images. Design time fell from two days to twenty minutes, so sales staff now quote on the first visit, and the installer's share of new contracts has risen. The vendor sells the same tool to any installer, and two rivals adopted it this year.\n\nA strategy review finds that customers wait about five weeks from signing to installation, which is typical across the industry. Permit applications and crew schedules are still prepared by hand from each design every Monday. The installer holds records of 18,000 past installations, including the crew hours each one took. The board proposes building an in-house design model so that rivals cannot match its designs.\n\nWhich investment is MOST likely to give the installer a lasting advantage?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Build an in-house design model trained on the installer's own satellite images and past layouts, so that its designs differ from those rivals produce."
+        },
+        {
+          "id": "B",
+          "text": "Negotiate a three-year regional exclusivity clause with the vendor, so that rivals who have not yet adopted the tool cannot license it."
+        },
+        {
+          "id": "C",
+          "text": "Train a model on the 18,000 installation records to predict crew hours, so that quotes reflect the labour each roof will actually need."
+        },
+        {
+          "id": "D",
+          "text": "Redesign the post-sale workflow around the instant design, so that installation can follow within days of a customer signing."
+        }
+      ],
+      "correctOptionIds": [
+        "D"
+      ],
+      "explanation": "A: A custom design model rebuilds what the installer already has at parity with rivals. Quoting on the first visit is already possible, and a slightly different layout is unlikely to win customers when the vendor's tool already produces workable designs. The investment competes where advantage has already been commoditized.\n\nB: Exclusivity is a contract term, not a capability. It would not affect the two rivals that already use the tool, it ends when the term ends, and other vendors can offer similar design tools. It protects the current gain briefly rather than building a lasting one.\n\nC: Using the installer's own records is appealing because rivals do not have them, and better labour estimates could improve margins. But quoting is no longer where customers wait, and more accurate quotes do not change the five-week gap after signing that the whole industry shares.\n\nD: AI that anyone can license gives a lasting edge only when the organization changes how it works around it, which rivals cannot copy by buying the same tool. The design now exists minutes after the first visit, yet the hand-built Monday paperwork and scheduling leave customers waiting as long as everywhere else. Rebuilding that flow turns a copied tool into a much faster service that would take rivals a reorganization, not a purchase, to match."
+    },
+    {
+      "id": "gen-2026-11-21-g-04",
+      "domainId": "domain-2",
+      "taskId": "2.2",
+      "skillId": "2.2.2",
+      "type": "single",
+      "text": "A land registry will introduce a machine learning (ML) tool that extracts details from deeds and flags missing documents in title applications. Leaders want to report how much the tool shortens the time it takes to register a title. A business strategist reviews the measurement plan:\n\n- The registry currently reports a median of 19 days, counted from the day an application is received to the day it is registered.\n- The tool arrives with a new case system that will start its clock when an application passes the completeness check, usually three to six days after receipt.\n- The old system stores both the receipt date and the completeness-check date for every application.\n- Application volumes peak each spring, and the launch is planned for October.\n- Caseworkers log handling time in weekly timesheets, which managers say are usually rounded.\n\nWhat should the strategist recommend for the baseline?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Recalculate last year's median from the old records with the completeness-check date as the start, so that it counts time the way the new system will."
+        },
+        {
+          "id": "B",
+          "text": "Compare the post-launch median with the same October-to-March months last year, so that the spring peak does not distort the reported change."
+        },
+        {
+          "id": "C",
+          "text": "Run a two-week time-and-motion study of caseworkers before launch, so that handling time is measured more precisely than the timesheets allow."
+        },
+        {
+          "id": "D",
+          "text": "Fix the current 19-day median as the official baseline and publish it before launch, so that the target cannot be moved once results arrive."
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "explanation": "A: A baseline is only useful if it measures the same thing, in the same way, as the figure it will be compared with. The new system will start counting three to six days later than the old one, so comparing its median with the 19-day figure would show a large reduction even if the tool changed nothing. Because the old records hold the completeness-check date, the registry can rebuild the baseline on the new definition before launch and then compare like with like, including by season.\n\nB: Matching seasons is good practice when volumes vary, and the October launch makes it tempting. But last year's figures still start the clock at receipt while the new system starts it at the completeness check, so the seasonal comparison would still credit the tool with days it did not save.\n\nC: Rounded timesheets do make handling time imprecise, but leaders want to report the time to register a title, which is an elapsed-time measure from system dates. A study of caseworker effort measures a different quantity and leaves the change in how elapsed time is counted untouched.\n\nD: Fixing a baseline in advance prevents moving targets, which is why this option appeals. Fixing a figure that is defined differently from the post-launch measure, however, locks in a comparison that overstates the tool's effect from the first report."
+    },
+    {
+      "id": "gen-2026-11-21-h-04",
+      "domainId": "domain-2",
+      "taskId": "2.1",
+      "skillId": "2.1.2",
+      "type": "single",
+      "text": "An online textbook buyback company makes cash offers for used textbooks and resells them. Its profit depends on how closely each offer anticipates the book's resale price, and leaders see pricing as the main way it beats larger rivals. The company wants a new machine learning (ML) pricing model before the next peak season in nine months. A strategist compares three options:\n\n- The company's data science team of five, which built the current model, estimates seven months to build a new one in Amazon SageMaker AI on 10 years of the company's sales records.\n- A vendor can deliver a pricing product in three months at a lower first-year cost. The product uses one model trained on pooled sales data from all its clients, including two of the company's rivals.\n- A consultancy offers to build a custom model in five months and run it for the company under a three-year contract.\n\nWhich option should the company choose?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Have the internal team build the new model on the company's sales history, and keep the current model running until the new one is ready."
+        },
+        {
+          "id": "B",
+          "text": "License the vendor's product for its larger pool of sales data, and move the data science team onto other analytics projects."
+        },
+        {
+          "id": "C",
+          "text": "Hire the consultancy to build and run the model, and have the data science team review the consultancy's work during the contract."
+        },
+        {
+          "id": "D",
+          "text": "Use the vendor's product for the coming peak season, and have the internal team build its own model for the season after that."
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "explanation": "A: Build decisions turn on whether the capability is a differentiator and whether the company can deliver it. Pricing is how this company wins, its own sales history is data that rivals cannot obtain, and the team that built the current model has the skills. The seven-month estimate fits within the nine months, and the current model covers the gap if the work runs late. Building keeps the advantage, the data and the skills inside the company.\n\nB: Buying usually wins for commodity needs: it is faster and cheaper in the first year, and a larger pool of data can improve accuracy. Here, though, the same pooled model prices books for two rivals, so the company would give up the edge it competes on and lose the team that built it.\n\nC: Partnering suits a company that lacks the skills or time to build. This company has both, and handing its main competitive capability to an outside firm under a three-year contract creates dependence on that firm for the thing it most needs to control.\n\nD: Using the vendor as a bridge looks cautious, but it pays for two solutions and runs the most important season on a model that rivals also use. The internal estimate already fits before peak season, and the current model is a cheaper fallback than a vendor contract."
+    },
+    {
+      "id": "gen-2026-11-21-j-02",
+      "domainId": "domain-2",
+      "taskId": "2.1",
+      "skillId": "2.1.5",
+      "type": "single",
+      "text": "An industrial gases supplier pays an outsourcing firm a fee for each supplier invoice it processes, about 40,000 a month. The finance director plans to end the contract and move the work to an AI service, built on Amazon Bedrock, that reads each invoice and matches it to a purchase order. The business case compares the outsourcing fee with the service's estimated token costs.\n\nIn a test on 3,000 invoices drawn from the past year, the service matched 92 percent correctly, the same rate as the outsourcing firm. The contract requires six months' notice. About a fifth of the outsourcing firm's staff hours go to answering suppliers' calls about late payments and chasing buyers for missing order numbers, and about 4 percent of the records in the supplier master file are duplicates.\n\nWhat should the strategist recommend before the transition is approved?",
+      "options": [
+        {
+          "id": "A",
+          "text": "Estimate the staff cost of the query and follow-up work that would return to the company, and add it to the service's costs in the comparison."
+        },
+        {
+          "id": "B",
+          "text": "Model the service's token costs at month-end peak volumes in AWS Pricing Calculator, and confirm that the savings still hold in the busiest weeks."
+        },
+        {
+          "id": "C",
+          "text": "Give notice now, and run the outsourcing firm and the AI service side by side on every invoice for the six months of the notice period."
+        },
+        {
+          "id": "D",
+          "text": "Remove the duplicate records from the supplier master file before the AI service starts matching any invoices to purchase orders."
+        }
+      ],
+      "correctOptionIds": [
+        "A"
+      ],
+      "explanation": "A: A transition's cost case must cover everything the current process does, not only the task being automated. The outsourcing fee pays for matching and also for about a fifth of the firm's hours spent on supplier calls and chasing missing order numbers. The AI service only reads and matches invoices, so that work would come back to the company's own staff. Leaving it out overstates the savings, and the approval decision depends on the full comparison.\n\nB: With consumption-based pricing, the service is charged for the tokens it processes, so the cost of each invoice is much the same in a busy week as in a quiet one. Peaks change when money is spent, not the monthly total for 40,000 invoices. The gap in the business case is work the service does not do at all, which no token estimate will show.\n\nC: A parallel run protects continuity during a cutover, but giving notice now commits the company before it knows whether the transition saves money. Paying both suppliers for six months also adds cost to a case that already leaves out part of the work. The comparison should be corrected before notice is given.\n\nD: Duplicate supplier records are a data-quality problem in the current process as well, and the test already showed the service matching at the outsourcing firm's rate. Cleaning them is worthwhile, but it does not change whether moving the work saves money, which is what the approval rests on."
     }
   ]
 }
