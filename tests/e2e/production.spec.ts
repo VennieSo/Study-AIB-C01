@@ -155,7 +155,7 @@ test('production includes the complete initial bank and enables every configurat
     path: testInfo.outputPath('production-homepage.png'),
     fullPage: true,
   });
-  for (const count of [20, 40, 60, 85]) {
+  for (const count of [20, 40, 65, 85]) {
     await page
       .getByLabel('Exam length', { exact: true })
       .selectOption(String(count));
@@ -172,7 +172,7 @@ test('production includes the complete initial bank and enables every configurat
       scope === 'all'
         ? bank.length
         : bank.filter(({ domainId }) => domainId === scope).length;
-    for (const size of scope === 'all' ? [20, 40, 60, 85] : [10, 15, 20, 25]) {
+    for (const size of [10, 15, 20, 25, 30]) {
       await page.getByLabel('Question count').selectOption(String(size));
       await expect(page.locator('#availability')).toContainText(
         `${count} questions available`,
@@ -235,7 +235,7 @@ test('production Practice completes with canonical feedback and explanations', a
   );
 });
 
-for (const count of [20, 40, 60, 85]) {
+for (const count of [20, 40, 65, 85]) {
   test(`production Exam ${count} preserves answers and canonical review`, async ({
     page,
   }) => {
@@ -247,7 +247,7 @@ for (const count of [20, 40, 60, 85]) {
       .selectOption(String(count));
     await page.getByRole('button', { name: 'Start exam', exact: true }).click();
     const minutes = (
-      { 20: 30, 40: 65, 60: 95, 85: 130 } as Record<number, number>
+      { 20: 40, 40: 80, 65: 130, 85: 170 } as Record<number, number>
     )[count];
     await expect(
       page.getByRole('timer', { name: 'Time remaining', exact: true }),
@@ -404,7 +404,7 @@ test('production Exam allows partial and over-selected revisions, then expires w
     page.getByRole('button', { name: 'Clear answer', exact: true }),
   ).toBeDisabled();
   await answer(page, 'exam-answer', [question.correctOptionIds[0]!]);
-  await page.clock.fastForward(31 * 60_000);
+  await page.clock.fastForward(41 * 60_000);
   await expect(
     page.getByRole('heading', { name: 'Exam complete', exact: true }),
   ).toBeFocused();

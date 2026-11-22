@@ -97,8 +97,8 @@ export class PracticeSession {
     dependencies: Dependencies,
     questionCount = 10,
   ) {
-    if (!practiceSizes(domainId).includes(questionCount))
-      throw new Error('Choose an approved Practice size for this scope.');
+    if (!practiceSizes.includes(questionCount))
+      throw new Error('Choose an approved Practice size.');
     const validated = loadQuestionBanks(
       Object.fromEntries(
         domains.map((domain) => [
@@ -163,7 +163,7 @@ export class PracticeSession {
       );
     const { domainId, questionCount } = state.configuration;
     if (
-      !practiceSizes(domainId).includes(questionCount) ||
+      !practiceSizes.includes(questionCount) ||
       state.questions.length !== questionCount ||
       state.currentIndex >= questionCount
     )

@@ -7,19 +7,19 @@ Study one domain or all four with **233 questions**, explanations, and no accoun
 
 ## Choose how to study
 
-**Practice** is untimed. Choose one domain and 10, 15, 20, or 25 questions, or all
-domains and 20, 40, 60, or 85 questions. Submit each answer for immediate feedback
+**Practice** is untimed. Choose one domain or all domains mixed, and 10, 15,
+20, 25, or 30 questions. Submit each answer for immediate feedback
 and an explanation. Submitted answers are locked; finish to see your raw score
 and results by domain.
 
 **Exam** is timed and covers all domains. Choose a paired preset:
 
-| Questions    | Time limit  |
-| ------------ | ----------- |
-| 20           | 30 minutes  |
-| 40           | 65 minutes  |
-| 60           | 95 minutes  |
-| 85 (default) | 130 minutes |
+| Questions                    | Time limit  |
+| ---------------------------- | ----------- |
+| 85 (full beta exam, default) | 170 minutes |
+| 65 (full standard exam)      | 130 minutes |
+| 40                           | 80 minutes  |
+| 20                           | 40 minutes  |
 
 Skip questions, move between them, and revise answers until you submit or time
 runs out. Afterwards, review every question, your selections, the correct answers,

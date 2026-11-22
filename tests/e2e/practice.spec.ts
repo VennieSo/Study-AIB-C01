@@ -363,10 +363,14 @@ test('a visitor can configure every Practice scope and size with actual availabi
   await page.goto('/');
   for (const scope of ['domain-1', 'domain-2', 'domain-3', 'domain-4', 'all']) {
     await page.getByLabel('Choose a domain').selectOption(scope);
-    const sizes = scope === 'all' ? [20, 40, 60, 85] : [10, 15, 20, 25];
+    const sizes = scope === 'all' ? [10, 15, 20, 25, 30] : [10, 15, 20, 25];
     await expect(
       page.getByLabel('Question count').locator('option'),
-    ).toHaveCount(4);
+    ).toHaveCount(5);
+    if (scope !== 'all')
+      await expect(
+        page.getByLabel('Question count').locator('option[value="30"]'),
+      ).toBeDisabled();
     for (const size of sizes) {
       await page.getByLabel('Question count').selectOption(String(size));
       await expect(page.locator('#availability')).toContainText(
@@ -396,16 +400,20 @@ test('a visitor can configure every Practice scope and size with actual availabi
   });
 });
 
-test('an 85-question all-domain Practice completes with domain results and restarts the same size', async ({
+test('a 30-question all-domain Practice completes with domain results and restarts the same size', async ({
   page,
 }, testInfo) => {
   test.setTimeout(120_000);
   await page.goto('/');
   await page.getByLabel('Choose a domain').selectOption('all');
-  await page.getByLabel('Question count').selectOption('85');
+  await page.getByLabel('Question count').selectOption('30');
   await page.getByRole('button', { name: 'Start practice' }).click();
   const seen = new Set<string>();
-  for (let index = 0; index < 85; index++) {
+  const seenDomains = new Set<string>();
+  for (let index = 0; index < 30; index++) {
+    seenDomains.add(
+      (await page.locator('#question-metadata').innerText()).slice(0, 8),
+    );
     const text = await page.getByRole('heading', { level: 1 }).innerText();
     expect(seen.has(text)).toBe(false);
     seen.add(text);
@@ -419,7 +427,7 @@ test('an 85-question all-domain Practice completes with domain results and resta
     await page.getByRole('button', { name: 'Submit answer' }).click();
     await page
       .getByRole('button', {
-        name: index === 84 ? 'See results' : 'Next question',
+        name: index === 29 ? 'See results' : 'Next question',
         exact: true,
       })
       .click();
@@ -427,19 +435,19 @@ test('an 85-question all-domain Practice completes with domain results and resta
   await expect(
     page.getByRole('heading', { name: 'Practice complete' }),
   ).toBeVisible();
-  await expect(page.getByLabel('Session counts')).toContainText('Correct85');
+  await expect(page.getByLabel('Session counts')).toContainText('Correct30');
   await expect(
     page
       .getByRole('table', { name: 'Practice performance by domain' })
       .getByRole('row'),
-  ).toHaveCount(5);
+  ).toHaveCount(seenDomains.size + 1);
   await page.screenshot({
     path: testInfo.outputPath('all-domain-results.png'),
     fullPage: true,
   });
   await page.getByRole('button', { name: 'Practice again' }).click();
   await expect(
-    page.getByText('Question 1 of 85', { exact: true }),
+    page.getByText('Question 1 of 30', { exact: true }),
   ).toBeVisible();
   expect(await page.getByRole('heading', { level: 1 }).innerText()).not.toBe(
     'Practice complete',

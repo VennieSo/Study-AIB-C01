@@ -188,15 +188,17 @@ it('reports every supported size from actual reduced pool counts without padding
       { questionCount: 15, available: true },
       { questionCount: 20, available: false },
       { questionCount: 25, available: false },
+      { questionCount: 30, available: false },
     ],
   });
   expect(practiceAvailability(questions, 'all')).toEqual({
     count: 64,
     sizes: [
+      { questionCount: 10, available: true },
+      { questionCount: 15, available: true },
       { questionCount: 20, available: true },
-      { questionCount: 40, available: true },
-      { questionCount: 60, available: true },
-      { questionCount: 85, available: false },
+      { questionCount: 25, available: true },
+      { questionCount: 30, available: true },
     ],
   });
 });

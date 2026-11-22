@@ -209,7 +209,7 @@ test('full-length results retain all eighty-five questions and a readable rounde
   await page
     .getByRole('button', { name: 'Question 85, unanswered', exact: true })
     .click();
-  await page.clock.fastForward(131 * 60_000);
+  await page.clock.fastForward(171 * 60_000);
   await expect(
     page.getByRole('heading', { name: 'Exam complete', exact: true }),
   ).toBeFocused();

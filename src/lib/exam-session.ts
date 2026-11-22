@@ -6,10 +6,10 @@ import { questionRevision } from './question-revision';
 import type { Dependencies, SessionQuestion } from './session';
 
 export const examPresets = [
-  { questionCount: 20, durationMinutes: 30 },
-  { questionCount: 40, durationMinutes: 65 },
-  { questionCount: 60, durationMinutes: 95 },
-  { questionCount: 85, durationMinutes: 130 },
+  { questionCount: 85, durationMinutes: 170, label: 'full beta exam' },
+  { questionCount: 65, durationMinutes: 130, label: 'full standard exam' },
+  { questionCount: 40, durationMinutes: 80, label: null },
+  { questionCount: 20, durationMinutes: 40, label: null },
 ] as const;
 
 export type ExamQuestionCount = (typeof examPresets)[number]['questionCount'];
@@ -49,7 +49,7 @@ const recordSchema = z.strictObject({
     questionCount: z.union([
       z.literal(20),
       z.literal(40),
-      z.literal(60),
+      z.literal(65),
       z.literal(85),
     ]),
     durationMinutes: z.number().int().positive(),
@@ -208,7 +208,8 @@ export class ExamSession {
       mode: 'exam',
       configuration: {
         domainId: 'all',
-        ...preset,
+        questionCount: preset.questionCount,
+        durationMinutes: preset.durationMinutes,
       },
       questions: await Promise.all(
         shuffle(selected, random).map(async (snapshot) => ({

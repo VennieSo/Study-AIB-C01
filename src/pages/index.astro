@@ -46,18 +46,18 @@ const payload = JSON.stringify(questions).replace(/</g, '\\u003c');
             <div class="panel-top"><span class="pill">Practice</span><span class="setup-kicker">A focused study break</span></div>
             <h2 id="configuration-heading" tabindex="-1">Your next practice session</h2>
             <p class="muted">Choose one domain or explore them all. Your own pace.</p>
-            <div class="session-details"><div><span class="field-label">Session length</span><strong>10–85 questions</strong></div><div><span class="field-label">Time limit</span><strong>None</strong></div></div>
+            <div class="session-details"><div><span class="field-label">Session length</span><strong>10–30 questions</strong></div><div><span class="field-label">Time limit</span><strong>None</strong></div></div>
           </div>
           <div class="setup-controls">
             <form id="configuration-form">
               <label class="field-label" for="domain">Choose a domain</label>
               <select name="domain" id="domain" aria-describedby="availability">
-                <option value="all">All domains</option>
                 {availability.map((domain) => <option value={domain.id} selected={domain.id === initialDomain.id}>{domain.number}. {domain.name}</option>)}
+                <option value="all">All domains (mixed)</option>
               </select>
               <label class="field-label count-label" for="question-count">Question count</label>
               <select name="question-count" id="question-count" aria-describedby="availability">
-                {practiceSizes('domain-1').map((count) => <option value={count} disabled={initialDomain.count < count}>{count} questions</option>)}
+                {practiceSizes.map((count) => <option value={count} disabled={initialDomain.count < count}>{count} questions</option>)}
               </select>
               <p id="availability" class="field-note" aria-live="polite">{initialDomain.count >= 10 ? `${initialDomain.count} questions available. 10 will be sampled.` : `${initialDomain.count} questions available. This scope needs at least 10 questions.`}</p>
               <p class="lifetime">{site.lifetime}</p>
@@ -78,7 +78,7 @@ const payload = JSON.stringify(questions).replace(/</g, '\\u003c');
             <form id="exam-configuration-form">
               <label class="field-label" for="exam-preset">Exam length</label>
               <select id="exam-preset" name="exam-preset">
-                {examPresets.map((preset) => <option value={preset.questionCount} selected={preset.questionCount === 85} disabled={!examAvailability(questions, preset.questionCount).available}>{preset.questionCount} questions / {preset.durationMinutes} minutes</option>)}
+                {examPresets.map((preset) => <option value={preset.questionCount} selected={preset.questionCount === 85} disabled={!examAvailability(questions, preset.questionCount).available}>{preset.questionCount} questions / {preset.durationMinutes} minutes{preset.label ? ` (${preset.label})` : ''}</option>)}
               </select>
               <p id="exam-availability" class="field-note" aria-live="polite"></p>
               <p class="lifetime">{site.lifetime} The timer continues while this tab is inactive or your device sleeps.</p>

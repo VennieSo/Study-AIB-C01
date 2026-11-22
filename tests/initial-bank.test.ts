@@ -23,7 +23,7 @@ const dependencies = () => ({
 const scopes: PracticeScope[] = ['all', ...domains.map(({ id }) => id)];
 
 for (const scope of scopes) {
-  it.each(practiceSizes(scope))(
+  it.each(practiceSizes)(
     `completes initial-bank Practice ${scope}/%i without repeats and retains explanations`,
     async (count) => {
       expect(

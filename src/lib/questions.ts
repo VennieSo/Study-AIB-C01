@@ -116,9 +116,7 @@ export function validateLaunchCounts(questions: readonly Question[]) {
 
 export type PracticeScope = DomainId | 'all';
 
-export function practiceSizes(scope: PracticeScope): readonly number[] {
-  return scope === 'all' ? [20, 40, 60, 85] : [10, 15, 20, 25];
-}
+export const practiceSizes: readonly number[] = [10, 15, 20, 25, 30];
 
 export function practiceAvailability(
   questions: readonly Question[],
@@ -127,7 +125,7 @@ export function practiceAvailability(
   const count = practiceQuestions(questions, scope).length;
   return {
     count,
-    sizes: practiceSizes(scope).map((questionCount) => ({
+    sizes: practiceSizes.map((questionCount) => ({
       questionCount,
       available: count >= questionCount,
     })),

@@ -380,7 +380,9 @@ it('samples every approved Practice scope and size without repeats and restores 
     'domain-4',
     'all',
   ] as const) {
-    for (const count of scope === 'all' ? [20, 40, 60, 85] : [10, 15, 20, 25]) {
+    for (const count of scope === 'all'
+      ? [10, 15, 20, 25, 30]
+      : [10, 15, 20, 25]) {
       const session = await PracticeSession.start(
         scope,
         questions,
@@ -435,7 +437,7 @@ it('uses the full unweighted pool, preserves answers, and reports participating 
     'all',
     questions,
     { ...dependencies(), random: () => 0.999 },
-    40,
+    30,
   );
   expect(
     session.record.questions
@@ -445,10 +447,10 @@ it('uses the full unweighted pool, preserves answers, and reports participating 
   expect(session.record.questions[25]!.snapshot.domainId).toBe('domain-2');
   const original = session.record.questions[0]!.snapshot.text;
   questions[0]!.text = 'new bank revision';
-  for (let index = 0; index < 40; index++) {
+  for (let index = 0; index < 30; index++) {
     const snapshot = session.record.questions[index]!.snapshot;
     session.select(
-      index < 30
+      index < 20
         ? snapshot.correctOptionIds
         : [
             snapshot.options.find(
@@ -466,31 +468,31 @@ it('uses the full unweighted pool, preserves answers, and reports participating 
   expect(restored.record.questions[0]!.snapshot.text).toBe(original);
   expect(restored.record.questions[0]!.selectedOptionIds).toEqual(['option-1']);
   expect(restored.result()).toMatchObject({
-    total: 40,
-    attempted: 40,
-    correct: 30,
+    total: 30,
+    attempted: 30,
+    correct: 20,
     incorrect: 10,
     unanswered: 0,
-    percentage: 75,
+    percentage: expect.closeTo(66.666667, 5),
   });
   expect(restored.domainResults()).toEqual([
     {
       domainId: 'domain-1',
       total: 25,
       attempted: 25,
-      correct: 25,
-      incorrect: 0,
+      correct: 20,
+      incorrect: 5,
       unanswered: 0,
-      percentage: 100,
+      percentage: 80,
     },
     {
       domainId: 'domain-2',
-      total: 15,
-      attempted: 15,
-      correct: 5,
-      incorrect: 10,
+      total: 5,
+      attempted: 5,
+      correct: 0,
+      incorrect: 5,
       unanswered: 0,
-      percentage: expect.closeTo(33.333333, 5),
+      percentage: 0,
     },
   ]);
 });
@@ -503,9 +505,6 @@ it('rejects unsupported configurations and refuses to repeat or silently shorten
   ).rejects.toThrow(/20 questions; 16 available/);
   await expect(
     PracticeSession.start('all', questions, dependencies(), 85),
-  ).rejects.toThrow(/85 questions; 64 available/);
-  await expect(
-    PracticeSession.start('all', questions, dependencies(), 10),
   ).rejects.toThrow(/approved/);
   await expect(
     PracticeSession.start('domain-1', questions, dependencies(), 85),
@@ -514,9 +513,9 @@ it('rejects unsupported configurations and refuses to repeat or silently shorten
     'all',
     questions,
     dependencies(),
-    60,
+    30,
   );
-  expect(session.record.questions).toHaveLength(60);
+  expect(session.record.questions).toHaveLength(30);
   for (const mutate of [
     (record: SessionRecord) => {
       record.configuration.questionCount = 20;
@@ -525,7 +524,7 @@ it('rejects unsupported configurations and refuses to repeat or silently shorten
       record.configuration.domainId = 'domain-1';
     },
     (record: SessionRecord) => {
-      record.currentIndex = 60;
+      record.currentIndex = 30;
     },
     (record: SessionRecord) => {
       record.questions[1] = record.questions[0]!;

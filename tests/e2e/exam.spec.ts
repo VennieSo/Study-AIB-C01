@@ -89,7 +89,7 @@ test('exam supports skipping, revision, cancellation, unrestricted selections, a
   await expect(
     page.getByText('Question 1 of 20', { exact: true }),
   ).toBeVisible();
-  await expect(page.getByLabel('Time remaining')).toHaveText('30:00');
+  await expect(page.getByLabel('Time remaining')).toHaveText('40:00');
   await expect(page.locator('#exam-session-view .pill')).toHaveCount(0);
   await expect(page.getByText(/^Correct answer/)).toHaveCount(0);
   await expect(page.getByText(/This is synthetic interface test/)).toHaveCount(
@@ -164,7 +164,7 @@ test('delayed execution expires without confirmation and preserves selected answ
   await page.getByLabel('Exam length', { exact: true }).selectOption('20');
   await page.getByRole('button', { name: 'Start exam', exact: true }).click();
   await page.getByRole('radio', { name: /Fixture target/ }).check();
-  await page.clock.fastForward(31 * 60 * 1000);
+  await page.clock.fastForward(41 * 60 * 1000);
   await expect(
     page.getByRole('heading', { name: 'Exam complete' }),
   ).toBeVisible();
@@ -234,10 +234,10 @@ test('mode navigation preserves cancelled sessions and warns before a reload dis
 });
 
 for (const [count, minutes] of [
-  [20, 30],
-  [40, 65],
-  [60, 95],
-  [85, 130],
+  [20, 40],
+  [40, 80],
+  [65, 130],
+  [85, 170],
 ] as const) {
   test(`preset ${count}/${minutes} preserves answers and countdown across keyboard question-grid navigation`, async ({
     page,

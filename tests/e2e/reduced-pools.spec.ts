@@ -42,12 +42,10 @@ test('legitimate reduced pools disable only unsupported sizes and show actual co
     '0 questions available',
   );
   await scope.selectOption('all');
-  await expect(sizes.locator('option[value="40"]')).toBeEnabled();
-  await expect(sizes.locator('option[value="60"]')).toBeDisabled();
-  await expect(sizes.locator('option[value="85"]')).toBeDisabled();
-  await sizes.selectOption('40');
+  await expect(sizes.locator('option[value="30"]')).toBeEnabled();
+  await sizes.selectOption('30');
   await expect(page.locator('#availability')).toHaveText(
-    '49 questions available. 40 will be sampled.',
+    '49 questions available. 30 will be sampled.',
   );
   await page.screenshot({
     path: testInfo.outputPath('reduced-pool-configuration.png'),
@@ -55,6 +53,6 @@ test('legitimate reduced pools disable only unsupported sizes and show actual co
   });
   await start.click();
   await expect(
-    page.getByText('Question 1 of 40', { exact: true }),
+    page.getByText('Question 1 of 30', { exact: true }),
   ).toBeVisible();
 });

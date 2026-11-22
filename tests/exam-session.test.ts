@@ -47,18 +47,18 @@ function startTwenty(
   return ExamSession.start(questions, deps, 20);
 }
 
-it('defaults to a full eighty-five-question exam with a 130-minute deadline', async () => {
+it('defaults to a full eighty-five-question beta exam with a 170-minute deadline', async () => {
   const session = await ExamSession.start(bank(), dependencies());
   expect(session.record.configuration).toEqual({
     domainId: 'all',
     questionCount: 85,
-    durationMinutes: 130,
+    durationMinutes: 170,
   });
   expect(session.record.questions).toHaveLength(85);
-  expect(session.record.deadlineAt).toBe('2026-11-10T12:10:00.000Z');
+  expect(session.record.deadlineAt).toBe('2026-11-10T12:50:00.000Z');
 });
 
-it('starts a weighted twenty-question exam with unique snapshots and an absolute thirty-minute deadline', async () => {
+it('starts a weighted twenty-question exam with unique snapshots and an absolute forty-minute deadline', async () => {
   const source = bank();
   const session = await startTwenty(source, dependencies());
   source[0]!.text = 'changed bank';
@@ -67,9 +67,9 @@ it('starts a weighted twenty-question exam with unique snapshots and an absolute
     schemaVersion: 1,
     mode: 'exam',
     status: 'active',
-    configuration: { domainId: 'all', questionCount: 20, durationMinutes: 30 },
+    configuration: { domainId: 'all', questionCount: 20, durationMinutes: 40 },
     startedAt: '2026-11-10T10:00:00.000Z',
-    deadlineAt: '2026-11-10T10:30:00.000Z',
+    deadlineAt: '2026-11-10T10:40:00.000Z',
   });
   expect(record.questions).toHaveLength(20);
   expect(
@@ -91,7 +91,7 @@ it('starts a weighted twenty-question exam with unique snapshots and an absolute
         snapshot.text !== 'changed bank',
     ),
   ).toBe(true);
-  expect(session.remainingMilliseconds()).toBe(30 * 60 * 1000);
+  expect(session.remainingMilliseconds()).toBe(40 * 60 * 1000);
 });
 
 it('retains revisable and cleared answers across skipped questions and finalizes exact-set scoring once', async () => {
@@ -136,7 +136,7 @@ it('finalizes retained answers on delayed execution and rejects an edit at the d
   const deps = dependencies();
   const session = await startTwenty(bank(), deps);
   session.select(session.record.questions[0]!.snapshot.correctOptionIds);
-  deps.advance(30 * 60 * 1000);
+  deps.advance(40 * 60 * 1000);
   expect(() => session.select([])).toThrow(/active/);
   expect(session.record.status).toBe('completed');
   expect(session.result()).toMatchObject({
@@ -158,7 +158,7 @@ it('finalizes retained answers on delayed execution and rejects an edit at the d
   suspended.checkDeadline();
   expect(suspended.record).toMatchObject({
     status: 'completed',
-    completedAt: '2026-11-10T10:30:00.000Z',
+    completedAt: '2026-11-10T10:40:00.000Z',
   });
   expect(suspended.result()).toMatchObject({
     attempted: 0,
@@ -179,12 +179,12 @@ it('reconstructs records with navigation and selections while retaining the orig
   const record = JSON.parse(JSON.stringify(session.record));
   session = await ExamSession.restore(record, deps);
   expect(session.record).toEqual(record);
-  expect(session.remainingMilliseconds()).toBe(18 * 60 * 1000);
+  expect(session.remainingMilliseconds()).toBe(28 * 60 * 1000);
   session.previous();
   expect(session.record.questions[0]!.selectedOptionIds).toHaveLength(1);
-  deps.advance(20 * 60 * 1000);
+  deps.advance(30 * 60 * 1000);
   session = await ExamSession.restore(record, deps);
-  expect(session.record.deadlineAt).toBe('2026-11-10T10:30:00.000Z');
+  expect(session.record.deadlineAt).toBe('2026-11-10T10:40:00.000Z');
   expect(session.result()).toMatchObject({
     attempted: 2,
     correct: 1,
@@ -382,7 +382,7 @@ it.each([
   [
     'unpaired duration',
     (record: any) => {
-      record.configuration.durationMinutes = 65;
+      record.configuration.durationMinutes = 80;
     },
   ],
   [
@@ -391,7 +391,7 @@ it.each([
       record.configuration = {
         domainId: 'all',
         questionCount: 40,
-        durationMinutes: 65,
+        durationMinutes: 80,
       };
     },
   ],
@@ -459,7 +459,7 @@ it.each([
 it.each([
   [20, [5, 5, 5, 5]],
   [40, [9, 11, 10, 10]],
-  [60, [14, 17, 14, 15]],
+  [65, [15, 18, 16, 16]],
   [85, [20, 24, 20, 21]],
 ] as const)(
   'starts preset %i whenever actual capacity supports a valid weighted allocation',
@@ -501,10 +501,10 @@ it.each([
 );
 
 it.each([
-  [20, 30, [5, 5, 5, 5]],
-  [40, 65, [10, 11, 10, 9]],
-  [60, 95, [15, 17, 14, 14]],
-  [85, 130, [21, 24, 20, 20]],
+  [20, 40, [5, 5, 5, 5]],
+  [40, 80, [10, 11, 10, 9]],
+  [65, 130, [16, 18, 16, 15]],
+  [85, 170, [21, 24, 20, 20]],
 ] as const)(
   'retains preset %i, direct navigation, unrestricted selections, and the deadline through reconstruction and expiry',
   async (count, minutes, allocation) => {
@@ -576,15 +576,15 @@ it.each([
   },
 );
 
-it.each([40, 60, 85] as const)(
+it.each([40, 65, 85] as const)(
   'randomly breaks weighted remainder ties for preset %i without changing higher-priority quotas',
   async (count) => {
     const allocations = new Set<string>();
     const allowed =
       count === 40
         ? ['10,11,10,9', '10,11,9,10', '9,11,10,10']
-        : count === 60
-          ? ['15,17,14,14', '14,17,15,14', '14,17,14,15']
+        : count === 65
+          ? ['16,18,16,15', '16,18,15,16', '15,18,16,16']
           : ['21,24,20,20', '20,24,21,20', '20,24,20,21'];
     for (const value of [0, 0.25, 0.5, 0.999]) {
       const session = await ExamSession.start(
