@@ -51,9 +51,11 @@ flowchart LR
 
 ### A static site, with the answers exposed
 
-With no server, the whole question bank is sent to the browser, answer keys
-included. A backend would hide them, but it adds running costs, accounts and
-something to secure. For a free study aid I accepted exposed answers.
+This project started with the idea of making something quickly. That took the 
+very first design decision toward a static site. It means the whole question 
+bank is sent to the browser, answer keys included. A backend would hide them, 
+but it adds complexity, running costs, accounts and something to secure. 
+Since this is a study aid I am sharing freely, I accepted the exposure.
 
 ### Cloudflare over GitHub Pages
 
@@ -104,9 +106,7 @@ per domain (100 in total), and the bank can keep growing.
 
 Cloudflare's built-in analytics needs no cookies and no consent banner, which
 makes it the simpler choice. It is also bare: page views and little else. I
-come from marketing and know Google Analytics 4 well, and learning from this
-site's traffic is one of the reasons it exists. Choosing GA4 means cookies, so
-it means asking for consent. I used a small open-source library,
+come from marketing and know Google Analytics well, so that's what I default to. But choosing GA4 means cookies, and asking for consent. I used a small open-source library,
 [orestbida/cookieconsent](https://github.com/orestbida/cookieconsent), over
 building a banner or paying for a consent platform. Analytics load only after
 a visitor accepts, and the preview site has none.

@@ -69,5 +69,3 @@ questions or claim them as your own.
 
 If you believe anything here should not be here, please
 [open an issue](https://github.com/VennieSo/Study-AIB-C01/issues).
-
-Built by [Vennie So](https://www.linkedin.com/in/vennieso/).
