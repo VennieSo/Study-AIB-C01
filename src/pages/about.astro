@@ -1,0 +1,117 @@
+---
+import SiteFooter from '../components/SiteFooter.astro';
+import SiteHead from '../components/SiteHead.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import { site } from '../content/site';
+import '../styles/global.css';
+
+const synthetic = import.meta.env.MODE === 'fixture';
+const title = `About and Privacy | ${site.name}`;
+const description =
+  'What Study AIB-C01 is, what data it collects, and credits for the material it draws on.';
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <SiteHead title={title} description={description} path={site.aboutPath} noindex={synthetic} />
+  </head>
+  <body>
+    <a href="#main" class="skip-link">Skip to content</a>
+    <SiteHeader />
+    <main id="main" class="wrap">
+      <article class="about">
+        <header class="about-header">
+          <h1>About and privacy</h1>
+        </header>
+
+        <section aria-labelledby="about-heading">
+          <h2 id="about-heading">About this site</h2>
+          <p>{site.name} is a free, unofficial study aid for the {site.certificationName} exam. It is not affiliated with, sponsored by, or endorsed by Amazon Web Services.</p>
+          <p>The practice questions are original and AI-generated. They are not real exam questions, and AWS has not reviewed them. Some may contain errors. Scores are raw percentages; they are not AWS scaled scores and do not predict whether you will pass.</p>
+        </section>
+
+        <section id="privacy" aria-labelledby="privacy-heading">
+          <h2 id="privacy-heading">Privacy</h2>
+          <p>This site has no accounts and does not ask for or store personal information. Your answers and scores stay in your browser tab and are gone when you close it.</p>
+          <p>Google Analytics loads only if you accept analytics cookies. You can change your choice at any time under Cookie settings at the bottom of any page.</p>
+          <p>Cloudflare hosts the site. Like any host, it processes technical request data, such as IP address, browser type and the page requested, to deliver and protect the site. It also gives me aggregate visit counts that use no cookies.</p>
+        </section>
+
+        <section id="credits" aria-labelledby="credits-heading">
+          <h2 id="credits-heading">Credits</h2>
+          <ul>
+            <li>Domain, task and skill statements are from the <a href={site.examGuideUrl}>AWS exam guide</a>, © Amazon Web Services, used under <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>. Some are shortened.</li>
+            <li>Thanks to <a href="https://www.linkedin.com/in/purcellmatthew">Matthew Purcell</a>, who shared his own practice question set, updated after he sat and passed the exam, under <a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a>.</li>
+            <li>{site.trademarkNotice}</li>
+          </ul>
+        </section>
+
+        <section id="use" aria-labelledby="use-heading">
+          <h2 id="use-heading">Use and corrections</h2>
+          <p>The site is free to use, for personal use only. Please do not republish the questions or claim them as your own.</p>
+          <p>If you find an error, or believe something here should not be here, please <a href={site.issuesUrl}>open an issue on GitHub</a>.</p>
+          <p>Built by <a href={site.author.url} rel="author">{site.author.name}</a>.</p>
+        </section>
+      </article>
+    </main>
+    <SiteFooter analytics={!synthetic} />
+  </body>
+</html>
+
+<style>
+  .about {
+    max-width: 800px;
+    margin-inline: auto;
+    padding-bottom: 72px;
+  }
+  .about-header {
+    padding: 66px 0 36px;
+    text-align: center;
+  }
+  h1 {
+    margin: 0 auto;
+    font-size: clamp(2rem, 4.4vw, 2.75rem);
+    line-height: 1.12;
+  }
+  section {
+    padding: 36px 0 8px;
+    border-top: 1px solid var(--border);
+    scroll-margin-top: 24px;
+  }
+  h2 {
+    margin: 0 0 18px;
+    font-size: 1.5rem;
+  }
+  section p,
+  section li {
+    font-size: 0.9375rem;
+    line-height: 1.75;
+  }
+  section p {
+    margin-bottom: 14px;
+  }
+  ul {
+    margin: 0 0 14px;
+    padding-inline-start: 22px;
+  }
+  li + li {
+    margin-top: 6px;
+  }
+  section a {
+    color: var(--ink);
+  }
+  @media (max-width: 650px) {
+    .about {
+      padding-bottom: 48px;
+    }
+    .about-header {
+      padding: 42px 0 28px;
+    }
+    section {
+      padding-top: 28px;
+    }
+    h2 {
+      font-size: 1.375rem;
+    }
+  }
+</style>

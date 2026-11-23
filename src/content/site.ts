@@ -35,6 +35,8 @@ export const site = {
     'https://aws.amazon.com/certification/certified-ai-business-strategist/',
   examGuideUrl:
     'https://docs.aws.amazon.com/aws-certification/latest/ai-business-strategist-01/ai-business-strategist-01.html',
+  aboutPath: '/about/',
+  issuesUrl: 'https://github.com/VennieSo/Study-AIB-C01/issues',
   notice:
     'Unofficial study resource. This site is not affiliated with, sponsored by, or endorsed by Amazon Web Services.',
   trademarkNotice:

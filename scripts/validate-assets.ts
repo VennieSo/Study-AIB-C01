@@ -16,8 +16,8 @@ const directory = resolve(
 
 // Shared assets for both builds. Production also serves the Google verification file.
 const allowed =
-  /^(?:index\.html|aib-c01-exam-facts\/index\.html|404\.html|_redirects|_headers|robots\.txt|sitemap\.xml|og-home\.png|favicon\.svg|_astro\/[A-Za-z0-9_-]+(?:\.[A-Za-z0-9_-]+)*\.[A-Za-z0-9_-]+\.(?:js|css|woff2))$/;
-const publicDirectories = new Set(['_astro', 'aib-c01-exam-facts']);
+  /^(?:index\.html|aib-c01-exam-facts\/index\.html|about\/index\.html|404\.html|_redirects|_headers|robots\.txt|sitemap\.xml|og-home\.png|favicon\.svg|_astro\/[A-Za-z0-9_-]+(?:\.[A-Za-z0-9_-]+)*\.[A-Za-z0-9_-]+\.(?:js|css|woff2))$/;
+const publicDirectories = new Set(['_astro', 'aib-c01-exam-facts', 'about']);
 const verificationFile = 'googlee0841d149f9fdcc6.html';
 const credential =
   /-----BEGIN (?:[A-Z]+ )?PRIVATE KEY-----|\b(?:gh[pousr]_[A-Za-z0-9]{20,}|github_pat_[A-Za-z0-9_]{20,}|(?:AKIA|ASIA)[A-Z0-9]{16})\b|(?:CLOUDFLARE_API_TOKEN|oauth_token|refresh_token|api[_-]?secret|api[_-]?token)\s*["']?\s*[:=]\s*["'][^"']{8,}["']/i;

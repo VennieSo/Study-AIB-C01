@@ -56,8 +56,9 @@ questions or claim them as your own.
   [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). Some are
   shortened.
 - Thanks to [Matthew Purcell](https://www.linkedin.com/in/purcellmatthew), who
-  took the exam and shared his own practice question set under
-  [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/). I found his
+  shared his own practice question set, updated after he sat and passed the
+  exam, under [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/).
+  I found his
   questions to be of high quality. Matthew said most of the exam is made up of
   longer questions like those in his set, so I added questions of similar
   length to this site, hoping to create an experience closer to exam day. I

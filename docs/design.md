@@ -41,8 +41,10 @@ files included. Edit the shared tokens and component styles in
 - Reading pages such as AIB-C01 Facts use the same header and footer, a centered
   title block, an 800px text column, and rounded gray tables that scroll
   sideways on narrow screens.
-- The header holds three navigation links. At 650px or less they move to their
-  own row below the wordmark.
+- The header gives Practice Questions and Timed Exam button weight; other
+  pages, such as AIB-C01 Facts, are plain text links. At 650px or less the
+  links move to their own row below the wordmark. About and privacy is linked
+  from the footer only.
 - Keep configuration compact, with one clear primary action. Use two columns on
   desktop and a single readable column at viewport widths of 800px or less.
 - Use gray domain cards with small neutral metadata. No decorative category colors,

@@ -134,9 +134,9 @@ h3:focus {
 /* Navigation and the centered, typography-led introduction. */
 .site-header {
   min-height: 84px;
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  justify-content: space-between;
   gap: 28px;
   border-bottom: 1px solid var(--border);
 }
@@ -163,11 +163,18 @@ h3:focus {
   width: 23px;
   height: 23px;
 }
+.site-header .wordmark {
+  justify-self: start;
+}
+/* The nav's children sit directly in the header grid: buttons centred, text links right. */
 .site-header nav {
+  display: contents;
+  font-size: 0.8125rem;
+}
+.nav-primary {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 0.8125rem;
 }
 .site-header nav a {
   padding: 7px 14px;
@@ -176,9 +183,19 @@ h3:focus {
   font-weight: 550;
   text-decoration: none;
 }
-.site-header nav a[aria-current='page'] {
-  color: white;
-  background: var(--ink);
+.site-header nav a.nav-text {
+  justify-self: end;
+  padding-inline: 8px;
+  background: none;
+  color: var(--muted);
+}
+.site-header nav a.nav-text:hover,
+.site-header nav a.nav-text[aria-current='page'] {
+  color: var(--ink);
+}
+.site-header nav a.nav-text[aria-current='page'] {
+  text-decoration: underline;
+  text-underline-offset: 6px;
 }
 .nav-future {
   display: inline-flex;
@@ -492,19 +509,20 @@ select {
 }
 .footer-links {
   grid-column: 2;
-  grid-row: 2;
   justify-self: end;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 4px 20px;
 }
+.footer-link,
 .footer-author a {
   color: var(--ink);
   font-size: 0.75rem;
   font-weight: 550;
   text-decoration: none;
 }
+.footer-link:hover,
 .footer-author a:hover {
   text-decoration: underline;
 }
@@ -526,9 +544,6 @@ select {
 .site-footer p {
   max-width: 620px;
   line-height: 1.8;
-}
-.site-footer .footer-notice {
-  text-align: right;
 }
 .skip-link {
   position: absolute;
@@ -1046,8 +1061,10 @@ fieldset {
     height: 21px;
   }
   .site-header nav {
-    gap: 0;
     font-size: 0.75rem;
+  }
+  .nav-primary {
+    gap: 4px;
   }
   .site-header nav a {
     padding: 6px 10px;
@@ -1146,9 +1163,6 @@ fieldset {
     flex-direction: column;
     gap: 14px;
     padding: 24px 0 30px;
-  }
-  .site-footer .footer-notice {
-    text-align: left;
   }
   .session-shell {
     margin: 28px auto 48px;
@@ -1461,23 +1475,29 @@ fieldset {
 /* Three navigation links need their own row on narrow screens. */
 @media (max-width: 650px) {
   .site-header {
-    flex-wrap: wrap;
-    row-gap: 10px;
+    grid-template-columns: 1fr auto;
+    gap: 10px 12px;
     padding: 14px 0 12px;
   }
-  .site-header nav {
-    width: 100%;
-    gap: 4px;
+  .site-header .wordmark {
+    grid-column: 1 / -1;
   }
   .site-header nav a {
-    flex: 1 1 auto;
-    padding: 7px 6px;
-    text-align: center;
+    padding: 7px 10px;
     white-space: nowrap;
   }
 }
 @media (max-width: 380px) {
+  .site-header {
+    column-gap: 6px;
+  }
   .site-header nav {
     font-size: 0.6875rem;
+  }
+  .site-header nav a {
+    padding: 7px 7px;
+  }
+  .site-header nav a.nav-text {
+    padding-inline: 2px;
   }
 }
