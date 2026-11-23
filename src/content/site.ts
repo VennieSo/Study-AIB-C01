@@ -1,14 +1,40 @@
 // Homepage copy and metadata are rendered into static HTML.
 export const site = {
   name: 'Study AIB-C01',
-  title:
-    'Study AIB-C01 AWS Certified AI Business Strategist with free practice questions, no account needed.',
+  url: 'https://aib-c01.vennie.so',
+  title: 'Free AWS Certified AI Business Strategist (AIB-C01) Practice Exam',
   description:
-    'Free, unofficial practice for AWS Certified AI Business Strategist (AIB-C01). Study one domain or all four with untimed questions, immediate explanations, and clear results.',
-  heading: 'Practice for AWS Certified AI Business Strategist (AIB-C01)',
-  subheading: 'Study the strategy behind AI.',
+    'Free AIB-C01 practice exam with 200+ original practice questions and explanations. Study by domain or take a timed practice test. No sign-up needed.',
+  heading:
+    'Free practice exam for AWS Certified AI Business Strategist (AIB-C01)',
+  subheading: '200+ practice questions. Free. No sign-up.',
   introduction:
-    'Prepare for the exam, test your ability to translate AI into business outcomes responsibly and drive AI adoption at scale.',
+    'Original, AI-generated practice questions written in the style of AWS’s published questions, each with an explanation. Practise one domain at your own pace, or take a timed practice test across all four.',
+  features: [
+    '200+ original questions',
+    'Explanation for every answer',
+    'Timed practice exam',
+    'No sign-up',
+  ],
+  socialTitle:
+    'Free practice exam for AWS Certified AI Business Strategist (AIB-C01)',
+  socialDescription:
+    '200+ original practice questions with explanations. Study by domain or take a timed practice test. Free, no sign-up.',
+  shareImage: '/og-home.png',
+  shareImageAlt:
+    'Study AIB-C01: free practice exam for AWS Certified AI Business Strategist',
+  author: {
+    name: 'Vennie So',
+    url: 'https://www.linkedin.com/in/vennieso/',
+    github: 'https://github.com/VennieSo',
+  },
+  repository: 'https://github.com/VennieSo/Study-AIB-C01/',
+  factsPath: '/aib-c01-exam-facts/',
+  certificationName: 'AWS Certified AI Business Strategist (AIB-C01)',
+  certificationUrl:
+    'https://aws.amazon.com/certification/certified-ai-business-strategist/',
+  examGuideUrl:
+    'https://docs.aws.amazon.com/aws-certification/latest/ai-business-strategist-01/ai-business-strategist-01.html',
   notice:
     'Unofficial study resource. This site is not affiliated with, sponsored by, or endorsed by Amazon Web Services.',
   trademarkNotice:

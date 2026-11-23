@@ -16,29 +16,37 @@ const directory = resolve(
 
 // Shared assets for both builds. Production also serves the Google verification file.
 const allowed =
-  /^(?:index\.html|_redirects|favicon\.svg|_astro\/[A-Za-z0-9_-]+(?:\.[A-Za-z0-9_-]+)*\.[A-Za-z0-9_-]+\.(?:js|css|woff2))$/;
+  /^(?:index\.html|aib-c01-exam-facts\/index\.html|_redirects|robots\.txt|sitemap\.xml|og-home\.png|favicon\.svg|_astro\/[A-Za-z0-9_-]+(?:\.[A-Za-z0-9_-]+)*\.[A-Za-z0-9_-]+\.(?:js|css|woff2))$/;
+const publicDirectories = new Set(['_astro', 'aib-c01-exam-facts']);
 const verificationFile = 'googlee0841d149f9fdcc6.html';
 const credential =
   /-----BEGIN (?:[A-Z]+ )?PRIVATE KEY-----|\b(?:gh[pousr]_[A-Za-z0-9]{20,}|github_pat_[A-Za-z0-9_]{20,}|(?:AKIA|ASIA)[A-Z0-9]{16})\b|(?:CLOUDFLARE_API_TOKEN|oauth_token|refresh_token|api[_-]?secret|api[_-]?token)\s*["']?\s*[:=]\s*["'][^"']{8,}["']/i;
+// Local paths, dev-server markers and source maps must never ship.
+const localEnvironment =
+  /\/(?:Users|home)\/[A-Za-z0-9._-]+\/|[A-Za-z]:\\Users\\|file:\/\/|data-vite-dev-id|data-astro-source-|\/@vite\/|\/@fs\/|sourceMappingURL|\b(?:localhost|127\.0\.0\.1):\d+/;
 async function inspect(relative = ''): Promise<void> {
   for (const entry of await readdir(resolve(directory, relative), {
     withFileTypes: true,
   })) {
     const path = relative ? `${relative}/${entry.name}` : entry.name;
-    if (entry.isDirectory() && path === '_astro') await inspect(path);
+    if (entry.isDirectory() && publicDirectories.has(path)) await inspect(path);
     else {
       const isVerificationFile = !values.fixtures && path === verificationFile;
       if (!entry.isFile() || (!allowed.test(path) && !isVerificationFile))
         throw new Error(`Public asset not allowed: ${path}`);
-      if (!path.endsWith('.woff2')) {
+      if (!/\.(?:woff2|png)$/.test(path)) {
         const content = await readFile(resolve(directory, path), 'utf8');
         if (
           isVerificationFile &&
           content.trimEnd() !== `google-site-verification: ${verificationFile}`
         )
-          throw new Error('Google verification file content does not match its filename.');
+          throw new Error(
+            'Google verification file content does not match its filename.',
+          );
         if (credential.test(content))
           throw new Error(`Possible credential in public asset: ${path}`);
+        if (localEnvironment.test(content))
+          throw new Error(`Local environment detail in public asset: ${path}`);
         if (
           !values.fixtures &&
           /synthetic-|Synthetic fixture|Fixture target|Development preview/.test(

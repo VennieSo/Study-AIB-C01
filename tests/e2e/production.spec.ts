@@ -115,12 +115,16 @@ test('production serves every built public asset unchanged', async ({
   await page.goto('/');
   const files = [
     'index.html',
+    'aib-c01-exam-facts/index.html',
     'favicon.svg',
+    'og-home.png',
+    'robots.txt',
+    'sitemap.xml',
     ...(await readdir('dist/_astro')).map((name) => `_astro/${name}`),
   ];
   for (const file of files) {
     const response = await page.request.get(
-      file === 'index.html' ? '/' : `/${file}`,
+      `/${file.replace(/index\.html$/, '')}`,
     );
     expect(response.status(), file).toBe(200);
     expect(await response.body(), file).toEqual(await readFile(`dist/${file}`));
@@ -135,12 +139,18 @@ test('production includes the complete initial bank and enables every configurat
   const response = await page.goto('/');
   const html = await response!.text();
   const bank = await pageBank(page);
-  expect(html).toContain('Study the strategy behind AI.');
+  expect(html).toContain('200+ practice questions. Free. No sign-up.');
   expect(html).toContain('name="description"');
   for (const marker of ['synthetic-', 'Fixture target', 'Development preview'])
     expect(html).not.toContain(marker);
   expect(bank).toHaveLength(233);
-  await expect(page).toHaveTitle(/Study AIB-C01/);
+  await expect(page).toHaveTitle(
+    'Free AWS Certified AI Business Strategist (AIB-C01) Practice Exam',
+  );
+  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
+    'href',
+    'https://aib-c01.vennie.so/',
+  );
   await expect(page.locator('meta[name="description"]')).toHaveAttribute(
     'content',
     /AIB-C01/,
@@ -449,10 +459,12 @@ test('production mode changes can be cancelled and reload discards an active ses
   await page.getByRole('button', { name: 'End exam', exact: true }).click();
   await expect(page.locator('#exam-heading')).toBeVisible();
   page.once('dialog', (dialog) => dialog.accept());
-  await page.getByRole('link', { name: 'Practice', exact: true }).click();
+  await page
+    .getByRole('link', { name: 'Practice Questions', exact: true })
+    .click();
   await expect(
     page.getByRole('heading', {
-      name: 'Your next practice session',
+      name: 'Practice Questions',
       exact: true,
     }),
   ).toBeFocused();
@@ -472,15 +484,20 @@ test('production mode changes can be cancelled and reload discards an active ses
   await expect(page.locator('#exam-session-view')).toBeHidden();
 });
 
-test('analytics requires consent and can be withdrawn from cookie settings', async ({ page }) => {
+test('analytics requires consent and can be withdrawn from cookie settings', async ({
+  page,
+}) => {
   await page.addInitScript(() => {
     Object.defineProperty(navigator, 'webdriver', { get: () => false });
   });
   let tagRequests = 0;
-  await page.route('https://www.googletagmanager.com/gtm.js?id=GTM-PFCNQPKV', async (route) => {
-    tagRequests += 1;
-    await route.fulfill({ contentType: 'application/javascript', body: '' });
-  });
+  await page.route(
+    'https://www.googletagmanager.com/gtm.js?id=GTM-PFCNQPKV',
+    async (route) => {
+      tagRequests += 1;
+      await route.fulfill({ contentType: 'application/javascript', body: '' });
+    },
+  );
 
   const banner = page.getByRole('region', { name: 'Cookie Consent' });
   const preferences = page.getByRole('dialog', { name: 'Consent Preferences' });
@@ -507,17 +524,80 @@ test('analytics requires consent and can be withdrawn from cookie settings', asy
   });
   await openSettings();
   await preferences.getByRole('button', { name: 'Decline' }).click();
-  await expect.poll(() => page.evaluate(() => {
-    const entries = Reflect.get(window, 'dataLayer') as ArrayLike<unknown>[];
-    return entries.some((entry) =>
-      entry[0] === 'consent' &&
-      entry[1] === 'update' &&
-      (entry[2] as { analytics_storage?: string })?.analytics_storage === 'denied',
-    );
-  })).toBe(true);
-  expect((await page.context().cookies()).some(({ name }) => name === '_ga')).toBe(false);
+  await expect
+    .poll(() =>
+      page.evaluate(() => {
+        const entries = Reflect.get(
+          window,
+          'dataLayer',
+        ) as ArrayLike<unknown>[];
+        return entries.some(
+          (entry) =>
+            entry[0] === 'consent' &&
+            entry[1] === 'update' &&
+            (entry[2] as { analytics_storage?: string })?.analytics_storage ===
+              'denied',
+        );
+      }),
+    )
+    .toBe(true);
+  expect(
+    (await page.context().cookies()).some(({ name }) => name === '_ga'),
+  ).toBe(false);
   await page.reload();
   await openSettings();
   await expect(preferences).toBeVisible();
   expect(tagRequests).toBe(2);
+});
+
+test('the exam facts page is linked, canonical, and matches its structured data', async ({
+  page,
+}) => {
+  await page.goto('/');
+  await page.getByRole('link', { name: 'AIB-C01 Facts' }).first().click();
+  await expect(page).toHaveURL(/\/aib-c01-exam-facts\/$/);
+  await expect(
+    page.getByRole('heading', {
+      level: 1,
+      name: 'AWS Certified AI Business Strategist (AIB-C01) exam facts',
+    }),
+  ).toBeVisible();
+  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
+    'href',
+    'https://aib-c01.vennie.so/aib-c01-exam-facts/',
+  );
+  await expect(page.locator('meta[name="robots"]')).toHaveCount(0);
+  const data = JSON.parse(
+    (await page.locator('script[type="application/ld+json"]').textContent())!,
+  );
+  expect(
+    data['@graph'].map((node: { '@type': unknown }) => node['@type']),
+  ).toContain('Article');
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= window.innerWidth,
+    ),
+  ).toBe(true);
+});
+
+test('the homepage FAQ structured data matches the visible questions', async ({
+  page,
+}) => {
+  await page.goto('/');
+  const data = JSON.parse(
+    (await page.locator('script[type="application/ld+json"]').textContent())!,
+  );
+  const faq = data['@graph'].find(
+    (node: { '@type': unknown }) => node['@type'] === 'FAQPage',
+  );
+  const visible = await page.locator('#faq summary').allTextContents();
+  expect(faq.mainEntity.map((entry: { name: string }) => entry.name)).toEqual(
+    visible,
+  );
+  for (const entry of faq.mainEntity)
+    expect(entry.acceptedAnswer.text).not.toMatch(/[<>]/);
+  await expect(page.locator('meta[property="og:image"]')).toHaveAttribute(
+    'content',
+    'https://aib-c01.vennie.so/og-home.png',
+  );
 });

@@ -34,9 +34,15 @@ files included. Edit the shared tokens and component styles in
 ## Composition and interaction
 
 - Use Study AIB-C01 as the website name. Center the homepage introduction with
-  AWS Certified AI Business Strategist as the main heading and Study the strategy
-  behind AI. as the subheading. Use a heavy, tightly tracked display face for the
-  main heading and a smaller responsive size on mobile.
+  the free practice exam for AWS Certified AI Business Strategist as the main
+  heading and the question count, price, and sign-up line as the subheading. Use
+  a heavy, tightly tracked display face for the main heading and a smaller
+  responsive size on mobile.
+- Reading pages such as AIB-C01 Facts use the same header and footer, a centered
+  title block, an 800px text column, and rounded gray tables that scroll
+  sideways on narrow screens.
+- The header holds three navigation links. At 650px or less they move to their
+  own row below the wordmark.
 - Keep configuration compact, with one clear primary action. Use two columns on
   desktop and a single readable column at viewport widths of 800px or less.
 - Use gray domain cards with small neutral metadata. No decorative category colors,

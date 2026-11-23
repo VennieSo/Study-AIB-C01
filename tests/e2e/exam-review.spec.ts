@@ -187,7 +187,7 @@ test('submitted review preserves every answer subset and unanswered item, then s
   await expect(page.getByLabel('Session counts')).toContainText('Unanswered20');
   await page.getByRole('button', { name: 'End exam', exact: true }).click();
   await expect(
-    page.getByRole('heading', { name: 'Your next exam session', exact: true }),
+    page.getByRole('heading', { name: 'Timed Exam', exact: true }),
   ).toBeFocused();
 });
 

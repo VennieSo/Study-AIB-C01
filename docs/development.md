@@ -113,7 +113,7 @@ no active-session resume or history feature is added. The canonical content hash
 includes `skillId`, so changing even a valid primary classification changes the
 revision; a changed snapshot cannot retain its previous revision hash.
 
-`ExamSession.start(questions, dependencies, questionCount?)` defaults to 85/130;
+`ExamSession.start(questions, dependencies, questionCount?)` defaults to 85/170;
 the optional count selects one of the four paired presets. `select`, `goTo`,
 `previous`, and `next` retain revisions and allow unanswered questions. `submit`
 finalizes once; `checkDeadline` finalizes expired active sessions. All mutating
@@ -184,13 +184,26 @@ this static study tool by design.
 ## Build and deployment boundary
 
 `npm run build` emits static files in `dist/`. `wrangler.json` serves that
-directory with Cloudflare Workers Static Assets on a free `workers.dev` hostname.
-`wrangler.preview.json` serves `.qa-dist/` through a separate preview Worker.
-Neither configuration has a runtime handler, SSR adapter, data binding, custom
-domain, or account requirement for students. Local build and preview commands
+directory with Cloudflare Workers Static Assets on the custom domain
+`aib-c01.vennie.so` only; its `workers.dev` hostname is off so the site has one
+address. `wrangler.preview.json` serves `.qa-dist/` through a separate preview
+Worker on `workers.dev` only. Cloudflare's per-version Preview URLs are off for
+both Workers. Production CI verifies the custom domain; preview CI reads the
+`workers.dev` URL from Wrangler's output. Neither configuration has a runtime handler, SSR adapter,
+data binding, or account requirement for students. Canonical URLs, the sitemap,
+and share tags use the custom domain from `site.url` in `src/content/site.ts`
+and `site` in `astro.config.mjs`; keep the two in step. `public/_redirects`
+maps `/aib-c01-exam-facts/` to its built `index.html`, because
+`html_handling` is `none`.
+
+Changing a Route or Custom Domain during `wrangler deploy` needs **Workers
+Routes Write** on the `vennie.so` zone in addition to Editor on the Worker.
+Once the Custom Domain exists, deployments that leave it unchanged need only
+Editor. Local build and preview commands
 work without Cloudflare credentials.
 
 Both builds run `validate:assets`. Its public allowlist permits only `index.html`,
+`aib-c01-exam-facts/index.html`, `robots.txt`, `sitemap.xml`, `og-home.png`,
 `favicon.svg`, and generated JS, CSS, and WOFF2 files directly under `_astro/`.
 Unexpected files, directories, symlinks, source maps, source JSON, and common
 credential patterns fail validation. Production's embedded question payload must

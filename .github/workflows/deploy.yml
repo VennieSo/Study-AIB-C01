@@ -62,9 +62,10 @@ jobs:
         run: |
           test -n "$CLOUDFLARE_API_TOKEN" || { echo "Missing GitHub secret CLOUDFLARE_API_TOKEN"; exit 1; }
           test -n "$CLOUDFLARE_ACCOUNT_ID" || { echo "Missing GitHub secret CLOUDFLARE_ACCOUNT_ID"; exit 1; }
-          npm run deploy | tee /tmp/aib-deployment.log
-          url=$(grep -Eo 'https://[[:alnum:]-]+\.[[:alnum:]-]+\.workers\.dev' /tmp/aib-deployment.log | tail -1)
+          npm run deploy
+          url=$(node -e "console.log(require('./wrangler.json').routes[0].pattern)")
           test -n "$url"
+          url="https://$url"
           curl --fail --silent --show-error --retry 5 --retry-all-errors "$url" -o /tmp/aib-live.html
           cmp dist/index.html /tmp/aib-live.html
           LIVE_BASE_URL="$url" npm run test:live

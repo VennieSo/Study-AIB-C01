@@ -122,7 +122,7 @@ test('a visitor completes ten unique questions, sees feedback and results, and r
   page.once('dialog', (dialog) => dialog.accept());
   await page.getByRole('button', { name: 'End practice' }).click();
   await expect(
-    page.getByRole('heading', { name: 'Your next practice session' }),
+    page.getByRole('heading', { name: 'Practice Questions' }),
   ).toBeVisible();
 });
 
@@ -202,7 +202,7 @@ test('layout, incorrect feedback, keyboard focus, and leave warnings work', asyn
   await dialog.accept();
   await reload;
   await expect(
-    page.getByRole('heading', { name: 'Your next practice session' }),
+    page.getByRole('heading', { name: 'Practice Questions' }),
   ).toBeVisible();
 });
 
@@ -351,7 +351,7 @@ test('multiple-response checkboxes support empty rejection, all selections, miss
   await page.getByRole('button', { name: 'End practice', exact: true }).click();
   await expect(
     page.getByRole('heading', {
-      name: 'Your next practice session',
+      name: 'Practice Questions',
       exact: true,
     }),
   ).toBeFocused();

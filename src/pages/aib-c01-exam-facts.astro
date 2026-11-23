@@ -1,0 +1,347 @@
+---
+import SiteFooter from '../components/SiteFooter.astro';
+import SiteHead from '../components/SiteHead.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import { site } from '../content/site';
+import { factsStructuredData } from '../content/structured-data';
+import { domains } from '../lib/exam-scope';
+import '../styles/global.css';
+
+const synthetic = import.meta.env.MODE === 'fixture';
+const title = 'AIB-C01 Exam Format, Domains, Cost and Passing Score';
+const description =
+  'AWS Certified AI Business Strategist (AIB-C01) exam facts: who it is for, format, passing score, cost, domains and weightings, and how it compares to AIF-C01.';
+const heading = 'AWS Certified AI Business Strategist (AIB-C01) exam facts';
+// One value drives the visible date and the structured data.
+const published = '2026-11-22';
+const lastChecked = '2026-11-22';
+const lastCheckedLabel = new Date(`${lastChecked}T00:00:00Z`).toLocaleDateString(
+  'en-GB',
+  { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' },
+);
+
+const guide = site.examGuideUrl;
+const certification = site.certificationUrl;
+const policy = 'https://aws.amazon.com/certification/policies/before-testing/';
+const announcement =
+  'https://aws.amazon.com/blogs/training-and-certification/introducing-aws-certified-ai-business-strategist-built-for-the-people-who-scale-ai/';
+const inScope =
+  'https://docs.aws.amazon.com/aws-certification/latest/ai-business-strategist-01/aib-01-in-scope-services.html';
+const practitioner =
+  'https://aws.amazon.com/certification/certified-ai-practitioner/';
+const practitionerGuide =
+  'https://docs.aws.amazon.com/aws-certification/latest/ai-practitioner-01/ai-practitioner-01.html';
+
+const domainCoverage: Record<(typeof domains)[number]['id'], string> = {
+  'domain-1':
+    'Core AI concepts and terminology; choosing the right type of AI solution; generative AI concepts and techniques',
+  'domain-2':
+    'Aligning AI strategy with business objectives; measuring and demonstrating value; positioning AI for competitive advantage',
+  'domain-3':
+    'Applying responsible AI principles; governance structures and regulatory compliance; identifying and mitigating enterprise AI risk',
+  'domain-4':
+    'Assessing readiness and maturity; data and infrastructure foundations; leading change and building workforce capability; scaling pilots to enterprise deployments',
+};
+
+const structuredData = factsStructuredData({
+  headline: heading,
+  description:
+    'Who the AIB-C01 exam is for, its format, passing score, cost and domains, and how it compares to AIF-C01.',
+  published,
+  modified: lastChecked,
+  citations: [certification, guide, policy],
+});
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <SiteHead title={title} description={description} path={site.factsPath} socialTitle="AIB-C01 exam facts: format, domains, cost and passing score" socialDescription="Who the AIB-C01 exam is for, how it is structured and scored, and how it compares to AIF-C01, each linked to its AWS source." type="article" noindex={synthetic} structuredData={synthetic ? undefined : structuredData} />
+  </head>
+  <body>
+    <a href="#main" class="skip-link">Skip to content</a>
+    <SiteHeader />
+    <main id="main" class="wrap">
+      <article class="facts">
+        <header class="facts-header">
+          <h1>{heading}</h1>
+          <p class="intro">What the AIB-C01 exam covers, who it is for, how it is structured and scored, and how it compares with AWS Certified AI Practitioner. Each section links to its AWS source.</p>
+          <p class="facts-checked">Last checked on <time datetime={lastChecked}>{lastCheckedLabel}</time></p>
+          <a class="button primary" href="/#configure">Start a free practice exam <span aria-hidden="true">→</span></a>
+        </header>
+
+        <nav class="facts-contents" aria-label="On this page">
+          <a href="#about">Who it is for</a>
+          <a href="#exam-format">Exam format</a>
+          <a href="#domains">Domains</a>
+          <a href="#how-to-prepare">How to prepare</a>
+          <a href="#aib-c01-vs-aif-c01">AIB-C01 vs AIF-C01</a>
+        </nav>
+
+        <section id="about" aria-labelledby="about-heading">
+          <h2 id="about-heading">What the exam is about and who it is for</h2>
+          <p>AWS Certified AI Business Strategist is a certification for people who make business decisions about AI. AIB-C01 is its exam code. The exam tests how you prioritize AI investments, build a business case, govern AI responsibly, and scale successful pilots across an organization.</p>
+          <p>AWS places it in its Business category, separate from the Foundational, Associate and Professional technical tracks. It is aimed at people who evaluate, sponsor or scale AI initiatives, such as product and program managers, consultants, business analysts, sales and marketing professionals, and business leaders.</p>
+          <ul>
+            <li><strong>Prerequisites:</strong> none.</li>
+            <li><strong>Recommended experience:</strong> about six months working with or alongside AI initiatives.</li>
+            <li><strong>Not required:</strong> coding, hands-on AWS implementation experience, or another AWS certification.</li>
+          </ul>
+          <h3>How much AWS knowledge do you need?</h3>
+          <p>The exam uses AWS services as context for business decisions. It does not ask you to configure or deploy anything. The exam guide lists these in scope at a basic level: Amazon Bedrock, Amazon SageMaker AI, Amazon Quick, the AWS Cloud Adoption Framework, the shared responsibility model, and AWS pricing and cost tools. Infrastructure services such as Amazon EC2, AWS Lambda and Amazon VPC are out of scope.</p>
+          <p class="sources">Sources: <a href={certification}>AWS certification page</a>, <a href={inScope}>in-scope services</a></p>
+        </section>
+
+        <section id="exam-format" aria-labelledby="format-heading">
+          <h2 id="format-heading">Exam format</h2>
+          <h3>Question types and scoring</h3>
+          <ul>
+            <li><strong>Multiple choice:</strong> one correct answer and three incorrect ones.</li>
+            <li><strong>Multiple response:</strong> two or more correct answers out of five or more options. You must select all of them to earn credit; there is no partial credit.</li>
+            <li>An unanswered question is marked incorrect, and there is no penalty for guessing, so answer every question.</li>
+            <li>Scores are reported on a scale of 100 to 1,000. The passing score is 700.</li>
+            <li>Scoring is compensatory: you pass on your overall score and do not need to pass each domain.</li>
+          </ul>
+          <h3>Delivery, results and validity</h3>
+          <ul>
+            <li>Take the exam at a Pearson VUE test centre or online with a proctor.</li>
+            <li>Results arrive within five business days.</li>
+            <li>The certification is valid for three years. You recertify by passing the latest version of the exam.</li>
+          </ul>
+          <p class="sources">Sources: <a href={guide}>AIB-C01 exam guide</a>, <a href={certification}>AWS certification page</a></p>
+
+          <h3 id="beta-vs-standard">What differs between the beta and standard exams</h3>
+          <p>The exam launched as a beta, and the beta is longer and cheaper than the standard exam. This is why you may see both 170 minutes and 130 minutes quoted: 170 is the beta time limit, and 130 is the standard time limit given in the exam guide.</p>
+          <div class="table-scroll">
+            <table>
+              <thead>
+                <tr><td></td><th scope="col">Beta exam</th><th scope="col">Standard exam</th></tr>
+              </thead>
+              <tbody>
+                <tr><th scope="row">Available</th><td>Until 13 January 2027</td><td>From 14 January 2027</td></tr>
+                <tr><th scope="row">Questions</th><td>85</td><td>Not yet published by AWS; 65 expected</td></tr>
+                <tr><th scope="row">Time limit</th><td>170 minutes</td><td>130 minutes</td></tr>
+                <tr><th scope="row">Cost</th><td>USD 50</td><td>USD 100</td></tr>
+                <tr><th scope="row">Languages</th><td>English, Japanese</td><td>English, Japanese, Korean, Portuguese, Simplified Chinese, Spanish (Latin America)</td></tr>
+                <tr><th scope="row">Attempts</th><td>One only</td><td>Retakes allowed after a 14-day wait</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>Passing either version earns the same certification. If you take the beta:</p>
+          <ul>
+            <li>You get one attempt. If you do not pass, you wait for the standard exam.</li>
+            <li>AWS’s Official Practice Exam is not available during the beta. The Official Practice Question Set is.</li>
+          </ul>
+          <p>The Early Adopter badge goes to candidates who earn the certification, through either version, by 15 February 2027.</p>
+          <p class="sources">Sources: <a href={certification}>AWS certification page</a>, <a href={policy}>AWS beta exam policy</a>, and the AWS exam scheduling site for dates and languages</p>
+        </section>
+
+        <section id="domains" aria-labelledby="domains-heading">
+          <h2 id="domains-heading">Exam domains and weightings</h2>
+          <p>The exam guide divides scored content into four domains.</p>
+          <div class="table-scroll">
+            <table>
+              <thead>
+                <tr><th scope="col">Domain</th><th scope="col">Weighting</th><th scope="col">What it covers</th></tr>
+              </thead>
+              <tbody>
+                {domains.map((domain) => <tr><th scope="row">{domain.number}. {domain.name}</th><td>{domain.weight}%</td><td>{domainCoverage[domain.id]}</td></tr>)}
+              </tbody>
+            </table>
+          </div>
+          <p><a class="text-link" href="/#configure">Practise one domain at a time <span aria-hidden="true">→</span></a></p>
+          <p class="sources">Source: <a href={guide}>AIB-C01 exam guide, content outline</a></p>
+        </section>
+
+        <section id="how-to-prepare" aria-labelledby="prepare-heading">
+          <h2 id="prepare-heading">How to prepare</h2>
+          <ol>
+            <li>Read the <a href={guide}>official exam guide</a>.</li>
+            <li>Work through the AWS Skill Builder Exam Prep Plan and its free Official Practice Question Set.</li>
+            <li><a href="/#configure">Practise by domain</a> to find gaps. Every question on this site has an explanation.</li>
+            <li>Take a <a href="/#exam-config">timed exam</a> across all four domains.</li>
+          </ol>
+          <p>The practice questions on this site are original and AI-generated, written in a similar style to the official sample questions. They are free, need no sign-up, and are not real exam questions.</p>
+        </section>
+
+        <section id="aib-c01-vs-aif-c01" aria-labelledby="comparison-heading">
+          <h2 id="comparison-heading">AIB-C01 vs AIF-C01</h2>
+          <p>AWS Certified AI Practitioner (AIF-C01) is the certification most often compared with this one. AWS describes the two as built for different purposes and validating different skills. There is no required order, and you can earn both.</p>
+          <div class="table-scroll">
+            <table>
+              <thead>
+                <tr><td></td><th scope="col">AI Business Strategist (AIB-C01)</th><th scope="col">AI Practitioner (AIF-C01)</th></tr>
+              </thead>
+              <tbody>
+                <tr><th scope="row">Exam focus</th><td>Business decisions about AI: strategy, business value, governance and adoption</td><td>How AI works: fundamentals of AI, machine learning and generative AI, foundation model applications, responsible AI, and security and compliance</td></tr>
+                <tr><th scope="row">Candidate audience</th><td>People who evaluate, sponsor or scale AI initiatives</td><td>People who use or work near AI/ML technologies on AWS and need foundational knowledge</td></tr>
+                <tr><th scope="row">Recommended experience</th><td>About six months working with or alongside AI initiatives</td><td>Up to six months of exposure to AI/ML technologies on AWS</td></tr>
+                <tr><th scope="row">Technical knowledge expected</th><td>AWS services appear as context for business decisions; no configuration or deployment</td><td>Recognizing AWS AI services and what each is used for</td></tr>
+                <tr><th scope="row">Prerequisites</th><td>None</td><td>None</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <h3>Which should you take first?</h3>
+          <p>Choose by role.</p>
+          <ul>
+            <li><strong>Take AIB-C01 first</strong> if your work is deciding where and how an organization uses AI: setting priorities, making the business case, managing risk and leading adoption.</li>
+            <li><strong>Take AIF-C01 first</strong> if you need to understand how AI and AWS AI services work, or you plan to continue to technical AWS certifications.</li>
+          </ul>
+          <p>AWS suggests AI Practitioner as a possible next step after AI Business Strategist for more technical depth.</p>
+          <p class="sources">Sources: <a href={practitioner}>AWS AI Practitioner certification page</a>, <a href={practitionerGuide}>AIF-C01 exam guide</a></p>
+        </section>
+
+        <section id="sources" aria-labelledby="sources-heading">
+          <h2 id="sources-heading">Sources</h2>
+          <ul>
+            <li><a href={certification}>AWS Certified AI Business Strategist certification page</a></li>
+            <li><a href={guide}>AIB-C01 exam guide</a></li>
+            <li><a href={policy}>AWS Certification policies: before testing</a></li>
+            <li><a href={announcement}>AWS announcement of the certification</a></li>
+            <li><a href={practitioner}>AWS Certified AI Practitioner certification page</a></li>
+          </ul>
+        </section>
+      </article>
+    </main>
+    <SiteFooter analytics={!synthetic} />
+  </body>
+</html>
+
+<style>
+  .facts {
+    max-width: 800px;
+    margin-inline: auto;
+    padding-bottom: 72px;
+  }
+  .facts-header {
+    padding: 66px 0 36px;
+    text-align: center;
+  }
+  h1 {
+    margin: 0 auto 20px;
+    font-size: clamp(2rem, 4.4vw, 2.75rem);
+    line-height: 1.12;
+    text-wrap: balance;
+  }
+  .facts-checked {
+    margin: 14px 0 26px;
+    color: var(--muted);
+    font-size: 0.75rem;
+  }
+  .facts-contents {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    padding-bottom: 36px;
+    font-size: 0.8125rem;
+  }
+  .facts-contents a {
+    padding: 7px 14px;
+    border-radius: 7px;
+    background: #f4f4f5;
+    font-weight: 550;
+    text-decoration: none;
+  }
+  section {
+    padding: 36px 0 8px;
+    border-top: 1px solid var(--border);
+    scroll-margin-top: 24px;
+  }
+  h2 {
+    margin: 0 0 18px;
+    font-size: 1.5rem;
+  }
+  h3 {
+    margin: 28px 0 12px;
+    font-size: 1.0625rem;
+    letter-spacing: -0.03em;
+    scroll-margin-top: 24px;
+  }
+  section p,
+  section li {
+    font-size: 0.9375rem;
+    line-height: 1.75;
+  }
+  section p {
+    margin-bottom: 14px;
+  }
+  ul,
+  ol {
+    margin: 0 0 14px;
+    padding-inline-start: 22px;
+  }
+  li + li {
+    margin-top: 6px;
+  }
+  section a {
+    color: var(--ink);
+  }
+  .text-link {
+    font-weight: 550;
+    text-decoration: none;
+  }
+  .text-link:hover {
+    text-decoration: underline;
+  }
+  section .sources {
+    margin: 18px 0 28px;
+    color: var(--muted);
+    font-size: 0.75rem;
+  }
+  .table-scroll {
+    margin: 18px 0 20px;
+    overflow-x: auto;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    background: var(--surface);
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.8125rem;
+    line-height: 1.6;
+  }
+  th,
+  td {
+    padding: 13px 18px;
+    text-align: left;
+    vertical-align: top;
+  }
+  thead th {
+    font-family: var(--display);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+  tbody th {
+    width: 24%;
+    font-weight: 600;
+  }
+  tbody td {
+    color: var(--muted);
+  }
+  tbody tr {
+    border-top: 1px solid var(--border);
+  }
+  @media (max-width: 650px) {
+    .facts {
+      padding-bottom: 48px;
+    }
+    .facts-header {
+      padding: 42px 0 28px;
+    }
+    section {
+      padding-top: 28px;
+    }
+    h2 {
+      font-size: 1.375rem;
+    }
+    th,
+    td {
+      padding: 11px 12px;
+    }
+    table {
+      min-width: 520px;
+    }
+  }
+</style>

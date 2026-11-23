@@ -195,15 +195,15 @@ test('mode navigation preserves cancelled sessions and warns before a reload dis
   await page.getByRole('button', { name: 'Start exam', exact: true }).click();
   await page.getByRole('radio', { name: /Fixture target/ }).check();
   page.once('dialog', (dialog) => dialog.dismiss());
-  await page.getByRole('link', { name: 'Practice', exact: true }).click();
+  await page.getByRole('link', { name: 'Practice Questions', exact: true }).click();
   await expect(
     page.getByRole('radio', { name: /Fixture target/ }),
   ).toBeChecked();
   page.once('dialog', (dialog) => dialog.accept());
-  await page.getByRole('link', { name: 'Practice', exact: true }).click();
+  await page.getByRole('link', { name: 'Practice Questions', exact: true }).click();
   await expect(
     page.getByRole('heading', {
-      name: 'Your next practice session',
+      name: 'Practice Questions',
       exact: true,
     }),
   ).toBeFocused();
@@ -212,14 +212,14 @@ test('mode navigation preserves cancelled sessions and warns before a reload dis
     .click();
   await page.getByRole('radio', { name: /Fixture target/ }).check();
   page.once('dialog', (dialog) => dialog.dismiss());
-  await page.getByRole('link', { name: 'Exam', exact: true }).click();
+  await page.getByRole('link', { name: 'Timed Exam', exact: true }).click();
   await expect(
     page.getByRole('radio', { name: /Fixture target/ }),
   ).toBeChecked();
   page.once('dialog', (dialog) => dialog.accept());
-  await page.getByRole('link', { name: 'Exam', exact: true }).click();
+  await page.getByRole('link', { name: 'Timed Exam', exact: true }).click();
   await expect(
-    page.getByRole('heading', { name: 'Your next exam session', exact: true }),
+    page.getByRole('heading', { name: 'Timed Exam', exact: true }),
   ).toBeFocused();
   await page.getByRole('button', { name: 'Start exam', exact: true }).click();
   const warning = page.waitForEvent('dialog');

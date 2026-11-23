@@ -1,65 +1,15 @@
 ---
-import { domains } from '../lib/exam-scope';
-
-const examGuide = 'https://docs.aws.amazon.com/aws-certification/latest/ai-business-strategist-01/ai-business-strategist-01.html';
-const certification = 'https://aws.amazon.com/certification/certified-ai-business-strategist/';
-const officialPractice = 'https://skillbuilder.aws/learn/NN5MQE4G3M/official-practice-question-set-aws-certified-ai-business-strategist-aibc01--english/9TUSJ7NJ7N';
+import { faqItems } from '../content/faq';
 ---
 <section class="faq" id="faq" aria-labelledby="faq-heading">
   <h2 id="faq-heading">AWS Certified AI Business Strategist (AIB-C01) FAQ</h2>
   <div class="faq-items">
-    <details>
-      <summary>What is AWS Certified AI Business Strategist (AIB-C01)?</summary>
-      <div class="answer">
-        <p>AWS Certified AI Business Strategist is a certification for making business decisions about AI. AIB-C01 is the exam code. It tests how you prioritize AI investments, build a business case, manage risk, and scale successful pilots across an organization. <a href={certification}>AWS certification overview</a></p>
-      </div>
-    </details>
-    <details>
-      <summary>Who is the AWS Certified AI Business Strategist exam for?</summary>
-      <div class="answer">
-        <p>The exam is for professionals who evaluate, sponsor, or scale AI initiatives. Typical candidates include product and program managers, business analysts, consultants, and business leaders who work with technical teams. <a href={examGuide}>AWS candidate profile</a></p>
-      </div>
-    </details>
-    <details>
-      <summary>Do I need coding, hands-on AWS experience, or another certification?</summary>
-      <div class="answer">
-        <p>AWS requires none of these. It recommends about six months working with or alongside teams adopting AI, plus familiarity with basic AI concepts and what AWS AI services offer at a business level. <a href={certification}>AWS certification prerequisites</a></p>
-      </div>
-    </details>
-    <details>
-      <summary>What topics are covered on the AIB-C01 exam?</summary>
-      <div class="answer">
-        <p>The exam covers four domains. These percentages show how AWS weights the scored content.</p>
-        <ul>
-          {domains.map((domain) => <li>{domain.name} ({domain.weight}%)</li>)}
-        </ul>
-        <p><a href={examGuide}>Official exam guide</a></p>
-      </div>
-    </details>
-    <details>
-      <summary>How long is the AIB-C01 exam, and what is the format?</summary>
-      <div class="answer">
-        <p>The <a href={examGuide}>AWS exam guide</a> lists 130 minutes. The exam is currently in beta, so the <a href={certification}>AWS certification page</a> lists 170 minutes for the beta. Questions include single-answer multiple choice and multiple response. For multiple-response questions, select every correct option to earn credit.</p>
-      </div>
-    </details>
-    <details>
-      <summary>What is the passing score for AIB-C01?</summary>
-      <div class="answer">
-        <p>AWS reports scores on a scale of 100 to 1,000. You need an overall scaled score of 700 to pass. <a href={examGuide}>AWS exam scoring</a></p>
-      </div>
-    </details>
-    <details>
-      <summary>Where can I find free AIB-C01 practice questions?</summary>
-      <div class="answer">
-        <p><a href="#configure">Start a free practice session</a> on this site to answer original, unofficial questions and see an explanation after each answer. Choose one domain or mix all four. No account is needed. AWS Skill Builder also offers a free <a href={officialPractice}>Official Practice Question Set</a> with 20 questions.</p>
-      </div>
-    </details>
-    <details>
-      <summary>How should I prepare for the AIB-C01 exam?</summary>
-      <div class="answer">
-        <p>Start with the <a href={examGuide}>official exam guide</a>. Practice by domain to find gaps, then try a <a href="#exam-config">timed mock exam</a> across all four domains. Review why each correct answer fits the business scenario, especially when several options sound reasonable.</p>
-      </div>
-    </details>
+    {faqItems.map((item) => (
+      <details>
+        <summary>{item.question}</summary>
+        <div class="answer" set:html={item.answer} />
+      </details>
+    ))}
   </div>
 </section>
 
@@ -116,10 +66,10 @@ const officialPractice = 'https://skillbuilder.aws/learn/NN5MQE4G3M/official-pra
     color: var(--muted);
     font-size: 0.875rem;
   }
-  .answer a {
+  .answer :global(a) {
     color: var(--ink);
   }
-  ul {
+  .answer :global(ul) {
     margin: 8px 0;
     padding-inline-start: 22px;
   }

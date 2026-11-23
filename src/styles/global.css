@@ -176,6 +176,10 @@ h3:focus {
   font-weight: 550;
   text-decoration: none;
 }
+.site-header nav a[aria-current='page'] {
+  color: white;
+  background: var(--ink);
+}
 .nav-future {
   display: inline-flex;
   align-items: center;
@@ -484,6 +488,15 @@ select {
   color: var(--muted);
   font-size: 0.6875rem;
 }
+.domain-link {
+  margin-top: 10px;
+  font-size: 0.6875rem;
+  font-weight: 550;
+  text-decoration: none;
+}
+.domain-link:hover {
+  text-decoration: underline;
+}
 .site-footer {
   display: grid;
   grid-template-columns: max-content minmax(0, 620px);
@@ -494,10 +507,28 @@ select {
   color: var(--muted);
   font-size: 0.6875rem;
 }
-.footer-repository {
+.footer-top {
   grid-column: 1 / -1;
-  justify-self: start;
-  align-self: start;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 20px;
+}
+.footer-link,
+.footer-author a {
+  color: var(--ink);
+  font-size: 0.75rem;
+  font-weight: 550;
+  text-decoration: none;
+}
+.footer-link:hover,
+.footer-author a:hover {
+  text-decoration: underline;
+}
+.site-footer .footer-author {
+  margin-left: auto;
+}
+.footer-repository {
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -1450,5 +1481,32 @@ fieldset {
   .review-option {
     padding: 0.875rem 0.75rem;
     font-size: 0.8125rem;
+  }
+}
+
+/* Three navigation links need their own row on narrow screens. */
+@media (max-width: 650px) {
+  .site-header {
+    flex-wrap: wrap;
+    row-gap: 10px;
+    padding: 14px 0 12px;
+  }
+  .site-header nav {
+    width: 100%;
+    gap: 4px;
+  }
+  .site-header nav a {
+    flex: 1 1 auto;
+    padding: 7px 6px;
+    text-align: center;
+    white-space: nowrap;
+  }
+  .site-footer .footer-author {
+    margin-left: 0;
+  }
+}
+@media (max-width: 380px) {
+  .site-header nav {
+    font-size: 0.6875rem;
   }
 }
