@@ -2,9 +2,9 @@ name: Check and deploy static assets
 
 on:
   push:
-    branches: [main, integration/spec-1]
+    branches: [main]
   pull_request:
-    branches: [main, integration/spec-1]
+    branches: [main]
   workflow_dispatch:
     inputs:
       target:
@@ -40,8 +40,8 @@ jobs:
       # Browser checks build and validate BOTH static output directories.
       - run: npm run test:e2e
       - run: npm run deploy:dry-run
-      - name: Deploy clearly labelled synthetic preview
-        if: (github.event_name == 'push' && github.ref == 'refs/heads/integration/spec-1') || (github.event_name == 'workflow_dispatch' && inputs.target == 'preview')
+      - name: Deploy preview (synthetic fixtures)
+        if: github.event_name == 'workflow_dispatch' && inputs.target == 'preview'
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
@@ -54,7 +54,7 @@ jobs:
           curl --fail --silent --show-error --retry 5 --retry-all-errors "$url" -o /tmp/aib-live.html
           cmp .qa-dist/index.html /tmp/aib-live.html
           printf 'Verified synthetic preview HTTPS URL: %s\n' "$url" >> "$GITHUB_STEP_SUMMARY"
-      - name: Deploy initial public question bank
+      - name: Deploy production
         if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && inputs.target == 'production'))
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
