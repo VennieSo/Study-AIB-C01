@@ -4,6 +4,8 @@
 
 # Local-only files.
 /.private/
+.claude/
+.codex/
 
 # Generated application files
 node_modules/

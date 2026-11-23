@@ -19,7 +19,8 @@ permissions:
 
 concurrency:
   group: static-assets-${{ github.ref }}
-  cancel-in-progress: true
+  # A newer push must not cancel a production deploy midway.
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
 
 jobs:
   check-and-deploy:

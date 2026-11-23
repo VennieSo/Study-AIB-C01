@@ -115,6 +115,7 @@ test('production serves every built public asset unchanged', async ({
   await page.goto('/');
   const files = [
     'index.html',
+    '404.html',
     'aib-c01-exam-facts/index.html',
     'favicon.svg',
     'og-home.png',

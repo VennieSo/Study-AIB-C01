@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import schema from '../docs/agents/question-bank.schema.json';
+import schema from '../src/data/question-bank.schema.json';
 import { domains, getDomain, getSkill, skills } from '../src/lib/exam-scope';
 import { loadQuestionBanks, validateLaunchCounts } from '../src/lib/questions';
 import { publicBanks } from '../src/data/public-banks';

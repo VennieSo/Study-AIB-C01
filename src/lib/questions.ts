@@ -1,6 +1,6 @@
 import Ajv2020 from 'ajv/dist/2020';
 import addFormats from 'ajv-formats';
-import schema from '../../docs/agents/question-bank.schema.json';
+import schema from '../data/question-bank.schema.json';
 import {
   getDomain,
   getSkill,
