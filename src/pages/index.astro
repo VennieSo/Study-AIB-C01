@@ -35,7 +35,7 @@ const payload = JSON.stringify(questions).replace(/</g, '\\u003c');
             <div class="feature-line">{site.features.map((feature) => <span>{feature}</span>)}</div>
           </div>
         </section>
-        <section class="setup-panel" id="configure" aria-labelledby="configuration-heading">
+        <section class="setup-panel" id="practice" aria-labelledby="configuration-heading">
           <div class="setup-copy">
             <h2 id="configuration-heading" tabindex="-1">Practice Questions</h2>
             <p class="muted">Choose one domain or explore them all. Untimed, with instant explanations.</p>
@@ -60,7 +60,7 @@ const payload = JSON.stringify(questions).replace(/</g, '\\u003c');
             <noscript><p class="error">JavaScript is required to start a practice session. You can still explore the domain information and official exam guide.</p></noscript>
           </div>
         </section>
-        <section class="setup-panel" id="exam-config" aria-labelledby="exam-configuration-heading">
+        <section class="setup-panel" id="exam" aria-labelledby="exam-configuration-heading">
           <div class="setup-copy">
             <h2 id="exam-configuration-heading" tabindex="-1">Timed Exam</h2>
             <p class="muted">Practice across all domains under time pressure. Revise or skip answers until you submit.</p>
@@ -80,9 +80,9 @@ const payload = JSON.stringify(questions).replace(/</g, '\\u003c');
           </div>
         </section>
         <section class="domains-section" aria-labelledby="domains-heading">
-          <div class="section-heading"><div><p class="eyebrow">The bigger picture</p><h2 id="domains-heading">Four domains. One business perspective.</h2></div><p class="muted">Aligned with the official exam scope.</p></div>
+          <div class="section-heading"><div><p class="eyebrow">The bigger picture</p><h2 id="domains-heading">Four domains. One business perspective.</h2></div><p class="muted"><a href={`${site.factsPath}#domains`}>Aligned with the official exam scope</a></p></div>
           <div class="domain-grid">
-            {availability.map((domain) => <article class="domain-card"><div class="domain-card-top"><span class="domain-number">0{domain.number}</span><span class="weight">{domain.weight}% of exam</span></div><h3>{domain.name}</h3><p>{domain.description}</p><span class="domain-availability">{domain.count} questions available</span><a class="domain-link" href={`${site.factsPath}#domains`} aria-label={`What ${domain.name} covers`}>What this domain covers <span aria-hidden="true">→</span></a></article>)}
+            {availability.map((domain) => <article class="domain-card"><div class="domain-card-top"><span class="domain-number">0{domain.number}</span><span class="weight">{domain.weight}% of exam</span></div><h3>{domain.name}</h3><p>{domain.description}</p><span class="domain-availability">{domain.count} questions available</span></article>)}
           </div>
         </section>
         <ExamFaq />

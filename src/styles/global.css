@@ -144,7 +144,7 @@ h3:focus {
   display: flex;
   align-items: center;
   gap: 10px;
-  font-size: 0.875rem;
+  font-size: 1.1875rem;
   font-weight: 650;
   letter-spacing: -0.025em;
   text-decoration: none;
@@ -192,17 +192,6 @@ h3:focus {
   border: 1px solid var(--border);
   border-radius: 5px;
   padding: 1px 5px;
-}
-.header-note {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-  font-size: 0.75rem;
-  font-weight: 500;
-  text-decoration: none;
-}
-.header-note:hover {
-  text-decoration: underline;
 }
 .preview-notice {
   width: fit-content;
@@ -426,6 +415,9 @@ select {
 .section-heading h2 {
   font-size: 1.75rem;
 }
+.section-heading > .muted a:hover {
+  color: var(--ink);
+}
 .section-heading > .muted {
   flex-shrink: 0;
   font-size: 0.75rem;
@@ -488,15 +480,6 @@ select {
   color: var(--muted);
   font-size: 0.6875rem;
 }
-.domain-link {
-  margin-top: 10px;
-  font-size: 0.6875rem;
-  font-weight: 550;
-  text-decoration: none;
-}
-.domain-link:hover {
-  text-decoration: underline;
-}
 .site-footer {
   display: grid;
   grid-template-columns: max-content minmax(0, 620px);
@@ -507,26 +490,23 @@ select {
   color: var(--muted);
   font-size: 0.6875rem;
 }
-.footer-top {
-  grid-column: 1 / -1;
+.footer-links {
+  grid-column: 2;
+  grid-row: 2;
+  justify-self: end;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 6px 20px;
+  gap: 4px 20px;
 }
-.footer-link,
 .footer-author a {
   color: var(--ink);
   font-size: 0.75rem;
   font-weight: 550;
   text-decoration: none;
 }
-.footer-link:hover,
 .footer-author a:hover {
   text-decoration: underline;
-}
-.site-footer .footer-author {
-  margin-left: auto;
 }
 .footer-repository {
   display: inline-flex;
@@ -1009,9 +989,6 @@ fieldset {
   .wrap {
     width: calc(100% - 56px);
   }
-  .header-note {
-    display: none;
-  }
   .setup-panel {
     gap: 28px;
   }
@@ -1057,7 +1034,7 @@ fieldset {
   }
   .wordmark {
     gap: 8px;
-    font-size: 0.8125rem;
+    font-size: 1.125rem;
   }
   .brand-mark {
     width: 28px;
@@ -1169,9 +1146,6 @@ fieldset {
     flex-direction: column;
     gap: 14px;
     padding: 24px 0 30px;
-  }
-  .site-footer .footer-repository + p {
-    margin-top: -6px;
   }
   .site-footer .footer-notice {
     text-align: left;
@@ -1500,9 +1474,6 @@ fieldset {
     padding: 7px 6px;
     text-align: center;
     white-space: nowrap;
-  }
-  .site-footer .footer-author {
-    margin-left: 0;
   }
 }
 @media (max-width: 380px) {

@@ -57,7 +57,7 @@ export const faqItems: readonly FaqItem[] = [
   },
   {
     question: 'Where can I find free AIB-C01 practice questions?',
-    answer: `<p><a href="#configure">Start a free practice session</a> on this site. You get 200+ original practice questions with an explanation after each answer, by domain or across all four, with no sign-up. For a practice test under time pressure, use the <a href="#exam-config">timed exam</a>. AWS Skill Builder also offers a free <a href="${officialPractice}">Official Practice Question Set</a> with 20 questions.</p>`,
+    answer: `<p><a href="#practice">Start a free practice session</a> on this site. You get 200+ original practice questions with an explanation after each answer, by domain or across all four, with no sign-up. For a practice test under time pressure, use the <a href="#exam">timed exam</a>. AWS Skill Builder also offers a free <a href="${officialPractice}">Official Practice Question Set</a> with 20 questions.</p>`,
   },
   {
     question: 'Are these real AIB-C01 exam questions?',
@@ -65,7 +65,7 @@ export const faqItems: readonly FaqItem[] = [
   },
   {
     question: 'How should I prepare for the AIB-C01 exam?',
-    answer: `<p>Start with the <a href="${examGuide}">official exam guide</a>. Practice by domain to find gaps, then try a <a href="#exam-config">timed mock exam</a> across all four domains. Review why each correct answer fits the business scenario, especially when several options sound reasonable.</p>`,
+    answer: `<p>Start with the <a href="${examGuide}">official exam guide</a>. Practice by domain to find gaps, then try a <a href="#exam">timed mock exam</a> across all four domains. Review why each correct answer fits the business scenario, especially when several options sound reasonable.</p>`,
   },
 ];
 
