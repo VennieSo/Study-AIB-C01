@@ -67,7 +67,12 @@ jobs:
           url=$(node -e "console.log(require('./wrangler.json').routes[0].pattern)")
           test -n "$url"
           url="https://$url"
-          curl --fail --silent --show-error --retry 5 --retry-all-errors "$url" -o /tmp/aib-live.html
+          # The custom domain can serve the previous version for a few seconds after a deploy.
+          for attempt in $(seq 1 12); do
+            curl --fail --silent --show-error --retry 5 --retry-all-errors "$url" -o /tmp/aib-live.html
+            cmp -s dist/index.html /tmp/aib-live.html && break
+            sleep 5
+          done
           cmp dist/index.html /tmp/aib-live.html
           LIVE_BASE_URL="$url" npm run test:live
           printf 'Verified production HTTPS URL: %s\n' "$url" >> "$GITHUB_STEP_SUMMARY"
